@@ -21158,6 +21158,7 @@ textarea:focus-visible {
   font-size: 17px;
   font-weight: 700;
   color: #1F2A2E;
+  overflow-wrap: anywhere;
 }
 
 .infoGrid-value-mono {
@@ -23088,6 +23089,12 @@ textarea:focus-visible {
 @media (max-width: 720px) {
   .formGrid-span2 {
     grid-column: auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .formGrid-fullOnMobile {
+    grid-column: 1/-1;
   }
 }
 

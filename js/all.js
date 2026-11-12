@@ -5288,3 +5288,15 @@
     });
 })();
 
+// ------------------------------------------------------------
+// 全站 Bootstrap Modal：關閉瞬間若焦點還留在對話框內（如剛點擊的關閉鈕），
+// 瀏覽器會擋下 aria-hidden 並噴出 console 警告，故先將焦點移出到 body
+// ------------------------------------------------------------
+(function () {
+    document.addEventListener('hide.bs.modal', function (e) {
+        var active = document.activeElement;
+        if (active && e.target.contains(active)) {
+            active.blur();
+        }
+    });
+})();

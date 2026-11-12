@@ -25,6 +25,12 @@
     }
 }
 
+.formGrid-fullOnMobile {
+    @media (max-width: 720px) {
+        grid-column: 1 / -1;
+    }
+}
+
 .formField-label {
     display: block;
     font-size: 18px;
