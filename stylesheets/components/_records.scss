@@ -1,0 +1,267 @@
+// ============================================================
+// 申請紀錄頁（school/records.html）專屬樣式
+// main 用 .bg-green / .bg-green-bleed；.recordsPage-container 寬度比照 center/borrow.html 的
+// .reviewPage-container（後台最寬 1360），banner 與主要內容卡共用同一個容器 class
+// ============================================================
+
+.recordsPage-container {
+    max-width: 1360px;
+    margin: 40px auto 0;
+    padding: 0 24px;
+
+    @media (max-width: 720px) {
+        margin: 20px auto 0;
+        padding: 0 16px;
+    }
+}
+
+.recordsPage-content {
+    position: relative;
+    z-index: 2;
+    margin-top: -200px;
+
+    @media (max-width: 720px) {
+        margin-top: -115px;
+    }
+}
+
+// ------------------------------------------------------------
+// 申請流程卡標題：全螢幕尺寸皆可收合，預設收合（見 CLAUDE.md §7.2 討論）
+// ------------------------------------------------------------
+.applyForm-sectionHead-toggle {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    justify-content: space-between;
+}
+
+.applyForm-sectionHead-chevron {
+    display: inline-flex;
+    font-size: 20px;
+    color: $ink-3;
+    transition: transform 200ms ease-out;
+}
+
+.applyForm-sectionHead-toggle[aria-expanded="true"] .applyForm-sectionHead-chevron {
+    transform: rotate(180deg);
+}
+
+.applyForm-sectionBody.is-collapsed {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .applyForm-sectionHead-chevron {
+        transition: none;
+    }
+}
+
+// ------------------------------------------------------------
+// 申請流程步驟列：橘＝學校處理、青綠＝中心處理、綠＝已完成
+// （design.md §2.7：狀態色不可自訂，沿用既有色票，不比照畫布草稿的藍色）
+// ------------------------------------------------------------
+.flowSteps {
+    display: flex;
+    align-items: stretch;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.flowSteps-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1 1 180px;
+    padding: 16px;
+    border-radius: $border-radius-lg;
+    background-color: $surface-teal-soft;
+}
+
+.flowSteps-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    background-color: $brand-teal;
+    color: #FFFFFF;
+}
+
+.flowSteps-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.4;
+}
+
+.flowSteps-title {
+    font-weight: 700;
+    font-size: 16px;
+    color: $ink-1;
+}
+
+.flowSteps-who {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.flowSteps-item-school {
+    background-color: $accent-amber-pale;
+
+    .flowSteps-circle {
+        background-color: $accent-amber;
+        color: $ink-1;
+    }
+}
+
+.flowSteps-item-done {
+    background-color: #E5F3EA;
+
+    .flowSteps-circle {
+        background-color: #1E6B3E;
+    }
+}
+
+.flowSteps-sep {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    flex: 0 0 28px;
+    color: $line-strong;
+    font-size: 18px;
+
+    @media (max-width: 900px) {
+        display: none;
+    }
+}
+
+// @media (max-width: 900px) {
+//     .flowSteps {
+//         flex-direction: column;
+//         gap: 10px;
+//     }
+
+//     .flowSteps-item {
+//         flex: 1 1 auto;
+//     }
+// }
+
+// 手機（≤720px）：改為左側獨立數字圓＋虛線相連、右側白色泡泡卡（比照首頁借用流程 .flowLayout-cards/.cardNumbered）
+@media (max-width: 1124px) {
+    .flowSteps {
+        position: relative;
+        gap: 14px;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 25px;
+            top: 26px;
+            bottom: 26px;
+            border-left: 2px dashed #8CC7BF;
+            pointer-events: none;
+        }
+    }
+
+    .flowSteps-item {
+        position: relative;
+        z-index: 1;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 0;
+        border-radius: 0;
+        background-color: transparent;
+    }
+
+    .flowSteps-circle {
+        width: 52px;
+        height: 52px;
+        font-size: 18px;
+        box-shadow: 0 0 0 5px $surface-mint;
+    }
+
+    .flowSteps-text {
+        flex: 1 1 auto;
+        min-width: 0;
+        gap: 2px;
+        padding: 14px 16px;
+        border-radius: $border-radius;
+        background-color: $surface-card;
+        box-shadow: $shadow-card;
+    }
+}
+
+// ------------------------------------------------------------
+// 篩選列：進度頁籤＋篩選欄位同一區（排版手法比照 .newsLayout-filters，
+// 但頁籤內容與篩選欄位不同，故另立專屬 class，不直接共用）
+// ------------------------------------------------------------
+.recordsFilters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px 18px;
+    margin-bottom: 20px;
+}
+
+.recordsFilters-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px 18px;
+}
+
+// 篩選列內的單一行：用在欄位數較多、需要拆成固定兩行的頁面（如 center/schools.html），
+// flex:1 1 100% 強制每行各自佔滿 .recordsFilters-form 的一整行，不受欄位寬度影響換行點
+.recordsFilters-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px 18px;
+    flex: 1 1 100%;
+}
+
+.recordsFilters-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+
+    label {
+        font-size: 16px;
+        font-weight: 700;
+        color: $ink-1;
+    }
+
+    .form-select,
+    .form-control {
+        width: auto;
+        min-width: 160px;
+    }
+
+    @media (max-width: 720px) {
+        flex: 1 1 140px;
+
+        .form-select,
+        .form-control {
+            width: 100%;
+            min-width: 0;
+        }
+    }
+}

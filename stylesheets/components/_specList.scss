@@ -1,0 +1,122 @@
+// ============================================================
+// 輔具詳情元件：規格列表（dl）與可借數量提示列
+// ============================================================
+
+// 可借數量提示列（資訊卡最上方）
+.stockBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 20px;
+    padding: 18px 22px;
+    border-radius: $border-radius-lg;
+    background-color: $surface-teal-pale;
+}
+
+.stockBar-label {
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.stockBar-num {
+    font-family: "Poppins", sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: $brand-teal-deep;
+    line-height: 1;
+}
+
+.stockBar-unit {
+    font-size: 18px;
+    color: $ink-1;
+    margin-left: 4px;
+}
+
+// 規格列表（品項編號／購置日期／使用年限／適用對象）
+.specList {
+    margin: 20px 0 0;
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    row-gap: 0;
+}
+
+.specList-label {
+    padding: 14px 0;
+    border-bottom: 1px solid $line-default;
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-3;
+}
+
+.specList-value {
+    margin: 0;
+    padding: 14px 0;
+    border-bottom: 1px solid $line-default;
+    font-size: 17px;
+    color: $ink-1;
+}
+
+// 編號、日期一律用 Poppins（design.md §3）
+.specList-value-mono {
+    font-family: "Poppins", sans-serif;
+}
+
+// 緊湊變體：取消列與列之間的框線與上下 padding，改用較小的列距（中心端申請審核明細搭配左側照片使用）
+.specList-compact {
+    margin-top: 12px;
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: 18px;
+    row-gap: 10px;
+
+    .specList-label,
+    .specList-value {
+        padding: 0;
+        border-bottom: 0;
+    }
+}
+
+// 輔具照片＋標題標籤＋規格列表的橫向排列（申請輔具卡片使用）
+.deviceSpecRow {
+    margin-top: 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+
+    @media (max-width: 560px) {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.deviceSpecRow-photo {
+    flex: 0 0 auto;
+    width: 120px;
+    height: 120px;
+    padding: 8px;
+    box-sizing: border-box;
+    object-fit: contain;
+    border-radius: $border-radius-md;
+    border: 1px solid $line-default;
+    background-color: $surface-card;
+}
+
+.deviceSpecRow-body {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.deviceSpecRow-heading {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.deviceSpecRow-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: $ink-1;
+}

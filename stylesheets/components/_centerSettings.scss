@@ -1,0 +1,317 @@
+// ============================================================
+// 中心端系統設定（center/settings.html）專屬樣式
+// main 用 .bg-green / .bg-green-bleed；container/-content 數值比照 .reviewPage-container/-content
+// ============================================================
+
+.settingsPage-container {
+    max-width: 1360px;
+    margin: 40px auto 0;
+    padding: 0 24px;
+
+    @media (max-width: 720px) {
+        margin: 20px auto 0;
+        padding: 0 16px;
+    }
+}
+
+.settingsPage-content {
+    position: relative;
+    z-index: 2;
+    margin-top: -160px;
+
+    @media (max-width: 720px) {
+        margin-top: -85px;
+    }
+}
+
+.settingsPage-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+
+    @media (max-width: 900px) {
+        flex-direction: column;
+    }
+}
+
+// 左側設定項目導覽：往下捲動時固定在內容區左側
+// #header 是 position:sticky（_base.scss），往下捲動即收合成只剩 .navBar（≈57px，見 _navBarLogged.scss），
+// 這裡的 top 需蓋過收合後的頭部高度，卡才不會滑到頁首下方；80px ≈ 57px 頭部 + 24px 間距（比照 .reviewDetail-aside）
+.settingsPage-nav {
+    flex: 0 0 240px;
+    position: sticky;
+    top: 80px;
+
+    @media (max-width: 900px) {
+        position: static;
+        flex: 1 1 auto;
+        width: 100%;
+    }
+}
+
+.settingsPage-navList {
+    margin: 0;
+    padding: 12px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-radius: $border-radius-lg;
+    background-color: $surface-card;
+    box-shadow: $shadow-panel;
+
+    @media (max-width: 900px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
+
+.settingsPage-navLink {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: $border-radius-md;
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-2;
+    text-decoration: none;
+    transition: background-color 160ms ease-out, color 160ms ease-out;
+
+    .bi {
+        font-size: 18px;
+        color: $ink-3;
+    }
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-tint;
+        color: $brand-teal-deep;
+    }
+
+    &.is-active {
+        background-color: $brand-teal;
+        color:white;
+
+        .bi {
+            color: white;
+        }
+    }
+}
+
+.settingsPage-sections {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    // 錨點捲動時與收合後的頭部保持間距，數值比照 .settingsPage-nav 的 sticky top
+    > .cardPanel {
+        scroll-margin-top: 80px;
+    }
+}
+
+// .cardPanel-head 預設無下框線，這裡為系統設定頁加上分隔線
+.settingsPage-head {
+    border-bottom: 1px solid $line-default;
+    padding-bottom: 14px;
+    margin-bottom: 20px;
+}
+
+.settingsPage-headNote {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.settingsPage-note {
+    margin-bottom: 20px;
+}
+
+.settingsPage-noteNum {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+}
+
+.settingsPage-periodList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.settingsPage-periodRow {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 16px;
+    align-items: end;
+    padding: 18px;
+    border: 1px solid $line-default;
+    border-radius: $border-radius-md;
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.settingsPage-periodInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.settingsPage-periodName {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.settingsPage-periodStatus {
+    margin: 0;
+}
+
+.settingsPage-periodHint {
+    margin-top: 16px;
+}
+
+.settingsPage-details {
+    margin-top: 20px;
+}
+
+.settingsPage-detailsSummary {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    color: $brand-teal-deep;
+
+    &:focus-visible {
+        outline: 3px solid $focus-ring;
+        outline-offset: 3px;
+    }
+}
+
+.settingsPage-pastList {
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.settingsPage-pastRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: $border-radius-md;
+    background-color: $surface-tint;
+    font-size: 16px;
+    color: $ink-2;
+}
+
+.settingsPage-pastDate {
+    font-family: "Poppins", sans-serif;
+    color: $ink-3;
+}
+
+.settingsPage-mailForm {
+    margin-bottom: 20px;
+}
+
+.settingsPage-mailList {
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.settingsPage-mailRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid $line-default;
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.settingsPage-mailText {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.settingsPage-mailLabel {
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.settingsPage-mailDesc {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.settingsPage-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+// ------------------------------------------------------------
+// 切換開關（Toggle switch）：通知信各項目的啟用／停用
+// ------------------------------------------------------------
+.toggleSwitch {
+    position: relative;
+    flex: 0 0 auto;
+    width: 56px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: $border-radius-pill;
+    background-color: $line-strong;
+    cursor: pointer;
+    transition: background-color 150ms ease-out;
+
+    &:focus-visible {
+        outline: 3px solid $focus-ring;
+        outline-offset: 3px;
+    }
+
+    &.is-on {
+        background-color: $brand-teal;
+    }
+}
+
+.toggleSwitch-knob {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: $surface-card;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+    transition: left 150ms ease-out;
+}
+
+.toggleSwitch.is-on .toggleSwitch-knob {
+    left: 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .settingsPage-navLink,
+    .settingsPage-detailsSummary,
+    .toggleSwitch,
+    .toggleSwitch-knob {
+        transition: none;
+    }
+}

@@ -1,0 +1,77 @@
+// ============================================================
+// 計數頁籤：文字 + 獨立圓形數字徽章（與 .tabsPill 的外框樣式不同，故另立元件）
+// 行為沿用 role="tab"／data-category，由 js/tabs.js＋main.js 的 initCategoryFilter 處理
+// ============================================================
+
+.tabsCount {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    background-color: $surface-tint;
+    padding: 6px;
+    border-radius: $border-radius;
+    max-width:max-content;
+}
+
+.tabsCount-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 18px;
+    border: none;
+    border-radius: $border-radius-md;
+    background-color: transparent;
+    color: $ink-1;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 180ms ease-out, color 180ms ease-out;
+
+    .tabsCount-badge {
+            background-color: white;
+            font-weight: 500;
+        }
+
+    &:hover {
+        background-color: $surface-teal-pale;
+    }
+
+    &[aria-selected="true"] {
+        background-color: $brand-teal;
+        color: #FFFFFF;
+        box-shadow: $shadow-panel;
+
+        &:hover {
+            background-color: $brand-teal-deep;
+        }
+
+        .tabsCount-badge {
+            background-color: rgba(white, .2);
+            color: white;
+        }
+    }
+}
+
+.tabsCount-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 6px;
+    border-radius: 50%;
+    background-color: $surface-tint;
+    color: $ink-2;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    transition: background-color 180ms ease-out, color 180ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tabsCount-item,
+    .tabsCount-badge {
+        transition: none;
+    }
+}

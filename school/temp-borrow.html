@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>臨時借用申請 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="學校端臨時借用申請，非申請期間借用中心現有輔具庫存">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_School.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu" src="../img/banner/temp-borrow.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="applyForm-container">
+                <div class="bannerWave-inner">
+                    <nav class="crumbNav" aria-label="麵包屑導覽">
+                        <ol>
+                            <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li>輔具申請</li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li aria-current="page" class="crumbNav-current">臨時借用申請</li>
+                        </ol>
+                    </nav>
+
+                    <div class="bannerWave-main">
+                        <h1 class="titleSection bannerWave-title">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            臨時借用申請
+                        </h1>
+                        <p class="bannerWave-desc">非申請期間有急需時，可以先借用中心現有的輔具。送出後由中心審核，必要時會安排治療師評估。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="applyForm-content">
+            <div class="applyForm-container">
+                <form class="applyForm" id="tempBorrowForm" novalidate>
+
+                    <!-- ① 選擇中心現有輔具 -->
+                    <section class="applyForm-section cardPanel" aria-labelledby="tp-sel">
+                        <div class="flex-row-between flex-wrap">
+                            <h2 id="tp-sel" class="applyForm-sectionHead"><span class="cardNumbered-num-sm" aria-hidden="true">1</span>選擇中心現有輔具</h2>
+                            <span class="applyForm-stockTime">庫存更新：<span>2026/10/29 08:00</span></span>
+                        </div>
+                        <div class="applyForm-sectionBody">
+                            <div class="comboPicker">
+                                <label for="pickerTrigger" class="formField-label">輔具品項 <span class="formField-required">必填</span></label>
+                                <button type="button" id="pickerTrigger" class="comboPicker-trigger" aria-expanded="false" aria-controls="pickerPanel" data-js="picker-trigger">
+                                    <img class="comboPicker-thumb" data-js="picker-thumb-img" src="../img/devices/wheelchair.jpg" alt="" hidden>
+                                    <span class="comboPicker-thumb-empty" data-js="picker-thumb-empty" aria-hidden="true"></span>
+                                    <span class="comboPicker-selected">
+                                        <span class="comboPicker-selected-placeholder" data-js="picker-name">請選擇</span>
+                                        <span class="tagPill tag-greenLight" data-js="picker-tag" hidden></span>
+                                        <span class="comboPicker-selected-cat" data-js="picker-cat-label" hidden></span>
+                                    </span>
+                                    <span class="comboPicker-chevron" aria-hidden="true"><i class="bi bi-chevron-down"></i></span>
+                                </button>
+
+                                <div id="pickerPanel" class="comboPicker-panel" data-js="picker-panel" hidden>
+                                    <div class="comboPicker-search">
+                                        <span class="comboPicker-search-icon" aria-hidden="true"><i class="bi bi-search"></i></span>
+                                        <input type="search" id="pickerSearch" class="comboPicker-search-input" placeholder="輸入輔具名稱搜尋" autocomplete="off" data-js="picker-search">
+                                    </div>
+                                    <ul class="comboPicker-list" aria-label="中心現有輔具" id="pickerList" data-js="picker-list"></ul>
+                                </div>
+                            </div>
+                            <p class="formField-hint">只列出中心目前在庫、開放臨時借用的輔具。需要的輔具不在清單中，請等待下次申請期間。</p>
+                        </div>
+                    </section>
+
+                    <!-- ② 學生資料 -->
+                    <section class="applyForm-section cardPanel" aria-labelledby="tp-student">
+                        <h2 id="tp-student" class="applyForm-sectionHead"><span class="cardNumbered-num-sm" aria-hidden="true">2</span>學生資料</h2>
+                        <div class="applyForm-sectionBody">
+                            <div class="formGrid formGrid-cols4">
+                                <div>
+                                    <label for="stName" class="formField-label">學生姓名 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="stName" class="form-control" placeholder="例：林小安">
+                                </div>
+                                <div>
+                                    <label for="stId" class="formField-label">身分證字號 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="stId" class="form-control" maxlength="10" autocomplete="off" placeholder="例：J123456789" style="text-transform:uppercase">
+                                </div>
+                                <div>
+                                    <label for="stGrade" class="formField-label">年級 <span class="formField-required">必填</span></label>
+                                    <select id="stGrade" class="form-select">
+                                        <option>請選擇</option>
+                                        <optgroup label="幼兒園"><option>小班</option><option>中班</option><option>大班</option></optgroup>
+                                        <optgroup label="國小"><option>一年級</option><option>二年級</option><option selected>三年級</option><option>四年級</option><option>五年級</option><option>六年級</option></optgroup>
+                                        <optgroup label="國中"><option>七年級</option><option>八年級</option><option>九年級</option></optgroup>
+                                        <optgroup label="高中職"><option>高一</option><option>高二</option><option>高三</option></optgroup>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="stClass" class="formField-label">班級 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="stClass" class="form-control" placeholder="例：甲班、資源班">
+                                </div>
+                            </div>
+
+                            <p class="formField-hint d-flex align-items-start gap-2">
+                                <i class="bi bi-info-circle" aria-hidden="true"></i>
+                                <span>身分證字號僅供中心核對學生身分，系統加密保存，畫面上只顯示部分號碼。</span>
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- ③ 借用需求 -->
+                    <section class="applyForm-section cardPanel" aria-labelledby="tp-need">
+                        <h2 id="tp-need" class="applyForm-sectionHead"><span class="cardNumbered-num-sm" aria-hidden="true">3</span>借用需求</h2>
+                        <div class="applyForm-sectionBody">
+                            <div class="formGrid formGrid-cols2">
+                                <div>
+                                    <label for="tpFrom" class="formField-label">希望借用日期 <span class="formField-required">必填</span></label>
+                                    <input type="date" id="tpFrom" class="form-control" value="2026-11-09">
+                                </div>
+                                <div>
+                                    <label for="tpTo" class="formField-label">預計歸還日期 <span class="formField-required">必填</span></label>
+                                    <input type="date" id="tpTo" class="form-control" value="2027-01-20">
+                                    <p class="formField-hint">臨時借用最長到本學期結束</p>
+                                </div>
+                                <div class="formGrid-span2">
+                                    <label for="tpWhy" class="formField-label">需求原因 <span class="formField-required">必填</span></label>
+                                    <textarea id="tpWhy" class="form-control" rows="3" placeholder="例：學生術後暫時無法行走，需要輪椅在校內移動，預計使用到期末"></textarea>
+                                </div>
+                            </div>
+
+                            <fieldset class="mt-3">
+                                <legend class="formField-label">是否需要治療師評估 <span class="formField-required">必填</span></legend>
+                                <div class="cardChoice-group cardChoice-group-row mt-2">
+                                    <label class="cardChoice is-selected" data-js="tev-card">
+                                        <input type="radio" name="tev" value="no" class="cardChoice-input" data-js="tev-radio" checked>
+                                        <span class="cardChoice-text">
+                                            <span class="cardChoice-title">不需要</span>
+                                            <span class="cardChoice-desc">直接借用現有輔具</span>
+                                        </span>
+                                    </label>
+                                    <label class="cardChoice" data-js="tev-card">
+                                        <input type="radio" name="tev" value="center" class="cardChoice-input" data-js="tev-radio">
+                                        <span class="cardChoice-text">
+                                            <span class="cardChoice-title">中心駐點評估</span>
+                                            <span class="cardChoice-desc">每月第 2 個週四</span>
+                                        </span>
+                                    </label>
+                                    <label class="cardChoice" data-js="tev-card">
+                                        <input type="radio" name="tev" value="school" class="cardChoice-input" data-js="tev-radio">
+                                        <span class="cardChoice-text">
+                                            <span class="cardChoice-title">到校評估</span>
+                                            <span class="cardChoice-desc">由中心安排治療師到校</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </section>
+
+                    <!-- 送出 -->
+                    <section class="applyForm-section cardPanel applyForm-submitBar" aria-label="送出申請">
+                        <p class="applyForm-submitNote">
+                            <i class="bi bi-info-circle" aria-hidden="true"></i>
+                            <span>送出後請下載申請表，校內簽核後到「申請紀錄」上傳，中心才會開始審核。</span>
+                        </p>
+                        <div class="applyForm-submitActions">
+                            <a href="index.html" class="btnPill btn-outline">取消</a>
+                            <button type="submit" class="btnPill btn-teal" data-js="submit-btn">送出申請</button>
+                        </div>
+                    </section>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- 送出成功 modal -->
+    <div class="modal fade" id="doneModal" data-js="doneModal" tabindex="-1" aria-hidden="true" aria-labelledby="dnTitle" aria-describedby="dnDesc">
+        <div class="modal-dialog modal-dialog-md">
+            <div class="modal-content">
+                <div class="modalDone">
+                    <button type="button" class="modalDone-close" aria-label="關閉" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                    <h2 id="dnTitle" class="modalDone-title">申請已送出，還需上傳簽核申請表</h2>
+                    <p id="dnDesc" class="modalDone-desc">申請編號 <b class="modalDone-code">T1151029-001</b>。<br>請下載申請表，校內簽核後上傳，中心收到後才會開始審核。</p>
+
+                    <ol class="stepTracker modalDone-steps" aria-label="申請流程，目前在第 1 步">
+                        <li class="stepTracker-item" aria-current="step">
+                            <span class="stepTracker-circle is-active" aria-hidden="true">1</span>
+                            <span class="stepTracker-label is-active">簽核申請表</span>
+                        </li>
+                        <li class="stepTracker-item">
+                            <span class="stepTracker-circle" aria-hidden="true">2</span>
+                            <span class="stepTracker-label">中心審核</span>
+                        </li>
+                        <li class="stepTracker-item">
+                            <span class="stepTracker-circle" aria-hidden="true">3</span>
+                            <span class="stepTracker-label">簽章借用單</span>
+                        </li>
+                        <li class="stepTracker-item">
+                            <span class="stepTracker-circle" aria-hidden="true">4</span>
+                            <span class="stepTracker-label">中心確認</span>
+                        </li>
+                        <li class="stepTracker-item">
+                            <span class="stepTracker-circle" aria-hidden="true">5</span>
+                            <span class="stepTracker-label">開始借用</span>
+                        </li>
+                    </ol>
+
+                    <a href="#" download class="btnPill btn-teal modalDone-download">
+                        <i class="bi bi-download" aria-hidden="true"></i>下載申請表（PDF）
+                    </a>
+                    <p class="modalDone-caption">已帶入剛才填寫的內容，列印後即可簽核</p>
+
+                    <div class="modalDone-links">
+                        <button type="button" class="modalDone-link" data-js="done-modal-records">前往申請紀錄上傳<i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+                        <button type="button" class="modalDone-secondary" data-bs-dismiss="modal">稍後再處理</button>
+                    </div>
+                    <p class="modalDone-divider">還沒上傳的申請會留在首頁「待辦事項」提醒你。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

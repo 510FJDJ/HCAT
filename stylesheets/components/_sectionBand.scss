@@ -1,0 +1,32 @@
+// ============================================================
+// 區塊堆疊背板元件（design.md §4 radius/section、§5.1）
+// 首頁區塊往上疊：頂部圓角 48px（手機 32px）
+// .sectionBand-overlap 用 margin-top 負值把本區塊往上拉進上一區塊，
+// 不加 padding-top 補償，露出來的是本身的 border-radius；
+// 上一個區塊需要自備足夠的 bottom padding 當緩衝，避免蓋到內容
+// ============================================================
+
+.sectionBand {
+    position: relative;
+    border-radius: 48px 48px 0 0;
+
+    @media (max-width: 720px) {
+        border-radius: 32px 32px 0 0;
+    }
+}
+
+.sectionBand-overlap {
+    margin-top: -48px;
+
+    @media (max-width: 720px) {
+        margin-top: -16px;
+    }
+}
+
+.sectionBand-tint {
+    background-color: $surface-tint;
+}
+
+.sectionBand-white {
+    background-color: $surface-card;
+}

@@ -1,0 +1,82 @@
+// ============================================================
+// 頁籤／分類按鈕元件（design.md §7.2）：共用於新聞分類頁籤、輔具分類 chips、字級切換
+// ARIA 與鍵盤規則見 ACCESSIBILITY.md §13（roving tabindex、方向鍵自動切換）
+// ============================================================
+
+.tabsPill {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    // 手機時按鈕間距縮小一點
+    @media (max-width: 720px) {
+        gap: 8px;
+    }
+}
+
+.tabsPill-item {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 22px;
+    border-radius: $border-radius-pill;
+    font-size: 17px;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+    background-color: $surface-card;
+    color: $ink-1;
+    border: 2px solid $line-strong;
+    cursor: pointer;
+    transition: background-color 180ms ease-out, border-color 180ms ease-out, color 180ms ease-out, transform 180ms ease-out;
+
+    &[aria-selected="true"],
+    &[aria-pressed="true"] {
+        background-color: $brand-teal;
+        border-color: $brand-teal;
+        color: #FFFFFF;
+    }
+
+    &:hover:not([aria-selected="true"]):not([aria-pressed="true"]) {
+        background-color: $surface-teal-pale;
+    }
+
+    // 點擊按壓回饋（比照 design.md §7.11 回到頂部按鈕 :active 的做法）
+    &:active {
+        transition-duration: 60ms;
+    }
+
+    &:active:not([aria-selected="true"]):not([aria-pressed="true"]) {
+        background-color: $surface-teal-select;
+        border-color: $brand-teal;
+    }
+
+    &[aria-selected="true"]:active,
+    &[aria-pressed="true"]:active {
+        background-color: $brand-teal-ink;
+        border-color: $brand-teal-ink;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .tabsPill-item:active {
+        transform: scale(.96);
+    }
+}
+
+// 字級切換（A／A+／A++）等小尺寸情境
+.tabsPill-sm {
+    gap: 6px;
+
+    .tabsPill-item {
+        min-height: 28px;
+        padding: 0 10px;
+        font-size: 13px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tabsPill-item {
+        transition: none;
+    }
+}

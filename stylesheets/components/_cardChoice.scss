@@ -1,0 +1,121 @@
+// ============================================================
+// 可選卡片元件：申請類別／評估方式／近期學籍異動等單選卡片群組
+// JS 依 radio 的 change 事件切換 .is-selected（見 js/school-apply.js）
+// ============================================================
+
+.cardChoice-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cardChoice-group-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+// 固定雙欄（如審核結果核准／退回補件）：欄寬平分，不像 .cardChoice-group-row 設最小寬度，
+// 窄側欄（側邊欄 360px）也能維持兩欄並排，不會被擠到換行
+.cardChoice-group-grid2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+// 三欄（如帳號管理「角色」選擇：中心人員／學校人員／廠商），窄幅收合為單欄
+.cardChoice-group-grid3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.cardChoice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px;
+    border-radius: $border-radius;
+    border: 2px solid $line-strong;
+    background-color: $surface-card;
+    cursor: pointer;
+    transition: border-color 160ms ease-out, background-color 160ms ease-out;
+
+    &:hover {
+        border-color: $brand-teal;
+    }
+
+    &.is-selected {
+        border-color: $brand-teal;
+        background-color: $surface-teal-pale;
+    }
+}
+
+.cardChoice-group-row .cardChoice {
+    flex: 1 1 220px;
+}
+
+.cardChoice-input {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    margin: 3px 0 0;
+    accent-color: $brand-teal;
+}
+
+.cardChoice-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5;
+}
+
+.cardChoice-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.cardChoice-desc {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+// 無說明文字的精簡版（如近期學籍異動選項）
+.cardChoice-plain .cardChoice-title {
+    line-height: 1.45;
+}
+
+// 破壞性選項變體（如審核結果「退回補件」）：選中時改用紅色系，與其他選項的青綠選中色區隔
+.cardChoice-danger:hover {
+    border-color: $state-required;
+}
+
+.cardChoice-danger.is-selected {
+    border-color: $state-required;
+    background-color: #FBEAEA;
+}
+
+.cardChoice-danger.is-selected .cardChoice-input {
+    accent-color: $state-required;
+}
+
+.cardChoice-danger.is-selected .cardChoice-title {
+    color: $state-required;
+}
+
+// 近期學籍異動選中後展開的子欄位
+.cardChoice-sub {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid $line-default;
+    width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cardChoice {
+        transition: none;
+    }
+}

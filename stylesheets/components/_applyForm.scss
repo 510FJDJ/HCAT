@@ -1,0 +1,308 @@
+// ============================================================
+// 輔具申請表頁面專屬元件（school/apply.html）
+// 排版組合只服務這個頁面，依 CLAUDE.md §7.1 例外直接寫在元件 class 內
+// ============================================================
+
+// 全頁淡綠底：main 用 .bg-green / .bg-green-bleed（見 stylesheets/components/_authShell.scss）
+
+// 表單頁內容最大寬度（design.md §4：表單頁內容最寬 1040px）
+.applyForm-container {
+    max-width: 1200px;
+    margin: 40px auto 0;
+    padding: 0 24px;
+
+    @media (max-width: 720px) {
+        margin: 20px auto 0;
+        padding: 0 16px;
+    }
+}
+
+// 主要內容卡片容器：稍微疊在頁首波浪曲線上方
+.applyForm-content {
+    position: relative;
+    z-index: 2;
+    margin-top: -160px;
+
+    @media (max-width: 720px) {
+        margin-top: -85px;
+    }
+}
+
+.applyForm {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+// 單一表單區塊卡片（沿用 .cardPanel 作為白色卡片外觀）
+.applyForm-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.applyForm-sectionHead {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: $brand-teal-deep;
+    flex-wrap: wrap;
+}
+
+.applyForm-sectionHead-itemName {
+    font-size: 16px;
+    font-weight: 500;
+    color: $ink-2;
+}
+
+.applyForm-sectionBody {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 16px;
+}
+
+// ------------------------------------------------------------
+// ② 選擇輔具：分類下拉＋輔具品項自訂下拉選單 並排
+// ------------------------------------------------------------
+.applyForm-pickerRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+
+    @media (max-width: 720px) {
+        flex-direction: column;
+    }
+}
+
+.applyForm-pickerRow-cat {
+    flex: 0 0 220px;
+
+    // 對齊右側 .comboPicker-trigger 的 min-height:64px，讓兩個下拉同高
+    .form-select {
+        height: 64px;
+    }
+
+    @media (max-width: 720px) {
+        flex: 1 1 auto;
+        width: 100%;
+    }
+}
+
+.applyForm-pickerRow-item {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+// ------------------------------------------------------------
+// 近期學籍異動：卡片選中後展開的學校欄位
+// ------------------------------------------------------------
+.applyForm-moveFields {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+// ------------------------------------------------------------
+// ④ 申請內容：聽障左耳／右耳 兩欄紫色方框
+// ------------------------------------------------------------
+.applyForm-earGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.applyForm-earBox {
+    padding: 16px 18px;
+    border-radius: $border-radius-lg;
+    background-color: #F4F1FA;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.applyForm-earBox-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #4B2E83;
+}
+
+// ------------------------------------------------------------
+// ④ 申請內容（免評估品項）：琥珀色方框
+// ------------------------------------------------------------
+.applyForm-freeBox {
+    padding: 20px 22px;
+    border-radius: $border-radius-lg;
+    background-color: $accent-amber-pale;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.applyForm-freeBox-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.applyForm-freeBox-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.applyForm-freeBox-note {
+    font-size: 16px;
+    color: $accent-amber-ink-2;
+}
+
+// ------------------------------------------------------------
+// 送出申請提交列（沿用 .cardPanel 作為白卡外觀）
+// ------------------------------------------------------------
+.applyForm-submitBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.applyForm-submitNote {
+    display: flex;
+    align-items: flex-start;
+    flex-direction:row;
+    gap: 8px;
+    font-size: 16px;
+    color: $ink-3;
+
+    .bi {
+        flex-shrink: 0;
+        margin-top: 2px;
+        color: $brand-teal-deep;
+    }
+}
+
+.applyForm-submitActions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 0 0 auto;
+}
+
+// ============================================================
+// 送出申請成功 Modal（.modal-panel.modal-panel-lg 內的自訂內容）
+// ============================================================
+.modalDone {
+    position: relative;
+    padding: 36px 32px 32px;
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 720px) {
+        padding: 28px 20px 24px;
+    }
+}
+
+.modalDone-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background-color: $surface-tint;
+    color: $ink-2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 160ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-teal-pale;
+        color: $brand-teal-deep;
+    }
+}
+
+.modalDone-title {
+    padding-right:40px;
+}
+
+.modalDone-desc {
+    margin: 10px 0 0;
+    font-size: 17px;
+    line-height: 1.7;
+    color: $ink-2;
+}
+
+.modalDone-code {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    color: $brand-teal-deep;
+}
+
+.modalDone-steps {
+    width: 100%;
+}
+
+.modalDone-download {
+    margin-top: 30px;
+}
+
+.modalDone-caption {
+    margin: 10px 0 0;
+    font-size: 16px;
+    color: $ink-3;
+    text-align: center;
+}
+
+.modalDone-links {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.modalDone-link {
+    font-size: 17px;
+    font-weight: 700;
+    color: $brand-teal-deep;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.modalDone-secondary {
+    font-size: 17px;
+    font-weight: 500;
+    color: $ink-3;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.modalDone-divider {
+    margin: 24px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid $line-default;
+    font-size: 15px;
+    color: $ink-3;
+    width: 100%;
+}

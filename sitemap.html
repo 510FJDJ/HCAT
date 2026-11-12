@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>網站導覽｜輔具管理資訊系統｜新竹縣特殊教育資源中心</title>
+    <link rel="icon" type="image/png" href="img/logo/logo.png">
+    <link rel="stylesheet" href="css/all.css">
+</head>
+<body>
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="layout/header.html"></div>
+
+    <main id="goCenter" tabindex="-1">
+
+        <section class="pageBanner">
+            <div class="container pageBanner-inner">
+                <div class="pageBanner-main">
+                    <div class="pageBanner-text">
+                        <span class="labelCaption"><span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>SITEMAP</span>
+                        <h1 class="titleSection">網站導覽</h1>
+                        <p class="pageBanner-desc">提供鍵盤操作說明，以及全站各角色頁面的連結清單。</p>
+                    </div>
+                    <img src="img/banner/sitemap.png" alt="" class="pageBanner-illustration">
+                </div>
+            </div>
+        </section>
+
+        <section class="sectionBand-overlap">
+            <div class="container pt-12 pb-16">
+
+                <div class="cardPanel">
+
+                    <h2 class="titleSubsection mb-8">
+                        <span class="panelCard-icon panelCard-icon-amber" aria-hidden="true"></span>鍵盤操作
+                    </h2>
+
+                    <p class="textNote mb-6">全站都可以只用鍵盤操作：<span class="kbdKey">Tab</span> 移到下一個項目、<span class="kbdKey">Shift</span><span class="kbdPlus">+</span><span class="kbdKey">Tab</span> 回到上一個、<span class="kbdKey">Enter</span> 開啟連結或按下按鈕。</p>
+                    <p class="textNote mb-6">也可以用下面的快速鍵，直接跳到頁面的三個區塊：</p>
+
+                    <div class="mb-6">
+                        <div class="kbdRow">
+                            <span class="kbdRow-keys"><span class="kbdKey">Alt</span><span class="kbdPlus">+</span><span class="kbdKey">U</span></span>
+                            <span class="kbdRow-region">上方選單區</span>
+                            <span class="kbdRow-desc">網站名稱、主選單、登入；登入後還有字級設定與登出。</span>
+                        </div>
+                        <div class="kbdRow">
+                            <span class="kbdRow-keys"><span class="kbdKey">Alt</span><span class="kbdPlus">+</span><span class="kbdKey">C</span></span>
+                            <span class="kbdRow-region">中央內容區</span>
+                            <span class="kbdRow-desc">每一頁的主要內容。</span>
+                        </div>
+                        <div class="kbdRow">
+                            <span class="kbdRow-keys"><span class="kbdKey">Alt</span><span class="kbdPlus">+</span><span class="kbdKey">Z</span></span>
+                            <span class="kbdRow-region">下方導覽區</span>
+                            <span class="kbdRow-desc">頁尾的快速前往、相關連結、主辦單位與聯絡資訊。</span>
+                        </div>
+                    </div>
+
+                    <p class="noteBox noteBox-tealSoft mb-6 flex-wrap">
+                        <i class="bi bi-info-circle" aria-hidden="true"></i>使用 Firefox 時，請改按 <span class="kbdKey">Shift</span><span class="kbdPlus">+</span><span class="kbdKey">Alt</span> 再加上字母鍵；Mac 請按 <span class="kbdKey">Control</span><span class="kbdPlus">+</span><span class="kbdKey">Option</span> 再加字母鍵。
+                    </p>
+
+                    <p class="textNote">登入後，頁面右上角可以切換字級（A、A+、A++），放大整頁文字。</p>
+
+                    <h2 class="titleSubsection mt-10 mb-8">
+                        <span class="panelCard-icon panelCard-icon-amber" aria-hidden="true"></span>網站架構
+                    </h2>
+
+                    <div class="siteMapGrid">
+
+                        <div class="cardGroup">
+                            <div class="cardGroup-head">
+                                <h3 class="cardGroup-title">公開頁面</h3>
+                            </div>
+                            <ul class="cardGroup-list">
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">1</span>
+                                    <a href="index.html" class="cardGroup-link linkGhost">首頁</a>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">2</span>
+                                    <a href="news.html" class="cardGroup-link linkGhost">最新消息</a>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">3</span>
+                                    <a href="catalog.html" class="cardGroup-link linkGhost">輔具目錄</a>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">4</span>
+                                    <a href="index.html#flow" class="cardGroup-link linkGhost">借用流程</a>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">5</span>
+                                    <a href="index.html#links" class="cardGroup-link linkGhost">友善連結</a>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">6</span>
+                                    <a href="login.html" class="cardGroup-link linkGhost">系統登入</a>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="register.html" class="cardGroup-link-sub linkGhost">申請註冊（維修廠商）</a>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="forgot-password.html" class="cardGroup-link-sub linkGhost">忘記密碼</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="cardGroup">
+                            <div class="cardGroup-head">
+                                <h3 class="cardGroup-title">學校端</h3>
+                                <span class="tagPill tag-greyLight">需登入</span>
+                            </div>
+                            <ul class="cardGroup-list">
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">1</span>
+                                    <a href="school/index.html" class="cardGroup-link linkGhost">首頁</a>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">2</span>
+                                    <span class="cardGroup-groupLabel">輔具申請</span>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="school/apply.html" class="cardGroup-link-sub linkGhost">輔具申請表</a>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="school/temp-borrow.html" class="cardGroup-link-sub linkGhost">臨時借用申請</a>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="school/records.html" class="cardGroup-link-sub linkGhost">申請紀錄</a>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">3</span>
+                                    <a href="school/borrowing.html" class="cardGroup-link linkGhost">借用中輔具</a>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">4</span>
+                                    <a href="school/repairs.html" class="cardGroup-link linkGhost">報修紀錄</a>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">5</span>
+                                    <span class="cardGroup-groupLabel">學校與帳號</span>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="school/profile.html" class="cardGroup-link-sub linkGhost">學校基本資料</a>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="school/staff.html" class="cardGroup-link-sub linkGhost">輔具管理人員</a>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="school/account.html" class="cardGroup-link-sub linkGhost">帳號與密碼</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="cardGroup">
+                            <div class="cardGroup-head">
+                                <h3 class="cardGroup-title">中心端</h3>
+                                <span class="tagPill tag-greyLight">需登入</span>
+                            </div>
+                            <ul class="cardGroup-list">
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">1</span>
+                                    <a href="center/index.html" class="cardGroup-link linkGhost">總覽</a>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">2</span>
+                                    <a href="center/review.html" class="cardGroup-link linkGhost">申請審核</a>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">3</span>
+                                    <a href="center/borrow.html" class="cardGroup-link linkGhost">借用管理</a>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">4</span>
+                                    <a href="center/repair.html" class="cardGroup-link linkGhost">報修管理</a>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">5</span>
+                                    <span class="cardGroup-groupLabel">資料管理</span>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="center/devices.html" class="cardGroup-link-sub linkGhost">輔具管理</a>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="center/schools.html" class="cardGroup-link-sub linkGhost">學校管理</a>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="center/vendors.html" class="cardGroup-link-sub linkGhost">廠商管理</a>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="center/accounts.html" class="cardGroup-link-sub linkGhost">帳號管理</a>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">6</span>
+                                    <span class="cardGroup-groupLabel">網站與設定</span>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="center/news.html" class="cardGroup-link-sub linkGhost">最新消息管理</a>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="center/settings.html" class="cardGroup-link-sub linkGhost">系統設定</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="cardGroup">
+                            <div class="cardGroup-head">
+                                <h3 class="cardGroup-title">廠商端</h3>
+                                <span class="tagPill tag-greyLight">需登入</span>
+                            </div>
+                            <ul class="cardGroup-list">
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">1</span>
+                                    <a href="vendor/index.html" class="cardGroup-link linkGhost">報修案件</a>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">2</span>
+                                    <a href="vendor/hearing.html" class="cardGroup-link linkGhost">聽障點交</a>
+                                    <span class="cardGroup-link-sub">（限聽障輔具供應商）</span>
+                                </li>
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">3</span>
+                                    <span class="cardGroup-groupLabel">帳號資料</span>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="vendor/profile.html" class="cardGroup-link-sub linkGhost">基本資料</a>
+                                </li>
+                                <li class="cardGroup-item cardGroup-item-sub">
+                                    <a href="vendor/password.html" class="cardGroup-link-sub linkGhost">修改密碼</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="cardGroup cardGroup-full">
+                            <div class="cardGroup-head">
+                                <h3 class="cardGroup-title">網站導覽</h3>
+                            </div>
+                            <ul class="cardGroup-list">
+                                <li class="cardGroup-item">
+                                    <span class="cardNumbered-num-sm" aria-hidden="true">1</span>
+                                    <span class="cardGroup-groupLabel">網站導覽（目前頁面）</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <div data-layout="layout/footer.html"></div>
+
+    <script src="js/all.js"></script>
+</body>
+</html>

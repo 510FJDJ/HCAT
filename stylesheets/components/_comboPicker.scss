@@ -1,0 +1,222 @@
+// ============================================================
+// 輔具品項自訂下拉選單（combobox + listbox），預設關閉，
+// 互動邏輯見 js/school-apply.js（仿 initNavDropdown 的 aria-expanded/outside-click 模式）
+// ============================================================
+
+.comboPicker {
+    position: relative;
+}
+
+.comboPicker-trigger {
+    width: 100%;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px 8px 10px;
+    border: 2px solid $line-strong;
+    border-radius: $border-radius-md;
+    background-color: $surface-card;
+    font-family: inherit;
+    color: $ink-1;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 160ms ease-out;
+
+    &:focus-visible {
+        outline: none;
+        border-color: $brand-teal;
+        box-shadow: 0 0 0 3px rgba(15, 127, 129, .18);
+    }
+
+    &[aria-expanded="true"] {
+        border-color: $brand-teal;
+    }
+}
+
+.comboPicker-thumb {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.comboPicker-thumb-empty {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    border-radius: $border-radius-sm;
+    background-color: $surface-tint;
+}
+
+.comboPicker-selected {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+}
+
+.comboPicker-selected-name {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.comboPicker-selected-cat {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.comboPicker-selected-placeholder {
+    font-size: 17px;
+    color: $ink-3;
+}
+
+.comboPicker-chevron {
+    flex: 0 0 auto;
+    display: inline-flex;
+    color: $ink-2;
+    transition: transform 160ms ease-out;
+}
+
+.comboPicker-trigger[aria-expanded="true"] .comboPicker-chevron {
+    transform: rotate(180deg);
+}
+
+.comboPicker-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 40;
+    margin-top: 6px;
+    padding: 10px;
+    border: 1px solid $line-default;
+    border-radius: $border-radius-lg;
+    background-color: $surface-card;
+    box-shadow: 0 16px 40px rgba(31, 42, 46, .18);
+}
+
+.comboPicker-panel[hidden] {
+    display: none;
+}
+
+.comboPicker-search {
+    position: relative;
+}
+
+.comboPicker-search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $ink-3;
+    display: inline-flex;
+    pointer-events: none;
+}
+
+.comboPicker-search-input {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px 0 42px;
+    box-sizing: border-box;
+    border: 2px solid $line-strong;
+    border-radius: $border-radius-sm;
+    font-family: inherit;
+    font-size: 17px;
+    color: $ink-1;
+    background-color: $surface-card;
+
+    &:focus-visible {
+        outline: none;
+        border-color: $brand-teal;
+        box-shadow: 0 0 0 3px rgba(15, 127, 129, .18);
+    }
+}
+
+.comboPicker-list {
+    margin: 8px 0 0;
+    padding: 0;
+    list-style: none;
+    max-height: 340px;
+    overflow-y: auto;
+}
+
+.comboPicker-groupLabel {
+    margin: 8px 0 2px;
+    padding: 0 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: $ink-3;
+}
+
+.comboPicker-groupList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.comboPicker-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: $border-radius-sm;
+    background-color: transparent;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 160ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-tint;
+    }
+
+    &[aria-pressed="true"] {
+        background-color: $surface-teal-pale;
+    }
+
+    &[aria-disabled="true"] {
+        cursor: not-allowed;
+        opacity: .5;
+    }
+}
+
+.comboPicker-item-thumb {
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.comboPicker-item-thumb-empty {
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background-color: $surface-tint;
+}
+
+.comboPicker-item-name {
+    flex: 1 1 auto;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+}
+
+.comboPicker-empty {
+    padding: 16px 10px;
+    font-size: 16px;
+    color: $ink-2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .comboPicker-trigger,
+    .comboPicker-chevron,
+    .comboPicker-item {
+        transition: none;
+    }
+}

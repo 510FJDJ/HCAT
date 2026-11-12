@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+        // 預覽用：切換成 'review' 'eval' 'evalDone' 'handover' 'returned' 'done' 可預覽對應審核狀態，
+        // 正式上線由後端依申請實際狀態輸出對應版本，不會有這段
+        document.documentElement.setAttribute('data-preview-state', 'review');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>申請審核明細 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="查看單筆輔具申請的詳細資料、評估報告與附件，並進行審核決定、安排評估或確認點交">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_Center.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu" src="../img/banner/review-detail.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="reviewPage-container">
+                <div class="bannerWave-inner">
+                    <div class="bannerWave-topRow">
+                        <nav class="crumbNav" aria-label="麵包屑導覽">
+                            <ol>
+                                <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                                <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                                <li><a href="review.html">申請審核</a></li>
+                                <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                                <li aria-current="page" class="crumbNav-current">A1150923-012</li>
+                            </ol>
+                        </nav>
+                        <a href="review.html" class="btnPill btn-outline btnPill-sm bannerWave-backBtn">
+                            <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                            返回申請審核
+                        </a>
+                    </div>
+
+                    <div class="bannerWave-main">
+                        <h1 class="titleSection bannerWave-title">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            申請審核明細
+                        </h1>
+                        <p class="bannerWave-desc">查看這筆申請的學生資料、評估報告與附件，並進行審核決定、安排到校評估或確認點交。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="reviewPage-content">
+            <div class="reviewPage-container">
+                <div class="reviewDetail-layout">
+
+                    <div class="reviewDetail-main">
+
+                        <section class="cardPanel" aria-label="申請資料">
+                            <div class="cardPanel-head">
+                                <h2 class="cardPanel-title">申請資料</h2>
+                            </div>
+                            <dl class="infoGrid">
+                                <div>
+                                    <dt class="infoGrid-label">申請編號</dt>
+                                    <dd class="infoGrid-value infoGrid-value-mono">A1150923-012</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">申請日期</dt>
+                                    <dd class="infoGrid-value infoGrid-value-mono">2026/09/23</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">申請學校</dt>
+                                    <dd class="infoGrid-value">竹北國小</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">申請類型</dt>
+                                    <dd class="infoGrid-value">首次借用</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">學校承辦人</dt>
+                                    <dd class="infoGrid-value">王○玲 老師</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">聯絡電話</dt>
+                                    <dd class="infoGrid-value infoGrid-value-mono">03-5551234 #602</dd>
+                                </div>
+                            </dl>
+
+                            <h3 class="cardPanel-subTitle">學生資料</h3>
+                            <dl class="infoGrid infoGrid-boxed">
+                                <div>
+                                    <dt class="infoGrid-label">學生姓名</dt>
+                                    <dd class="infoGrid-value">林○安</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">身分證字號</dt>
+                                    <dd class="infoGrid-value infoGrid-value-mono">A12●●●●678</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">出生日期</dt>
+                                    <dd class="infoGrid-value infoGrid-value-mono">2015/04/12</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">就讀年級</dt>
+                                    <dd class="infoGrid-value">三年級</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">障礙類別</dt>
+                                    <dd class="infoGrid-value">視覺障礙</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">鑑輔會證明文號</dt>
+                                    <dd class="infoGrid-value infoGrid-value-mono">竹縣鑑輔113-0456</dd>
+                                </div>
+                            </dl>
+                        </section>
+
+                        <section class="cardPanel" aria-label="申請輔具">
+                            <div class="cardPanel-head">
+                                <h2 class="cardPanel-title">申請輔具</h2>
+                            </div>
+                            <div class="deviceSpecRow">
+                                <img src="../img/devices/cctv.jpg" alt="桌上型擴視機" class="deviceSpecRow-photo">
+                                <div class="deviceSpecRow-body">
+                                    <p class="deviceSpecRow-heading">
+                                        <span class="deviceSpecRow-name">桌上型擴視機</span>
+                                        <span class="tagPill tag-goldLight">視障輔具</span>
+                                    </p>
+                                    <dl class="specList specList-compact">
+                                        <dt class="specList-label">申請類型</dt>
+                                        <dd class="specList-value">首次借用</dd>
+                                        <dt class="specList-label">使用現況</dt>
+                                        <dd class="specList-value">目前無擴視設備，上課板書與紙本教材閱讀困難</dd>
+                                        <dt class="specList-label">申請原因</dt>
+                                        <dd class="specList-value">視力退化，近用印刷品需放大 10 倍以上才能辨識</dd>
+                                        <dt class="specList-label">借用學期</dt>
+                                        <dd class="specList-value">115 學年度第 1 學期</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="cardPanel" aria-label="評估報告與附件">
+                            <div class="cardPanel-head">
+                                <h2 class="cardPanel-title">評估報告與附件</h2>
+                                <label class="btnPill btn-outline btnPill-sm" for="rdScanUpload">
+                                    <i class="bi bi-cloud-arrow-up" aria-hidden="true"></i>
+                                    上傳掃描檔
+                                </label>
+                                <input type="file" id="rdScanUpload" class="fileUpload-input" accept=".jpg,.jpeg,.png,.pdf" multiple>
+                            </div>
+
+                            <p class="evalMethodPill" data-state-for="review handover returned done">評估方式：已有治療師協助填寫</p>
+                            <p class="evalMethodPill" data-state-for="eval evalDone" hidden>評估方式：中心安排到校評估</p>
+
+                            <div class="reviewDetail-evalInfo" data-state-for="eval evalDone" hidden>
+                                <div class="reviewDetail-evalInfo-head">
+                                    <span class="reviewDetail-evalInfo-title">到校評估安排</span>
+                                    <span class="tagPill tag-cyanLight" data-state-for="eval" hidden>已排定</span>
+                                    <span class="tagPill tag-greenLight" data-state-for="evalDone" hidden>評估完成</span>
+                                    <span class="tagPill tag-cyanLight" data-state-for="evalDone" hidden>已通知學校</span>
+                                </div>
+                                <dl class="infoGrid infoGrid-cols3">
+                                    <div>
+                                        <dt class="infoGrid-label">評估時間</dt>
+                                        <dd class="infoGrid-value infoGrid-value-mono">2026/10/02．下午</dd>
+                                    </div>
+                                    <div>
+                                        <dt class="infoGrid-label">評估地點</dt>
+                                        <dd class="infoGrid-value">竹北國小 資源班教室</dd>
+                                    </div>
+                                    <div>
+                                        <dt class="infoGrid-label">治療師</dt>
+                                        <dd class="infoGrid-value">王○雅 職能治療師</dd>
+                                    </div>
+                                </dl>
+                            </div>
+
+                            <div class="d-flex flex-column gap-3 mt-5">
+                                <div class="fileRow fileRow-preview" data-state-for="review handover returned done">
+                                    <span class="fileRow-icon" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
+                                    <span class="fileRow-body">
+                                        <span class="fileRow-name">輔具需求評估報告（治療師）.pdf</span>
+                                        <span class="fileRow-meta">學校上傳．2026/09/23．1.2 MB</span>
+                                    </span>
+                                    <span class="fileRow-actions">
+                                        <a href="../files/demo/therapist-report.pdf" target="_blank" rel="noopener" class="btnPill btn-outline btnPill-sm fileRow-action">
+                                            <i class="bi bi-eye" aria-hidden="true"></i>
+                                            檢視
+                                        </a>
+                                        <a href="../files/demo/therapist-report.pdf" download="輔具需求評估報告（治療師）.pdf" class="btnPill btn-outline btnPill-sm fileRow-action">
+                                            <i class="bi bi-download" aria-hidden="true"></i>
+                                            下載
+                                        </a>
+                                    </span>
+                                </div>
+                                <div class="fileRow fileRow-preview" data-state-for="review handover returned done" hidden>
+                                    <span class="fileRow-icon" aria-hidden="true"><i class="bi bi-file-earmark-medical"></i></span>
+                                    <span class="fileRow-body">
+                                        <span class="fileRow-name">功能性視覺評估.pdf</span>
+                                        <span class="fileRow-meta">學校上傳．2026/09/23．860 KB</span>
+                                    </span>
+                                    <span class="fileRow-actions">
+                                        <a href="../files/demo/vision-assessment.pdf" target="_blank" rel="noopener" class="btnPill btn-outline btnPill-sm fileRow-action">
+                                            <i class="bi bi-eye" aria-hidden="true"></i>
+                                            檢視
+                                        </a>
+                                        <a href="../files/demo/vision-assessment.pdf" download="功能性視覺評估.pdf" class="btnPill btn-outline btnPill-sm fileRow-action">
+                                            <i class="bi bi-download" aria-hidden="true"></i>
+                                            下載
+                                        </a>
+                                    </span>
+                                </div>
+                                <div class="fileRow fileRow-preview" data-state-for="review eval evalDone handover returned done" hidden>
+                                    <span class="fileRow-icon" aria-hidden="true"><i class="bi bi-file-earmark-medical"></i></span>
+                                    <span class="fileRow-body">
+                                        <span class="fileRow-name">輔具需求評估及借用申請表（簽核）.pdf</span>
+                                        <span class="fileRow-meta">學校上傳．2026/09/23．540 KB</span>
+                                    </span>
+                                    <span class="fileRow-actions">
+                                        <a href="../files/demo/application-form-signed.pdf" target="_blank" rel="noopener" class="btnPill btn-outline btnPill-sm fileRow-action">
+                                            <i class="bi bi-eye" aria-hidden="true"></i>
+                                            檢視
+                                        </a>
+                                        <a href="../files/demo/application-form-signed.pdf" download="輔具需求評估及借用申請表（簽核）.pdf" class="btnPill btn-outline btnPill-sm fileRow-action">
+                                            <i class="bi bi-download" aria-hidden="true"></i>
+                                            下載
+                                        </a>
+                                    </span>
+                                </div>
+                                <div class="fileRow fileRow-preview" data-state-for="evalDone" hidden>
+                                    <span class="fileRow-icon" aria-hidden="true"><i class="bi bi-file-earmark-check"></i></span>
+                                    <span class="fileRow-body">
+                                        <span class="fileRow-name">到校評估報告_林○安.pdf</span>
+                                        <span class="fileRow-meta">中心上傳．2026/10/02．1.4 MB</span>
+                                    </span>
+                                    <span class="fileRow-actions">
+                                        <a href="../files/demo/eval-report.pdf" target="_blank" rel="noopener" class="btnPill btn-outline btnPill-sm fileRow-action">
+                                            <i class="bi bi-eye" aria-hidden="true"></i>
+                                            檢視
+                                        </a>
+                                        <a href="../files/demo/eval-report.pdf" download="到校評估報告_林○安.pdf" class="btnPill btn-outline btnPill-sm fileRow-action">
+                                            <i class="bi bi-download" aria-hidden="true"></i>
+                                            下載
+                                        </a>
+                                        <button type="button" class="fileRow-delete" data-js="rdStaticDelete" aria-label="刪除檔案 到校評估報告_林○安.pdf">
+                                            <i class="bi bi-trash3" aria-hidden="true"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div class="fileRow fileRow-preview" data-state-for="evalDone" hidden>
+                                    <span class="fileRow-icon" aria-hidden="true"><i class="bi bi-file-earmark-medical"></i></span>
+                                    <span class="fileRow-body">
+                                        <span class="fileRow-name">功能性視覺評估紀錄.pdf</span>
+                                        <span class="fileRow-meta">中心上傳．2026/10/02．620 KB</span>
+                                    </span>
+                                    <span class="fileRow-actions">
+                                        <a href="../files/demo/vision-assessment-record.pdf" target="_blank" rel="noopener" class="btnPill btn-outline btnPill-sm fileRow-action">
+                                            <i class="bi bi-eye" aria-hidden="true"></i>
+                                            檢視
+                                        </a>
+                                        <a href="../files/demo/vision-assessment-record.pdf" download="功能性視覺評估紀錄.pdf" class="btnPill btn-outline btnPill-sm fileRow-action">
+                                            <i class="bi bi-download" aria-hidden="true"></i>
+                                            下載
+                                        </a>
+                                        <button type="button" class="fileRow-delete" data-js="rdStaticDelete" aria-label="刪除檔案 功能性視覺評估紀錄.pdf">
+                                            <i class="bi bi-trash3" aria-hidden="true"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-column gap-3 mt-3" data-js="rdScanList"></div>
+
+                            <div class="mt-6" data-state-for="eval" hidden>
+                                <label class="fileUpload fileUpload-drop" for="rdEvalUpload">
+                                    <span class="fileUpload-icon" aria-hidden="true"><i class="bi bi-cloud-arrow-up"></i></span>
+                                    <span class="fileUpload-drop-text">點擊或拖曳檔案到這裡上傳評估紀錄</span>
+                                    <span class="fileUpload-drop-sub">支援 JPG、PNG、PDF，單檔 10MB 以內</span>
+                                </label>
+                                <input type="file" id="rdEvalUpload" class="fileUpload-input" data-js="rdEvalUploadInput" accept=".jpg,.jpeg,.png,.pdf" multiple>
+                            </div>
+                        </section>
+
+                        <section class="cardPanel" aria-label="處理紀錄">
+                            <div class="cardPanel-head">
+                                <h2 class="cardPanel-title">處理紀錄</h2>
+                            </div>
+                            <ol class="dotTimeline">
+                                <li class="dotTimeline-item is-done">
+                                    <span class="dotTimeline-dot" aria-hidden="true"></span>
+                                    <div class="dotTimeline-content">
+                                        <p class="dotTimeline-date">2026/09/23</p>
+                                        <p class="dotTimeline-text">竹北國小提出申請</p>
+                                    </div>
+                                </li>
+                                <li class="dotTimeline-item is-pending" data-state-for="review" hidden>
+                                    <span class="dotTimeline-dot" aria-hidden="true"></span>
+                                    <div class="dotTimeline-content">
+                                        <p class="dotTimeline-text dotTimeline-text-pending">等待中心審核</p>
+                                        <p class="dotTimeline-date dotTimeline-date-muted">—</p>
+                                    </div>
+                                </li>
+                                <li class="dotTimeline-item is-done" data-state-for="eval evalDone handover done" hidden>
+                                    <span class="dotTimeline-dot" aria-hidden="true"></span>
+                                    <div class="dotTimeline-content">
+                                        <p class="dotTimeline-date">2026/09/25</p>
+                                        <p class="dotTimeline-text">中心安排到校評估，預定 2026/10/02 於竹北國小 資源班教室</p>
+                                    </div>
+                                </li>
+                                <li class="dotTimeline-item is-done" data-state-for="returned" hidden>
+                                    <span class="dotTimeline-dot" aria-hidden="true"></span>
+                                    <div class="dotTimeline-content">
+                                        <p class="dotTimeline-date">2026/09/24</p>
+                                        <p class="dotTimeline-text">中心退回補件：缺少最新醫療診斷證明</p>
+                                    </div>
+                                </li>
+                                <li class="dotTimeline-item is-done" data-state-for="evalDone handover done" hidden>
+                                    <span class="dotTimeline-dot" aria-hidden="true"></span>
+                                    <div class="dotTimeline-content">
+                                        <p class="dotTimeline-date">2026/10/02</p>
+                                        <p class="dotTimeline-text">完成到校評估，評估人員：王○雅 治療師</p>
+                                    </div>
+                                </li>
+                                <li class="dotTimeline-item is-done" data-state-for="handover done" hidden>
+                                    <span class="dotTimeline-dot" aria-hidden="true"></span>
+                                    <div class="dotTimeline-content">
+                                        <p class="dotTimeline-date">2026/10/03</p>
+                                        <p class="dotTimeline-text">中心核准申請，指定財產編號 TA-VI-0231</p>
+                                    </div>
+                                </li>
+                                <li class="dotTimeline-item is-done" data-state-for="handover done" hidden>
+                                    <span class="dotTimeline-dot" aria-hidden="true"></span>
+                                    <div class="dotTimeline-content">
+                                        <p class="dotTimeline-date">2026/10/04</p>
+                                        <p class="dotTimeline-text">竹北國小上傳簽章借用單</p>
+                                    </div>
+                                </li>
+                                <li class="dotTimeline-item is-done" data-state-for="done" hidden>
+                                    <span class="dotTimeline-dot" aria-hidden="true"></span>
+                                    <div class="dotTimeline-content">
+                                        <p class="dotTimeline-date">2026/10/07</p>
+                                        <p class="dotTimeline-text">完成點交，借用中</p>
+                                    </div>
+                                </li>
+                            </ol>
+                        </section>
+
+                    </div>
+
+                    <aside class="reviewDetail-aside">
+                        <div class="cardPanel reviewDetail-panel reviewDetail-panel-review" data-js="rdPanel">
+                            <div class="reviewDetail-panelHead">
+                                <div class="cardPanel-head">
+                                    <h2 class="cardPanel-title" data-js="rdPanelTitle">審核作業</h2>
+                                    <span class="statusPill statusPill-gold" data-js="rdPill">
+                                        <span class="statusPill-dot" aria-hidden="true"></span>
+                                        <span data-js="rdPillText">待審核</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="reviewDetail-panelBody">
+                                <div class="infoBox mt-6" data-state-for="handover returned done" hidden>
+                                    <div class="infoBox-row" data-state-for="handover done" hidden>
+                                        <span class="infoBox-label">財產編號</span>
+                                        <span class="infoBox-value infoBox-value-mono">TA-VI-0231</span>
+                                    </div>
+                                    <div class="infoBox-row" data-state-for="handover" hidden>
+                                        <span class="infoBox-label">核准日期</span>
+                                        <span class="infoBox-value infoBox-value-mono">2026/10/03</span>
+                                    </div>
+                                    <div class="infoBox-row" data-state-for="done" hidden>
+                                        <span class="infoBox-label">點交日期</span>
+                                        <span class="infoBox-value infoBox-value-mono">2026/10/07</span>
+                                    </div>
+                                    <div class="infoBox-row" data-state-for="handover done" hidden>
+                                        <span class="infoBox-label">預計歸還</span>
+                                        <span class="infoBox-value infoBox-value-mono">2027/07/31</span>
+                                    </div>
+                                    <div class="infoBox-row" data-state-for="returned" hidden>
+                                        <span class="infoBox-label">退回日期</span>
+                                        <span class="infoBox-value infoBox-value-mono">2026/09/24</span>
+                                    </div>
+                                    <div class="infoBox-row" data-state-for="returned" hidden>
+                                        <span class="infoBox-label">處理人</span>
+                                        <span class="infoBox-value">陳○文 專員</span>
+                                    </div>
+                                </div>
+
+                                <!-- 審核決定（待審核／評估完成可審核） -->
+                                <div class="mt-6" data-state-for="review evalDone" data-js="rdDecisionBlock">
+                                    <p class="noteBox noteBox-green mb-3" data-state-for="evalDone" hidden>
+                                        <i class="bi bi-check-circle" aria-hidden="true"></i>
+                                        <span>到校評估已完成，可進行審核。</span>
+                                    </p>
+                                    <fieldset>
+                                        <legend class="formField-label">審核結果 <span class="formField-required">必填</span></legend>
+                                        <div class="cardChoice-group cardChoice-group-grid2" data-js="rdDecisionGroup">
+                                            <label class="cardChoice cardChoice-plain is-selected" data-js="rdDecisionCard">
+                                                <input type="radio" name="rdDecision" value="approve" class="cardChoice-input" data-js="rdDecisionInput" checked>
+                                                <span class="cardChoice-text">
+                                                    <span class="cardChoice-title">核准</span>
+                                                </span>
+                                            </label>
+                                            <label class="cardChoice cardChoice-plain cardChoice-danger" data-js="rdDecisionCard">
+                                                <input type="radio" name="rdDecision" value="return" class="cardChoice-input" data-js="rdDecisionInput">
+                                                <span class="cardChoice-text">
+                                                    <span class="cardChoice-title">退回補件</span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </fieldset>
+
+                                    <div class="mt-5" data-js="rdApproveFields">
+                                        <div>
+                                            <label for="rdDeviceSn" class="formField-label">指定借出輔具 <span class="formField-required">必填</span></label>
+                                            <select id="rdDeviceSn" class="form-select">
+                                                <option value="">請選擇財產編號</option>
+                                                <option value="TA-VI-0231" selected>TA-VI-0231．桌上型擴視機（庫存可用）</option>
+                                                <option value="TA-VI-0245">TA-VI-0245．桌上型擴視機（庫存可用）</option>
+                                            </select>
+                                            <p class="formField-hint">目前在庫 2 台，借出 9 台</p>
+                                        </div>
+                                        <div class="mt-5">
+                                            <label for="rdReturnDate" class="formField-label">預計歸還日期 <span class="formField-required">必填</span></label>
+                                            <input type="date" id="rdReturnDate" class="form-control" value="2027-07-31">
+                                            <p class="formField-hint">學校填寫：學生畢業（2027/07），可修改</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-5">
+                                        <label for="rdNote" class="formField-label">審核意見 <span class="formField-required" data-js="rdNoteRequired" hidden>必填</span></label>
+                                        <textarea id="rdNote" class="form-control" rows="3" placeholder="選填，例如點交注意事項" data-js="rdNoteInput"></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- 待到校評估：鎖定 -->
+                                <div class="mt-6" data-state-for="eval" hidden>
+                                    <div class="infoBox">
+                                        <div class="infoBox-row">
+                                            <span class="infoBox-label">受理日期</span>
+                                            <span class="infoBox-value infoBox-value-mono">2026/09/23</span>
+                                        </div>
+                                        <div class="infoBox-row">
+                                            <span class="infoBox-label">評估時間</span>
+                                            <span class="infoBox-value infoBox-value-mono">10/08（四）09:30</span>
+                                        </div>
+                                        <div class="infoBox-row">
+                                            <span class="infoBox-label">治療師</span>
+                                            <span class="infoBox-value">王○雅 職能治療師</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 待點交確認 -->
+                                <div class="mt-6" data-state-for="handover" hidden>
+                                    <p class="formField-label">借用單</p>
+                                    <div class="fileRow fileRow-preview">
+                                        <span class="fileRow-icon" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
+                                        <span class="fileRow-body">
+                                            <span class="fileRow-name">借用單（系統產生）</span>
+                                            <span class="fileRow-meta">系統產製．2026/10/03</span>
+                                        </span>
+                                        <span class="fileRow-actions">
+                                            <a href="../files/demo/borrow-slip.pdf" download="借用單_竹北國小_林○安.pdf" class="btnPill btn-outline btnPill-sm fileRow-action">
+                                                <i class="bi bi-download" aria-hidden="true"></i>
+                                                下載
+                                            </a>
+                                        </span>
+                                    </div>
+                                    <div class="fileRow fileRow-preview fileRow-signed">
+                                        <span class="fileRow-icon" aria-hidden="true"><i class="bi bi-file-earmark-check"></i></span>
+                                        <span class="fileRow-body">
+                                            <span class="fileRow-name">學校簽章檔</span>
+                                            <span class="fileRow-meta">學校上傳．2026/10/04．410 KB</span>
+                                        </span>
+                                        <span class="fileRow-actions">
+                                            <a href="../files/demo/borrow-slip-signed.pdf" target="_blank" rel="noopener" class="btnPill btn-outline btnPill-sm fileRow-action">
+                                                <i class="bi bi-eye" aria-hidden="true"></i>
+                                                檢視
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- 退回補件 -->
+                                <div class="mt-6" data-state-for="returned" hidden>
+                                    <p class="formField-label">退回原因</p>
+                                    <p class="noteBox noteBox-red mb-0">缺少最新醫療診斷證明，請學校補充後重新送出申請。</p>
+                                    <p class="formField-hint mt-5 mb-0">學校補件送出後，案件會回到「待審核」。</p>
+                                </div>
+
+                                <!-- 已完成 -->
+                                <div class="mt-6" data-state-for="done" hidden>
+                                    <p class="noteBox noteBox-green">
+                                        <i class="bi bi-check-circle" aria-hidden="true"></i>
+                                        <span>已點交，輔具借用中</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="reviewDetail-panelFoot">
+                                <!-- 審核決定的送出區：勾選與按鈕固定在底部，不隨上方欄位捲動 -->
+                                <div data-state-for="review evalDone" data-js="rdDecisionFoot">
+                                    <div class="formField-checkRow">
+                                        <input type="checkbox" class="form-check-input" id="rdNotify" checked>
+                                        <label for="rdNotify" class="formField-checkRow-label">寄送審核結果給學校承辦人</label>
+                                    </div>
+                                    <button type="button" class="btnPill btn-teal w-100 mt-5" data-js="rdSubmitBtn">核准並通知學校</button>
+                                </div>
+
+                                <div data-state-for="eval" hidden>
+                                    <div class="d-flex gap-3 w-100">
+                                        <button type="button" class="btnPill btn-outline w-100" data-js="rdOpenSchedule" data-bs-toggle="modal" data-bs-target="#scheduleModal">
+                                            <i class="bi bi-pencil" aria-hidden="true"></i>
+                                            修改安排
+                                        </button>
+                                        <button type="button" class="btnPill btn-secondary btn-secondaryRed w-100" data-js="rdCancelEval">取消評估</button>
+                                    </div>
+                                    <p class="noteBox noteBox-grey mt-5" id="rdEvalLockHint">
+                                        <i class="bi bi-lock" aria-hidden="true"></i>
+                                        <span>評估完成並在左側上傳報告後，才能核准或退回。</span>
+                                    </p>
+                                    <button type="button" class="btnPill btn-teal w-100 mt-5" aria-disabled="true" aria-describedby="rdEvalLockHint">核准並通知學校</button>
+                                </div>
+
+                                <div data-state-for="handover" hidden>
+                                    <div class="formField-checkRow">
+                                        <input type="checkbox" class="form-check-input" id="rdHandoverCheck" data-js="rdHandoverCheck">
+                                        <label for="rdHandoverCheck" class="formField-checkRow-label">已核對簽章、財產編號與輔具狀況</label>
+                                    </div>
+                                    <button type="button" class="btnPill btn-teal w-100 mt-5" data-js="rdHandoverConfirm" aria-disabled="true" aria-describedby="rdHandoverHint">確認點交，開始借用</button>
+                                    <button type="button" class="btnPill btn-secondary btn-secondaryRed w-100 mt-5" data-js="rdHandoverReject">簽章有誤，請學校重傳</button>
+                                    <p id="rdHandoverHint" class="formField-hint">請先核對借用單無誤，才能確認點交</p>
+                                </div>
+
+                                <button type="button" class="btnPill btn-outline w-100" data-state-for="returned" hidden>重新寄送補件通知</button>
+
+                                <a href="borrow-device.html" class="btnPill btn-outline w-100" data-state-for="done" hidden>前往借用管理查看</a>
+
+                                <div class="reviewDetail-footerRow">
+                                    <a href="review.html" class="reviewDetail-footerLink">
+                                        <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                                        返回列表
+                                    </a>
+                                    <button type="button" class="reviewDetail-footerLink reviewDetail-footerLink-accent" data-state-for="review evalDone" data-bs-toggle="modal" data-bs-target="#scheduleModal">
+                                        <i class="bi bi-calendar-event" aria-hidden="true"></i>
+                                        改為安排到校評估
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 安排到校評估 modal（需填寫資料，遮罩不可點擊關閉） -->
+    <div class="modal fade" id="scheduleModal" data-js="scheduleModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="schTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 id="schTitle" class="modal-title">安排到校評估</h2>
+                        <p class="modal-subtitle textNote">申請編號 A1150923-012．竹北國小．林○安</p>
+                    </div>
+                    <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <form novalidate>
+                    <div class="modal-body">
+                        <fieldset class="modal-body-section">
+                            <legend class="formField-label">評估方式 <span class="formField-required">必填</span></legend>
+                            <div class="cardChoice-group cardChoice-group-row" data-js="schWayGroup">
+                                <label class="cardChoice is-selected" data-js="schWayCard">
+                                    <input type="radio" name="schWay" value="school" class="cardChoice-input" data-js="schWayInput" checked>
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">到校評估</span>
+                                        <span class="cardChoice-desc">治療師到校進行評估</span>
+                                    </span>
+                                </label>
+                                <label class="cardChoice" data-js="schWayCard">
+                                    <input type="radio" name="schWay" value="center" class="cardChoice-input" data-js="schWayInput">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">中心駐點</span>
+                                        <span class="cardChoice-desc">家長帶學生到中心評估</span>
+                                    </span>
+                                </label>
+                                <label class="cardChoice" data-js="schWayCard">
+                                    <input type="radio" name="schWay" value="home" class="cardChoice-input" data-js="schWayInput">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">到家評估</span>
+                                        <span class="cardChoice-desc">治療師到學生住家評估</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </fieldset>
+
+                        <div class="formGrid modal-body-section">
+                            <div>
+                                <label for="schDate" class="formField-label">評估日期 <span class="formField-required">必填</span></label>
+                                <input type="date" id="schDate" class="form-control" data-js="schDateInput" value="2026-10-02">
+                            </div>
+                            <div>
+                                <label for="schTime" class="formField-label">時段 <span class="formField-required">必填</span></label>
+                                <select id="schTime" class="form-select">
+                                    <option value="am">上午 09:00–12:00</option>
+                                    <option value="pm" selected>下午 14:00–16:00</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="schTherapist" class="formField-label">治療師 <span class="formField-required">必填</span></label>
+                                <select id="schTherapist" class="form-select">
+                                    <option value="wang" selected>王○雅 職能治療師</option>
+                                    <option value="chen">陳○宏 物理治療師</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="schPlace" class="formField-label">評估地點 <span class="formField-required">必填</span></label>
+                                <input type="text" id="schPlace" class="form-control" data-js="schPlaceInput" value="竹北國小 資源班教室">
+                                <p class="reviewDetail-modalHint" data-js="schPlaceHint">依評估方式自動帶入，可自行修改</p>
+                            </div>
+                        </div>
+
+                        <div class="modal-body-section">
+                            <label for="schNote" class="formField-label">說明（選填）</label>
+                            <textarea id="schNote" class="form-control" rows="3" placeholder="給學校或治療師的補充說明"></textarea>
+                        </div>
+
+                        <div class="formField-checkRow modal-body-section">
+                            <input type="checkbox" class="form-check-input" id="schNotify" checked>
+                            <label for="schNotify" class="formField-checkRow-label">送出後以 Email 通知學校承辦人</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" class="btnPill btn-teal" data-js="schSubmitBtn">確認安排</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

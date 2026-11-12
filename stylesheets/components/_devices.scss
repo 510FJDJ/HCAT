@@ -1,0 +1,252 @@
+// ============================================================
+// 中心端輔具管理三頁（center/devices.html、device.html、device-qty.html）專屬樣式
+// main 用 .bg-green / .bg-green-bleed；container/-content 數值比照 .reviewPage-container/-content
+// ============================================================
+
+.devicesPage-container {
+    max-width: 1360px;
+    margin: 40px auto 0;
+    padding: 0 24px;
+
+    @media (max-width: 720px) {
+        margin: 20px auto 0;
+        padding: 0 16px;
+    }
+}
+
+.devicesPage-content {
+    position: relative;
+    z-index: 2;
+    margin-top: -160px;
+
+    @media (max-width: 720px) {
+        margin-top: -85px;
+    }
+}
+
+// 品項頁 banner 標題列：h1 與管理方式標籤並排
+.devicesPage-titleRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 18px;
+}
+
+// 卡片標題列：h2（或 h3）與右側動作按鈕同列，窄幅自動換行
+.devicesPage-panelHead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 20px;
+}
+
+.devicesPage-panelTitle {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: $brand-teal-deep;
+}
+
+// 卡片內的次層標題（如配發頁「異動明細」）
+.devicesPage-subTitle {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+// 列表「品項」欄尚未上傳照片時的虛線占位框（尺寸比照 .dataTable-cellDevice-photo）
+.devicesPage-noPhoto {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border: 1.5px dashed $line-strong;
+    border-radius: $border-radius-sm;
+    background-color: $surface-tint;
+    color: $ink-3;
+    font-size: 20px;
+}
+
+// 數量（在庫／總數）欄：數字用 Poppins，總數淡化；數量 0 用 accent/amber-ink（design.md §2.3）
+.devicesPage-qty {
+    font-family: "Poppins", "Noto Sans TC", sans-serif;
+    white-space: nowrap;
+
+    b {
+        font-size: 18px;
+    }
+}
+
+.devicesPage-qty-total {
+    color: $ink-3;
+}
+
+.devicesPage-qtyZero {
+    color: $accent-amber-ink;
+}
+
+// 配發頁異動明細「數量」欄：正數（入庫）綠字、負數（配發）一般字
+.devicesPage-qtyDelta {
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.devicesPage-qtyDelta-pos {
+    color: #1E6B3E; // 同 .tag-greenLight 文字色
+}
+
+// 單台財產「使用年限」欄：年限與屆滿提示疊兩行
+.devicesPage-lifeCell {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+.devicesPage-lifeDue {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.devicesPage-lifeDue-warn {
+    color: $state-required;
+    font-weight: 700;
+}
+
+// 異動紀錄切換鈕的箭頭：展開時轉 180 度
+.devicesPage-logToggle .bi {
+    transition: transform 160ms ease-out;
+}
+
+.devicesPage-logToggle[aria-expanded="true"] .bi {
+    transform: rotate(180deg);
+}
+
+// 異動紀錄展開列：不套功能欄的 sticky（整列只有一格，固定起來會蓋住時間軸）
+.devicesPage-logRow > td {
+    padding: 8px 16px 18px;
+}
+
+@media (min-width: 721px) {
+    .dataTable--stickyEnd .devicesPage-logRow td:last-child {
+        position: static;
+        border-left: 0;
+    }
+}
+
+// ------------------------------------------------------------
+// 品項資訊卡：照片＋infoGrid＋標籤＋使用說明
+// ------------------------------------------------------------
+.deviceSummary {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 28px;
+    align-items: flex-start;
+}
+
+.deviceSummary-photo {
+    flex: 0 0 auto;
+    width: 168px;
+    height: 168px;
+    object-fit: contain;
+    border: 1px solid $line-default;
+    border-radius: $border-radius-lg;
+    background-color: $surface-card;
+    padding: 10px;
+}
+
+.deviceSummary-noPhoto {
+    flex: 0 0 auto;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 168px;
+    height: 168px;
+    border: 2px dashed $line-strong;
+    border-radius: $border-radius-lg;
+    background-color: $surface-tint;
+    color: $ink-3;
+    font-size: 16px;
+
+    .bi {
+        font-size: 26px;
+    }
+}
+
+.deviceSummary-main {
+    flex: 1 1 480px;
+    min-width: 0;
+
+    .infoGrid {
+        margin-top: 0;
+    }
+}
+
+.deviceSummary-tags {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.deviceSummary-desc {
+    margin: 14px 0 0;
+    padding: 14px 18px;
+    border-radius: $border-radius-md;
+    background-color: $surface-tint;
+    font-size: 16px;
+    line-height: 1.75;
+    color: $ink-2;
+
+    b {
+        color: $ink-1;
+    }
+}
+
+// ------------------------------------------------------------
+// 品項表單 modal：照片框與名稱／分類欄位的左右配置
+// ------------------------------------------------------------
+.devicesPage-photoRow {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.devicesPage-photoRow-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+// 編輯品項時管理方式已鎖定：取消可點擊外觀（搭配 aria-disabled 與鎖定說明文字）
+.cardChoice.is-locked {
+    cursor: default;
+
+    &:hover {
+        border-color: $line-strong;
+    }
+
+    &.is-selected:hover {
+        border-color: $brand-teal;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .devicesPage-logToggle .bi {
+        transition: none;
+    }
+}

@@ -1,0 +1,51 @@
+// ============================================================
+// 學校基本資料頁（school/profile.html）專屬樣式
+// main 用 .bg-green / .bg-green-bleed；.profilePage-container/-content 數值比照 .applyForm-container/-content
+// ============================================================
+
+.profilePage-container {
+    max-width: 1200px;
+    margin: 40px auto 0;
+    padding: 0 24px;
+
+    @media (max-width: 720px) {
+        margin: 20px auto 0;
+        padding: 0 16px;
+    }
+}
+
+.profilePage-content {
+    position: relative;
+    z-index: 2;
+    margin-top: -160px;
+
+    @media (max-width: 720px) {
+        margin-top: -85px;
+    }
+}
+
+// 唯讀資訊與下方可編輯表單之間的虛線分隔（排版組合只服務這張卡，依 CLAUDE.md §7.1 例外直接寫在元件 class 內）
+.profileCard-form {
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px dashed $line-default;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+// 單獨一張卡、上面沒有唯讀資訊區塊時用（例如 school/account.html 的修改密碼卡），不需要虛線分隔
+.profileCard-form-bare {
+    padding-top: 0;
+    border-top: none;
+}
+
+// school/account.html 登入狀態預覽切換：依 html[data-preview-login] 顯示對應版本，
+// 正式上線由後端依帳號類型直接輸出對應內容，不需要這段
+[data-preview-login="openid"] [data-login-variant="local"] {
+    display: none;
+}
+
+[data-preview-login="local"] [data-login-variant="openid"] {
+    display: none;
+}

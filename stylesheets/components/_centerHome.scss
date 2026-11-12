@@ -1,0 +1,249 @@
+// ============================================================
+// 中心端總覽專屬儀表板元件：待辦數量方塊、三欄面板（申請期間／到校評估／其他提醒）
+// 問候語區沿用 _homeGreeting.scss，內容卡白底容器沿用 _homeCards.scss 的 .panelCard
+// ============================================================
+
+// 待辦數量方塊頂框色：藍色僅此處使用（不在 design.md 色票內，沿用畫布原色）
+$tileCard-blue: #3B82C4;
+
+.tileGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tileCard {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 150px;
+    padding: 22px 24px;
+    border-radius: $border-radius-lg;
+    border-top: 6px solid transparent;
+    background-color: $surface-card;
+    box-shadow: $shadow-panel;
+    text-decoration: none;
+    color: $ink-1;
+    transition: box-shadow 180ms ease-out, transform 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        box-shadow: $shadow-card-hover;
+        transform: translateY(-2px);
+    }
+}
+
+.tileCard-amber { border-top-color: $accent-amber; }
+.tileCard-blue  { border-top-color: $tileCard-blue; }
+.tileCard-teal  { border-top-color: $brand-teal; }
+.tileCard-red   { border-top-color: $state-required; }
+
+.tileCard-label {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.tileCard-number {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.tileCard-count {
+    font-family: "Poppins", sans-serif;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.tileCard-unit {
+    font-size: 17px;
+    color: $ink-2;
+}
+
+.tileCard-note {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+// ---- 三欄面板（申請期間／近期到校評估／其他提醒），面板本體沿用 .panelCard ----
+.panelGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    align-items: start;
+    gap: 24px;
+    margin-top: 28px;
+}
+
+.statusText-green {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1E6B3E;
+}
+
+.periodPanel-name {
+    margin: 12px 0 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.periodPanel-range {
+    margin: 4px 0 0;
+    font-size: 16px;
+    color: $ink-2;
+
+    time {
+        font-family: "Poppins", sans-serif;
+    }
+}
+
+.periodPanel-progress {
+    margin-top: 14px;
+}
+
+.progressTrack {
+    height: 12px;
+    border-radius: $border-radius-pill;
+    background-color: $line-default;
+    overflow: hidden;
+}
+
+.progressTrack-fill {
+    height: 100%;
+    border-radius: $border-radius-pill;
+    background-color: $brand-teal;
+}
+
+.periodPanel-days {
+    margin: 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 16px;
+    color: $ink-2;
+}
+
+.periodPanel-daysCount {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    color: $state-required;
+}
+
+.statGridSm {
+    margin: 16px 0 0;
+    padding: 14px 18px;
+    border-radius: $border-radius-md;
+    background-color: $surface-tint;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    text-align: center;
+}
+
+.statGridSm-label {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.statGridSm-value {
+    margin: 2px 0 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+// ---- 近期到校評估：日期徽章＋說明 ----
+.evalRow {
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-top: 1px solid $line-default;
+}
+
+.evalRow-date {
+    flex: 0 0 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 56px;
+    border-radius: $border-radius-md;
+    background-color: #E8F1FB;
+    color: #1D4F86;
+    line-height: 1.1;
+}
+
+.evalRow-date-month {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.evalRow-date-day {
+    font-family: "Poppins", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.evalRow-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.45;
+}
+
+.evalRow-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.evalRow-meta {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+// ---- 其他提醒：標題＋徽章＋箭頭 ----
+.remindRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 56px;
+    padding: 6px 4px;
+    border-bottom: 1px solid $line-default;
+    color: $ink-1;
+    text-decoration: none;
+    transition: color 180ms ease-out;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover,
+    &:focus-visible {
+        color: $brand-teal-deep;
+    }
+}
+
+.remindRow-title {
+    flex: 1 1 auto;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.remindRow-arrow {
+    flex-shrink: 0;
+    color: $ink-3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tileCard,
+    .remindRow {
+        transition: none;
+    }
+}

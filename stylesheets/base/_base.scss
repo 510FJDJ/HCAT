@@ -1,0 +1,204 @@
+// ============================================================
+// 基礎設定：CSS 變數輸出、無障礙焦點、螢幕閱讀器工具、reduced-motion
+// ============================================================
+
+// 設計 Token 以 CSS 自訂屬性輸出，供頁面 inline style 與 JS 直接取用
+// 命名對應 design.md token（"/" 改為 "-"），ACCESSIBILITY.md §4.1 的
+// var(--focus-ring)／var(--brand-teal) 等寫法即對應這裡輸出的變數。
+:root {
+    --brand-teal: #{$brand-teal};
+    --brand-teal-deep: #{$brand-teal-deep};
+    --brand-teal-ink: #{$brand-teal-ink};
+    --brand-teal-card: #{$brand-teal-card};
+    --brand-teal-hover: #{$brand-teal-hover};
+    --surface-mint: #{$surface-mint};
+    --surface-mint-dots: #{$surface-mint-dots};
+    --surface-tint: #{$surface-tint};
+    --surface-teal-pale: #{$surface-teal-pale};
+    --surface-teal-select: #{$surface-teal-select};
+    --surface-teal-soft: #{$surface-teal-soft};
+    --surface-marker: #{$surface-marker};
+    --deco-hill: #{$deco-hill};
+    --deco-dots: #{$deco-dots};
+    --accent-amber: #{$accent-amber};
+    --accent-amber-soft: #{$accent-amber-soft};
+    --accent-amber-pale: #{$accent-amber-pale};
+    --accent-amber-ink: #{$accent-amber-ink};
+    --accent-amber-ink-2: #{$accent-amber-ink-2};
+    --focus-ring: #{$focus-ring};
+    --ink-1: #{$ink-1};
+    --ink-2: #{$ink-2};
+    --ink-3: #{$ink-3};
+    --line-default: #{$line-default};
+    --line-strong: #{$line-strong};
+    --surface-card: #{$surface-card};
+    --state-required: #{$state-required};
+    --footer-text-primary: #{$footer-text-primary};
+    --footer-text-secondary: #{$footer-text-secondary};
+    --shadow-card: #{$shadow-card};
+    --shadow-card-hover: #{$shadow-card-hover};
+    --shadow-panel: #{$shadow-panel};
+    --shadow-float: #{$shadow-float};
+    --shadow-header: #{$shadow-header};
+    --shadow-dialog: #{$shadow-dialog};
+}
+
+html {
+    scroll-behavior: smooth;
+    // offcanvas 選單以 transform 位移到螢幕外時，position:fixed 元素會撐大整個文件可捲動寬度
+    // （右側多出空白＋出現水平捲軸），須在 html 這層也裁掉
+    overflow-x: clip;
+}
+
+// Sticky footer（CLAUDE.md §7.2）：一般頁面在 body 直接子層（#header／main／#footer）用這組；
+// login／register 等頁因 header／main 包在 .authShell 內，改在 .authShell 設 flex:1 0 auto（見下方）。
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: clip; // 用 clip 而非 hidden：hidden 會讓 body 變成捲動容器，害 header 的 position:sticky 失效
+    -webkit-font-smoothing: antialiased;
+    // 內文字距（會繼承）：components 內已指定字距的元素（.04/.08/.16/.2em）用自己的值蓋掉，不受影響
+    letter-spacing: 0.03em;
+}
+
+main {
+    position: relative;
+    flex: 1 0 auto;
+}
+
+// login／register 頁：header 與 main 都包在 .authShell 內，.authShell 才是 body 的直接子層
+.authShell {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+}
+
+// #header 是 layout/header*.html 的 fetch 注入包裹 div，裡面只有 header 本身，
+// 高度會剛好等於 header 內容高度，若 sticky 定位掛在 header 本身，
+// containing block（= 這個包裹 div）沒有多餘高度可以「黏住」，捲動時會直接跟著內容一起滑走。
+// sticky 定位改掛在這一層，containing block 才會是撐滿全頁高度的 body。
+#header {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+// 前台內容左右留白（design.md §4：桌面 24–40px、手機 16–20px），與 _header.scss 斷點一致
+.container {
+    padding-right: 20px;
+    padding-left: 20px;
+
+    @media (max-width: 1280px) {
+        padding-right: 24px;
+        padding-left: 24px;
+    }
+
+    @media (max-width: 720px) {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+}
+
+// 中文不使用斜體（design.md §3）
+em,
+i:not([class]) {
+    font-style: normal;
+    font-weight: 500;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: $ink-1;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+ol,ul,dl{
+    list-style: none;
+    padding-left: 1em;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+// ---- 焦點樣式（ACCESSIBILITY.md §4.1）----
+// 一般互動元素（按鈕、卡片、頁籤、連結）
+:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+// 深色底（頁尾 brand/teal）上改用白色，對比 4.80
+footer :focus-visible {
+    outline-color: #FFFFFF;
+}
+
+// 輸入框不使用 outline，改用邊框色＋外圈陰影（design.md §7.7）
+// 上面的通用 :focus-visible 規則會把 border-radius 蓋成 4px，這裡要蓋回輸入框原本的圓角
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: none;
+    border-color: var(--brand-teal);
+    box-shadow: 0 0 0 3px rgba(15, 127, 129, .18);
+    border-radius: $input-border-radius;
+}
+
+:focus:not(:focus-visible) {
+    outline: 0;
+}
+
+// ---- 共用文字樣式 utility ----
+.textNote {
+    font-size: 16px;
+    color: $ink-2;
+}
+
+// ---- 螢幕閱讀器隱藏與跳過導覽連結（ACCESSIBILITY.md §1、§10）----
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.sr-only.focusable:focus {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 2100;
+    width: auto;
+    height: auto;
+    padding: 8px 16px;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    background-color: $surface-card;
+    color: $brand-teal-deep;
+    border-radius: 8px;
+    box-shadow: $shadow-card;
+}
+
+// ---- 動效一律尊重使用者系統設定（ACCESSIBILITY.md §9）----
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

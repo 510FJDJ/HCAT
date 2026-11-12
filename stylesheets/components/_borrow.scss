@@ -1,0 +1,10 @@
+// ============================================================
+// 中心端借用管理（center/borrow.html／borrow-school.html／borrow-device.html）專屬樣式
+// Banner 與容器沿用 center/review.html 的 .bannerWave／.reviewPage-container/-content，
+// 這裡只補第一層學校列表「借用中」欄位台數的 Poppins 數字樣式
+// ============================================================
+
+.borrowCount-num {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+}

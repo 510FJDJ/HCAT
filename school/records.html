@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>申請紀錄 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="學校端查看每筆輔具申請的進度，並上傳簽核申請表或簽章借用單">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_School.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu dec-records" src="../img/banner/records.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="recordsPage-container">
+                <div class="bannerWave-inner">
+                    <nav class="crumbNav" aria-label="麵包屑導覽">
+                        <ol>
+                            <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li>輔具申請</li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li aria-current="page" class="crumbNav-current">申請紀錄</li>
+                        </ol>
+                    </nav>
+
+                    <div class="bannerWave-main">
+                        <h1 class="titleSection bannerWave-title">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            申請紀錄
+                        </h1>
+                        <p class="bannerWave-desc">查看每筆申請走到哪一步。橘色是需要學校處理的步驟，青綠色由中心處理。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="recordsPage-content">
+            <div class="recordsPage-container">
+
+                <!-- 申請流程 -->
+                <section class="applyForm-section cardPanel" aria-labelledby="rc-flow">
+                    <h2 id="rc-flow" class="applyForm-sectionHead">
+                        <button type="button" class="applyForm-sectionHead-toggle" data-js="flowToggle" aria-expanded="false" aria-controls="rc-flow-body">
+                            申請流程
+                            <i class="bi bi-chevron-down applyForm-sectionHead-chevron" aria-hidden="true"></i>
+                        </button>
+                    </h2>
+                    <div class="applyForm-sectionBody is-collapsed" id="rc-flow-body" data-js="flowBody">
+                        <ol class="flowSteps">
+                            <li class="flowSteps-item flowSteps-item-school">
+                                <span class="flowSteps-circle" aria-hidden="true">1</span>
+                                <span class="flowSteps-text">
+                                    <span class="flowSteps-title">簽核申請表</span>
+                                    <span class="flowSteps-who">學校處理</span>
+                                </span>
+                            </li>
+                            <li class="flowSteps-sep" aria-hidden="true"><i class="bi bi-chevron-right"></i></li>
+                            <li class="flowSteps-item">
+                                <span class="flowSteps-circle" aria-hidden="true">2</span>
+                                <span class="flowSteps-text">
+                                    <span class="flowSteps-title">中心審核</span>
+                                    <span class="flowSteps-who">中心處理</span>
+                                </span>
+                            </li>
+                            <li class="flowSteps-sep" aria-hidden="true"><i class="bi bi-chevron-right"></i></li>
+                            <li class="flowSteps-item flowSteps-item-school">
+                                <span class="flowSteps-circle" aria-hidden="true">3</span>
+                                <span class="flowSteps-text">
+                                    <span class="flowSteps-title">簽章借用單</span>
+                                    <span class="flowSteps-who">學校處理</span>
+                                </span>
+                            </li>
+                            <li class="flowSteps-sep" aria-hidden="true"><i class="bi bi-chevron-right"></i></li>
+                            <li class="flowSteps-item">
+                                <span class="flowSteps-circle" aria-hidden="true">4</span>
+                                <span class="flowSteps-text">
+                                    <span class="flowSteps-title">中心確認</span>
+                                    <span class="flowSteps-who">中心處理</span>
+                                </span>
+                            </li>
+                            <li class="flowSteps-sep" aria-hidden="true"><i class="bi bi-chevron-right"></i></li>
+                            <li class="flowSteps-item flowSteps-item-done">
+                                <span class="flowSteps-circle" aria-hidden="true">5</span>
+                                <span class="flowSteps-text">
+                                    <span class="flowSteps-title">開始借用</span>
+                                </span>
+                            </li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- 申請列表 -->
+                <section class="applyForm-section cardPanel mt-6" aria-label="申請列表">
+                    <div class="applyForm-sectionBody mt-0">
+
+                        <div class="recordsFilters">
+                            <div class="tabsCount" role="tablist" aria-label="依進度檢視">
+                                <button type="button" class="tabsCount-item" role="tab" id="tab-rc-all" data-category="all" aria-selected="true" aria-controls="panel-rcList" tabindex="0">全部<span class="tabsCount-badge" aria-hidden="true">8</span></button>
+                                <button type="button" class="tabsCount-item" role="tab" id="tab-rc-todo" data-category="todo" aria-selected="false" aria-controls="panel-rcList" tabindex="-1">待學校處理<span class="tabsCount-badge" aria-hidden="true">4</span></button>
+                                <button type="button" class="tabsCount-item" role="tab" id="tab-rc-doing" data-category="doing" aria-selected="false" aria-controls="panel-rcList" tabindex="-1">中心處理中<span class="tabsCount-badge" aria-hidden="true">2</span></button>
+                                <button type="button" class="tabsCount-item" role="tab" id="tab-rc-ret" data-category="ret" aria-selected="false" aria-controls="panel-rcList" tabindex="-1">退回補件<span class="tabsCount-badge" aria-hidden="true">1</span></button>
+                                <button type="button" class="tabsCount-item" role="tab" id="tab-rc-done" data-category="done" aria-selected="false" aria-controls="panel-rcList" tabindex="-1">已完成<span class="tabsCount-badge" aria-hidden="true">1</span></button>
+                            </div>
+
+                            <form class="recordsFilters-form" novalidate>
+                                <div class="recordsFilters-field">
+                                    <label for="rcType">申請類型</label>
+                                    <select id="rcType" class="form-select">
+                                        <option value="all" selected>全部類型</option>
+                                        <option value="first">首次借用</option>
+                                        <option value="temp">臨時借用</option>
+                                        <option value="school">校內使用</option>
+                                        <option value="return">畢業歸還</option>
+                                        <option value="renew">轉銜續借</option>
+                                    </select>
+                                </div>
+                                <div class="recordsFilters-field">
+                                    <label for="rcYear">學年度</label>
+                                    <select id="rcYear" class="form-select">
+                                        <option value="all" selected>全部年度</option>
+                                        <option value="115">115 學年度</option>
+                                    </select>
+                                </div>
+                                <div class="recordsFilters-field">
+                                    <label for="rcSearch">關鍵字</label>
+                                    <div class="inputGroup">
+                                        <i class="bi bi-search inputGroup-icon" aria-hidden="true"></i>
+                                        <input type="search" id="rcSearch" class="form-control" placeholder="輸入申請編號或輔具名稱">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btnPill btn-teal btnPill-sm">查詢</button>
+                                <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                    <i class="bi bi-download" aria-hidden="true"></i>匯出 Excel
+                                </button>
+                            </form>
+                        </div>
+
+                        <p class="textNote">總筆數：8</p>
+
+                        <div role="tabpanel" id="panel-rcList" aria-labelledby="tab-rc-all">
+                            <p class="textNote py-6" data-js="emptyNote" hidden>這個分類目前沒有申請紀錄。</p>
+
+                            <div class="dataTable-wrap">
+                                <div class="dataTable-scroll">
+                                    <table class="dataTable dataTable--stickyEnd2">
+                                        <caption>申請紀錄列表</caption>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">申請編號／日期</th>
+                                                <th scope="col">類型</th>
+                                                <th scope="col">學生／輔具</th>
+                                                <th scope="col">進度</th>
+                                                <th scope="col">文件</th>
+                                                <th scope="col">下一步</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr data-category="todo">
+                                                <td data-label="申請編號／日期">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">A1151029-006</span>
+                                                        <span class="dataTable-cellTitle-sub">2026/10/29</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="類型"><span class="tagPill tag-tealSoft">首次借用</span></td>
+                                                <td data-label="學生／輔具">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">兒童輪椅</span>
+                                                        <span class="dataTable-cellTitle-sub">吳○翰</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="進度"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待上傳簽核申請表</span></td>
+                                                <td data-label="文件"><a href="#" class="linkMarker" download><i class="bi bi-download me-1" aria-hidden="true"></i>下載申請表</a></td>
+                                                <td data-label="下一步" class="dataTable-cellNext">
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="recordsUpload" data-step="1" data-app="A1151029-006" data-device="兒童輪椅" data-student="吳○翰">上傳簽核申請表</button>
+                                                </td>
+                                            </tr>
+                                            <tr data-category="todo">
+                                                <td data-label="申請編號／日期">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">A1150926-011</span>
+                                                        <span class="dataTable-cellTitle-sub">2026/10/25</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="類型"><span class="tagPill tag-goldLight">轉銜續借</span></td>
+                                                <td data-label="學生／輔具">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">桌上型擴視機</span>
+                                                        <span class="dataTable-cellTitle-sub">林○安</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="進度"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待上傳簽章借用單</span></td>
+                                                <td data-label="文件"><a href="#" class="linkMarker" download><i class="bi bi-download me-1" aria-hidden="true"></i>下載借用單</a></td>
+                                                <td data-label="下一步" class="dataTable-cellNext">
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="recordsUpload" data-step="3" data-app="A1150926-011" data-device="桌上型擴視機" data-student="林○安" data-property="HC-2026-0188" data-return="2027/10/25">上傳簽章借用單</button>
+                                                </td>
+                                            </tr>
+                                            <tr data-category="todo">
+                                                <td data-label="申請編號／日期">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">A1150926-012</span>
+                                                        <span class="dataTable-cellTitle-sub">2026/09/26</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="類型"><span class="tagPill tag-purpleLight">校內使用</span></td>
+                                                <td data-label="學生／輔具">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">安全頭套</span>
+                                                        <span class="dataTable-cellTitle-sub">－</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="進度"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待上傳簽核申請表</span></td>
+                                                <td data-label="文件"><a href="#" class="linkMarker" download><i class="bi bi-download me-1" aria-hidden="true"></i>下載申請表</a></td>
+                                                <td data-label="下一步" class="dataTable-cellNext">
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="recordsUpload" data-step="1" data-app="A1150926-012" data-device="安全頭套" data-student="－">上傳簽核申請表</button>
+                                                </td>
+                                            </tr>
+                                            <tr data-category="todo">
+                                                <td data-label="申請編號／日期">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">A1150912-006</span>
+                                                        <span class="dataTable-cellTitle-sub">2026/09/12</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="類型"><span class="tagPill tag-tanLight">畢業歸還</span></td>
+                                                <td data-label="學生／輔具">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">一般輪椅</span>
+                                                        <span class="dataTable-cellTitle-sub">許○廷</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="進度"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待上傳簽章歸還單</span></td>
+                                                <td data-label="文件"><a href="#" class="linkMarker" download><i class="bi bi-download me-1" aria-hidden="true"></i>下載歸還單</a></td>
+                                                <td data-label="下一步" class="dataTable-cellNext">
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="recordsUpload" data-step="3" data-kind="return" data-app="A1150912-006" data-device="一般輪椅" data-student="許○廷" data-property="M-WC-0031" data-return="2026/09/30">上傳簽章歸還單</button>
+                                                </td>
+                                            </tr>
+                                            <tr data-category="ret">
+                                                <td data-label="申請編號／日期">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">A1151029-004</span>
+                                                        <span class="dataTable-cellTitle-sub">2026/10/29</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="類型"><span class="tagPill tag-tealSoft">首次借用</span></td>
+                                                <td data-label="學生／輔具">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">站立架</span>
+                                                        <span class="dataTable-cellTitle-sub">劉○妤</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="進度">
+                                                    <span class="dataTable-cellActions">
+                                                        <span class="statusPill statusPill-red"><span class="statusPill-dot" aria-hidden="true"></span>退回補件</span>
+                                                        <span class="dataTable-cellTitle-sub">申請表缺少校長核章</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="文件">－</td>
+                                                <td data-label="下一步" class="dataTable-cellNext">
+                                                    <a href="apply.html" class="btnPill btn-amberSolid btnPill-sm">前往補件</a>
+                                                </td>
+                                            </tr>
+                                            <tr data-category="doing">
+                                                <td data-label="申請編號／日期">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">A1151015-003</span>
+                                                        <span class="dataTable-cellTitle-sub">2026/10/15</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="類型"><span class="tagPill tag-tealSoft">首次借用</span></td>
+                                                <td data-label="學生／輔具">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">調頻輔聽系統</span>
+                                                        <span class="dataTable-cellTitle-sub">陳○宇</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="進度"><span class="statusPill statusPill-teal"><span class="statusPill-dot" aria-hidden="true"></span>中心審核中</span></td>
+                                                <td data-label="文件">－</td>
+                                                <td data-label="下一步" class="dataTable-cellNext">等待中心處理</td>
+                                            </tr>
+                                            <tr data-category="doing">
+                                                <td data-label="申請編號／日期">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">A1151002-002</span>
+                                                        <span class="dataTable-cellTitle-sub">2026/10/02</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="類型"><span class="tagPill tag-tealSoft">首次借用</span></td>
+                                                <td data-label="學生／輔具">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">擺位椅</span>
+                                                        <span class="dataTable-cellTitle-sub">黃○婷</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="進度"><span class="statusPill statusPill-teal"><span class="statusPill-dot" aria-hidden="true"></span>待到校評估</span></td>
+                                                <td data-label="文件">－</td>
+                                                <td data-label="下一步" class="dataTable-cellNext">等待中心處理</td>
+                                            </tr>
+                                            <tr data-category="done">
+                                                <td data-label="申請編號／日期">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">A1150915-001</span>
+                                                        <span class="dataTable-cellTitle-sub">2026/09/15</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="類型"><span class="tagPill tag-cyanLight">臨時借用</span></td>
+                                                <td data-label="學生／輔具">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">助行器</span>
+                                                        <span class="dataTable-cellTitle-sub">－</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="進度"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>已完成</span></td>
+                                                <td data-label="文件"><a href="#" class="linkMarker" download><i class="bi bi-download me-1" aria-hidden="true"></i>下載借用單</a></td>
+                                                <td data-label="下一步" class="dataTable-cellNext">借用中</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- 分頁為靜態示意（尚無真實分頁邏輯），預設顯示多頁狀態供工程參考 -->
+                            <nav class="pageNav mt-6" aria-label="分頁">
+                                <p class="pageNav-summary">顯示第 1 至 8 筆，共 8 筆資料</p>
+                                <ul class="pageNav-list">
+                                    <li><span class="pageNav-item" aria-disabled="true" aria-label="第一頁"><i class="bi bi-chevron-bar-left" aria-hidden="true"></i></span></li>
+                                    <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="rcPagePrevNote"><i class="bi bi-chevron-left" aria-hidden="true"></i>上一頁</span></li>
+                                    <li><span class="pageNav-item" aria-current="page">1</span></li>
+                                    <li><span class="pageNav-item">2</span></li>
+                                    <li><span class="pageNav-item">3</span></li>
+                                    <li><span class="pageNav-item">4</span></li>
+                                    <li><span class="pageNav-item pageNav-item-label">下一頁<i class="bi bi-chevron-right" aria-hidden="true"></i></span></li>
+                                    <li><span class="pageNav-item" aria-label="最後一頁"><i class="bi bi-chevron-bar-right" aria-hidden="true"></i></span></li>
+                                </ul>
+                                <span id="rcPagePrevNote" class="sr-only">已是第一頁，沒有上一頁</span>
+                            </nav>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- 上傳簽核申請表／簽章借用單 modal（內容依點擊的按鈕動態帶入） -->
+    <div class="modal fade" data-js="uploadModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="upTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 id="upTitle" class="modal-title" data-js="upTitle">上傳簽核申請表</h2>
+                        <p class="modal-subtitle textNote" data-js="upSubtitle">申請編號 A1151029-006</p>
+                    </div>
+                    <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ol class="stepTracker modal-body-section" aria-label="申請流程" data-js="uploadSteps">
+                        <li class="stepTracker-item" data-js="upStep-1">
+                            <span class="stepTracker-circle" aria-hidden="true">1</span>
+                            <span class="stepTracker-label">簽核申請表</span>
+                        </li>
+                        <li class="stepTracker-item" data-js="upStep-2">
+                            <span class="stepTracker-circle" aria-hidden="true">2</span>
+                            <span class="stepTracker-label">中心審核</span>
+                        </li>
+                        <li class="stepTracker-item" data-js="upStep-3">
+                            <span class="stepTracker-circle" aria-hidden="true">3</span>
+                            <span class="stepTracker-label" data-js="upStep3Label">簽章借用單</span>
+                        </li>
+                        <li class="stepTracker-item" data-js="upStep-4">
+                            <span class="stepTracker-circle" aria-hidden="true">4</span>
+                            <span class="stepTracker-label">中心確認</span>
+                        </li>
+                        <li class="stepTracker-item" data-js="upStep-5">
+                            <span class="stepTracker-circle" aria-hidden="true">5</span>
+                            <span class="stepTracker-label" data-js="upStep5Label">開始借用</span>
+                        </li>
+                    </ol>
+
+                    <div class="modal-body-section" data-js="upDocSummary" hidden>
+                        <h3 data-js="upDocTitle">請核對借用單內容</h3>
+                        <div class="row g-4">
+                            <div class="col-6"><span class="formField-label">財產編號</span><p class="textNote" data-js="upProperty">－</p></div>
+                            <div class="col-6"><span class="formField-label">輔具</span><p class="textNote" data-js="upDevice">－</p></div>
+                            <div class="col-6"><span class="formField-label">學生</span><p class="textNote" data-js="upStudent">－</p></div>
+                            <div class="col-6"><span class="formField-label" data-js="upReturnLabel">預計歸還日</span><p class="textNote" data-js="upReturn">－</p></div>
+                        </div>
+                        <p class="textNote mt-4">內容有誤請聯繫中心修正，勿手寫更改。</p>
+                    </div>
+
+                    <div class="modal-body-section">
+                        <h3>上傳檔案</h3>
+                        <input type="file" id="uploadFile" class="fileUpload-input" accept="image/*,.pdf">
+                        <label for="uploadFile" class="fileUpload fileUpload-drop">
+                            <i class="bi bi-upload fileUpload-icon" aria-hidden="true"></i>
+                            <span class="fileUpload-drop-text">點擊或拖曳上傳檔案</span>
+                            <span class="fileUpload-drop-sub">支援 PDF、JPG、PNG，每個檔案 10 MB 以內</span>
+                        </label>
+                        <div class="fileUploadList" data-js="uploadFileList" hidden></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btnPill btn-teal" data-js="uploadSubmit">送出<span data-js="upSubmitText">給中心審核</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

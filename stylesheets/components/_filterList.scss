@@ -1,0 +1,76 @@
+// ============================================================
+// 直式分類篩選清單元件（輔具目錄側邊欄）：ARIA 直式頁籤（role="tablist" aria-orientation="vertical"），
+// 鍵盤與切換邏輯共用 js/tabs.js、js/main.js 既有的頁籤機制，與 .tabsPill 同一套互動規則，只是直排滿版
+// ============================================================
+
+.filterList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filterList-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 16px;
+    border-radius: $border-radius-md;
+    background-color: $surface-card;
+    border: 2px solid transparent;
+    color: $ink-1;
+    font-size: 17px;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 180ms ease-out, border-color 180ms ease-out, color 180ms ease-out;
+
+    &[aria-selected="true"] {
+        background-color: $brand-teal;
+        color: #FFFFFF;
+    }
+
+    &:hover:not([aria-selected="true"]) {
+        background-color: $surface-teal-pale;
+    }
+
+    &:active:not([aria-selected="true"]) {
+        background-color: $surface-teal-select;
+        border-color: $brand-teal;
+    }
+
+    &[aria-selected="true"]:active {
+        background-color: $brand-teal-ink;
+    }
+}
+
+.filterList-item-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 28px;
+    padding: 0 8px;
+    border-radius: $border-radius-pill;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
+    background-color: $surface-teal-pale;
+    color: $brand-teal-deep;
+    transition: background-color 180ms ease-out, color 180ms ease-out;
+}
+
+.filterList-item[aria-selected="true"] .filterList-item-count {
+    background-color: rgba(255, 255, 255, .22);
+    color: #FFFFFF;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .filterList-item,
+    .filterList-item-count {
+        transition: none;
+    }
+}

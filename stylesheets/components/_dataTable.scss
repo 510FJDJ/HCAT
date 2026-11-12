@@ -1,0 +1,277 @@
+// ============================================================
+// 資料表格元件：桌機維持表格排版，手機（≤720px）轉直式卡片
+// RWD 手法比照 NCSES-SMS 的 data-label + ::before（td 轉 flex 列，欄名由 data-label 顯示）
+// ============================================================
+
+.dataTable-wrap {
+    border: 1px solid $line-default;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+}
+
+// 桌機維持可水平捲動（避免欄位過多被擠壓），手機轉卡片後不需要捲動
+.dataTable-scroll {
+    overflow-x: auto;
+}
+
+.dataTable {
+    width: 100%;
+    min-width: max-content;
+    border-collapse: collapse;
+    font-size: 17px;
+
+    caption {
+        position: absolute;
+        left: -9999px;
+    }
+
+    th,
+    td {
+        padding: 14px 16px;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    thead tr {
+        background-color: $surface-tint;
+    }
+
+    thead th {
+        font-size: 16px;
+        font-weight: 700;
+        color: $ink-2;
+        white-space: nowrap;
+    }
+
+    tbody tr {
+        background-color: $surface-card;
+        border-top: 1px solid $line-default;
+        transition: background-color 160ms ease-out;
+    }
+
+    tbody tr:hover {
+        background-color: $surface-tint;
+    }
+}
+
+.dataTable-cellTitle {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.4;
+}
+
+.dataTable-cellTitle-main {
+    font-family: "Poppins", "Noto Sans TC", sans-serif;
+    font-weight: 600;
+}
+
+.dataTable-cellTitle-sub {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+// 輔具欄：縮圖＋名稱／財產編號（縮圖本身有框線，與 .deviceInfo-photo 無框線的用途區分）
+.dataTable-cellDevice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dataTable-cellDevice-photo {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    border: 1px solid $line-default;
+    border-radius: $border-radius-sm;
+    background-color: #FFFFFF;
+    padding: 4px;
+}
+
+.dataTable-cellActions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+// 「功能」欄只有純動作按鈕、不需要垂直堆疊狀態／備註文字時使用（如 center/schools.html
+// 的「借用歷史」＋「編輯」）：按鈕一律水平並排，手機轉卡片後也跟著左側欄名同一行顯示，
+// 不像 .dataTable-cellActions 需要在手機版強制換行堆疊
+.dataTable-actionsRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+}
+
+.dataTable-cellNext {
+    text-align: center;
+    white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dataTable tbody tr {
+        transition: none;
+    }
+}
+
+// ------------------------------------------------------------
+// 固定最後一欄於右側（外型修飾子，可供其他表格重用）：桌機／平板尚未轉卡片時，
+// 「功能」欄固定在最右，左側欄位（包含表格本來就會有的其他欄）維持水平捲動；
+// 捲動與固定同時成立——欄位多到需要捲動時，固定欄才真正有用
+// ------------------------------------------------------------
+.dataTable--stickyEnd {
+    @media (min-width: 721px) {
+        th:last-child,
+        td:last-child {
+            position: sticky;
+            right: 0;
+            z-index: 1;
+            border-left: 1px solid $line-default;
+        }
+
+        thead th:last-child {
+            background-color: $surface-tint;
+        }
+
+        tbody td:last-child {
+            background-color: $surface-card;
+        }
+
+        tbody tr:hover td:last-child {
+            background-color: $surface-tint;
+        }
+    }
+}
+
+// ------------------------------------------------------------
+// 固定最後兩欄於右側：少數表格有兩個真正的功能欄（如學校端申請紀錄的「文件」＋「下一步」），
+// 用法與上面相同，倒數第二欄的 right 位移＝最後一欄實際寬度，由 js/all.js 量測寫入 CSS 變數，
+// --dataTable-lastColWidth 預設值僅作為 JS 失效時的退場機制
+// ------------------------------------------------------------
+.dataTable--stickyEnd2 {
+    @media (min-width: 721px) {
+        th:nth-last-child(-n + 2),
+        td:nth-last-child(-n + 2) {
+            position: sticky;
+            z-index: 1;
+        }
+
+        th:nth-last-child(1),
+        td:nth-last-child(1) {
+            right: 0;
+        }
+
+        th:nth-last-child(2),
+        td:nth-last-child(2) {
+            right: var(--dataTable-lastColWidth, 170px);
+            border-left: 1px solid $line-default;
+        }
+
+        thead th:nth-last-child(-n + 2) {
+            background-color: $surface-tint;
+        }
+
+        tbody td:nth-last-child(-n + 2) {
+            background-color: $surface-card;
+        }
+
+        tbody tr:hover td:nth-last-child(-n + 2) {
+            background-color: $surface-tint;
+        }
+    }
+}
+
+// ------------------------------------------------------------
+// RWD：≤720px 轉直式卡片
+// ------------------------------------------------------------
+@media (max-width: 720px) {
+    .dataTable-scroll {
+        overflow-x: visible;
+    }
+
+    // 手機版不在最外層設定樣式：卡片感改由每一列（學生卡）自己負責
+    .dataTable-wrap {
+        border: none;
+        border-radius: 0;
+        overflow: visible;
+    }
+
+    .dataTable {
+        display: block;
+        min-width: 0;
+
+        thead {
+            display: none;
+        }
+
+        tbody,
+        tr,
+        td {
+            display: block;
+            width: 100%;
+        }
+
+        tbody tr {
+            margin-bottom: 16px;
+            border-radius: $border-radius-md;
+            overflow: hidden;
+            box-shadow: $shadow-card;
+            background-color: $surface-card;
+            border-top:none;
+
+            &:hover {
+                background-color: $surface-card;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        // 左側欄名色塊：以「學生卡」（列）為單位單雙交錯，同一張卡內的欄位維持同一色
+        tbody tr:nth-child(odd) td::before {
+            background-color: $surface-mint-dots;
+        }
+
+        tbody tr:nth-child(even) td::before {
+            background-color: $accent-amber-pale; //$surface-tint
+        }
+
+        tbody td {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 14px;
+            border-top: 1px solid $line-default;
+
+            &:first-child {
+                border-top: 0;
+            }
+
+            // 左側欄名標籤（取代 thead）：用負 margin 抵消 td 自身的上下左 padding，
+            // 讓背景色撐滿到 td 的外緣（而非只包住文字），右側則維持 gap 與內容分隔
+            &::before {
+                content: attr(data-label);
+                flex: 0 0 34%;
+                align-self: stretch;
+                display: flex;
+                align-items: center;
+                margin: -10px 0 -10px -14px;
+                padding: 10px 10px 10px 14px;
+                font-size: 16px;
+                font-weight: 700;
+                color: $ink-3;
+            }
+        }
+    }
+
+    .dataTable-cellNext {
+        text-align: left;
+
+        .btnPill {
+            width: 100%;
+        }
+    }
+}

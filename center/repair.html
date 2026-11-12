@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>報修管理 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="特教資源中心指派維修廠商處理學校回報的輔具故障，確認維修進度並結案">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_Center.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu" src="../img/banner/repair.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="reviewPage-container">
+                <div class="bannerWave-inner">
+                    <nav class="crumbNav" aria-label="麵包屑導覽">
+                        <ol>
+                            <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li aria-current="page" class="crumbNav-current">報修管理</li>
+                        </ol>
+                    </nav>
+
+                    <div class="bannerWave-main">
+                        <h1 class="titleSection bannerWave-title">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            報修管理
+                        </h1>
+                        <p class="bannerWave-desc">學校在系統送出報修後，由中心指派維修廠商；廠商回報「完成維修」或「無法修復」後，再由中心結案。學校若已自行聯繫廠商，列表會標示出來。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="reviewPage-content">
+            <div class="reviewPage-container">
+                <section class="cardPanel" aria-label="報修列表">
+
+                    <div class="recordsFilters">
+                        <div class="tabsCount" role="tablist" aria-label="依狀態檢視">
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-rp-assign" data-category="assign" aria-selected="true" aria-controls="panel-rpList" tabindex="0">待指派<span class="tabsCount-badge" aria-hidden="true">3</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-rp-fixing" data-category="fixing" aria-selected="false" aria-controls="panel-rpList" tabindex="-1">維修中<span class="tabsCount-badge" aria-hidden="true">2</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-rp-report" data-category="report" aria-selected="false" aria-controls="panel-rpList" tabindex="-1">待結案（廠商已回報）<span class="tabsCount-badge" aria-hidden="true">2</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-rp-closed" data-category="closed" aria-selected="false" aria-controls="panel-rpList" tabindex="-1">已結案<span class="tabsCount-badge" aria-hidden="true">1</span></button>
+                        </div>
+
+                        <form class="recordsFilters-form" novalidate>
+                            <div class="recordsFilters-field">
+                                <label for="rpYear">學年度</label>
+                                <select id="rpYear" class="form-select">
+                                    <option value="115" selected>115 學年度</option>
+                                    <option value="114">114 學年度</option>
+                                    <option value="113">113 學年度</option>
+                                </select>
+                            </div>
+                            <div class="recordsFilters-field">
+                                <label for="rpVendor">維修廠商</label>
+                                <select id="rpVendor" class="form-select">
+                                    <option value="all" selected>全部廠商</option>
+                                    <option value="v1">○○醫療器材行</option>
+                                    <option value="v2">○○輔具科技有限公司</option>
+                                    <option value="v3">○○復健器材社</option>
+                                </select>
+                            </div>
+                            <div class="recordsFilters-field">
+                                <label for="rpContact">學校已聯繫廠商</label>
+                                <select id="rpContact" class="form-select">
+                                    <option value="all" selected>全部</option>
+                                    <option value="yes">已聯繫</option>
+                                    <option value="no">未聯繫</option>
+                                </select>
+                            </div>
+                            <div class="recordsFilters-field">
+                                <label for="rpSearch">關鍵字</label>
+                                <div class="inputGroup">
+                                    <i class="bi bi-search inputGroup-icon" aria-hidden="true"></i>
+                                    <input type="search" id="rpSearch" class="form-control" placeholder="報修編號、財產編號、學校">
+                                </div>
+                            </div>
+                            <button type="submit" class="btnPill btn-teal btnPill-sm">查詢</button>
+                            <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                <i class="bi bi-download" aria-hidden="true"></i>匯出 Excel
+                            </button>
+                        </form>
+                    </div>
+
+                    <p class="textNote">總筆數：8</p>
+
+                    <div role="tabpanel" id="panel-rpList" aria-labelledby="tab-rp-assign">
+                        <p class="textNote py-6" data-js="emptyNote" hidden>這個分類目前沒有報修案件。</p>
+
+                        <div class="dataTable-wrap">
+                            <div class="dataTable-scroll">
+                                <table class="dataTable dataTable--stickyEnd">
+                                    <caption>報修列表</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">報修編號／日期</th>
+                                            <th scope="col">學校</th>
+                                            <th scope="col">輔具</th>
+                                            <th scope="col">損壞說明</th>
+                                            <th scope="col">維修廠商</th>
+                                            <th scope="col">狀態</th>
+                                            <th scope="col">功能</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-category="assign">
+                                            <td data-label="報修編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">R1151012-007</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/10/12</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">竹北國小</td>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">擴視機</span>
+                                                    <span class="dataTable-cellTitle-sub">V-CCTV-0012</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="損壞說明">畫面閃爍，放大 10 倍以上會黑畫面</td>
+                                            <td data-label="維修廠商">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="textAmberBold">尚未指派</span>
+                                                    <span class="tagPill tagPill-withIcon tag-blueLight"><i class="bi bi-check-lg" aria-hidden="true"></i>學校已聯繫</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待指派</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-js="repairAssign"
+                                                    data-case="R1151012-007" data-date="2026/10/12" data-school="竹北國小" data-contact="王○○・03-5551234 #215"
+                                                    data-device="擴視機" data-property="V-CCTV-0012" data-desc="畫面閃爍，放大 10 倍以上會黑畫面"
+                                                    data-contacted="true" data-contact-vendor="○○輔具科技有限公司" data-contact-phone="02-2555-2222"
+                                                    data-media='[{"type":"image","src":"../img/devices/cctv.jpg","name":"擴視機 照片 1"},{"type":"image","src":"../img/devices/cctv.jpg","name":"擴視機 照片 2"}]'
+                                                    aria-label="指派廠商 R1151012-007">指派廠商</button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="assign">
+                                            <td data-label="報修編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">R1151020-011</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/10/20</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">湖口國小</td>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">兒童輪椅</span>
+                                                    <span class="dataTable-cellTitle-sub">M-WC-0033</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="損壞說明">右側煞車失靈，推動時偏向一邊</td>
+                                            <td data-label="維修廠商"><span class="textAmberBold">尚未指派</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待指派</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-js="repairAssign"
+                                                    data-case="R1151020-011" data-date="2026/10/20" data-school="湖口國小" data-contact="吳○○・03-5991234"
+                                                    data-device="兒童輪椅" data-property="M-WC-0033" data-desc="右側煞車失靈，推動時偏向一邊"
+                                                    data-contacted="false"
+                                                    data-media='[{"type":"image","src":"../img/devices/wheelchair.jpg","name":"兒童輪椅 照片"}]'
+                                                    aria-label="指派廠商 R1151020-011">指派廠商</button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="assign">
+                                            <td data-label="報修編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">R1151022-002</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/10/22</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">新豐國中</td>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">調頻輔聽系統</span>
+                                                    <span class="dataTable-cellTitle-sub">H-FM-0021</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="損壞說明">接收器充電後仍無法開機</td>
+                                            <td data-label="維修廠商"><span class="textAmberBold">尚未指派</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待指派</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-js="repairAssign"
+                                                    data-case="R1151022-002" data-date="2026/10/22" data-school="新豐國中" data-contact="陳○○・03-5591234"
+                                                    data-device="調頻輔聽系統" data-property="H-FM-0021" data-desc="接收器充電後仍無法開機"
+                                                    data-contacted="false"
+                                                    data-media='[{"type":"image","src":"../img/devices/fm-system.jpg","name":"調頻輔聽系統 照片"}]'
+                                                    aria-label="指派廠商 R1151022-002">指派廠商</button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="fixing" hidden>
+                                            <td data-label="報修編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">R1151008-004</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/10/08</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">橫山國小</td>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">語音溝通器</span>
+                                                    <span class="dataTable-cellTitle-sub">C-AAC-0007</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="損壞說明">第 3 排按鍵錄音後無聲</td>
+                                            <td data-label="維修廠商">○○醫療器材行</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>維修中</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <button type="button" class="btnPill btn-outline btnPill-sm" data-js="repairView"
+                                                    data-case="R1151008-004" data-date="2026/10/08" data-school="橫山國小" data-contact="吳○○・03-5872111"
+                                                    data-device="語音溝通器" data-property="C-AAC-0007" data-desc="第 3 排按鍵錄音後無聲"
+                                                    data-vendor="○○醫療器材行" data-contacted="false" data-status="fixing"
+                                                    data-media='[{"type":"image","src":"../img/devices/aac-device.jpg","name":"語音溝通器 照片"}]'
+                                                    data-log='[{"date":"2026/10/10","text":"廠商開始維修"},{"date":"2026/10/08","text":"中心指派給○○醫療器材行"}]'
+                                                    aria-label="查看 R1151008-004">查看</button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="fixing" hidden>
+                                            <td data-label="報修編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">R1151001-015</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/10/01</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">竹東國中</td>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">擴視機</span>
+                                                    <span class="dataTable-cellTitle-sub">V-CCTV-0007</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="損壞說明">鏡頭無法對焦</td>
+                                            <td data-label="維修廠商">
+                                                <span class="dataTable-cellActions">
+                                                    <span>○○輔具科技有限公司</span>
+                                                    <span class="tagPill tagPill-withIcon tag-blueLight"><i class="bi bi-check-lg" aria-hidden="true"></i>學校已聯繫</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>維修中</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <button type="button" class="btnPill btn-outline btnPill-sm" data-js="repairView"
+                                                    data-case="R1151001-015" data-date="2026/10/01" data-school="竹東國中" data-contact="林○○・03-5941234"
+                                                    data-device="擴視機" data-property="V-CCTV-0007" data-desc="鏡頭無法對焦"
+                                                    data-vendor="○○輔具科技有限公司" data-contacted="true" data-contact-vendor="○○輔具科技有限公司" data-contact-phone="03-5941200" data-status="fixing"
+                                                    data-media='[{"type":"image","src":"../img/devices/portable-cctv.jpg","name":"擴視機 照片"}]'
+                                                    data-log='[{"date":"2026/10/03","text":"廠商開始維修"},{"date":"2026/10/01","text":"中心指派給○○輔具科技有限公司"}]'
+                                                    aria-label="查看 R1151001-015">查看</button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="report" hidden>
+                                            <td data-label="報修編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">R1150925-009</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/09/25</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">北埔國小</td>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">助行器</span>
+                                                    <span class="dataTable-cellTitle-sub">M-WK-0011</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="損壞說明">前輪鬆脫</td>
+                                            <td data-label="維修廠商">○○復健器材社</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-teal"><span class="statusPill-dot" aria-hidden="true"></span>廠商回報：完成維修</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-js="repairClose"
+                                                    data-case="R1150925-009" data-date="2026/09/25" data-school="北埔國小" data-contact="鄭○○・03-5802345"
+                                                    data-device="助行器" data-property="M-WK-0011" data-desc="前輪鬆脫"
+                                                    data-vendor="○○復健器材社" data-contacted="false" data-status="report-ok"
+                                                    data-report-date="2026/10/16" data-report-note="更換前輪軸承與固定螺絲，已交還學校並試用正常。"
+                                                    data-media='[{"type":"image","src":"../img/devices/walker.jpg","name":"助行器 照片"}]'
+                                                    aria-label="結案 R1150925-009">結案</button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="report" hidden>
+                                            <td data-label="報修編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">R1150918-003</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/09/18</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">關西國中</td>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">擴視機</span>
+                                                    <span class="dataTable-cellTitle-sub">V-CCTV-0011</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="損壞說明">電源板燒毀</td>
+                                            <td data-label="維修廠商">○○輔具科技有限公司</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-red"><span class="statusPill-dot" aria-hidden="true"></span>廠商回報：無法修復</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-js="repairClose"
+                                                    data-case="R1150918-003" data-date="2026/09/18" data-school="關西國中" data-contact="張○○・03-5872123"
+                                                    data-device="擴視機" data-property="V-CCTV-0011" data-desc="電源板燒毀"
+                                                    data-vendor="○○輔具科技有限公司" data-contacted="false" data-status="report-fail"
+                                                    data-report-date="2026/10/24" data-report-note="電源板燒毀，原廠已停產零件，無法修復；建議報廢。"
+                                                    data-media='[{"type":"image","src":"../img/devices/magnifier.jpg","name":"擴視機 照片"}]'
+                                                    aria-label="結案 R1150918-003">結案</button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="closed" hidden>
+                                            <td data-label="報修編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">R1150905-001</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/09/05</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">峨眉國小</td>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">站立架</span>
+                                                    <span class="dataTable-cellTitle-sub">M-ST-0004</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="損壞說明">固定帶斷裂</td>
+                                            <td data-label="維修廠商">○○醫療器材行</td>
+                                            <td data-label="狀態"><span class="statusPill"><span class="statusPill-dot" aria-hidden="true"></span>已結案</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <button type="button" class="btnPill btn-outline btnPill-sm" data-js="repairView"
+                                                    data-case="R1150905-001" data-date="2026/09/05" data-school="峨眉國小" data-contact="劉○○・03-5802345"
+                                                    data-device="站立架" data-property="M-ST-0004" data-desc="固定帶斷裂"
+                                                    data-vendor="○○醫療器材行" data-contacted="false" data-status="closed"
+                                                    data-report-date="2026/09/12" data-report-note="更換底座軸承並重新上油，測試穩固無鬆動。"
+                                                    data-media='[{"type":"image","src":"../img/devices/stander.jpg","name":"站立架 照片"}]'
+                                                    data-log='[{"date":"2026/09/12","text":"廠商完成維修，財產已恢復借用中"},{"date":"2026/09/08","text":"廠商開始維修"},{"date":"2026/09/05","text":"中心指派給○○醫療器材行"}]'
+                                                    aria-label="查看 R1150905-001">查看</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 分頁為靜態示意（尚無真實分頁邏輯，現有樣本資料剛好一頁） -->
+                        <nav class="pageNav mt-6" aria-label="分頁">
+                            <p class="pageNav-summary">顯示第 1 至 8 筆，共 8 筆資料</p>
+                            <ul class="pageNav-list">
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="第一頁"><i class="bi bi-chevron-bar-left" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="rpPagePrevNote"><i class="bi bi-chevron-left" aria-hidden="true"></i>上一頁</span></li>
+                                <li><span class="pageNav-item" aria-current="page">1</span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="rpPageNextNote">下一頁<i class="bi bi-chevron-right" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="最後一頁"><i class="bi bi-chevron-bar-right" aria-hidden="true"></i></span></li>
+                            </ul>
+                            <span id="rpPagePrevNote" class="sr-only">已是第一頁，沒有上一頁</span>
+                            <span id="rpPageNextNote" class="sr-only">已是最後一頁，沒有下一頁</span>
+                        </nav>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- 指派維修廠商 modal（需填寫資料，遮罩不可點擊關閉） -->
+    <div class="modal fade" data-js="repairAssignModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="raTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 id="raTitle" class="modal-title">指派維修廠商</h2>
+                        <p class="modal-subtitle textNote" data-js="raSubtitle">報修編號 －</p>
+                    </div>
+                    <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <form novalidate>
+                    <div class="modal-body">
+                        <dl class="infoGrid infoGrid-boxed infoGrid-cols3 modal-body-section">
+                            <div>
+                                <dt class="infoGrid-label">報修學校</dt>
+                                <dd class="infoGrid-value" data-js="raSchool">－</dd>
+                            </div>
+                            <div>
+                                <dt class="infoGrid-label">報修人</dt>
+                                <dd class="infoGrid-value" data-js="raContact">－</dd>
+                            </div>
+                            <div>
+                                <dt class="infoGrid-label">輔具</dt>
+                                <dd class="infoGrid-value"><span data-js="raDevice">－</span><span class="infoGrid-value-mono" data-js="raProperty"></span></dd>
+                            </div>
+                            <div class="infoGrid-full">
+                                <dt class="infoGrid-label">損壞說明</dt>
+                                <dd class="infoGrid-value" data-js="raDesc">－</dd>
+                            </div>
+                        </dl>
+
+                        <div class="modal-splitRow modal-body-section">
+                            <div class="modal-splitRow-col">
+                                <span class="formField-label">照片與影片</span>
+                                <div class="photoLightbox-grid" data-js="raMediaGrid"></div>
+                            </div>
+                            <div class="modal-splitRow-col">
+                                <span class="formField-label">學校聯繫廠商</span>
+                                <p class="noteBox noteBox-blue" data-js="raContactNote" hidden>
+                                    <i class="bi bi-check-circle" aria-hidden="true"></i>
+                                    <span data-js="raContactNoteText"></span>
+                                </p>
+                                <p class="noteBox noteBox-grey" data-js="raContactNoneNote" hidden>
+                                    <i class="bi bi-info-circle" aria-hidden="true"></i>
+                                    <span>學校尚未自行聯繫廠商</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="modal-body-section">
+                            <label for="raVendor" class="formField-label">指派維修廠商 <span class="formField-required">必填</span></label>
+                            <select id="raVendor" class="form-select" data-js="raVendorSelect" required>
+                                <option value="" selected disabled>請選擇廠商</option>
+                                <option value="v2" data-js="raVendorFirstOption">○○輔具科技有限公司</option>
+                                <option value="v1">○○醫療器材行</option>
+                                <option value="v3">○○復健器材社</option>
+                            </select>
+                            <p class="textNote" data-js="raVendorHint">只列出服務該輔具分類的廠商；學校已聯繫的廠商排在最前面。</p>
+                        </div>
+
+                        <div class="modal-body-section">
+                            <label for="raNote" class="formField-label">給廠商的說明</label>
+                            <textarea id="raNote" class="form-control" rows="2" placeholder="例：請先電話聯繫學校承辦人，約定到校時間"></textarea>
+                        </div>
+
+                        <div class="formField-checkRow">
+                            <input type="checkbox" class="form-check-input" id="raNotify" checked>
+                            <label for="raNotify" class="formField-checkRow-label">寄送通知給廠商與學校承辦人</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" class="btnPill btn-teal">確認指派並通知</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 報修結案 modal（需填寫資料，遮罩不可點擊關閉） -->
+    <div class="modal fade" data-js="repairCloseModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="rcTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 id="rcTitle" class="modal-title">
+                            報修結案
+                            <span class="statusPill ms-2" data-js="rcStatusPill"><span class="statusPill-dot" aria-hidden="true"></span><span data-js="rcStatusText">－</span></span>
+                        </h2>
+                        <p class="modal-subtitle textNote" data-js="rcSubtitle">報修編號 －</p>
+                    </div>
+                    <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <form novalidate>
+                    <div class="modal-body">
+                        <dl class="infoGrid infoGrid-boxed infoGrid-cols3 modal-body-section">
+                            <div>
+                                <dt class="infoGrid-label">報修學校</dt>
+                                <dd class="infoGrid-value" data-js="rcSchool">－</dd>
+                            </div>
+                            <div>
+                                <dt class="infoGrid-label">報修人</dt>
+                                <dd class="infoGrid-value" data-js="rcContact">－</dd>
+                            </div>
+                            <div>
+                                <dt class="infoGrid-label">輔具</dt>
+                                <dd class="infoGrid-value"><span data-js="rcDevice">－</span><span class="infoGrid-value-mono" data-js="rcProperty"></span></dd>
+                            </div>
+                            <div class="infoGrid-full">
+                                <dt class="infoGrid-label">損壞說明</dt>
+                                <dd class="infoGrid-value" data-js="rcDesc">－</dd>
+                            </div>
+                        </dl>
+
+                        <div class="modal-splitRow modal-body-section">
+                            <div class="modal-splitRow-col">
+                                <span class="formField-label">照片與影片</span>
+                                <div class="photoLightbox-grid" data-js="rcMediaGrid"></div>
+                            </div>
+                            <div class="modal-splitRow-col">
+                                <span class="formField-label">學校聯繫廠商</span>
+                                <p class="noteBox noteBox-blue" data-js="rcContactNote" hidden>
+                                    <i class="bi bi-check-circle" aria-hidden="true"></i>
+                                    <span data-js="rcContactNoteText"></span>
+                                </p>
+                                <p class="noteBox noteBox-grey" data-js="rcContactNoneNote" hidden>
+                                    <i class="bi bi-info-circle" aria-hidden="true"></i>
+                                    <span>學校尚未自行聯繫廠商</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="modal-body-section">
+                            <h3>廠商回報</h3>
+                            <div class="reportBox" data-js="rcReportBox">
+                                <p class="reportBox-head">
+                                    <span class="tagPill" data-js="rcReportTag">－</span>
+                                    <span class="reportBox-meta" data-js="rcReportMeta">－</span>
+                                </p>
+                                <p class="reportBox-note" data-js="rcReportNote">－</p>
+                            </div>
+                        </div>
+
+                        <fieldset class="modal-body-section">
+                            <legend class="formField-label">結案處理 <span class="formField-required">必填</span></legend>
+                            <div class="cardChoice-group cardChoice-group-grid2" data-js="rcCloseGroup">
+                                <label class="cardChoice">
+                                    <input type="radio" name="rcClose" value="ok" class="cardChoice-input" data-js="rcCloseInput" checked required>
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title" data-js="rcCloseOkTitle">確認結案</span>
+                                        <span class="cardChoice-desc" data-js="rcCloseOkDesc">財產恢復為借用中或在庫</span>
+                                    </span>
+                                </label>
+                                <label class="cardChoice cardChoice-danger">
+                                    <input type="radio" name="rcClose" value="back" class="cardChoice-input" data-js="rcCloseInput">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">重新指派</span>
+                                        <span class="cardChoice-desc" data-js="rcBackDesc">學校反映仍有問題時，案件回到「待指派」</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </fieldset>
+
+                        <div class="modal-body-section">
+                            <label for="rcNote" class="formField-label">結案備註</label>
+                            <textarea id="rcNote" class="form-control" rows="2" placeholder="例：已確認學校可正常使用"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" class="btnPill btn-teal" data-js="rcSubmitBtn">確認結案</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 查看報修案件 modal（純顯示，不需輸入，遮罩可點擊關閉） -->
+    <div class="modal fade" data-js="repairViewModal" tabindex="-1" aria-hidden="true" aria-labelledby="rvTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 id="rvTitle" class="modal-title">
+                            報修案件
+                            <span class="statusPill ms-2" data-js="rvStatusPill"><span class="statusPill-dot" aria-hidden="true"></span><span data-js="rvStatusText">－</span></span>
+                        </h2>
+                        <p class="modal-subtitle textNote" data-js="rvSubtitle">報修編號 －</p>
+                    </div>
+                    <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <dl class="infoGrid infoGrid-boxed infoGrid-cols3 modal-body-section">
+                        <div>
+                            <dt class="infoGrid-label">報修學校</dt>
+                            <dd class="infoGrid-value" data-js="rvSchool">－</dd>
+                        </div>
+                        <div>
+                            <dt class="infoGrid-label">報修人</dt>
+                            <dd class="infoGrid-value" data-js="rvContact">－</dd>
+                        </div>
+                        <div>
+                            <dt class="infoGrid-label">輔具</dt>
+                            <dd class="infoGrid-value"><span data-js="rvDevice">－</span><span class="infoGrid-value-mono" data-js="rvProperty"></span></dd>
+                        </div>
+                        <div class="infoGrid-full">
+                            <dt class="infoGrid-label">損壞說明</dt>
+                            <dd class="infoGrid-value" data-js="rvDesc">－</dd>
+                        </div>
+                    </dl>
+
+                    <div class="modal-splitRow modal-body-section">
+                        <div class="modal-splitRow-col">
+                            <span class="formField-label">照片與影片</span>
+                            <div class="photoLightbox-grid" data-js="rvMediaGrid"></div>
+                        </div>
+                        <div class="modal-splitRow-col">
+                            <span class="formField-label">學校聯繫廠商</span>
+                            <p class="noteBox noteBox-blue" data-js="rvContactNote" hidden>
+                                <i class="bi bi-check-circle" aria-hidden="true"></i>
+                                <span data-js="rvContactNoteText"></span>
+                            </p>
+                            <p class="noteBox noteBox-grey" data-js="rvContactNoneNote" hidden>
+                                <i class="bi bi-info-circle" aria-hidden="true"></i>
+                                <span>學校尚未自行聯繫廠商</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="modal-body-section" data-js="rvReportSection" hidden>
+                        <h3>廠商回報</h3>
+                        <div class="reportBox" data-js="rvReportBox">
+                            <p class="reportBox-head">
+                                <span class="tagPill" data-js="rvReportTag">－</span>
+                                <span class="reportBox-meta" data-js="rvReportMeta">－</span>
+                            </p>
+                            <p class="reportBox-note" data-js="rvReportNote">－</p>
+                        </div>
+                    </div>
+
+                    <div class="modal-body-section">
+                        <h3>處理進度</h3>
+                        <ol class="dotTimeline" data-js="rvTimeline"></ol>
+                    </div>
+                </div>
+                <div class="modal-footer modal-footer-single modal-footer-single-wide">
+                    <button type="button" class="btnPill btn-teal" data-bs-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 照片與影片全螢幕放大檢視（疊在對話框之上，非 Bootstrap Modal：純顯示用途，無需其表單語意與堆疊限制） -->
+    <div class="photoViewerFull" data-js="repairPhotoViewer" role="dialog" aria-modal="true" aria-label="照片與影片放大檢視" hidden>
+        <button type="button" class="photoViewerFull-close btnIcon" data-js="rpvClose" aria-label="關閉放大檢視">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="photoViewerFull-nav photoViewerFull-nav-prev" data-js="rpvPrev" aria-label="上一項">
+            <i class="bi bi-chevron-left" aria-hidden="true"></i>
+        </button>
+        <div class="photoViewerFull-stage">
+            <img class="photoViewerFull-img" data-js="rpvImg" src="" alt="">
+            <video class="photoViewerFull-video" data-js="rpvVideo" controls hidden></video>
+            <p class="photoViewerFull-counter" data-js="rpvCounter">1 / 1</p>
+        </div>
+        <button type="button" class="photoViewerFull-nav photoViewerFull-nav-next" data-js="rpvNext" aria-label="下一項">
+            <i class="bi bi-chevron-right" aria-hidden="true"></i>
+        </button>
+        <a class="photoViewerFull-download btnIcon" data-js="rpvDownload" href="" download aria-label="下載這個檔案">
+            <i class="bi bi-download" aria-hidden="true"></i>
+        </a>
+    </div>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

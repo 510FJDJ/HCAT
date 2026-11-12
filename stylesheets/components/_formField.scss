@@ -1,0 +1,445 @@
+// ============================================================
+// 表單欄位元件（design.md §7.7）：Bootstrap 表單變數已於 helpers/_variables.scss
+// 覆寫，.form-control／.form-check 會自動套用設計稿樣式；這裡只補版面與輔助元素。
+// ============================================================
+
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 24px;
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+.formGrid-full {
+    grid-column: 1 / -1;
+}
+
+.formGrid-span2 {
+    grid-column: span 2;
+
+    @media (max-width: 720px) {
+        grid-column: auto;
+    }
+}
+
+.formField-label {
+    display: block;
+    font-size: 18px;
+    font-weight: 500;
+    color: $ink-1;
+    margin-bottom: 6px;
+}
+
+.formField-required {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 0px 4px;
+    border-radius: 6px;
+    background-color: $state-required;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 400;
+    vertical-align: middle;
+}
+
+.formField-hint {
+    margin-top: 6px;
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.formField-error {
+    margin-top: 6px;
+    font-size: 16px;
+    font-weight: 700;
+    color: $state-required;
+}
+
+// 跨頁共用的淺色提示框（表單下方注意事項、對話框內說明文字）
+.noteBox {
+    display: flex;
+    align-items: flex-start;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    border-radius: $border-radius-sm;
+    background-color: $surface-mint-dots;
+    font-size: 16px;
+    color: $ink-2;
+
+    .bi {
+        flex-shrink: 0;
+        font-size: 18px;
+        color: $brand-teal-deep;
+        margin-top: 1px;
+    }
+}
+
+// 琥珀提示框（免評估說明、增購提示等）：design.md §2.3 accent/amber-pale 底、amber-ink-2 字
+.noteBox-amber {
+    background-color: $accent-amber-pale;
+    color: $accent-amber-ink-2;
+
+    .bi {
+        color: $accent-amber-ink;
+    }
+}
+
+// 紫色提示框（聽障輔具專用區塊說明）
+.noteBox-purple {
+    background-color: #F1ECF8;
+    color: #4B2E83;
+
+    .bi {
+        color: #4B2E83;
+    }
+}
+
+// 藍色提示框（中心到校評估等系統說明訊息）
+.noteBox-blue {
+    background-color: #E8F1FB;
+    color: #1D4F86;
+
+    .bi {
+        color: #1D4F86;
+    }
+}
+
+// 灰色提示框（鎖定中的功能說明，如審核卡「評估完成後才能核准或退回」）
+.noteBox-grey {
+    background-color: $surface-tint;
+    color: $ink-2;
+
+    .bi {
+        color: $ink-3;
+    }
+}
+
+// 琥珀框線提示框（增購／暫無庫存等需要較高警示層級的訊息）：框線沿用 .tag-amberOutline（待購置標籤）同一組 token，避免另創顏色
+.noteBox-amberBordered {
+    border: 1.5px solid #E2A54A;
+    background-color: $accent-amber-pale;
+    color: $accent-amber-ink-2;
+
+    .bi {
+        color: $accent-amber-ink;
+    }
+}
+
+// 紅色提示框（報修「無法修復」等需要立即注意的訊息）
+.noteBox-red {
+    background-color: #FBEAEA;
+    color: $state-required;
+
+    .bi {
+        color: $state-required;
+    }
+}
+
+// 綠色提示框（已完成／已上傳等正向結果訊息，色票沿用 .tag-greenLight 同一組 token）
+.noteBox-green {
+    background-color: #E5F3EA;
+    color: #1E6B3E;
+
+    .bi {
+        color: #1E6B3E;
+    }
+}
+
+// 青綠色提示框（如系統設定頁的申請期間狀態說明）
+.noteBox-teal {
+    background-color: $surface-teal-pale;
+    color: $brand-teal-deep;
+    font-weight: 700;
+
+    .bi {
+        color: $brand-teal-deep;
+    }
+}
+
+// 淺青綠提示框，字重維持一般（如網站導覽頁的瀏覽器快速鍵補充說明）
+.noteBox-tealSoft {
+    padding: 14px 16px;
+    background-color: $surface-teal-pale;
+    color: #0B4F51;
+
+    .bi {
+        color: #0B4F51;
+    }
+}
+
+// 兩欄／三欄／四欄表單網格（在 .formGrid 基礎上調整欄數，手機一律收為單欄）
+.formGrid-cols3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.formGrid-cols4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    @media (max-width: 900px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// 虛線上傳框（檔案上傳按鈕外觀，搭配隱藏的 input[type=file]）
+.fileUpload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 48px;
+    border: 2px dashed #BFCAC7;
+    border-radius: $border-radius-sm;
+    background-color: $surface-card;
+    color: $brand-teal-deep;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 180ms ease-out, border-color 180ms ease-out;
+
+    &:hover {
+        border-color: $brand-teal;
+        background-color: $surface-teal-pale;
+
+        .fileUpload-icon {
+            transform: translateY(-3px);
+        }
+    }
+
+    &:active {
+        border-color: $brand-teal-deep;
+        background-color: $surface-teal-select;
+
+        .fileUpload-icon {
+            transform: translateY(0);
+        }
+    }
+
+    // 拖曳檔案經過時的提示狀態（JS 於 dragenter/dragover 時加上 is-dragover）
+    &.is-dragover {
+        border-style: solid;
+        border-color: $brand-teal;
+        background-color: $surface-teal-pale;
+
+        .fileUpload-icon {
+            transform: translateY(-3px);
+        }
+    }
+}
+
+// 實際的 input[type=file] 在 label 之前（視覺上隱藏但仍可 Tab 到達），
+// 鍵盤移至該 input 時讓後面的 .fileUpload 同步顯示 hover 外觀
+.fileUpload-input:focus-visible + .fileUpload {
+    border-color: $brand-teal;
+    background-color: $surface-teal-pale;
+
+    .fileUpload-icon {
+        transform: translateY(-3px);
+    }
+}
+
+.fileUpload-icon {
+    display: inline-flex;
+    transition: transform 180ms ease-out;
+}
+
+.fileUpload-lg {
+    height: auto;
+    padding: 18px 22px;
+    border-radius: $border-radius-lg;
+    background-color: $surface-tint;
+    gap: 14px;
+
+    .fileUpload-icon {
+        font-size: 22px;
+        color: $brand-teal;
+    }
+}
+
+// 置中大型拖曳上傳區（modal 內的上傳檔案區塊使用）：圖示在上、主文字置中、下方灰字補充格式說明
+.fileUpload-drop {
+    flex-direction: column;
+    justify-content: center;
+    height: auto;
+    gap: 10px;
+    padding: 32px 22px;
+    border-radius: $border-radius-lg;
+    background-color: $surface-tint;
+
+    .fileUpload-icon {
+        font-size: 28px;
+        color: $brand-teal;
+    }
+}
+
+.fileUpload-drop-text {
+    font-size: 17px;
+    font-weight: 700;
+    color: $brand-teal-deep;
+}
+
+.fileUpload-drop-sub {
+    font-size: 16px;
+    font-weight: 400;
+    color: $ink-3;
+}
+
+.fileUpload-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.fileUpload-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.45;
+    text-align: left;
+}
+
+.fileUpload-text-sub {
+    font-size: 16px;
+    font-weight: 500;
+    color: $ink-3;
+}
+
+// 密碼顯示切換鈕（輸入框內右側）
+.inputGroup {
+    position: relative;
+}
+
+.inputGroup .form-control {
+    padding-right: 2px;
+}
+
+.inputGroup-btn {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    bottom: 4px;
+    width: 40px;
+    border: none;
+    background: none;
+    color: $ink-3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    transition: color 180ms ease-out, background-color 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        color: $brand-teal-deep;
+        background-color: $surface-teal-pale;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .inputGroup-btn,
+    .fileUpload,
+    .fileUpload-icon {
+        transition: none;
+    }
+}
+
+// 左側裝飾圖示（搜尋欄位等），純裝飾不可互動
+.inputGroup-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: $ink-3;
+    pointer-events: none;
+}
+
+.inputGroup-icon ~ .form-control {
+    padding-left: 44px;
+}
+
+// 驗證碼：圖形顯示＋語音／重新產生
+.captchaRow {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.captchaRow .form-control {
+    flex: 1 1 140px;
+    min-width: 0;
+}
+
+.captchaDisplay {
+    flex: 0 0 auto;
+    min-width: 108px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    border-radius: $input-border-radius;
+    background-color: $surface-mint-dots;
+    font-family: "Poppins", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    color: $ink-1;
+    user-select: none;
+}
+
+// 行內 label＋select（學年度等單一篩選欄位，與 label 同列排列）
+.selectInline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.selectInline-label {
+    flex-shrink: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.selectInline .form-select {
+    width: auto;
+}
+
+.formField-checkRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.formField-checkRow .form-check-input {
+    margin-top: 3px;
+}
+
+.formField-checkRow-label {
+    font-size: 16px;
+    color: $ink-1;
+
+    .linkMarker {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+    }
+}

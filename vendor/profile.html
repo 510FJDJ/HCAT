@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基本資料 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="廠商端查看公司資料並維護聯絡資料">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_Vendor.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu" src="../img/banner/account.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="profilePage-container">
+                <div class="bannerWave-inner">
+                    <nav class="crumbNav" aria-label="麵包屑導覽">
+                        <ol>
+                            <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li>帳號資料</li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li aria-current="page" class="crumbNav-current">基本資料</li>
+                        </ol>
+                    </nav>
+
+                    <div class="bannerWave-main">
+                        <h1 class="titleSection bannerWave-title">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            基本資料
+                        </h1>
+                        <p class="bannerWave-desc">維護聯絡資料。公司基本資料若需要修改，請聯繫特教資源中心。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="profilePage-content">
+            <div class="profilePage-container">
+                <section class="cardPanel" aria-labelledby="vpBasic">
+                    <div class="cardPanel-head">
+                        <h2 id="vpBasic" class="cardPanel-title">基本資料</h2>
+                        <span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>帳號啟用中</span>
+                    </div>
+
+                    <dl class="infoGrid">
+                        <div>
+                            <dt class="infoGrid-label">公司名稱</dt>
+                            <dd class="infoGrid-value">○○輔具科技有限公司</dd>
+                        </div>
+                        <div>
+                            <dt class="infoGrid-label">統一編號</dt>
+                            <dd class="infoGrid-value infoGrid-value-mono">〔統一編號〕</dd>
+                        </div>
+                        <div>
+                            <dt class="infoGrid-label">廠商類型</dt>
+                            <dd class="infoGrid-value"><span class="tagPill tag-tealSoft">維修廠商</span></dd>
+                        </div>
+                        <div>
+                            <dt class="infoGrid-label">服務輔具類別</dt>
+                            <dd class="infoGrid-value">
+                                <span class="tagPill tag-goldLight">視障輔具</span>
+                                <span class="tagPill tag-greyLight">資訊輔具</span>
+                            </dd>
+                        </div>
+                        <div>
+                            <dt class="infoGrid-label">登入帳號</dt>
+                            <dd class="infoGrid-value infoGrid-value-mono">fix@vendor2.example.com</dd>
+                        </div>
+                        <div>
+                            <dt class="infoGrid-label">帳號啟用日期</dt>
+                            <dd class="infoGrid-value infoGrid-value-mono">2026/08/12</dd>
+                        </div>
+                    </dl>
+
+                    <form class="profileCard-form" id="vendorProfileForm">
+                        <div class="formGrid formGrid-cols3">
+                            <div>
+                                <label for="vpContact" class="formField-label">聯絡人 <span class="formField-required">必填</span></label>
+                                <input type="text" id="vpContact" class="form-control" value="陳○○" placeholder="例：陳○○">
+                            </div>
+                            <div>
+                                <label for="vpTitle" class="formField-label">職稱</label>
+                                <input type="text" id="vpTitle" class="form-control" value="維修主任" placeholder="例：維修主任">
+                            </div>
+                            <div>
+                                <label for="vpTel" class="formField-label">電話 <span class="formField-required">必填</span></label>
+                                <input type="tel" id="vpTel" class="form-control" value="02-2555-2222" placeholder="例：02-2555-2222">
+                            </div>
+                            <div>
+                                <label for="vpMobile" class="formField-label">手機</label>
+                                <input type="tel" id="vpMobile" class="form-control" placeholder="例：0912-345-678">
+                            </div>
+                            <div class="formGrid-span2">
+                                <label for="vpEmail" class="formField-label">通知信箱 <span class="formField-required">必填</span></label>
+                                <input type="email" id="vpEmail" class="form-control" value="fix@vendor2.example.com" placeholder="例：fix@vendor2.example.com" aria-describedby="vpEmailHint">
+                                <p id="vpEmailHint" class="formField-hint">報修指派、案件提醒會寄到這個信箱，可與登入帳號不同。</p>
+                            </div>
+                            <div class="formGrid-full">
+                                <label for="vpAddr" class="formField-label">公司地址</label>
+                                <input type="text" id="vpAddr" class="form-control" placeholder="例：新竹縣竹北市○○路○號">
+                            </div>
+                        </div>
+
+                        <div class="flex-center-center">
+                            <button type="submit" class="btnPill btn-teal">儲存聯絡資料</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

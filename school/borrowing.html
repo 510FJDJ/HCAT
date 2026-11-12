@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>借用中輔具 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="學校查看目前借用中的輔具，可提出報修或歸還．轉銜申請">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_School.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu dec-borrowing" src="../img/banner/borrowing.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="borrowingPage-container">
+                <div class="bannerWave-inner">
+                    <div class="bannerWave-main">
+                        <h1 class="titleSection bannerWave-title">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            借用中輔具
+                        </h1>
+                        <p class="bannerWave-desc">學校目前借用的輔具。輔具故障請按「報修」；學生畢業、轉學或不再使用時，請按「歸還・轉銜」提出申請。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="borrowingPage-content">
+            <div class="borrowingPage-container">
+
+                <section class="applyForm-section cardPanel" aria-label="借用中輔具列表">
+                    <div class="applyForm-sectionBody mt-0">
+
+                        <div class="borrowingFilters">
+                            <form class="borrowingFilters-form" novalidate>
+                                <div class="borrowingFilters-field">
+                                    <label for="bwStatus">狀態</label>
+                                    <select id="bwStatus" class="form-select">
+                                        <option value="all" selected>全部（10）</option>
+                                        <option value="soon">即將到期（1）</option>
+                                        <option value="repair">報修中（1）</option>
+                                        <option value="busy">歸還・轉銜辦理中（1）</option>
+                                    </select>
+                                </div>
+                                <div class="borrowingFilters-field">
+                                    <label for="bwCategory">輔具類別</label>
+                                    <select id="bwCategory" class="form-select">
+                                        <option selected>全部類別</option>
+                                        <option>行動與擺位輔具</option>
+                                        <option>視障輔具</option>
+                                        <option>聽障輔具</option>
+                                        <option>溝通輔具</option>
+                                        <option>資訊輔具</option>
+                                        <option>書寫與閱讀輔具</option>
+                                        <option>其他</option>
+                                    </select>
+                                </div>
+                                <div class="borrowingFilters-field">
+                                    <label for="bwSearch">關鍵字</label>
+                                    <div class="inputGroup">
+                                        <i class="bi bi-search inputGroup-icon" aria-hidden="true"></i>
+                                        <input type="search" id="bwSearch" class="form-control" placeholder="學生姓名、輔具名稱、財產編號">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btnPill btn-teal btnPill-sm">
+                                    <i class="bi bi-search" aria-hidden="true"></i>查詢
+                                </button>
+                            </form>
+                        </div>
+
+                        <p class="textNote">總筆數：10</p>
+
+                        <div class="dataTable-wrap">
+                            <div class="dataTable-scroll">
+                                <table class="dataTable">
+                                    <caption>借用中輔具列表</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">輔具</th>
+                                            <th scope="col">使用者</th>
+                                            <th scope="col">借用期間</th>
+                                            <th scope="col">狀態</th>
+                                            <th scope="col">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellDevice">
+                                                    <img class="dataTable-cellDevice-photo" src="../img/devices/cctv.jpg" alt="">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">桌上型擴視機</span>
+                                                        <span class="dataTable-cellTitle-sub">V-CCTV-0012</span>
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="dataTable-cellTitle-main">林○安（三年甲班）</span>
+                                                    <span class="tagPill tag-tealSoft">首次借用</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="借用期間">
+                                                <span class="borrowing-period">
+                                                    <span class="borrowing-period-start">2024/09/12 起</span>
+                                                    <span class="borrowing-period-due">2030/06/30 歸還</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>借用中</span></td>
+                                            <td data-label="操作">
+                                                <span class="borrowing-cellActions">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-js="borrowingRepair" data-device="桌上型擴視機" data-property="V-CCTV-0012" data-user="林○安（三年甲班）" data-photo="../img/devices/cctv.jpg" aria-label="報修 桌上型擴視機 V-CCTV-0012">
+                                                        <i class="bi bi-tools" aria-hidden="true"></i>報修
+                                                    </button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="borrowingChange" data-device="桌上型擴視機" data-property="V-CCTV-0012" data-user="林○安（三年甲班）" data-photo="../img/devices/cctv.jpg" aria-label="歸還或轉銜 桌上型擴視機 V-CCTV-0012">歸還・轉銜</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellDevice">
+                                                    <img class="dataTable-cellDevice-photo" src="../img/devices/fm-system.jpg" alt="">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">調頻輔聽系統</span>
+                                                        <span class="dataTable-cellTitle-sub">H-FM-0017</span>
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="dataTable-cellTitle-main">吳○涵（四年乙班）</span>
+                                                    <span class="tagPill tag-tealSoft">首次借用</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="借用期間">
+                                                <span class="borrowing-period">
+                                                    <span class="borrowing-period-start">2025/03/05 起</span>
+                                                    <span class="borrowing-period-due">2029/06/30 歸還</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>報修中</span></td>
+                                            <td data-label="操作">
+                                                <span class="borrowing-cellActions">
+                                                    <a href="repairs.html" class="linkMarker">查看報修</a>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="borrowingChange" data-device="調頻輔聽系統" data-property="H-FM-0017" data-user="吳○涵（四年乙班）" data-photo="../img/devices/fm-system.jpg" aria-label="歸還或轉銜 調頻輔聽系統 H-FM-0017">歸還・轉銜</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellDevice">
+                                                    <img class="dataTable-cellDevice-photo" src="../img/devices/walker.jpg" alt="">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">助行器</span>
+                                                        <span class="dataTable-cellTitle-sub">M-WK-0009</span>
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="dataTable-cellTitle-main">鄭○哲（五年甲班）</span>
+                                                    <span class="tagPill tag-cyanLight">臨時借用</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="借用期間">
+                                                <span class="borrowing-period">
+                                                    <span class="borrowing-period-start">2026/08/25 起</span>
+                                                    <span class="borrowing-period-due borrowing-dueWarn">2026/12/31 歸還・剩 2 個月</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>借用中</span></td>
+                                            <td data-label="操作">
+                                                <span class="borrowing-cellActions">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-js="borrowingRepair" data-device="助行器" data-property="M-WK-0009" data-user="鄭○哲（五年甲班）" data-photo="../img/devices/walker.jpg" aria-label="報修 助行器 M-WK-0009">
+                                                        <i class="bi bi-tools" aria-hidden="true"></i>報修
+                                                    </button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="borrowingChange" data-device="助行器" data-property="M-WK-0009" data-user="鄭○哲（五年甲班）" data-photo="../img/devices/walker.jpg" aria-label="歸還或轉銜 助行器 M-WK-0009">歸還・轉銜</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellDevice">
+                                                    <img class="dataTable-cellDevice-photo" src="../img/devices/wheelchair.jpg" alt="">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">一般輪椅</span>
+                                                        <span class="dataTable-cellTitle-sub">M-WC-0018</span>
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="dataTable-cellTitle-main">許○廷（六年乙班）</span>
+                                                    <span class="tagPill tag-tealSoft">首次借用</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="借用期間">
+                                                <span class="borrowing-period">
+                                                    <span class="borrowing-period-start">2021/09/01 起</span>
+                                                    <span class="borrowing-period-due">2026/09/30 歸還</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>辦理中</span></td>
+                                            <td data-label="操作">
+                                                <span class="borrowing-busyNote">
+                                                    <span class="borrowing-busyNote-text">畢業歸還辦理中</span>
+                                                    <a href="records.html" class="linkMarker">前往申請紀錄</a>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellDevice">
+                                                    <img class="dataTable-cellDevice-photo" src="../img/devices/communication-board.jpg" alt="">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">溝通板</span>
+                                                        <span class="dataTable-cellTitle-sub">C-CB-0014</span>
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="dataTable-cellTitle-main">黃○恩（一年甲班）</span>
+                                                    <span class="tagPill tag-tealSoft">首次借用</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="借用期間">
+                                                <span class="borrowing-period">
+                                                    <span class="borrowing-period-start">2025/09/15 起</span>
+                                                    <span class="borrowing-period-due">2032/06/30 歸還</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>借用中</span></td>
+                                            <td data-label="操作">
+                                                <span class="borrowing-cellActions">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-js="borrowingRepair" data-device="溝通板" data-property="C-CB-0014" data-user="黃○恩（一年甲班）" data-photo="../img/devices/communication-board.jpg" aria-label="報修 溝通板 C-CB-0014">
+                                                        <i class="bi bi-tools" aria-hidden="true"></i>報修
+                                                    </button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="borrowingChange" data-device="溝通板" data-property="C-CB-0014" data-user="黃○恩（一年甲班）" data-photo="../img/devices/communication-board.jpg" aria-label="歸還或轉銜 溝通板 C-CB-0014">歸還・轉銜</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellDevice">
+                                                    <img class="dataTable-cellDevice-photo" src="../img/devices/touch-monitor.jpg" alt="">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">觸摸顯示器</span>
+                                                        <span class="dataTable-cellTitle-sub">I-TS-0003</span>
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="dataTable-cellTitle-main">資源班</span>
+                                                    <span class="tagPill tag-purpleLight">校內使用</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="借用期間">
+                                                <span class="borrowing-period">
+                                                    <span class="borrowing-period-start">2025/02/20 起</span>
+                                                    <span class="borrowing-period-due">2027/06/30 歸還</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>借用中</span></td>
+                                            <td data-label="操作">
+                                                <span class="borrowing-cellActions">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-js="borrowingRepair" data-device="觸摸顯示器" data-property="I-TS-0003" data-user="資源班" data-photo="../img/devices/touch-monitor.jpg" aria-label="報修 觸摸顯示器 I-TS-0003">
+                                                        <i class="bi bi-tools" aria-hidden="true"></i>報修
+                                                    </button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="borrowingChange" data-device="觸摸顯示器" data-property="I-TS-0003" data-user="資源班" data-photo="../img/devices/touch-monitor.jpg" aria-label="歸還或轉銜 觸摸顯示器 I-TS-0003">歸還・轉銜</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellDevice">
+                                                    <img class="dataTable-cellDevice-photo" src="../img/devices/stander.jpg" alt="">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">站立架</span>
+                                                        <span class="dataTable-cellTitle-sub">M-ST-0004</span>
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="dataTable-cellTitle-main">周○宇（四年丙班）</span>
+                                                    <span class="tagPill tag-goldLight">轉銜續借</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="借用期間">
+                                                <span class="borrowing-period">
+                                                    <span class="borrowing-period-start">2023/09/01 起</span>
+                                                    <span class="borrowing-period-due">2028/06/30 歸還</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>借用中</span></td>
+                                            <td data-label="操作">
+                                                <span class="borrowing-cellActions">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-js="borrowingRepair" data-device="站立架" data-property="M-ST-0004" data-user="周○宇（四年丙班）" data-photo="../img/devices/stander.jpg" aria-label="報修 站立架 M-ST-0004">
+                                                        <i class="bi bi-tools" aria-hidden="true"></i>報修
+                                                    </button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="borrowingChange" data-device="站立架" data-property="M-ST-0004" data-user="周○宇（四年丙班）" data-photo="../img/devices/stander.jpg" aria-label="歸還或轉銜 站立架 M-ST-0004">歸還・轉銜</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellDevice">
+                                                    <img class="dataTable-cellDevice-photo" src="../img/devices/joystick-mouse.jpg" alt="">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">搖桿滑鼠</span>
+                                                        <span class="dataTable-cellTitle-sub">I-JS-0008</span>
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="dataTable-cellTitle-main">蔡○恩（六年甲班）</span>
+                                                    <span class="tagPill tag-tealSoft">首次借用</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="借用期間">
+                                                <span class="borrowing-period">
+                                                    <span class="borrowing-period-start">2022/09/01 起</span>
+                                                    <span class="borrowing-period-due">2027/06/30 歸還</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>借用中</span></td>
+                                            <td data-label="操作">
+                                                <span class="borrowing-cellActions">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-js="borrowingRepair" data-device="搖桿滑鼠" data-property="I-JS-0008" data-user="蔡○恩（六年甲班）" data-photo="../img/devices/joystick-mouse.jpg" aria-label="報修 搖桿滑鼠 I-JS-0008">
+                                                        <i class="bi bi-tools" aria-hidden="true"></i>報修
+                                                    </button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="borrowingChange" data-device="搖桿滑鼠" data-property="I-JS-0008" data-user="蔡○恩（六年甲班）" data-photo="../img/devices/joystick-mouse.jpg" aria-label="歸還或轉銜 搖桿滑鼠 I-JS-0008">歸還・轉銜</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellDevice">
+                                                    <img class="dataTable-cellDevice-photo" src="../img/devices/positioning-chair.jpg" alt="">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">擺位椅</span>
+                                                        <span class="dataTable-cellTitle-sub">M-SE-0006</span>
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="dataTable-cellTitle-main">李○萱（二年乙班）</span>
+                                                    <span class="tagPill tag-tealSoft">首次借用</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="借用期間">
+                                                <span class="borrowing-period">
+                                                    <span class="borrowing-period-start">2025/09/10 起</span>
+                                                    <span class="borrowing-period-due">2031/06/30 歸還</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>借用中</span></td>
+                                            <td data-label="操作">
+                                                <span class="borrowing-cellActions">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-js="borrowingRepair" data-device="擺位椅" data-property="M-SE-0006" data-user="李○萱（二年乙班）" data-photo="../img/devices/positioning-chair.jpg" aria-label="報修 擺位椅 M-SE-0006">
+                                                        <i class="bi bi-tools" aria-hidden="true"></i>報修
+                                                    </button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="borrowingChange" data-device="擺位椅" data-property="M-SE-0006" data-user="李○萱（二年乙班）" data-photo="../img/devices/positioning-chair.jpg" aria-label="歸還或轉銜 擺位椅 M-SE-0006">歸還・轉銜</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellDevice">
+                                                    <img class="dataTable-cellDevice-photo" src="../img/devices/aac-device.jpg" alt="">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">語音溝通器</span>
+                                                        <span class="dataTable-cellTitle-sub">C-AAC-0011</span>
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="dataTable-cellTitle-main">何○翰（五年乙班）</span>
+                                                    <span class="tagPill tag-tealSoft">首次借用</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="借用期間">
+                                                <span class="borrowing-period">
+                                                    <span class="borrowing-period-start">2024/09/01 起</span>
+                                                    <span class="borrowing-period-due">2028/06/30 歸還</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>借用中</span></td>
+                                            <td data-label="操作">
+                                                <span class="borrowing-cellActions">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-js="borrowingRepair" data-device="語音溝通器" data-property="C-AAC-0011" data-user="何○翰（五年乙班）" data-photo="../img/devices/aac-device.jpg" aria-label="報修 語音溝通器 C-AAC-0011">
+                                                        <i class="bi bi-tools" aria-hidden="true"></i>報修
+                                                    </button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="borrowingChange" data-device="語音溝通器" data-property="C-AAC-0011" data-user="何○翰（五年乙班）" data-photo="../img/devices/aac-device.jpg" aria-label="歸還或轉銜 語音溝通器 C-AAC-0011">歸還・轉銜</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 分頁為靜態示意（尚無真實分頁邏輯，現有樣本資料剛好一頁） -->
+                        <nav class="pageNav mt-6" aria-label="分頁">
+                            <p class="pageNav-summary">顯示第 1 至 10 筆，共 10 筆資料</p>
+                            <ul class="pageNav-list">
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="第一頁"><i class="bi bi-chevron-bar-left" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="bwPagePrevNote"><i class="bi bi-chevron-left" aria-hidden="true"></i>上一頁</span></li>
+                                <li><span class="pageNav-item" aria-current="page">1</span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="bwPageNextNote">下一頁<i class="bi bi-chevron-right" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="最後一頁"><i class="bi bi-chevron-bar-right" aria-hidden="true"></i></span></li>
+                            </ul>
+                            <span id="bwPagePrevNote" class="sr-only">已是第一頁，沒有上一頁</span>
+                            <span id="bwPageNextNote" class="sr-only">已是最後一頁，沒有下一頁</span>
+                        </nav>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- 歸還．轉銜申請 modal（內容依點擊的按鈕動態帶入） -->
+    <div class="modal fade" data-js="changeModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="chTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-head-text">
+                    <h2 id="chTitle" class="modal-title">歸還・轉銜申請</h2>
+                    <p class="modal-subtitle textNote" data-js="chSubtitle">－</p>
+                </div>
+                <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <fieldset class="cardChoice-group cardChoice-group-row">
+                    <legend class="formField-label">申請類型 <span class="formField-required">必填</span></legend>
+                    <label class="cardChoice is-selected" data-js="ch-card">
+                        <input type="radio" name="chKind" value="grad" class="cardChoice-input" data-js="ch-radio" checked>
+                        <span class="cardChoice-text">
+                            <span class="cardChoice-title">畢業歸還</span>
+                            <span class="cardChoice-desc">學生畢業，輔具歸還中心</span>
+                        </span>
+                    </label>
+                    <label class="cardChoice" data-js="ch-card">
+                        <input type="radio" name="chKind" value="transfer" class="cardChoice-input" data-js="ch-radio">
+                        <span class="cardChoice-text">
+                            <span class="cardChoice-title">轉銜續借</span>
+                            <span class="cardChoice-desc">學生轉學，輔具跟著到新學校</span>
+                        </span>
+                    </label>
+                    <label class="cardChoice" data-js="ch-card">
+                        <input type="radio" name="chKind" value="stop" class="cardChoice-input" data-js="ch-radio">
+                        <span class="cardChoice-text">
+                            <span class="cardChoice-title">停止借用</span>
+                            <span class="cardChoice-desc">不再需要，提前歸還</span>
+                        </span>
+                    </label>
+                </fieldset>
+
+                <!-- 轉銜續借 -->
+                <div class="modal-body-section" data-js="ch-transfer" hidden>
+                    <p class="noteBox noteBox-blue">
+                        <i class="bi bi-info-circle" aria-hidden="true"></i>
+                        <span>同學習階段轉學、國中升縣立高中可以轉銜續借。升小一、國一、高一請選「畢業歸還」，由新學校重新申請。</span>
+                    </p>
+                    <div class="formGrid formGrid-cols3 mt-4">
+                        <div>
+                            <label for="chStage" class="formField-label">轉入學校學制 <span class="formField-required">必填</span></label>
+                            <select id="chStage" class="form-select" data-js="ch-stage">
+                                <option value="k">幼兒園</option>
+                                <option value="e" selected>國小</option>
+                                <option value="j">國中</option>
+                                <option value="h">高中職</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="chSchool" class="formField-label">轉入學校 <span class="formField-required">必填</span></label>
+                            <select id="chSchool" class="form-select" data-js="ch-school">
+                                <option value="">請選擇國小</option>
+                                <option>竹北市 博愛國小</option>
+                                <option>竹北市 東海國小</option>
+                                <option>竹北市 十興國小</option>
+                                <option>竹東鎮 竹東國小</option>
+                                <option>湖口鄉 湖口國小</option>
+                                <option>新豐鄉 新豐國小</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="chDate" class="formField-label">轉出日期 <span class="formField-required">必填</span></label>
+                            <input type="date" id="chDate" class="form-control" value="2026-11-16">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 畢業歸還 -->
+                <div class="modal-body-section" data-js="ch-grad">
+                    <div class="formGrid">
+                        <div>
+                            <label for="chRetGrad" class="formField-label">預計歸還日期 <span class="formField-required">必填</span></label>
+                            <input type="date" id="chRetGrad" class="form-control" value="2027-06-30">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 停止借用 -->
+                <div class="modal-body-section" data-js="ch-stop" hidden>
+                    <div class="formGrid">
+                        <div>
+                            <label for="chWhy" class="formField-label">停止原因 <span class="formField-required">必填</span></label>
+                            <select id="chWhy" class="form-select">
+                                <option value="">請選擇原因</option>
+                                <option>學生已不需要</option>
+                                <option>改用其他輔具</option>
+                                <option>輔具不適合學生</option>
+                                <option>其他</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="chRetStop" class="formField-label">預計歸還日期 <span class="formField-required">必填</span></label>
+                            <input type="date" id="chRetStop" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-body-section">
+                    <label for="chNote" class="formField-label">備註</label>
+                    <textarea id="chNote" class="form-control" rows="2" data-js="ch-notePh" placeholder="例：配件已整理齊全，可安排收回時間"></textarea>
+                </div>
+
+                <p class="modal-foot-note" data-js="chNoteText">送出後由中心審核。核准後請到「申請紀錄」下載歸還單，簽章後上傳。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btnPill btn-teal" data-js="changeSubmit">送出給中心審核</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 輔具報修 modal（內容依點擊的按鈕動態帶入） -->
+    <div class="modal fade" data-js="repairModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="rpTitle">
+        <div class="modal-dialog modal-dialog-md">
+            <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-head-text">
+                    <h2 id="rpTitle" class="modal-title">輔具報修</h2>
+                </div>
+                <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="deviceInfo">
+                    <img class="deviceInfo-photo" data-js="rpPhoto" src="" alt="">
+                    <span class="deviceInfo-text">
+                        <span class="deviceInfo-title" data-js="rpDevice">－</span>
+                        <span class="deviceInfo-sub" data-js="rpUser">－</span>
+                    </span>
+                </div>
+
+                <div class="modal-body-section mt-5">
+                    <label for="rpDesc" class="formField-label">損壞說明 <span class="formField-required">必填</span></label>
+                    <textarea id="rpDesc" class="form-control" rows="3" placeholder="請描述狀況，例如：右側煞車失靈、開機後畫面一直閃爍"></textarea>
+                </div>
+
+                <div class="modal-body-section">
+                    <span id="rpMediaLabel" class="formField-label">照片或影片</span>
+                    <input type="file" id="rpMedia" class="fileUpload-input" multiple accept="image/*,video/*" aria-labelledby="rpMediaLabel">
+                    <label for="rpMedia" class="fileUpload fileUpload-lg">
+                        <i class="bi bi-camera fileUpload-icon" aria-hidden="true"></i>
+                        <span class="fileUpload-text">拍照或選擇檔案<span class="fileUpload-text-sub">JPG、PNG、MP4，最多 5 個</span></span>
+                    </label>
+                    <div class="fileUploadList" data-js="rpFileList" hidden></div>
+                </div>
+
+                <div class="boxBordered">
+                    <p class="textNote">維修廠商　<b>○○輔具科技有限公司</b>　<a href="tel:0225552222" class="linkMarker">02-2555-2222</a></p>
+                    <div class="formField-checkRow mt-5">
+                        <input class="form-check-input" type="checkbox" id="rpCalled">
+                        <label for="rpCalled" class="formField-checkRow-label">已自行聯繫廠商</label>
+                    </div>
+                    <p class="textNote">可以先打電話給廠商；勾選後中心就知道學校已聯繫過。</p>
+
+                    <div class="formGrid mt-4">
+                        <div>
+                            <label for="rpName" class="formField-label">聯絡人 <span class="formField-required">必填</span></label>
+                            <input type="text" id="rpName" class="form-control" value="王○○" placeholder="例：王小明">
+                        </div>
+                        <div>
+                            <label for="rpTel" class="formField-label">聯絡電話 <span class="formField-required">必填</span></label>
+                            <input type="tel" id="rpTel" class="form-control" value="03-5551234 #215" placeholder="例：03-5551234 #215">
+                        </div>
+                    </div>
+                </div>
+
+                <p class="modal-foot-note">送出後由中心指派維修廠商，進度可以在「報修紀錄」查看。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btnPill btn-teal" data-js="repairSubmit">送出報修</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

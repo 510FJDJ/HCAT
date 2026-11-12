@@ -1,0 +1,293 @@
+// ============================================================
+// 頁尾版位（design.md §5.1、§6）：landmark 命名，內部元件外型命名
+// ============================================================
+
+// 插圖壓在 footer 圓角上面（蓋住轉角），背景點點退到 footer 後面：見 CLAUDE.md §7.2 討論
+.siteFooter-illustration {
+    position: relative;
+    width: 100%;
+    padding: 72px 0;
+
+    img {
+        position: relative;
+        z-index: 2;
+        display: block;
+        width: auto;
+        max-width: calc(100% - 48px);
+        height: 160px;
+        margin: 0 auto;
+        object-fit: contain;
+    }
+}
+
+@media (max-width: 720px) {
+    .siteFooter-illustration {
+        padding: 0;
+
+        img {
+            height: 120px;
+        }
+    }
+}
+
+.siteFooter-illustration-bg {
+    position: absolute;
+    inset: 0;
+}
+
+.siteFooter {
+    position: relative;
+    z-index: 1;
+    margin-top: -94px;
+    background-color: $brand-teal;
+    border-radius: 72px 72px 0 0;
+    color: $footer-text-primary;
+    padding: 48px 0 0;
+
+    @media (max-width: 720px) {
+        margin-top: -52px;
+        border-radius: 40px 40px 0 0;
+    }
+}
+
+// 導盲磚定位點 :::（純裝飾文字，標示 Alt+Z／#footerAnchor 落點，見 ACCESSIBILITY.md §2）
+// 寬度與左右留白對齊 .siteFooter-inner，讓 ::: 落在 logo 正上方
+.siteFooter-anchor {
+    display: block;
+    max-width: 1280px;
+    margin: 0 auto 16px;
+    padding: 0 40px;
+    letter-spacing: .2em;
+    font-weight: 700;
+    color: $footer-text-secondary;
+
+    @media (max-width: 992px) {
+        padding: 0 24px;
+    }
+
+    @media (max-width: 720px) {
+        padding: 0 16px;
+    }
+}
+
+.siteFooter-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 40px;
+
+    @media (max-width: 992px) {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 0 24px;
+    }
+
+    @media (max-width: 720px) {
+        padding: 0 16px;
+    }
+}
+
+.siteFooter-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.siteFooter-col-brand {
+    gap: 20px;
+}
+
+.siteFooter-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+
+    img {
+        width: 44px;
+        height: 44px;
+        object-fit: contain;
+        flex-shrink: 0;
+    }
+}
+
+.siteFooter-logoText {
+    display: flex;
+    flex-direction: column;
+}
+
+.siteFooter-logoText-small {
+    font-size: 14px;
+    color: $footer-text-secondary;
+}
+
+.siteFooter-logoText-main {
+    font-size: 18px;
+    font-weight: 700;
+    color: $footer-text-primary;
+}
+
+.siteFooter-infoList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+}
+
+.siteFooter-infoRow {
+    display: flex;
+    gap: 12px;
+    font-size: 16px;
+
+    dt {
+        flex-shrink: 0;
+        width: 76px;
+        color: $footer-text-secondary;
+    }
+
+    dd {
+        margin: 0;
+        color: $footer-text-primary;
+    }
+}
+
+.footerColTitle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 21px;
+    font-weight: 700;
+    color: $footer-text-primary;
+
+    &::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 2px;
+        background-color: $accent-amber-soft;
+        flex-shrink: 0;
+    }
+}
+
+// ---- 快速前往：按鈕式列，右側白色圓底箭頭（共用 .btnPill-arrowCircle）----
+.siteFooter-navList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    // 平板／手機：改為兩個兩個並排，按鈕比例縮小
+    @media (max-width: 992px) {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.siteFooter-navRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-radius: $border-radius-pill;
+    background-color: $brand-teal-card;
+    color: $footer-text-primary;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $brand-teal-hover;
+    }
+
+    @media (max-width: 992px) {
+        min-height: 48px;
+        padding: 0 8px 0 14px;
+
+        .btnPill-arrowCircle {
+            width: 28px;
+            height: 28px;
+
+            .bi {
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+// ---- 相關連結：兩行式項目（.linkFooter-twoLine，見 _linkText.scss）----
+.siteFooter-linkList {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+
+    // 分隔線畫在 li 的緊貼邊界上，連結 hover 時因 padding 外擴而蓋過這條線
+    li:not(:last-child) {
+        border-bottom: 1px solid rgba(255, 255, 255, .12);
+    }
+
+    // 平板／手機：改為兩個兩個並排，改用 gap 區隔，不再畫分隔線（兩欄時「最後一個」無法代表每行的結尾）
+    @media (max-width: 992px) {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px 16px;
+
+        li:not(:last-child) {
+            border-bottom: none;
+        }
+    }
+}
+
+// ---- 底部列 ----
+.siteFooter-bottom {
+    margin-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, .18);
+    padding: 20px 40px 24px;
+    font-size: 16px;
+    color: $footer-text-secondary;
+
+    @media (max-width: 720px) {
+        padding: 20px 16px 24px;
+    }
+}
+
+.siteFooter-bottom-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.siteFooter-bottom-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+}
+
+// 版權列與製作資訊：已與使用者確認的例外，字級縮小至 14px，不受 design.md §3 的 16px 下限限制
+.siteFooter-copyright {
+    font-size: 14px;
+}
+
+.siteFooter-bottom-note {
+    margin: 6px 0 0;
+    font-size: 14px;
+    color: $footer-text-secondary;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .siteFooter-navRow {
+        transition: none;
+    }
+}

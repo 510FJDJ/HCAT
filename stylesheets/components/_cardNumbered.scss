@@ -1,0 +1,142 @@
+// ============================================================
+// 編號步驟卡元件（design.md §7.4、§8.2）：借用流程步驟卡
+// ============================================================
+
+.cardNumbered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    padding: 28px 22px;
+    border-radius: $border-radius-xxl;
+    background-color: $surface-card;
+    box-shadow: $shadow-panel;
+
+    // 手機：直式列表，數字圓圈移到左側，說明文字放進右側泡泡卡
+    @media (max-width: 720px) {
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+        gap: 14px;
+        padding: 0;
+        border-radius: 0;
+        background-color: transparent;
+        box-shadow: none;
+    }
+}
+
+.cardNumbered-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    font-family: "Poppins", sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    background-color: $surface-teal-soft;
+    color: $brand-teal-deep;
+
+    @media (max-width: 720px) {
+        flex-shrink: 0;
+        width: 52px;
+        height: 52px;
+        font-size: 18px;
+        box-shadow: 0 0 0 5px $surface-mint;
+    }
+}
+
+// 第一步實心強調
+.cardNumbered:first-child .cardNumbered-num,
+.cardNumbered-num.is-active {
+    background-color: $brand-teal;
+    color: #FFFFFF;
+}
+
+// 小型編號圓（輔具詳情頁「操作步驟」等行內條列，非獨立卡片）
+.cardNumbered-num-sm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    background-color: $brand-teal;
+    color: #FFFFFF;
+}
+
+// 標題＋說明文字分組容器；桌面維持 display:contents，讓子項仍是 .cardNumbered 的直接 flex 子項（排版不變）
+.cardNumbered-body {
+    display: contents;
+
+    @media (max-width: 720px) {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        flex: 1 1 auto;
+        min-width: 0;
+        padding: 14px 16px;
+        border-radius: $border-radius;
+        background-color: $surface-card;
+        box-shadow: $shadow-card;
+    }
+}
+
+.cardNumbered-title {
+    font-size: 21px;
+    font-weight: 700;
+    color: $ink-1;
+
+    @media (max-width: 720px) {
+        font-size: 18px;
+    }
+}
+
+.cardNumbered-desc {
+    font-size: 16px;
+    color: $ink-2;
+}
+
+// 步驟卡下方裝飾用短橫條（純裝飾，無互動語意）
+.flowDots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+}
+
+.flowDots-item {
+    width: 24px;
+    height: 4px;
+    border-radius: $border-radius-pill;
+    background-color: $accent-amber;
+}
+
+// 捲動到時依序上浮；不支援 animation-timeline 的瀏覽器直接顯示（design.md §8.2）
+@supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .cardNumbered {
+            animation: cardNumbered-riseIn linear;
+            animation-timeline: view();
+            animation-range: entry 0% cover 30%;
+        }
+    }
+}
+
+@keyframes cardNumbered-riseIn {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

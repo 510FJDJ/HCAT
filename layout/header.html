@@ -1,0 +1,116 @@
+<div class="barSlim">
+    <div class="barSlim-inner flex-row-between">
+        <span class="barSlim-anchor" aria-hidden="true">:::</span>
+        <div class="flex-row-center gap-8">
+            <a href="sitemap.html" class="linkGhost">網站導覽</a>
+            <div class="tabsPill tabsPill-sm" role="group" aria-label="文字大小">
+                <button type="button" class="tabsPill-item" data-js="fontSize" data-size="1" aria-pressed="true">A</button>
+                <button type="button" class="tabsPill-item" data-js="fontSize" data-size="2" aria-pressed="false">A+</button>
+                <button type="button" class="tabsPill-item" data-js="fontSize" data-size="3" aria-pressed="false">A++</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<header class="siteHeader">
+    <div class="siteHeader-inner">
+        <a href="index.html" class="siteHeader-logo">
+            <img src="img/logo/logo.png" alt="新竹縣政府教育局">
+            <span class="siteHeader-logoText">
+                <span class="siteHeader-logoText-small">新竹縣特殊教育資源中心</span>
+                <span class="siteHeader-logoText-main">輔具管理資訊系統</span>
+            </span>
+        </a>
+
+        <nav class="siteHeader-nav" id="headerNav" aria-label="主選單">
+            <ul class="siteHeader-navList">
+                <li><a href="news.html" class="linkGhost">最新消息</a></li>
+                <li><a href="catalog.html" class="linkGhost">輔具目錄</a></li>
+                <li><a href="#flow" class="linkGhost" data-js="scrollLink">借用流程</a></li>
+                <li><a href="#links" class="linkGhost" data-js="scrollLink">友善連結</a></li>
+                <li><a href="login.html" class="btnPill btn-teal btnPill-sm"><i class="bi bi-person-fill" aria-hidden="true"></i> 登入</a></li>
+            </ul>
+        </nav>
+
+        <button type="button" class="btnPill btn-outline btnPill-sm siteHeader-menuTrigger" data-js="menuOpen" aria-haspopup="true" aria-expanded="false">
+            <i class="bi bi-list" aria-hidden="true"></i>
+            選單
+        </button>
+    </div>
+</header>
+
+<div class="panelFull" data-js="menuPanel" role="dialog" aria-modal="true" aria-label="選單">
+    <div class="panelFull-head">
+        <a href="index.html" class="siteHeader-logo siteHeader-logo-sm">
+            <img src="img/logo/logo.png" alt="新竹縣政府教育局">
+            <span class="siteHeader-logoText">
+                <span class="siteHeader-logoText-small">新竹縣特殊教育資源中心</span>
+                <span class="siteHeader-logoText-main">輔具管理資訊系統</span>
+            </span>
+        </a>
+        <button type="button" class="btnIcon" data-js="menuClose" aria-label="關閉選單">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <div class="panelFull-body">
+        <div class="panelFull-identity panelFull-identity-guest">
+            <p class="flex-column gap-5 mb-0">
+                <span class="textNote">學校人員請使用教育部帳號登入</span>
+                <a href="login.html" class="btnPill btn-teal"><i class="bi bi-person-fill" aria-hidden="true"></i> 教育部 OpenID 登入</a>
+            </p>
+            <a href="login.html" class="panelFull-identity-link">
+                資源中心及維修廠商登入
+                <i class="bi bi-chevron-right panelFull-identity-link-arrow" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <nav aria-label="主選單">
+            <ul class="flex-column list-unstyled mb-0">
+                <li><a href="index.html" class="listRow listRow-menu" data-nav-skip-current>
+                    <span class="listRow-icon" aria-hidden="true"><i class="bi bi-house-door-fill"></i></span>
+                    <span class="listRow-title">首頁</span>
+                    <span class="btnPill-arrowCircle btnPill-arrowCircle-soft"><i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i></span>
+                </a></li>
+                <li><a href="news.html" class="listRow listRow-menu">
+                    <span class="listRow-icon" aria-hidden="true"><i class="bi bi-megaphone-fill"></i></span>
+                    <span class="listRow-title">最新消息</span>
+                    <span class="btnPill-arrowCircle btnPill-arrowCircle-soft"><i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i></span>
+                </a></li>
+                <li><a href="catalog.html" class="listRow listRow-menu">
+                    <span class="listRow-icon" aria-hidden="true"><i class="bi bi-box-seam-fill"></i></span>
+                    <span class="listRow-title">輔具目錄</span>
+                    <span class="btnPill-arrowCircle btnPill-arrowCircle-soft"><i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i></span>
+                </a></li>
+                <li><a href="#flow" class="listRow listRow-menu" data-js="scrollLink">
+                    <span class="listRow-icon" aria-hidden="true"><i class="bi bi-arrow-left-right"></i></span>
+                    <span class="listRow-title">借用流程</span>
+                    <span class="btnPill-arrowCircle btnPill-arrowCircle-soft"><i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i></span>
+                </a></li>
+                <li><a href="#links" class="listRow listRow-menu" data-js="scrollLink">
+                    <span class="listRow-icon" aria-hidden="true"><i class="bi bi-link-45deg"></i></span>
+                    <span class="listRow-title">友善連結</span>
+                    <span class="btnPill-arrowCircle btnPill-arrowCircle-soft"><i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i></span>
+                </a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="panelFull-toolbar">
+        <a href="sitemap.html" class="panelFull-toolbar-link">
+            <span class="panelFull-toolbar-link-label">
+                <i class="bi bi-signpost-split-fill" aria-hidden="true"></i>
+                網站導覽
+            </span>
+            <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+        </a>
+        <div class="panelFull-toolbar-row">
+            <span class="textNote">文字大小</span>
+            <div class="tabsPill" role="group" aria-label="文字大小">
+                <button type="button" class="tabsPill-item" data-js="fontSize" data-size="1" aria-pressed="true">A</button>
+                <button type="button" class="tabsPill-item" data-js="fontSize" data-size="2" aria-pressed="false">A+</button>
+                <button type="button" class="tabsPill-item" data-js="fontSize" data-size="3" aria-pressed="false">A++</button>
+            </div>
+        </div>
+    </div>
+</div>

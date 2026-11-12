@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>竹北國小 借用紀錄 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="特教資源中心查看竹北國小的輔具借用紀錄，依借用中與已結束分頁">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_Center.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu" src="../img/banner/borrow.png" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="reviewPage-container">
+                <div class="bannerWave-inner">
+                    <div class="pageBanner-top flex-row-between flex-wrap gap-8">
+                        <nav class="crumbNav" aria-label="麵包屑導覽">
+                            <ol>
+                                <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                                <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                                <li><a href="borrow.html" class="linkGhost">借用管理</a></li>
+                                <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                                <li aria-current="page" class="crumbNav-current">竹北國小</li>
+                            </ol>
+                        </nav>
+                        <a href="borrow.html" class="btnPill btn-outline btnPill-sm bannerWave-backBtn-top">
+                            <i class="bi bi-arrow-left" aria-hidden="true"></i>返回借用管理
+                        </a>
+                    </div>
+
+                    <div class="bannerWave-main">
+                        <div class="flex-row-between flex-wrap gap-8">
+                            <h1 class="titleSection bannerWave-title">
+                                <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                                竹北國小
+                                <span class="tagPill tag-greyLight">國小</span>
+                            </h1>
+                            <a href="borrow.html" class="btnPill btn-outline btnPill-sm bannerWave-backBtn-inline">
+                                <i class="bi bi-arrow-left" aria-hidden="true"></i>返回借用管理
+                            </a>
+                        </div>
+                        <p class="bannerWave-desc">竹北國小目前借用中與已結束的輔具借用紀錄。點「查看」可進入該台輔具的借用歷程。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="reviewPage-content">
+            <div class="reviewPage-container">
+                <section class="cardPanel" aria-label="借用紀錄">
+
+                    <div class="recordsFilters">
+                        <div class="tabsCount" role="tablist" aria-label="借用狀態" data-js="bsTabs">
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-bs-active" aria-controls="panel-bs-active" aria-selected="true" tabindex="0">
+                                借用中<span class="tabsCount-badge" aria-hidden="true">6</span>
+                            </button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-bs-ended" aria-controls="panel-bs-ended" aria-selected="false" tabindex="-1">
+                                已結束<span class="tabsCount-badge" aria-hidden="true">4</span>
+                            </button>
+                        </div>
+
+                        <form class="recordsFilters-form" novalidate>
+                            <div class="recordsFilters-field">
+                                <label for="sSearch">輔具或使用者</label>
+                                <div class="inputGroup">
+                                    <i class="bi bi-search inputGroup-icon" aria-hidden="true"></i>
+                                    <input type="search" id="sSearch" class="form-control" placeholder="例：擴視機、王小明">
+                                </div>
+                            </div>
+                            <button type="submit" class="btnPill btn-teal btnPill-sm">查詢</button>
+                            <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                <i class="bi bi-download" aria-hidden="true"></i>匯出 Excel
+                            </button>
+                        </form>
+                    </div>
+
+                    <div role="tabpanel" id="panel-bs-active" aria-labelledby="tab-bs-active">
+                        <div class="dataTable-wrap">
+                            <div class="dataTable-scroll">
+                                <table class="dataTable dataTable--stickyEnd">
+                                    <caption>竹北國小借用中輔具</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">輔具／財產編號</th>
+                                            <th scope="col">使用者</th>
+                                            <th scope="col">借用日期</th>
+                                            <th scope="col">預計歸還日期</th>
+                                            <th scope="col">狀態</th>
+                                            <th scope="col" class="dataTable-cellNext">功能</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td data-label="輔具／財產編號">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">擴視機</span>
+                                                    <span class="dataTable-cellTitle-sub">V-CCTV-0012</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">王小明</td>
+                                            <td data-label="借用日期"><span class="dataTable-cellTitle-main">2026-02-18</span></td>
+                                            <td data-label="預計歸還日期"><span class="dataTable-cellTitle-main">2027-01-31</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-teal"><span class="statusPill-dot" aria-hidden="true"></span>借用中</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="borrow-device.html" class="btnPill btn-teal btnPill-sm" aria-label="查看擴視機 V-CCTV-0012 借用紀錄">查看</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具／財產編號">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">點字機</span>
+                                                    <span class="dataTable-cellTitle-sub">V-BR-0005</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">陳小美</td>
+                                            <td data-label="借用日期"><span class="dataTable-cellTitle-main">2026-03-02</span></td>
+                                            <td data-label="預計歸還日期"><span class="dataTable-cellTitle-main">2027-01-31</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-teal"><span class="statusPill-dot" aria-hidden="true"></span>借用中</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="borrow-device.html" class="btnPill btn-teal btnPill-sm" aria-label="查看點字機 V-BR-0005 借用紀錄">查看</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具／財產編號">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">溝通板</span>
+                                                    <span class="dataTable-cellTitle-sub">C-COM-0031</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">林小華</td>
+                                            <td data-label="借用日期"><span class="dataTable-cellTitle-main">2026-09-10</span></td>
+                                            <td data-label="預計歸還日期"><span class="dataTable-cellTitle-main">2027-07-31</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-teal"><span class="statusPill-dot" aria-hidden="true"></span>借用中</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="borrow-device.html" class="btnPill btn-teal btnPill-sm" aria-label="查看溝通板 C-COM-0031 借用紀錄">查看</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具／財產編號">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">特製輪椅</span>
+                                                    <span class="dataTable-cellTitle-sub">M-WC-0098</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">張小強</td>
+                                            <td data-label="借用日期"><span class="dataTable-cellTitle-main">2025-09-05</span></td>
+                                            <td data-label="預計歸還日期"><span class="dataTable-cellTitle-main">2026-11-20</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>30 天內到期</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="borrow-device.html" class="btnPill btn-teal btnPill-sm" aria-label="查看特製輪椅 M-WC-0098 借用紀錄">查看</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具／財產編號">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">助聽輔具（FM 系統）</span>
+                                                    <span class="dataTable-cellTitle-sub">H-FM-0014</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">李小芳</td>
+                                            <td data-label="借用日期"><span class="dataTable-cellTitle-main">2025-09-01</span></td>
+                                            <td data-label="預計歸還日期"><span class="dataTable-cellTitle-main">2026-10-31</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-red"><span class="statusPill-dot" aria-hidden="true"></span>已逾期</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="borrow-device.html" class="btnPill btn-teal btnPill-sm" aria-label="查看助聽輔具 H-FM-0014 借用紀錄">查看</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具／財產編號">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">站立架</span>
+                                                    <span class="dataTable-cellTitle-sub">M-ST-0027</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">黃小宇</td>
+                                            <td data-label="借用日期"><span class="dataTable-cellTitle-main">2026-02-20</span></td>
+                                            <td data-label="預計歸還日期"><span class="dataTable-cellTitle-main">2027-01-31</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>報修中</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="borrow-device.html" class="btnPill btn-teal btnPill-sm" aria-label="查看站立架 M-ST-0027 借用紀錄">查看</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" id="panel-bs-ended" aria-labelledby="tab-bs-ended" hidden>
+                        <div class="dataTable-wrap">
+                            <div class="dataTable-scroll">
+                                <table class="dataTable dataTable--stickyEnd">
+                                    <caption>竹北國小已結束借用紀錄</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">輔具／財產編號</th>
+                                            <th scope="col">使用者</th>
+                                            <th scope="col">借用期間</th>
+                                            <th scope="col">結束方式</th>
+                                            <th scope="col" class="dataTable-cellNext">功能</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td data-label="輔具／財產編號">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">擴視機</span>
+                                                    <span class="dataTable-cellTitle-sub">V-CCTV-0009</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">吳小婷</td>
+                                            <td data-label="借用期間"><span class="dataTable-cellTitle-main">2024-09-02～2025-07-10</span></td>
+                                            <td data-label="結束方式">畢業歸還</td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="borrow-device.html" class="btnPill btn-teal btnPill-sm" aria-label="查看擴視機 V-CCTV-0009 借用紀錄">查看</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具／財產編號">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">溝通板</span>
+                                                    <span class="dataTable-cellTitle-sub">C-COM-0019</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">周小傑</td>
+                                            <td data-label="借用期間"><span class="dataTable-cellTitle-main">2024-03-01～2026-02-15</span></td>
+                                            <td data-label="結束方式">轉銜續借</td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="borrow-device.html" class="btnPill btn-teal btnPill-sm" aria-label="查看溝通板 C-COM-0019 借用紀錄">查看</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具／財產編號">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">助聽輔具（FM 系統）</span>
+                                                    <span class="dataTable-cellTitle-sub">H-FM-0006</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">鄭小宜</td>
+                                            <td data-label="借用期間"><span class="dataTable-cellTitle-main">2023-09-01～2025-06-30</span></td>
+                                            <td data-label="結束方式">畢業歸還</td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="borrow-device.html" class="btnPill btn-teal btnPill-sm" aria-label="查看助聽輔具 H-FM-0006 借用紀錄">查看</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-label="輔具／財產編號">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">特製輪椅</span>
+                                                    <span class="dataTable-cellTitle-sub">M-WC-0071</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="使用者">楊小廷</td>
+                                            <td data-label="借用期間"><span class="dataTable-cellTitle-main">2023-02-20～2024-01-31</span></td>
+                                            <td data-label="結束方式">停止借用</td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="borrow-device.html" class="btnPill btn-teal btnPill-sm" aria-label="查看特製輪椅 M-WC-0071 借用紀錄">查看</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

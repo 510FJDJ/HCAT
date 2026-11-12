@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>輔具品項：擴視機 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="財產類輔具品項頁：以財產編號逐台管理，查看每一台的狀態與異動紀錄">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_Center.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu" src="../img/banner/devices.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="devicesPage-container">
+                <div class="bannerWave-inner">
+                    <div class="bannerWave-topRow">
+                        <nav class="crumbNav" aria-label="麵包屑導覽">
+                            <ol>
+                                <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                                <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                                <li>資料管理</li>
+                                <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                                <li><a href="devices.html">輔具管理</a></li>
+                                <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                                <li aria-current="page" class="crumbNav-current">擴視機</li>
+                            </ol>
+                        </nav>
+                        <a href="devices.html" class="btnPill btn-outline btnPill-sm bannerWave-backBtn">
+                            <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                            返回輔具管理
+                        </a>
+                    </div>
+
+                    <div class="bannerWave-main">
+                        <div class="devicesPage-titleRow">
+                            <h1 class="titleSection bannerWave-title">
+                                <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                                擴視機
+                            </h1>
+                            <span class="tagPill tag-tealSoft">財產・單台</span>
+                        </div>
+                        <p class="bannerWave-desc">共 14 台，目前在庫 3 台。每一台的借用與維修歷程，可在下方展開「異動紀錄」查看。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="devicesPage-content">
+            <div class="devicesPage-container">
+                <section class="cardPanel" aria-labelledby="deviceInfoTitle">
+                    <div class="devicesPage-panelHead">
+                        <h2 id="deviceInfoTitle" class="devicesPage-panelTitle">品項資訊</h2>
+                        <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceItemModal">
+                            <i class="bi bi-pencil" aria-hidden="true"></i>編輯品項
+                        </button>
+                    </div>
+
+                    <div class="deviceSummary">
+                        <img class="deviceSummary-photo" src="../img/devices/cctv.jpg" alt="擴視機照片">
+                        <div class="deviceSummary-main">
+                            <dl class="infoGrid">
+                                <div>
+                                    <dt class="infoGrid-label">分類</dt>
+                                    <dd class="infoGrid-value">視障輔具</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">管理方式</dt>
+                                    <dd class="infoGrid-value">財產・單台</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">預設使用年限</dt>
+                                    <dd class="infoGrid-value">5 年</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">前台目錄</dt>
+                                    <dd class="infoGrid-value">顯示中</dd>
+                                </div>
+                            </dl>
+                            <div class="deviceSummary-tags">
+                                <span class="tagPill tag-greenLight">免評估</span>
+                                <span class="tagPill tag-tealSoft">可臨時借用</span>
+                            </div>
+                            <p class="deviceSummary-desc"><b>使用說明</b>　可放大課本、作業單等書面資料，並調整對比與色彩模式，適合低視力學生閱讀與書寫。</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="cardPanel mt-5" aria-labelledby="deviceUnitsTitle">
+                    <div class="devicesPage-panelHead">
+                        <h2 id="deviceUnitsTitle" class="devicesPage-panelTitle">單台財產</h2>
+                        <button type="button" class="btnPill btn-teal" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="new">
+                            <i class="bi bi-plus-lg" aria-hidden="true"></i>新增財產
+                        </button>
+                    </div>
+
+                    <div class="tabsCount mt-4" role="tablist" aria-label="依狀態檢視">
+                        <button type="button" class="tabsCount-item" role="tab" id="tab-un-all" data-category="all" aria-selected="true" aria-controls="panel-unitList" tabindex="0">全部<span class="tabsCount-badge" aria-hidden="true">14</span></button>
+                        <button type="button" class="tabsCount-item" role="tab" id="tab-un-stock" data-category="stock" aria-selected="false" aria-controls="panel-unitList" tabindex="-1">在庫<span class="tabsCount-badge" aria-hidden="true">3</span></button>
+                        <button type="button" class="tabsCount-item" role="tab" id="tab-un-out" data-category="out" aria-selected="false" aria-controls="panel-unitList" tabindex="-1">借出中<span class="tabsCount-badge" aria-hidden="true">9</span></button>
+                        <button type="button" class="tabsCount-item" role="tab" id="tab-un-fix" data-category="fix" aria-selected="false" aria-controls="panel-unitList" tabindex="-1">維修中<span class="tabsCount-badge" aria-hidden="true">1</span></button>
+                        <button type="button" class="tabsCount-item" role="tab" id="tab-un-scrap" data-category="scrap" aria-selected="false" aria-controls="panel-unitList" tabindex="-1">已報廢<span class="tabsCount-badge" aria-hidden="true">1</span></button>
+                    </div>
+
+                    <div role="tabpanel" id="panel-unitList" aria-labelledby="tab-un-all" class="mt-4">
+                        <p class="textNote py-6" data-js="emptyNote" hidden>這個狀態目前沒有財產。</p>
+
+                        <div class="dataTable-wrap">
+                            <div class="dataTable-scroll">
+                                <table class="dataTable dataTable--stickyEnd">
+                                    <caption>擴視機單台財產列表</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">財產編號</th>
+                                            <th scope="col">規格</th>
+                                            <th scope="col">購置日期</th>
+                                            <th scope="col">使用年限</th>
+                                            <th scope="col">狀態</th>
+                                            <th scope="col">目前使用</th>
+                                            <th scope="col">功能</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-category="out">
+                                            <td data-label="財產編號"><span class="dataTable-cellTitle-main">V-CCTV-0012</span></td>
+                                            <td data-label="規格">桌上型 24 吋</td>
+                                            <td data-label="購置日期"><span class="dataTable-cellTitle-main">2021/08/16</span></td>
+                                            <td data-label="使用年限">
+                                                <span class="devicesPage-lifeCell">
+                                                    <span>5 年</span>
+                                                    <span class="devicesPage-lifeDue devicesPage-lifeDue-warn">2026/08 屆滿（已屆滿）</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>借出中</span></td>
+                                            <td data-label="目前使用">竹北國小・林○安</td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0012" data-um-spec="桌上型 24 吋" data-um-buy="2021-08-16" data-um-life="5" data-um-status="out" aria-label="編輯 V-CCTV-0012">編輯</button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0012" aria-label="異動紀錄 V-CCTV-0012">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="devicesPage-logRow" id="log-0012" hidden>
+                                            <td colspan="7" data-label="異動紀錄">
+                                                <div class="logPanel">
+                                                    <ol class="logTimeline">
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-blueLight">借出</span>
+                                                                <span class="logTimeline-title">借出給 竹北國小（林○安）</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2026/10/02 09:20</span>　中心 王○○ 確認點交</span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-violetLight">歸還</span>
+                                                                <span class="logTimeline-title">芎林國中 畢業歸還</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2026/07/15 14:05</span>　中心 王○○ 確認歸還單</span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-greenLight">修復</span>
+                                                                <span class="logTimeline-title">完成維修：更換鏡頭模組</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2025/12/20 16:30</span>　○○醫療器材行</span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-goldLight">報修</span>
+                                                                <span class="logTimeline-title">芎林國中 報修：畫面無法對焦</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2025/12/08 10:12</span>　芎林國中 許○○</span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-blueLight">借出</span>
+                                                                <span class="logTimeline-title">借出給 芎林國中（許○廷）</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2023/09/18 11:00</span>　中心 王○○ 確認點交</span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-greyLight">入庫</span>
+                                                                <span class="logTimeline-title">新增財產，購置入庫</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2021/08/16 15:40</span>　中心 王○○</span>
+                                                            </div>
+                                                        </li>
+                                                    </ol>
+                                                    <div class="logPanel-side">
+                                                        <p class="logPanel-note">
+                                                            <i class="bi bi-clock-history" aria-hidden="true"></i>依借用、歸還、報修流程由系統自動記錄，不需另填異動單。
+                                                        </p>
+                                                        <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                                            <i class="bi bi-download" aria-hidden="true"></i>匯出這台紀錄
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="stock">
+                                            <td data-label="財產編號"><span class="dataTable-cellTitle-main">V-CCTV-0015</span></td>
+                                            <td data-label="規格">桌上型 24 吋</td>
+                                            <td data-label="購置日期"><span class="dataTable-cellTitle-main">2023/03/02</span></td>
+                                            <td data-label="使用年限">
+                                                <span class="devicesPage-lifeCell">
+                                                    <span>5 年</span>
+                                                    <span class="devicesPage-lifeDue">2028/03 屆滿</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-teal"><span class="statusPill-dot" aria-hidden="true"></span>在庫</span></td>
+                                            <td data-label="目前使用">中心庫房</td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0015" data-um-spec="桌上型 24 吋" data-um-buy="2023-03-02" data-um-life="5" data-um-status="stock" aria-label="編輯 V-CCTV-0015">編輯</button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0015" aria-label="異動紀錄 V-CCTV-0015">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="devicesPage-logRow" id="log-0015" hidden>
+                                            <td colspan="7" data-label="異動紀錄">
+                                                <div class="logPanel">
+                                                    <ol class="logTimeline">
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-greyLight">入庫</span>
+                                                                <span class="logTimeline-title">新增財產，購置入庫</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2023/03/02 10:20</span>　中心 王○○</span>
+                                                            </div>
+                                                        </li>
+                                                    </ol>
+                                                    <div class="logPanel-side">
+                                                        <p class="logPanel-note">
+                                                            <i class="bi bi-clock-history" aria-hidden="true"></i>依借用、歸還、報修流程由系統自動記錄，不需另填異動單。
+                                                        </p>
+                                                        <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                                            <i class="bi bi-download" aria-hidden="true"></i>匯出這台紀錄
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="stock">
+                                            <td data-label="財產編號"><span class="dataTable-cellTitle-main">V-CCTV-0009</span></td>
+                                            <td data-label="規格">桌上型 22 吋</td>
+                                            <td data-label="購置日期"><span class="dataTable-cellTitle-main">2022/05/20</span></td>
+                                            <td data-label="使用年限">
+                                                <span class="devicesPage-lifeCell">
+                                                    <span>5 年</span>
+                                                    <span class="devicesPage-lifeDue devicesPage-lifeDue-warn">2027/05 屆滿（一年內）</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-teal"><span class="statusPill-dot" aria-hidden="true"></span>在庫</span></td>
+                                            <td data-label="目前使用">中心庫房</td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0009" data-um-spec="桌上型 22 吋" data-um-buy="2022-05-20" data-um-life="5" data-um-status="stock" aria-label="編輯 V-CCTV-0009">編輯</button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0009" aria-label="異動紀錄 V-CCTV-0009">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="devicesPage-logRow" id="log-0009" hidden>
+                                            <td colspan="7" data-label="異動紀錄">
+                                                <div class="logPanel">
+                                                    <ol class="logTimeline">
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-violetLight">歸還</span>
+                                                                <span class="logTimeline-title">新埔國小 畢業歸還</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2026/07/01 09:40</span>　中心 王○○ 確認歸還單</span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-blueLight">借出</span>
+                                                                <span class="logTimeline-title">借出給 新埔國小（吳○蓁）</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2024/09/12 10:30</span>　中心 王○○ 確認點交</span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-greyLight">入庫</span>
+                                                                <span class="logTimeline-title">新增財產，購置入庫</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2022/05/20 14:10</span>　中心 王○○</span>
+                                                            </div>
+                                                        </li>
+                                                    </ol>
+                                                    <div class="logPanel-side">
+                                                        <p class="logPanel-note">
+                                                            <i class="bi bi-clock-history" aria-hidden="true"></i>依借用、歸還、報修流程由系統自動記錄，不需另填異動單。
+                                                        </p>
+                                                        <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                                            <i class="bi bi-download" aria-hidden="true"></i>匯出這台紀錄
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="stock">
+                                            <td data-label="財產編號"><span class="dataTable-cellTitle-main">V-CCTV-0014</span></td>
+                                            <td data-label="規格">桌上型 24 吋</td>
+                                            <td data-label="購置日期"><span class="dataTable-cellTitle-main">2023/03/02</span></td>
+                                            <td data-label="使用年限">
+                                                <span class="devicesPage-lifeCell">
+                                                    <span>5 年</span>
+                                                    <span class="devicesPage-lifeDue">2028/03 屆滿</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-teal"><span class="statusPill-dot" aria-hidden="true"></span>在庫</span></td>
+                                            <td data-label="目前使用">中心庫房</td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0014" data-um-spec="桌上型 24 吋" data-um-buy="2023-03-02" data-um-life="5" data-um-status="stock" aria-label="編輯 V-CCTV-0014">編輯</button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0014" aria-label="異動紀錄 V-CCTV-0014">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="devicesPage-logRow" id="log-0014" hidden>
+                                            <td colspan="7" data-label="異動紀錄">
+                                                <div class="logPanel">
+                                                    <ol class="logTimeline">
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-greyLight">入庫</span>
+                                                                <span class="logTimeline-title">新增財產，購置入庫</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2023/03/02 10:20</span>　中心 王○○</span>
+                                                            </div>
+                                                        </li>
+                                                    </ol>
+                                                    <div class="logPanel-side">
+                                                        <p class="logPanel-note">
+                                                            <i class="bi bi-clock-history" aria-hidden="true"></i>依借用、歸還、報修流程由系統自動記錄，不需另填異動單。
+                                                        </p>
+                                                        <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                                            <i class="bi bi-download" aria-hidden="true"></i>匯出這台紀錄
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="out">
+                                            <td data-label="財產編號"><span class="dataTable-cellTitle-main">V-CCTV-0011</span></td>
+                                            <td data-label="規格">桌上型 24 吋</td>
+                                            <td data-label="購置日期"><span class="dataTable-cellTitle-main">2021/08/16</span></td>
+                                            <td data-label="使用年限">
+                                                <span class="devicesPage-lifeCell">
+                                                    <span>5 年</span>
+                                                    <span class="devicesPage-lifeDue devicesPage-lifeDue-warn">2026/08 屆滿（已屆滿）</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>借出中</span></td>
+                                            <td data-label="目前使用">關西國中・資源班</td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0011" data-um-spec="桌上型 24 吋" data-um-buy="2021-08-16" data-um-life="5" data-um-status="out" aria-label="編輯 V-CCTV-0011">編輯</button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0011" aria-label="異動紀錄 V-CCTV-0011">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="devicesPage-logRow" id="log-0011" hidden>
+                                            <td colspan="7" data-label="異動紀錄">
+                                                <div class="logPanel">
+                                                    <ol class="logTimeline">
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-blueLight">借出</span>
+                                                                <span class="logTimeline-title">借出給 關西國中（資源班）</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2025/09/08 13:00</span>　中心 王○○ 確認點交</span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-greyLight">入庫</span>
+                                                                <span class="logTimeline-title">新增財產，購置入庫</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2021/08/16 15:40</span>　中心 王○○</span>
+                                                            </div>
+                                                        </li>
+                                                    </ol>
+                                                    <div class="logPanel-side">
+                                                        <p class="logPanel-note">
+                                                            <i class="bi bi-clock-history" aria-hidden="true"></i>依借用、歸還、報修流程由系統自動記錄，不需另填異動單。
+                                                        </p>
+                                                        <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                                            <i class="bi bi-download" aria-hidden="true"></i>匯出這台紀錄
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="out">
+                                            <td data-label="財產編號"><span class="dataTable-cellTitle-main">V-CCTV-0010</span></td>
+                                            <td data-label="規格">桌上型 22 吋</td>
+                                            <td data-label="購置日期"><span class="dataTable-cellTitle-main">2022/05/20</span></td>
+                                            <td data-label="使用年限">
+                                                <span class="devicesPage-lifeCell">
+                                                    <span>5 年</span>
+                                                    <span class="devicesPage-lifeDue devicesPage-lifeDue-warn">2027/05 屆滿（一年內）</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>借出中</span></td>
+                                            <td data-label="目前使用">新埔國小・徐○琪</td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0010" data-um-spec="桌上型 22 吋" data-um-buy="2022-05-20" data-um-life="5" data-um-status="out" aria-label="編輯 V-CCTV-0010">編輯</button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0010" aria-label="異動紀錄 V-CCTV-0010">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="devicesPage-logRow" id="log-0010" hidden>
+                                            <td colspan="7" data-label="異動紀錄">
+                                                <div class="logPanel">
+                                                    <ol class="logTimeline">
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-blueLight">借出</span>
+                                                                <span class="logTimeline-title">借出給 新埔國小（徐○琪）</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2026/09/10 10:00</span>　中心 王○○ 確認點交</span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-greyLight">入庫</span>
+                                                                <span class="logTimeline-title">新增財產，購置入庫</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2022/05/20 14:10</span>　中心 王○○</span>
+                                                            </div>
+                                                        </li>
+                                                    </ol>
+                                                    <div class="logPanel-side">
+                                                        <p class="logPanel-note">
+                                                            <i class="bi bi-clock-history" aria-hidden="true"></i>依借用、歸還、報修流程由系統自動記錄，不需另填異動單。
+                                                        </p>
+                                                        <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                                            <i class="bi bi-download" aria-hidden="true"></i>匯出這台紀錄
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="fix">
+                                            <td data-label="財產編號"><span class="dataTable-cellTitle-main">V-CCTV-0008</span></td>
+                                            <td data-label="規格">桌上型 22 吋</td>
+                                            <td data-label="購置日期"><span class="dataTable-cellTitle-main">2022/05/20</span></td>
+                                            <td data-label="使用年限">
+                                                <span class="devicesPage-lifeCell">
+                                                    <span>5 年</span>
+                                                    <span class="devicesPage-lifeDue devicesPage-lifeDue-warn">2027/05 屆滿（一年內）</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>維修中</span></td>
+                                            <td data-label="目前使用">廠商維修中</td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0008" data-um-spec="桌上型 22 吋" data-um-buy="2022-05-20" data-um-life="5" data-um-status="fix" aria-label="編輯 V-CCTV-0008">編輯</button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0008" aria-label="異動紀錄 V-CCTV-0008">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="devicesPage-logRow" id="log-0008" hidden>
+                                            <td colspan="7" data-label="異動紀錄">
+                                                <div class="logPanel">
+                                                    <ol class="logTimeline">
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-goldLight">報修</span>
+                                                                <span class="logTimeline-title">竹東國小 報修：螢幕無法開機</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2026/10/20 09:15</span>　竹東國小 陳○○</span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-greyLight">入庫</span>
+                                                                <span class="logTimeline-title">新增財產，購置入庫</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2022/05/20 14:10</span>　中心 王○○</span>
+                                                            </div>
+                                                        </li>
+                                                    </ol>
+                                                    <div class="logPanel-side">
+                                                        <p class="logPanel-note">
+                                                            <i class="bi bi-clock-history" aria-hidden="true"></i>依借用、歸還、報修流程由系統自動記錄，不需另填異動單。
+                                                        </p>
+                                                        <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                                            <i class="bi bi-download" aria-hidden="true"></i>匯出這台紀錄
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="out">
+                                            <td data-label="財產編號"><span class="dataTable-cellTitle-main">V-CCTV-0007</span></td>
+                                            <td data-label="規格">桌上型 22 吋</td>
+                                            <td data-label="購置日期"><span class="dataTable-cellTitle-main">2020/09/01</span></td>
+                                            <td data-label="使用年限">
+                                                <span class="devicesPage-lifeCell">
+                                                    <span>5 年</span>
+                                                    <span class="devicesPage-lifeDue devicesPage-lifeDue-warn">2025/09 屆滿（已屆滿）</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>借出中</span></td>
+                                            <td data-label="目前使用">竹東國中・彭○婷</td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0007" data-um-spec="桌上型 22 吋" data-um-buy="2020-09-01" data-um-life="5" data-um-status="out" aria-label="編輯 V-CCTV-0007">編輯</button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0007" aria-label="異動紀錄 V-CCTV-0007">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="devicesPage-logRow" id="log-0007" hidden>
+                                            <td colspan="7" data-label="異動紀錄">
+                                                <div class="logPanel">
+                                                    <ol class="logTimeline">
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-blueLight">借出</span>
+                                                                <span class="logTimeline-title">借出給 竹東國中（彭○婷）</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2024/09/05 11:20</span>　中心 王○○ 確認點交</span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-greyLight">入庫</span>
+                                                                <span class="logTimeline-title">新增財產，購置入庫</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2020/09/01 09:00</span>　中心 王○○</span>
+                                                            </div>
+                                                        </li>
+                                                    </ol>
+                                                    <div class="logPanel-side">
+                                                        <p class="logPanel-note">
+                                                            <i class="bi bi-clock-history" aria-hidden="true"></i>依借用、歸還、報修流程由系統自動記錄，不需另填異動單。
+                                                        </p>
+                                                        <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                                            <i class="bi bi-download" aria-hidden="true"></i>匯出這台紀錄
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="out">
+                                            <td data-label="財產編號"><span class="dataTable-cellTitle-main">V-CCTV-0006</span></td>
+                                            <td data-label="規格">桌上型 22 吋</td>
+                                            <td data-label="購置日期"><span class="dataTable-cellTitle-main">2020/09/01</span></td>
+                                            <td data-label="使用年限">
+                                                <span class="devicesPage-lifeCell">
+                                                    <span>5 年</span>
+                                                    <span class="devicesPage-lifeDue devicesPage-lifeDue-warn">2025/09 屆滿（已屆滿）</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>借出中</span></td>
+                                            <td data-label="目前使用">湖口高中・羅○宏</td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0006" data-um-spec="桌上型 22 吋" data-um-buy="2020-09-01" data-um-life="5" data-um-status="out" aria-label="編輯 V-CCTV-0006">編輯</button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0006" aria-label="異動紀錄 V-CCTV-0006">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="devicesPage-logRow" id="log-0006" hidden>
+                                            <td colspan="7" data-label="異動紀錄">
+                                                <div class="logPanel">
+                                                    <ol class="logTimeline">
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-blueLight">借出</span>
+                                                                <span class="logTimeline-title">借出給 湖口高中（羅○宏）</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2023/09/15 14:30</span>　中心 王○○ 確認點交</span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-greyLight">入庫</span>
+                                                                <span class="logTimeline-title">新增財產，購置入庫</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2020/09/01 09:00</span>　中心 王○○</span>
+                                                            </div>
+                                                        </li>
+                                                    </ol>
+                                                    <div class="logPanel-side">
+                                                        <p class="logPanel-note">
+                                                            <i class="bi bi-clock-history" aria-hidden="true"></i>依借用、歸還、報修流程由系統自動記錄，不需另填異動單。
+                                                        </p>
+                                                        <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                                            <i class="bi bi-download" aria-hidden="true"></i>匯出這台紀錄
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="scrap">
+                                            <td data-label="財產編號"><span class="dataTable-cellTitle-main">V-CCTV-0004</span></td>
+                                            <td data-label="規格">桌上型 22 吋</td>
+                                            <td data-label="購置日期"><span class="dataTable-cellTitle-main">2019/09/10</span></td>
+                                            <td data-label="使用年限">
+                                                <span class="devicesPage-lifeCell">
+                                                    <span>5 年</span>
+                                                    <span class="devicesPage-lifeDue devicesPage-lifeDue-warn">2024/09 屆滿（已屆滿）</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill"><span class="statusPill-dot" aria-hidden="true"></span>已報廢</span></td>
+                                            <td data-label="目前使用">—</td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0004" data-um-spec="桌上型 22 吋" data-um-buy="2019-09-10" data-um-life="5" data-um-status="scrap" aria-label="編輯 V-CCTV-0004">編輯</button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0004" aria-label="異動紀錄 V-CCTV-0004">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="devicesPage-logRow" id="log-0004" hidden>
+                                            <td colspan="7" data-label="異動紀錄">
+                                                <div class="logPanel">
+                                                    <ol class="logTimeline">
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-redLight">報廢</span>
+                                                                <span class="logTimeline-title">超過使用年限，功能異常無法修復</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2025/01/10 15:00</span>　中心 王○○</span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="logTimeline-item">
+                                                            <span class="logTimeline-rail" aria-hidden="true"><span class="logTimeline-dot"></span><span class="logTimeline-line"></span></span>
+                                                            <div class="logTimeline-body">
+                                                                <span class="tagPill tag-greyLight">入庫</span>
+                                                                <span class="logTimeline-title">新增財產，購置入庫</span>
+                                                                <span class="logTimeline-meta"><span class="logTimeline-meta-time">2019/09/10 10:30</span>　中心 王○○</span>
+                                                            </div>
+                                                        </li>
+                                                    </ol>
+                                                    <div class="logPanel-side">
+                                                        <p class="logPanel-note">
+                                                            <i class="bi bi-clock-history" aria-hidden="true"></i>依借用、歸還、報修流程由系統自動記錄，不需另填異動單。
+                                                        </p>
+                                                        <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                                            <i class="bi bi-download" aria-hidden="true"></i>匯出這台紀錄
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 分頁為靜態示意（尚無真實分頁邏輯），預設顯示多頁狀態供工程參考 -->
+                        <nav class="pageNav mt-6" aria-label="分頁">
+                            <p class="pageNav-summary">顯示第 1 至 10 筆，共 14 筆資料</p>
+                            <ul class="pageNav-list">
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="第一頁"><i class="bi bi-chevron-bar-left" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="unPagePrevNote"><i class="bi bi-chevron-left" aria-hidden="true"></i>上一頁</span></li>
+                                <li><span class="pageNav-item" aria-current="page">1</span></li>
+                                <li><a href="#" class="pageNav-item" aria-label="第 2 頁">2</a></li>
+                                <li><a href="#" class="pageNav-item pageNav-item-label">下一頁<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
+                                <li><a href="#" class="pageNav-item" aria-label="最後一頁"><i class="bi bi-chevron-bar-right" aria-hidden="true"></i></a></li>
+                            </ul>
+                            <span id="unPagePrevNote" class="sr-only">已是第一頁，沒有上一頁</span>
+                        </nav>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <!-- 編輯品項 modal（管理方式已鎖定為財產・單台） -->
+    <div class="modal fade" id="deviceItemModal" data-js="deviceItemModal" data-dm-locked="unit" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="dmTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 id="dmTitle" class="modal-title">編輯品項</h2>
+                        <p class="modal-subtitle textNote">擴視機・財產・單台</p>
+                    </div>
+                    <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <form novalidate data-js="deviceModalForm">
+                    <div class="modal-body">
+                        <fieldset class="modal-body-section">
+                            <legend class="formField-label">管理方式</legend>
+                            <div class="cardChoice-group cardChoice-group-row">
+                                <label class="cardChoice is-selected is-locked">
+                                    <input type="radio" name="dmType" value="unit" class="cardChoice-input" checked aria-disabled="true" aria-describedby="dmTypeLockNote" data-js="dmTypeRadio">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">財產・單台</span>
+                                        <span class="cardChoice-desc">以財產編號逐台管理，借出後需歸還</span>
+                                    </span>
+                                </label>
+                                <label class="cardChoice is-locked">
+                                    <input type="radio" name="dmType" value="qty" class="cardChoice-input" aria-disabled="true" aria-describedby="dmTypeLockNote" data-js="dmTypeRadio">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">配發・數量</span>
+                                        <span class="cardChoice-desc">客製或消耗品只管數量，配發後不用歸還</span>
+                                    </span>
+                                </label>
+                            </div>
+                            <p class="formField-hint" id="dmTypeLockNote">品項建立後不可變更管理方式。</p>
+                        </fieldset>
+
+                        <div class="modal-body-section devicesPage-photoRow">
+                            <div>
+                                <span class="formField-label">照片</span>
+                                <div data-js="uploadTile">
+                                    <input type="file" id="dmPhoto" class="fileUpload-input" accept="image/*" aria-describedby="dmPhotoHint" data-js="uploadTileInput">
+                                    <label for="dmPhoto" class="uploadTile-box">
+                                        <span class="uploadTile-empty" hidden data-js="uploadTileEmpty">
+                                            <i class="bi bi-upload uploadTile-icon" aria-hidden="true"></i>
+                                            <span class="uploadTile-text">上傳照片</span>
+                                            <span class="uploadTile-sub" id="dmPhotoHint">JPG、PNG</span>
+                                        </span>
+                                        <img class="uploadTile-preview" src="../img/devices/cctv.jpg" alt="目前的品項照片" data-js="uploadTilePreview">
+                                    </label>
+                                    <div class="uploadTile-actions" data-js="uploadTileActions">
+                                        <button type="button" class="btnPill btn-outline btnPill-sm" data-js="uploadTileReplace">重新上傳</button>
+                                        <button type="button" class="btnPill btn-secondary btnPill-sm" data-js="uploadTileRemove">移除照片</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="devicesPage-photoRow-fields">
+                                <div>
+                                    <label for="dmName" class="formField-label">品項名稱 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="dmName" class="form-control" value="擴視機" placeholder="例：擴視機">
+                                </div>
+                                <div>
+                                    <label for="dmCat" class="formField-label">輔具分類 <span class="formField-required">必填</span></label>
+                                    <select id="dmCat" class="form-select">
+                                        <option>行動與擺位輔具</option>
+                                        <option selected>視障輔具</option>
+                                        <option>聽障輔具</option>
+                                        <option>溝通輔具</option>
+                                        <option>資訊輔具</option>
+                                        <option>書寫與閱讀輔具</option>
+                                        <option>其他輔具</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-body-section">
+                            <label for="dmDesc" class="formField-label">使用說明</label>
+                            <textarea id="dmDesc" class="form-control" rows="3" placeholder="簡短介紹用途與適用對象，會顯示在前台輔具目錄。例：可放大課本、作業單等書面資料，適合低視力學生閱讀與書寫。">可放大課本、作業單等書面資料，並調整對比與色彩模式，適合低視力學生閱讀與書寫。</textarea>
+                        </div>
+
+                        <div class="modal-body-section formGrid">
+                            <div data-js="dmUnitOnly">
+                                <label for="dmLife" class="formField-label">預設使用年限 <span class="formField-required">必填</span></label>
+                                <select id="dmLife" class="form-select">
+                                    <option value="3">3 年</option>
+                                    <option value="4">4 年</option>
+                                    <option value="5" selected>5 年</option>
+                                    <option value="6">6 年</option>
+                                    <option value="8">8 年</option>
+                                    <option value="none">無期限</option>
+                                </select>
+                            </div>
+                            <fieldset>
+                                <legend class="formField-label">申請設定</legend>
+                                <div class="flex-column gap-2">
+                                    <div class="formField-checkRow">
+                                        <input type="checkbox" id="dmFree" class="form-check-input" checked>
+                                        <label for="dmFree" class="formField-checkRow-label">免評估（學校申請不需評估報告）</label>
+                                    </div>
+                                    <div class="formField-checkRow" data-js="dmUnitOnly">
+                                        <input type="checkbox" id="dmTemp" class="form-check-input" checked>
+                                        <label for="dmTemp" class="formField-checkRow-label">可臨時借用</label>
+                                    </div>
+                                    <div class="formField-checkRow">
+                                        <input type="checkbox" id="dmShow" class="form-check-input" checked>
+                                        <label for="dmShow" class="formField-checkRow-label">顯示在前台輔具目錄</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" class="btnPill btn-teal">儲存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增／編輯財產 modal（標題與欄位由 js/all.js 依開啟按鈕切換） -->
+    <div class="modal fade" id="deviceUnitModal" data-js="deviceUnitModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="umTitle">
+        <div class="modal-dialog modal-dialog-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 id="umTitle" class="modal-title" data-js="umTitle">新增財產</h2>
+                        <p class="modal-subtitle textNote">擴視機・財產・單台</p>
+                    </div>
+                    <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <form novalidate data-js="deviceModalForm">
+                    <div class="modal-body">
+                        <div class="modal-body-section formGrid">
+                            <div>
+                                <label for="umNo" class="formField-label">財產編號 <span class="formField-required">必填</span></label>
+                                <input type="text" id="umNo" class="form-control" placeholder="例：V-CCTV-0016" data-js="umNo">
+                            </div>
+                            <div>
+                                <label for="umSpec" class="formField-label">規格</label>
+                                <input type="text" id="umSpec" class="form-control" placeholder="例：桌上型 24 吋" data-js="umSpec">
+                            </div>
+                            <div>
+                                <label for="umBuy" class="formField-label">購置日期 <span class="formField-required">必填</span></label>
+                                <input type="date" id="umBuy" class="form-control" data-js="umBuy">
+                            </div>
+                            <div>
+                                <label for="umLife" class="formField-label">使用年限 <span class="formField-required">必填</span></label>
+                                <select id="umLife" class="form-select" data-js="umLife">
+                                    <option value="3">3 年</option>
+                                    <option value="4">4 年</option>
+                                    <option value="5" selected>5 年</option>
+                                    <option value="6">6 年</option>
+                                    <option value="8">8 年</option>
+                                    <option value="none">無期限</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-body-section">
+                            <label for="umStatus" class="formField-label">狀態</label>
+                            <select id="umStatus" class="form-select" aria-describedby="umStatusHint" data-js="umStatus">
+                                <option value="stock" selected>在庫</option>
+                                <option value="out">借出中</option>
+                                <option value="fix">維修中</option>
+                                <option value="scrap">已報廢</option>
+                            </select>
+                            <p class="formField-hint" id="umStatusHint">新增的財產預設為「在庫」；借出與歸還的狀態由借用流程自動變更，不需手動調整。</p>
+                        </div>
+                        <div class="modal-body-section">
+                            <label for="umNote" class="formField-label">備註</label>
+                            <textarea id="umNote" class="form-control" rows="2" placeholder="例：附原廠充電器、收納袋"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" class="btnPill btn-teal">儲存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

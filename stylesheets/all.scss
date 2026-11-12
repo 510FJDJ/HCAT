@@ -1,0 +1,123 @@
+// ============================================================
+// HCAT 全站樣式編譯入口（Live Sass Compiler → css/all.css）
+// 順序不可調換：functions → 自訂變數 → bootstrap → base → components
+// ============================================================
+
+// 1. Bootstrap 核心函式
+@import "../node_modules/bootstrap/scss/functions";
+
+// 2. 自訂變數覆寫（必須在 bootstrap variables 之前）
+@import "./helpers/variables";
+
+// 3. Bootstrap 變數與工具
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/variables-dark";
+@import "../node_modules/bootstrap/scss/maps";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/utilities";
+@import "../node_modules/bootstrap/scss/root";
+
+// 4. Bootstrap 元件（依需求載入）
+@import "../node_modules/bootstrap/scss/reboot";
+@import "../node_modules/bootstrap/scss/type";
+@import "../node_modules/bootstrap/scss/images";
+@import "../node_modules/bootstrap/scss/containers";
+@import "../node_modules/bootstrap/scss/grid";
+@import "../node_modules/bootstrap/scss/tables";
+@import "../node_modules/bootstrap/scss/forms";
+@import "../node_modules/bootstrap/scss/buttons";
+@import "../node_modules/bootstrap/scss/transitions";
+@import "../node_modules/bootstrap/scss/dropdown";
+@import "../node_modules/bootstrap/scss/nav";
+@import "../node_modules/bootstrap/scss/navbar";
+@import "../node_modules/bootstrap/scss/card";
+@import "../node_modules/bootstrap/scss/accordion";
+@import "../node_modules/bootstrap/scss/breadcrumb";
+@import "../node_modules/bootstrap/scss/pagination";
+@import "../node_modules/bootstrap/scss/badge";
+@import "../node_modules/bootstrap/scss/alert";
+@import "../node_modules/bootstrap/scss/list-group";
+@import "../node_modules/bootstrap/scss/close";
+@import "../node_modules/bootstrap/scss/toasts";
+@import "../node_modules/bootstrap/scss/modal";
+@import "../node_modules/bootstrap/scss/spinners";
+@import "../node_modules/bootstrap/scss/offcanvas";
+@import "../node_modules/bootstrap/scss/placeholders";
+@import "../node_modules/bootstrap/scss/helpers";
+@import "../node_modules/bootstrap/scss/utilities/api";
+
+// 5. 基礎（字型 → 基礎設定 → flex utility）
+@import "./base/font";
+@import "./base/base";
+@import "./base/flex";
+
+// 6. 圖示（純 CSS import：路徑相對於編譯後輸出位置 css/all.css，見 CLAUDE.md §3）
+@import "vendor/bootstrap-icons/bootstrap-icons.min.css";
+
+// 7. UI 元件（一元件一檔，新增元件時於此處加入對應 @import）
+@import "./components/bgDeco";
+@import "./components/sectionBand";
+@import "./components/sectionHeading";
+@import "./components/pageBanner";
+@import "./components/pageBannerWave";
+@import "./components/barSlim";
+@import "./components/linkText";
+@import "./components/btn";
+@import "./components/tabsPill";
+@import "./components/tabsCount";
+@import "./components/panelFull";
+@import "./components/listRow";
+@import "./components/tagPill";
+@import "./components/cardPhoto";
+@import "./components/cardNumbered";
+@import "./components/cardBordered";
+@import "./components/cardPanel";
+@import "./components/infoGrid";
+@import "./components/infoBox";
+@import "./components/cardFloating";
+@import "./components/badgePill";
+@import "./components/heroBanner";
+@import "./components/sectionLayout";
+@import "./components/pagination";
+@import "./components/article";
+@import "./components/fileRow";
+@import "./components/header";
+@import "./components/footer";
+@import "./components/authShell";
+@import "./components/formField";
+@import "./components/modal";
+@import "./components/filterList";
+@import "./components/specList";
+@import "./components/navBarLogged";
+@import "./components/homeGreeting";
+@import "./components/homeCards";
+@import "./components/centerHome";
+@import "./components/cardChoice";
+@import "./components/comboPicker";
+@import "./components/stepTracker";
+@import "./components/applyForm";
+@import "./components/dataTable";
+@import "./components/records";
+@import "./components/borrowing";
+@import "./components/deviceInfo";
+@import "./components/repairs";
+@import "./components/photoLightbox";
+@import "./components/schoolProfile";
+@import "./components/staffList";
+@import "./components/staffPicker";
+@import "./components/vendorRepairs";
+@import "./components/vendorHearing";
+@import "./components/review";
+@import "./components/reviewDetail";
+@import "./components/borrow";
+@import "./components/centerRepair";
+@import "./components/devices";
+@import "./components/schoolsPage";
+@import "./components/vendorsPage";
+@import "./components/uploadTile";
+@import "./components/logTimeline";
+@import "./components/statCard";
+@import "./components/accountsPage";
+@import "./components/news";
+@import "./components/siteMap";
+@import "./components/centerSettings";

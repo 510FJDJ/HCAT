@@ -1,0 +1,131 @@
+// ============================================================
+// 輔具管理人員清單（school/staff.html）：姓名職稱＋聯絡方式＋編輯/刪除
+// ============================================================
+
+.staffRow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid $line-default;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    @media (max-width: 720px) {
+        flex-wrap: wrap;
+    }
+}
+
+.staffRow-main {
+    flex: 1 1 260px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.staffRow-nameLine {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.staffRow-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.staffRow-title {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.staffRow-contact {
+    flex: 1 1 240px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    color: $ink-2;
+
+    @media (max-width: 720px) {
+        flex: 1 1 100%;
+        order: 3;
+    }
+}
+
+.staffRow-badges {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+
+    @media (max-width: 720px) {
+        flex-direction: row;
+        align-items: center;
+        order: 2;
+    }
+}
+
+.staffRow-actions {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 8px;
+
+    @media (max-width: 720px) {
+        order: 4;
+        margin-left: auto;
+    }
+}
+
+.staffRow-iconBtn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid $brand-teal;
+    background-color: $surface-card;
+    color: $brand-teal-deep;
+    cursor: pointer;
+    transition: background-color 160ms ease-out, border-color 160ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-teal-pale;
+    }
+}
+
+.staffRow-iconBtn-danger {
+    border-color: $state-required;
+    color: $state-required;
+
+    &:hover,
+    &:focus-visible {
+        background-color: #FBEAEA;
+    }
+
+    &[aria-disabled="true"] {
+        border-color: $line-strong;
+        color: $ink-3;
+        cursor: not-allowed;
+
+        &:hover,
+        &:focus-visible {
+            background-color: transparent;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .staffRow-iconBtn {
+        transition: none;
+    }
+}

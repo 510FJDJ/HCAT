@@ -1,0 +1,195 @@
+// ============================================================
+// 學校端首頁問候語區（design.md §5.2、§10：中心端總覽／學校端首頁不放人物插圖）
+// 點點底＋弧線遮罩（做法同 _pageBanner.scss）＋右側幾何圖形裝飾
+// ============================================================
+
+// 問候語區幾何圖形裝飾色：使用者特別調淡、刻意挑選的配色，不可改回飽和色
+$homeDeco-amber-sm: #F4C989;
+$homeDeco-teal-md:  #A9D8D2;
+$homeDeco-teal-wedge: #CBE8E2;
+$homeDeco-amber-md: #F7DAA8;
+$homeDeco-teal-sm:  #8FCBC4;
+$homeDeco-teal-lg:  #B9E1DB;
+
+.homeMain {
+    position: relative;
+}
+
+.homeMain-dots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    // main 結尾緊接共用 footer.html 的 .siteFooter-illustration（插圖區，高 304px），
+    // 該區自己的點點背景是從 0% 透明往下淡入到 70%（約 213px）才接近不透明，
+    // 這裡點點往下多探出一段墊在它底下，淡入還沒不透明的部分才不會露出空白
+    bottom: -220px;
+    z-index: -1;
+    background-color: $surface-mint-dots;
+    background-image: radial-gradient(rgba(15,127,129,0.1) 1.1px, transparent 1.6px);
+    background-size: 10px 10px;
+    pointer-events: none;
+}
+
+.homeMain-content {
+    position: relative;
+    z-index: 1;
+}
+
+// 右側幾何圖形裝飾：純裝飾、aria-hidden，桌面版才顯示（同 .pageBanner-illustration 斷點）
+.homeGreeting-deco {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 340px;
+    overflow: hidden;
+    pointer-events: none;
+
+    @media (max-width: 720px) {
+        display: none;
+    }
+}
+
+.homeGreeting-deco span {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.homeGreeting-deco span:nth-child(1) {
+    left: 50%;
+    top: 124px;
+    width: 16px;
+    height: 16px;
+    background-color: $homeDeco-amber-sm;
+}
+
+.homeGreeting-deco span:nth-child(2) {
+    left: 53.5%;
+    top: 150px;
+    width: 60px;
+    height: 60px;
+    background-color: $homeDeco-teal-md;
+}
+
+.homeGreeting-deco span:nth-child(3) {
+    left: 62%;
+    top: 84px;
+    width: 160px;
+    height: 80px;
+    border-radius: 80px 80px 0 0;
+    background-color: $homeDeco-teal-wedge;
+}
+
+.homeGreeting-deco span:nth-child(4) {
+    left: 77%;
+    top: 150px;
+    width: 40px;
+    height: 40px;
+    background-color: $homeDeco-amber-md;
+}
+
+.homeGreeting-deco span:nth-child(5) {
+    left: 73%;
+    top: 196px;
+    width: 10px;
+    height: 10px;
+    background-color: $homeDeco-teal-sm;
+}
+
+.homeGreeting-deco span:nth-child(6) {
+    left: 85.3%;
+    top: 93px;
+    width: 108px;
+    height: 108px;
+    background-color: $homeDeco-teal-lg;
+}
+
+// 持續微飄：不靠捲動觸發，載入後就會自己緩緩浮動，做法同 _authShell.scss 的 authDecoFloat
+// 各圖形給不同時長與延遲，避免 6 個一起同步漂、看起來呆板
+@media (prefers-reduced-motion: no-preference) {
+    .homeGreeting-deco span:nth-child(1) { animation: homeGreeting-decoFloat 4s ease-in-out infinite; --drift-x: -5px; --drift-y: 5px; }
+    .homeGreeting-deco span:nth-child(2) { animation: homeGreeting-decoFloat 6s ease-in-out infinite -1s; --drift-x: 5px;  --drift-y: 6px; }
+    .homeGreeting-deco span:nth-child(3) { animation: homeGreeting-decoFloat 7s ease-in-out infinite -3s; --drift-x: -4px; --drift-y: 5px; }
+    .homeGreeting-deco span:nth-child(4) { animation: homeGreeting-decoFloat 5s ease-in-out infinite -2s; --drift-x: 6px;  --drift-y: 8px; }
+    .homeGreeting-deco span:nth-child(5) { animation: homeGreeting-decoFloat 3.5s ease-in-out infinite -1.5s; --drift-x: -5px; --drift-y: 3px; }
+    .homeGreeting-deco span:nth-child(6) { animation: homeGreeting-decoFloat 8s ease-in-out infinite -4s; --drift-x: 4px;  --drift-y: 4px; }
+}
+
+@keyframes homeGreeting-decoFloat {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(var(--drift-x), var(--drift-y));
+    }
+}
+
+.homeMain-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 56px 40px 20px;
+
+    @media (max-width: 1280px) {
+        padding: 48px 24px 0;
+    }
+
+    @media (max-width: 720px) {
+        padding: 32px 16px 0;
+    }
+}
+
+.homeGreeting-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-size: 16px;
+    color: $ink-2;
+
+    time {
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        color:$brand-teal;
+    }
+}
+
+.homeGreeting-meta-sep {
+    width: 1px;
+    height: 14px;
+    background-color: $line-strong;
+}
+
+.homeGreeting-title {
+    display: flex;
+    align-items: center;
+    margin: 0 0 14px;
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: .04em;
+    color: $ink-1;
+
+    @media (max-width: 720px) {
+        font-size: 28px;
+    }
+}
+
+.homeGreeting-desc {
+    margin: 0;
+    max-width: 56ch;
+    font-size: 18px;
+    color: $ink-2;
+
+    @media (max-width: 720px) {
+        font-size: 16px;
+    }
+}
+
+.homeGreeting-count {
+    font-family: "Poppins", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: $accent-amber-ink;
+}

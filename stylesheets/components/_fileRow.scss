@@ -1,0 +1,167 @@
+// ============================================================
+// 檔案列（共用外型）：最新消息附件下載／相關連結、表單上傳後的檔案清單皆共用
+// .fileRow-external 為外連變體；.fileRow-upload 為上傳檔案清單變體（無連結、右側為刪除鈕）
+// ============================================================
+
+.fileRow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border-radius: $border-radius;
+    border: 1.5px solid $line-default;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 180ms ease-out, background-color 180ms ease-out;
+
+    & + & {
+        margin-top: 10px;
+    }
+
+    &:hover,
+    &:focus-visible {
+        border-color: $brand-teal;
+        background-color: $surface-teal-pale;
+    }
+}
+
+.fileRow-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background-color: $surface-mint-dots;
+    color: $brand-teal-deep;
+    font-size: 20px;
+}
+
+.fileRow-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.fileRow-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-1;
+    overflow-wrap: anywhere;
+}
+
+.fileRow-meta {
+    font-size: 15px;
+    color: $ink-3;
+}
+
+.fileRow-arrow {
+    flex-shrink: 0;
+    color: $ink-3;
+    transition: transform 180ms ease-out;
+}
+
+.fileRow:hover .fileRow-arrow,
+.fileRow:focus-visible .fileRow-arrow {
+    transform: translateY(2px);
+}
+
+// 外連變體（相關連結）：箭頭往右上移動，而非往下
+.fileRow-external:hover .fileRow-arrow,
+.fileRow-external:focus-visible .fileRow-arrow {
+    transform: translate(2px, -2px);
+}
+
+// ---- 上傳檔案清單變體：右側為刪除鈕，不是連結箭頭 ----
+.fileRow-upload {
+    cursor: default;
+
+    &:hover,
+    &:focus-visible {
+        border-color: $line-default;
+        background-color: transparent;
+    }
+}
+
+.fileRow-delete {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 10px;
+    background: none;
+    color: $ink-3;
+    cursor: pointer;
+    transition: background-color 160ms ease-out, color 160ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $accent-amber-pale;
+        color: $state-required;
+    }
+}
+
+// ---- 檢視按鈕變體：右側是獨立的「檢視」按鈕，不是整列可點擊的連結（評估報告與附件清單使用）----
+// 容器較窄（如側欄）時，內文最少保留 120px 寬度，不隨操作鈕硬擠到只剩幾個字；
+// 真的放不下時讓 .fileRow-actions 整個掉到下一行，而不是兩邊互搶寬度造成擁擠
+.fileRow-preview {
+    cursor: default;
+    flex-wrap: wrap;
+    row-gap: 10px;
+
+    &:hover,
+    &:focus-visible {
+        border-color: $line-default;
+        background-color: transparent;
+    }
+
+    .fileRow-body {
+        min-width: 120px;
+    }
+
+    .fileRow-actions {
+        margin-left: auto;
+    }
+}
+
+.fileRow-action {
+    flex-shrink: 0;
+}
+
+// 單列同時有多顆操作按鈕（檢視／下載／刪除）時的外層容器
+.fileRow-actions {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+// 上傳後的檔案清單：多檔左右並排，寬度不足自動換行（間距一律由 gap 控制，不疊 margin）
+.fileUploadList {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 12px;
+    margin-bottom: 16px;
+
+    .fileRow {
+        flex: 1 1 280px;
+        min-width: 0;
+        margin-top: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fileRow,
+    .fileRow-arrow,
+    .fileRow-delete {
+        transition: none;
+    }
+}

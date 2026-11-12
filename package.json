@@ -1,0 +1,9 @@
+{
+  "name": "HCAT",
+  "description": "新竹縣特殊教育資源中心 輔具管理資訊系統（HCAT）",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3"
+  }
+}

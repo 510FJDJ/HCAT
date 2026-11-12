@@ -1,0 +1,88 @@
+// ============================================================
+// 分頁元件（design.md §7.10）：置中，顯示「顯示 N 筆，共 M 筆」與頁碼
+// ============================================================
+
+.pageNav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 40px;
+
+    @media (max-width: 720px) {
+        margin-top: 28px;
+    }
+}
+
+.pageNav-summary {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.pageNav-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pageNav-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 44px;
+    padding: 0 6px;
+    border-radius: 12px;
+    border: 1.5px solid $line-strong;
+    background-color: $surface-card;
+    color: $ink-1;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 180ms ease-out, border-color 180ms ease-out, color 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-teal-pale;
+        border-color: $brand-teal;
+    }
+}
+
+.pageNav-item[aria-current="page"] {
+    background-color: $brand-teal;
+    border-color: $brand-teal;
+    color: #FFFFFF;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $brand-teal-deep;
+        border-color: $brand-teal-deep;
+    }
+}
+
+.pageNav-item[aria-disabled="true"] {
+    background-color: #EEF1F0;
+    border-color: #EEF1F0;
+    color: #8A9A9F;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+// 上一頁／下一頁：圖示＋文字並排，寬度隨內容撐開
+.pageNav-item-label {
+    width: auto;
+    gap: 6px;
+    padding: 0 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pageNav-item {
+        transition: none;
+    }
+}

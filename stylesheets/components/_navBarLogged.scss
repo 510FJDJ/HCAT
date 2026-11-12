@@ -1,0 +1,314 @@
+// ============================================================
+// 已登入後台頁首（design.md §5.2）：Header（Logo／字級／使用者／登出）
+// ＋水平主選單（可展開下拉）。中心端／廠商端沿用相同結構，
+// 分支位置以 .appBar-navBar、.navBar 共用，不綁定特定角色名稱。
+// 斷點對齊 .siteHeader-nav／.siteHeader-menuTrigger（_header.scss，900／901px）
+// ============================================================
+
+// ---- 第一排：Logo、申請期間、字級、使用者、登出 ----
+.appBar {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid $line-default;
+    overflow: hidden;
+    max-height: 200px;
+    transition: max-height 200ms ease-out, opacity 200ms ease-out, border-bottom-width 200ms ease-out;
+}
+
+// 往下滑動時第一排收合（JS 依捲動位置切換 #header.is-compact，見 js/main.js）
+// #header 本身已是 position:sticky（_base.scss），第一排收合後第二排 .navBar 會自然頂到最上方
+// border-bottom-width 要一起轉成 0，只轉顏色的話框線寬度還是會卡出 1px 縫隙
+// 僅在 ≥901px（.navBar 有顯示時）才收合：900px 以下 .navBar 本來就 display:none，
+// 若 .appBar 這時也收合到 0，整排 header 會完全消失、無法保持置頂
+@media (min-width: 901px) {
+    #header.is-compact .appBar {
+        max-height: 0;
+        opacity: 0;
+        border-bottom-width: 0;
+    }
+}
+
+.appBar-inner {
+    max-width: 1360px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 14px 40px;
+
+    @media (max-width: 1280px) {
+        padding: 10px 24px;
+    }
+
+    @media (max-width: 720px) {
+        height: 64px;
+        padding: 8px 16px;
+    }
+}
+
+.appBar-tools {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    @media (max-width: 900px) {
+        display: none;
+    }
+}
+
+.appBar-divider {
+    width: 1px;
+    height: 28px;
+    background-color: $line-default;
+    flex-shrink: 0;
+}
+
+
+.appBar-userText {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.4;
+}
+
+.appBar-userName {
+    font-size: 16px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.appBar-userRole {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.appBar-identity {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+// ---- 第二排：水平主選單（design.md §5.2，桌面版，手機隱藏） ----
+.navBar {
+    background-color: rgba(255, 255, 255, .62);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid $line-default;
+
+    @media (max-width: 900px) {
+        display: none;
+    }
+}
+
+.navBar-inner {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 40px;
+
+    @media (max-width: 1280px) {
+        padding: 0 24px;
+    }
+}
+
+.navBar-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navBar-item {
+    position: relative;
+}
+
+// 連結與下拉觸發鈕共用同一套文字／底線樣式
+.navBar-link,
+.navBar-trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 56px;
+    padding: 0 6px;
+    background: none;
+    border: none;
+    box-shadow: inset 0 -3px 0 transparent;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 500;
+    color: $ink-1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 180ms ease-out, box-shadow 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        color: $brand-teal-deep;
+    }
+
+    &[aria-current="page"],
+    &.is-currentGroup {
+        color: $brand-teal-deep;
+        font-weight: 700;
+        box-shadow: inset 0 -3px 0 $accent-amber;
+    }
+}
+
+.navBar-trigger-icon {
+    font-size: 14px;
+    transition: transform 200ms ease-out;
+}
+
+.navBar-trigger[aria-expanded="true"] .navBar-trigger-icon {
+    transform: rotate(180deg);
+}
+
+.navBar-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 4px;
+    min-width: 230px;
+    padding: 8px;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: $shadow-dialog;
+    z-index: 1040;
+    list-style: none;
+}
+
+.navBar-dropdownLink {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    color: $ink-1;
+    text-decoration: none;
+    transition: background-color 180ms ease-out, color 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-teal-pale;
+        color: $brand-teal-deep;
+    }
+
+    &[aria-current="page"] {
+        background-color: $surface-teal-pale;
+        color: $brand-teal-deep;
+        font-weight: 700;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .appBar,
+    .navBar-link,
+    .navBar-trigger {
+        transition: none;
+    }
+
+    .navBar-trigger-icon {
+        transition: none;
+    }
+}
+
+// ============================================================
+// 手機選單：身分區改為使用者資訊（非訪客登入卡）
+// ============================================================
+.panelFull-identity-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.panelFull-identity-user .appBar-userName {
+    font-size: 20px;
+}
+
+// ============================================================
+// 手機選單：可展開分組（輔具申請／學校與帳號）
+// 不沿用 .listRow-expandable（該元件假設右向箭頭轉 90 度），
+// 另建專屬類別：箭頭為下chevron，展開轉 180 度＋深底＋左側引導線
+// ============================================================
+.navMobile-group {
+    border-radius: 16px;
+    transition: background-color 180ms ease-out;
+}
+
+// .navMobile-group.is-open {
+//     background-color: $surface-mint-dots;
+// }
+
+.navMobile-toggle {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.navMobile-toggle-icon {
+    margin-left: auto;
+    transition: transform 200ms ease-out;
+}
+
+.navMobile-toggle[aria-expanded="true"] .navMobile-toggle-icon {
+    transform: rotate(180deg);
+}
+
+.navMobile-sublist {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0 12px 10px 34px;
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: 31px;
+        top: 0;
+        bottom: 10px;
+        width: 2px;
+        background-color: $surface-teal-soft;
+    }
+}
+
+.navMobile-sublistLink {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 44px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    color: $ink-1;
+    text-decoration: none;
+    transition: background-color 180ms ease-out, color 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-mint;
+        color: $brand-teal-deep;
+    }
+
+    &[aria-current="page"] {
+        background-color: #FFFFFF;
+        color: $brand-teal-deep;
+        font-weight: 700;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .navMobile-group,
+    .navMobile-toggle-icon,
+    .navMobile-sublistLink {
+        transition: none;
+    }
+}

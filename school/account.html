@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+        // 預覽用：切換成 'local' 'openid' 可預覽一般帳號密碼 或 OPENID登入狀態，正式上線由後端依帳號類型輸出對應版本，不會有這段
+        document.documentElement.setAttribute('data-preview-login', 'local');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帳號與密碼 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="學校端查看登入資料並維護登入密碼">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_School.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu" src="../img/banner/school.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="profilePage-container">
+                <div class="bannerWave-inner">
+                    <nav class="crumbNav" aria-label="麵包屑導覽">
+                        <ol>
+                            <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li>學校與帳號</li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li aria-current="page" class="crumbNav-current">帳號與密碼</li>
+                        </ol>
+                    </nav>
+
+                    <div class="bannerWave-main">
+                        <h1 class="titleSection bannerWave-title">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            帳號與密碼
+                        </h1>
+                        <p class="bannerWave-desc">查看你的登入資料，並維護登入密碼。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="profilePage-content">
+            <div class="profilePage-container">
+                <!-- 示範用：帳號登入方式分「教育部 OpenID」與「中心核發帳號」兩種狀態，實際上線由後端依帳號類型決定顯示哪一組；
+                     這裡用 html[data-preview-login] 統一控制所有標了 data-login-variant 的元素，預設顯示 OpenID。
+                     要預覽另一狀態時，改 <head> 裡的 data-preview-login 值即可，
+                     不需要逐個元素手動移 hidden。 -->
+                <section class="cardPanel" aria-labelledby="accInfo">
+                    <div class="cardPanel-head">
+                        <h2 id="accInfo" class="cardPanel-title">登入資料</h2>
+                    </div>
+
+                    <dl class="infoGrid">
+                        <div>
+                            <dt class="infoGrid-label">姓名</dt>
+                            <dd class="infoGrid-value">王小明</dd>
+                        </div>
+                        <div>
+                            <dt class="infoGrid-label">學校／職稱</dt>
+                            <dd class="infoGrid-value">竹北國小／特教組長</dd>
+                        </div>
+                        <div>
+                            <dt class="infoGrid-label">登入方式</dt>
+                            <dd class="infoGrid-value">
+                                <span class="tagPill tag-cyanLight" data-login-variant="openid">教育部 OpenID</span>
+                                <span class="tagPill tag-tealSoft" data-login-variant="local">中心核發帳號</span>
+                            </dd>
+                        </div>
+                        <div>
+                            <dt class="infoGrid-label">帳號</dt>
+                            <dd class="infoGrid-value infoGrid-value-mono">
+                                <span data-login-variant="openid">wang@cpes.hcc.edu.tw</span>
+                                <span data-login-variant="local">cp-wang01</span>
+                            </dd>
+                        </div>
+                        <div>
+                            <dt class="infoGrid-label">上次登入</dt>
+                            <dd class="infoGrid-value infoGrid-value-mono">2026/10/29 08:12</dd>
+                        </div>
+                    </dl>
+                </section>
+
+                <div class="mt-4"></div>
+
+                <section class="cardPanel" aria-labelledby="accPassword" data-login-variant="openid">
+                    <div class="cardPanel-head">
+                        <h2 id="accPassword" class="cardPanel-title d-flex align-items-center gap-2">
+                            <i class="bi bi-lock-fill" aria-hidden="true"></i>
+                            密碼
+                        </h2>
+                    </div>
+
+                    <p class="formField-hint">你的密碼由教育部 OpenID（教育雲）管理，本系統不提供修改，請前往教育雲網站重設密碼。</p>
+
+                    <div class="flex-center-center">
+                        <a href="#" class="btnPill btn-outline mt-10" target="_blank" rel="noopener" title="將另開新視窗，前往教育部教育雲修改密碼頁">
+                            <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+                            前往教育部 OpenID 修改密碼
+                        </a>
+                    </div>
+                </section>
+
+                <section class="cardPanel" aria-labelledby="accPasswordLocal" data-login-variant="local">
+                    <div class="cardPanel-head">
+                        <h2 id="accPasswordLocal" class="cardPanel-title d-flex align-items-center gap-2">
+                            <i class="bi bi-lock-fill" aria-hidden="true"></i>
+                            修改密碼
+                        </h2>
+                    </div>
+
+                    <form class="profileCard-form profileCard-form-bare" id="accountPasswordForm">
+                        <div class="formGrid">
+                            <div class="formGrid-full">
+                                <label for="accCurrentPw" class="formField-label">目前密碼<span class="formField-required">必填</span></label>
+                                <div class="inputGroup">
+                                    <input type="password" id="accCurrentPw" class="form-control" autocomplete="current-password" minlength="6" maxlength="12" placeholder="請輸入目前密碼" required>
+                                    <button type="button" class="inputGroup-btn" data-js="togglePassword" data-target="accCurrentPw" aria-label="顯示密碼" aria-pressed="false">
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="accNewPw" class="formField-label">新密碼<span class="formField-required">必填</span></label>
+                                <div class="inputGroup">
+                                    <input type="password" id="accNewPw" class="form-control" autocomplete="new-password" minlength="6" maxlength="12" placeholder="請輸入新密碼" required aria-describedby="accNewPwHint">
+                                    <button type="button" class="inputGroup-btn" data-js="togglePassword" data-target="accNewPw" aria-label="顯示密碼" aria-pressed="false">
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <p id="accNewPwHint" class="formField-hint">6–12 碼英數字或半形符號</p>
+                            </div>
+                            <div>
+                                <label for="accNewPwConfirm" class="formField-label">確認新密碼<span class="formField-required">必填</span></label>
+                                <div class="inputGroup">
+                                    <input type="password" id="accNewPwConfirm" class="form-control" autocomplete="new-password" minlength="6" maxlength="12" placeholder="請輸入確認新密碼" required>
+                                    <button type="button" class="inputGroup-btn" data-js="togglePassword" data-target="accNewPwConfirm" aria-label="顯示密碼" aria-pressed="false">
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <p class="formField-error" data-js="passwordMatchError" hidden></p>
+                            </div>
+                        </div>
+
+                        <div class="noteBox noteBox-amber">
+                            <i class="bi bi-info-circle" aria-hidden="true"></i>
+                            <span>密碼長度 6–12 碼，可用大小寫英文字母、數字或半形特殊符號。</span>
+                        </div>
+
+                        <div class="flex-center-center">
+                            <button type="submit" class="btnPill btn-teal">更新密碼</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

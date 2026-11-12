@@ -1,0 +1,52 @@
+// ============================================================
+// 標籤元件（design.md §7.3、§2.6）：外型固定，色票以色名命名修飾子
+// 同色票跨頁共用（例：行動與擺位輔具／申請公告皆為 tealSoft）
+// ============================================================
+
+.tagPill {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+// 搭配圖示使用時（如置頂徽章的 pin 圖示），圖示與文字之間需要間距
+.tagPill-withIcon {
+    gap: 4px;
+
+    .bi {
+        font-size: 14px;
+    }
+}
+
+.tag-tealSoft   { background-color: #D6EEEC; color: #0B6466; } // 行動與擺位輔具／申請公告
+.tag-goldLight  { background-color: #FCE7C6; color: #7A4A00; } // 視障輔具／系統公告
+.tag-cyanLight  { background-color: #D8EFF1; color: #1E5F66; } // 聽障輔具
+.tag-purpleLight{ background-color: #E4E0F3; color: #4A3D8A; } // 溝通輔具
+.tag-greyLight  { background-color: #E3E8E7; color: #3F4D53; } // 資訊輔具／其他
+.tag-tanLight   { background-color: #EFE7D6; color: #5E4A1F; } // 書寫與閱讀
+.tag-greenLight { background-color: #E5F3EA; color: #1E6B3E; } // 免評估（全站統一）
+.tag-coralLight { background-color: #FBDCD3; color: #8E3822; } // 研習活動
+.tag-amberOutline {
+    background-color: $accent-amber-pale;
+    color: $accent-amber-ink-2;
+    border: 1.5px solid #E2A54A;
+} // 待購置
+.tag-redLight {
+    background-color: #FBEAEA;
+    color: $state-required;
+} // 退回補件等待辦狀態（文字沿用已驗證對比的 state/required）
+.tag-amberSolid {
+    background-color: $accent-amber;
+    color: $ink-1;
+} // 置頂（同 design.md §7.9 數字徽章配色）
+.tag-blueLight  { background-color: #E8F1FB; color: #1D4F86; } // 借出（聽障點交），同 noteBox-blue
+.tag-violetLight{ background-color: #F1ECF8; color: #4B2E83; } // 歸還（聽障點交），同 noteBox-purple
+
+// 標籤文字為編號（如財產編號）時改用 Poppins，讓數字在中文版面中自然浮出來（design.md §3）
+.tagPill-mono {
+    font-family: "Poppins", sans-serif;
+}

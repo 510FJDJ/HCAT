@@ -1,0 +1,107 @@
+// ============================================================
+// 背景裝飾元件（design.md §6.2、§6.3）：點點背景、區塊波浪漸層
+// ============================================================
+
+.bgDotted {
+    background-color: $surface-mint-dots;
+    background-image: radial-gradient($deco-dots 1.1px, transparent 1.6px);
+    background-size: 10px 10px;
+}
+
+// 需要讓點點淡出時用 mask-image 漸層，不改變點點本身
+.bgDotted-fadeBottom {
+    mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+}
+
+// 方向相反：上方透明，往下漸入（頁尾插圖區背景用，比例與透明度可再調整）
+.bgDotted-fadeTop {
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, .85) 70%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, .85) 70%);
+}
+
+// 借用流程區塊的緩坡曲線＋漸層（design.md §6.3）：SVG 曲線疊加 deco/hill 由 20% 漸變到 0%
+.bgWave {
+    position: relative;
+    background-color: $surface-mint;
+    overflow: hidden;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient($deco-dots 1.1px, transparent 1.6px);
+        background-size: 10px 10px;
+        pointer-events: none;
+    }
+
+    > * {
+        position: relative;
+    }
+}
+
+// 波浪曲線色塊：對齊標題區下方開始，往下延伸到區塊底部
+.bgWave-hill {
+    position: absolute;
+    left: 0;
+    top: 168px;
+    bottom: 0;
+    width: 100%;
+    height: calc(100% - 168px);
+    pointer-events: none;
+
+    // 手機版版面較窄，緩坡曲線改用下方的圓角長方形色塊取代
+    @media (max-width: 720px) {
+        display: none;
+    }
+}
+
+// 手機版波浪色塊：曲線簡化為圓角長方形區塊（design.md §6.3 手機版例外）
+.bgWave-hillMobile {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 150px;
+    bottom: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba($deco-hill, .45) 0%, rgba($deco-hill, .22) 40%, rgba($deco-hill, 0) 100%);
+    border-radius: 60% 40% 0 0 / 40px 60px 0 0;
+
+    @media (max-width: 720px) {
+        display: block;
+    }
+}
+
+// 借用流程區塊的葉子／花朵裝飾（純裝飾，aria-hidden）
+.bgWave-leaf {
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    height: auto;
+
+    &-1 {
+        left: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 55px;
+    }
+
+    &-2 {
+        right: 8%;
+        top: 40px;
+        width: 39px;
+    }
+
+    &-3 {
+        right: 14%;
+        bottom: 40px;
+        width: 45px;
+    }
+    @media (max-width: 720px) {
+        &-3 {
+       display: none;
+    }
+        
+    }
+}

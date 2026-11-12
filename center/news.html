@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最新消息管理 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="特教資源中心管理前台「最新消息」的公告，包含新增、編輯、分類與上下架設定">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_Center.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu" src="../img/banner/news-admin.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="newsPage-container">
+                <div class="bannerWave-inner">
+                    <nav class="crumbNav" aria-label="麵包屑導覽">
+                        <ol>
+                            <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li>網站與設定</li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li aria-current="page" class="crumbNav-current">最新消息管理</li>
+                        </ol>
+                    </nav>
+
+                    <div class="bannerWave-main">
+                        <h1 class="titleSection bannerWave-title">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            最新消息管理
+                        </h1>
+                        <p class="bannerWave-desc">新增、編輯與刪除前台「最新消息」。在編輯視窗裡設定是否啟用：停用的消息就是草稿，會放在「停用・草稿」頁籤；啟用的消息會依上架期間自動顯示與下架。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="newsPage-content">
+            <div class="newsPage-container">
+                <section class="cardPanel" aria-label="消息列表">
+
+                    <div class="flex-row-between flex-wrap newsPage-tabsRow">
+                        <div class="tabsCount" role="tablist" aria-label="依狀態檢視">
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-news-all" data-category="all" aria-selected="true" aria-controls="panel-newsList" tabindex="0">全部<span class="tabsCount-badge" aria-hidden="true">9</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-news-live" data-category="live" aria-selected="false" aria-controls="panel-newsList" tabindex="-1">上架中<span class="tabsCount-badge" aria-hidden="true">5</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-news-sched" data-category="sched" aria-selected="false" aria-controls="panel-newsList" tabindex="-1">排程中<span class="tabsCount-badge" aria-hidden="true">1</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-news-draft" data-category="draft" aria-selected="false" aria-controls="panel-newsList" tabindex="-1">停用・草稿<span class="tabsCount-badge" aria-hidden="true">2</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-news-off" data-category="off" aria-selected="false" aria-controls="panel-newsList" tabindex="-1">已下架<span class="tabsCount-badge" aria-hidden="true">1</span></button>
+                        </div>
+                        <div class="flex-row-start flex-wrap gap-3">
+                            <button type="button" class="btnPill btn-outline" data-bs-toggle="modal" data-bs-target="#newsCatModal" data-js="newsCatOpen">
+                                <i class="bi bi-list-ul" aria-hidden="true"></i>分類管理
+                            </button>
+                            <button type="button" class="btnPill btn-teal" data-bs-toggle="modal" data-bs-target="#newsFormModal" data-js="newsAddOpen">
+                                <i class="bi bi-plus-lg" aria-hidden="true"></i>新增消息
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="recordsFilters">
+                        <form class="recordsFilters-form" novalidate>
+                            <div class="recordsFilters-field">
+                                <label for="newsFilterCat">分類</label>
+                                <select id="newsFilterCat" class="form-select">
+                                    <option value="all" selected>全部分類</option>
+                                    <option value="apply">申請公告</option>
+                                    <option value="system">系統公告</option>
+                                    <option value="event">研習活動</option>
+                                </select>
+                            </div>
+                            <div class="recordsFilters-field">
+                                <label for="newsFilterQ">關鍵字</label>
+                                <div class="inputGroup">
+                                    <i class="bi bi-search inputGroup-icon" aria-hidden="true"></i>
+                                    <input type="search" id="newsFilterQ" class="form-control" placeholder="消息標題">
+                                </div>
+                            </div>
+                            <button type="submit" class="btnPill btn-teal btnPill-sm">查詢</button>
+                        </form>
+                    </div>
+
+                    <p class="textNote" data-js="newsTotalNote">總筆數：9</p>
+
+                    <div role="tabpanel" id="panel-newsList" aria-labelledby="tab-news-all">
+                        <p class="textNote py-6" data-js="emptyNote" hidden>這個分類目前沒有消息。</p>
+
+                        <div class="dataTable-wrap">
+                            <div class="dataTable-scroll">
+                                <table class="dataTable dataTable--stickyEnd">
+                                    <caption>最新消息列表</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">標題</th>
+                                            <th scope="col">分類</th>
+                                            <th scope="col">上架期間</th>
+                                            <th scope="col">狀態</th>
+                                            <th scope="col">功能</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-category="live">
+                                            <td data-label="標題">
+                                                <span class="newsPage-titleCell">
+                                                    <span class="tagPill tag-amberSolid tagPill-withIcon"><i class="bi bi-pin-angle-fill" aria-hidden="true"></i>置頂</span>
+                                                    <span class="newsPage-titleText">115 學年度第二次學校輔具申請開放</span>
+                                                    <i class="bi bi-paperclip newsPage-fileIcon" aria-hidden="true"></i>
+                                                </span>
+                                            </td>
+                                            <td data-label="分類"><span class="tagPill tag-tealSoft" data-cat="apply">申請公告</span></td>
+                                            <td data-label="上架期間">
+                                                <span class="newsPage-dateRange"><span>2026/08/25</span><span class="newsPage-dateRange-to">至 2027/03/31</span></span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>上架中</span></td>
+                                            <td data-label="功能" class="dataTable-actionsRow">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#newsFormModal" data-js="newsEditOpen"
+                                                    data-news-title="115 學年度第二次學校輔具申請開放" data-news-cat="apply" data-news-from="2026-08-25" data-news-to="2027-03-31"
+                                                    data-news-pinned="true" data-news-home="true" data-news-enabled="true"
+                                                    data-news-body="115 學年度第二次學校輔具申請將於 2027 年 2 月 1 日開放，請各校於期限內登入系統填寫申請表，並上傳簽核後的申請單。"
+                                                    data-news-file='{"name":"115學年度輔具申請須知.pdf","size":"680 KB"}'
+                                                    data-news-links='[{"text":"115 學年度輔具申請線上填寫說明（影片）","url":"#"},{"text":"教育部特殊教育通報網","url":"#"}]'
+                                                    aria-label="編輯「115 學年度第二次學校輔具申請開放」">編輯</button>
+                                                <button type="button" class="btnIconCircle btnIconCircle-sm btnIconCircle-danger" data-bs-toggle="modal" data-bs-target="#newsDeleteModal" data-js="newsDeleteOpen"
+                                                    data-title="115 學年度第二次學校輔具申請開放" aria-label="刪除「115 學年度第二次學校輔具申請開放」"><i class="bi bi-trash3" aria-hidden="true"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="live">
+                                            <td data-label="標題">
+                                                <span class="newsPage-titleCell">
+                                                    <span class="tagPill tag-amberSolid tagPill-withIcon"><i class="bi bi-pin-angle-fill" aria-hidden="true"></i>置頂</span>
+                                                    <span class="newsPage-titleText">輔具管理資訊系統操作手冊下載</span>
+                                                    <i class="bi bi-paperclip newsPage-fileIcon" aria-hidden="true"></i>
+                                                </span>
+                                            </td>
+                                            <td data-label="分類"><span class="tagPill tag-goldLight" data-cat="system">系統公告</span></td>
+                                            <td data-label="上架期間">
+                                                <span class="newsPage-dateRange"><span>2026/08/18</span><span class="newsPage-dateRange-to">至 不限</span></span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>上架中</span></td>
+                                            <td data-label="功能" class="dataTable-actionsRow">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#newsFormModal" data-js="newsEditOpen"
+                                                    data-news-title="輔具管理資訊系統操作手冊下載" data-news-cat="system" data-news-from="2026-08-18" data-news-to=""
+                                                    data-news-pinned="true" data-news-home="true" data-news-enabled="true"
+                                                    data-news-body="系統操作手冊已更新，內容包含申請、借用、報修等各項功能的操作說明，歡迎下載參考。"
+                                                    data-news-file='{"name":"輔具管理資訊系統操作手冊.pdf","size":"2.4 MB"}'
+                                                    aria-label="編輯「輔具管理資訊系統操作手冊下載」">編輯</button>
+                                                <button type="button" class="btnIconCircle btnIconCircle-sm btnIconCircle-danger" data-bs-toggle="modal" data-bs-target="#newsDeleteModal" data-js="newsDeleteOpen"
+                                                    data-title="輔具管理資訊系統操作手冊下載" aria-label="刪除「輔具管理資訊系統操作手冊下載」"><i class="bi bi-trash3" aria-hidden="true"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="live">
+                                            <td data-label="標題">
+                                                <span class="newsPage-titleCell">
+                                                    <span class="newsPage-titleText">115 學年度輔具管理系統教育訓練報名</span>
+                                                    <i class="bi bi-paperclip newsPage-fileIcon" aria-hidden="true"></i>
+                                                </span>
+                                            </td>
+                                            <td data-label="分類"><span class="tagPill tag-coralLight" data-cat="event">研習活動</span></td>
+                                            <td data-label="上架期間">
+                                                <span class="newsPage-dateRange"><span>2026/10/21</span><span class="newsPage-dateRange-to">至 2026/11/30</span></span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>上架中</span></td>
+                                            <td data-label="功能" class="dataTable-actionsRow">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#newsFormModal" data-js="newsEditOpen"
+                                                    data-news-title="115 學年度輔具管理系統教育訓練報名" data-news-cat="event" data-news-from="2026-10-21" data-news-to="2026-11-30"
+                                                    data-news-pinned="false" data-news-home="true" data-news-enabled="true"
+                                                    data-news-body="開放各校輔具管理人員報名教育訓練課程，課程內容包含系統操作與輔具評估流程，請於期限內完成報名。"
+                                                    data-news-file='{"name":"教育訓練課程表.pdf","size":"410 KB"}'
+                                                    aria-label="編輯「115 學年度輔具管理系統教育訓練報名」">編輯</button>
+                                                <button type="button" class="btnIconCircle btnIconCircle-sm btnIconCircle-danger" data-bs-toggle="modal" data-bs-target="#newsDeleteModal" data-js="newsDeleteOpen"
+                                                    data-title="115 學年度輔具管理系統教育訓練報名" aria-label="刪除「115 學年度輔具管理系統教育訓練報名」"><i class="bi bi-trash3" aria-hidden="true"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="live">
+                                            <td data-label="標題">
+                                                <span class="newsPage-titleCell">
+                                                    <span class="newsPage-titleText">聽障輔具申請請檢附聽力圖說明</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="分類"><span class="tagPill tag-tealSoft" data-cat="apply">申請公告</span></td>
+                                            <td data-label="上架期間">
+                                                <span class="newsPage-dateRange"><span>2026/10/14</span><span class="newsPage-dateRange-to">至 不限</span></span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>上架中</span></td>
+                                            <td data-label="功能" class="dataTable-actionsRow">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#newsFormModal" data-js="newsEditOpen"
+                                                    data-news-title="聽障輔具申請請檢附聽力圖說明" data-news-cat="apply" data-news-from="2026-10-14" data-news-to=""
+                                                    data-news-pinned="false" data-news-home="false" data-news-enabled="true"
+                                                    data-news-body="申請聽障類輔具時，請務必檢附最近六個月內的聽力圖，以利中心進行評估審核。"
+                                                    aria-label="編輯「聽障輔具申請請檢附聽力圖說明」">編輯</button>
+                                                <button type="button" class="btnIconCircle btnIconCircle-sm btnIconCircle-danger" data-bs-toggle="modal" data-bs-target="#newsDeleteModal" data-js="newsDeleteOpen"
+                                                    data-title="聽障輔具申請請檢附聽力圖說明" aria-label="刪除「聽障輔具申請請檢附聽力圖說明」"><i class="bi bi-trash3" aria-hidden="true"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="sched">
+                                            <td data-label="標題">
+                                                <span class="newsPage-titleCell">
+                                                    <span class="newsPage-titleText">116 年度寒假輔具歸還作業說明</span>
+                                                    <i class="bi bi-paperclip newsPage-fileIcon" aria-hidden="true"></i>
+                                                </span>
+                                            </td>
+                                            <td data-label="分類"><span class="tagPill tag-tealSoft" data-cat="apply">申請公告</span></td>
+                                            <td data-label="上架期間">
+                                                <span class="newsPage-dateRange"><span>2026/12/15</span><span class="newsPage-dateRange-to">至 2027/02/28</span></span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>排程中</span></td>
+                                            <td data-label="功能" class="dataTable-actionsRow">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#newsFormModal" data-js="newsEditOpen"
+                                                    data-news-title="116 年度寒假輔具歸還作業說明" data-news-cat="apply" data-news-from="2026-12-15" data-news-to="2027-02-28"
+                                                    data-news-pinned="false" data-news-home="true" data-news-enabled="true"
+                                                    data-news-body="寒假期間輔具歸還作業將依各校安排時間進行，請提前與中心確認歸還時間與方式。"
+                                                    data-news-file='{"name":"寒假歸還作業時間表.pdf","size":"320 KB"}'
+                                                    aria-label="編輯「116 年度寒假輔具歸還作業說明」">編輯</button>
+                                                <button type="button" class="btnIconCircle btnIconCircle-sm btnIconCircle-danger" data-bs-toggle="modal" data-bs-target="#newsDeleteModal" data-js="newsDeleteOpen"
+                                                    data-title="116 年度寒假輔具歸還作業說明" aria-label="刪除「116 年度寒假輔具歸還作業說明」"><i class="bi bi-trash3" aria-hidden="true"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="off">
+                                            <td data-label="標題">
+                                                <span class="newsPage-titleCell">
+                                                    <span class="newsPage-titleText">系統維護暫停服務通知</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="分類"><span class="tagPill tag-goldLight" data-cat="system">系統公告</span></td>
+                                            <td data-label="上架期間">
+                                                <span class="newsPage-dateRange"><span>2026/10/06</span><span class="newsPage-dateRange-to">至 2026/10/08</span></span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill"><span class="statusPill-dot" aria-hidden="true"></span>已下架</span></td>
+                                            <td data-label="功能" class="dataTable-actionsRow">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#newsFormModal" data-js="newsEditOpen"
+                                                    data-news-title="系統維護暫停服務通知" data-news-cat="system" data-news-from="2026-10-06" data-news-to="2026-10-08"
+                                                    data-news-pinned="false" data-news-home="false" data-news-enabled="true"
+                                                    data-news-body="系統於上述期間進行例行維護，暫停對外服務，造成不便敬請見諒。"
+                                                    aria-label="編輯「系統維護暫停服務通知」">編輯</button>
+                                                <button type="button" class="btnIconCircle btnIconCircle-sm btnIconCircle-danger" data-bs-toggle="modal" data-bs-target="#newsDeleteModal" data-js="newsDeleteOpen"
+                                                    data-title="系統維護暫停服務通知" aria-label="刪除「系統維護暫停服務通知」"><i class="bi bi-trash3" aria-hidden="true"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="draft">
+                                            <td data-label="標題">
+                                                <span class="newsPage-titleCell">
+                                                    <span class="newsPage-titleText">輔具借用常見問題整理</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="分類"><span class="tagPill tag-tealSoft" data-cat="apply">申請公告</span></td>
+                                            <td data-label="上架期間">
+                                                <span class="newsPage-dateRange">－</span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>停用・草稿</span></td>
+                                            <td data-label="功能" class="dataTable-actionsRow">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#newsFormModal" data-js="newsEditOpen"
+                                                    data-news-title="輔具借用常見問題整理" data-news-cat="apply" data-news-from="" data-news-to=""
+                                                    data-news-pinned="false" data-news-home="false" data-news-enabled="false"
+                                                    data-news-body="彙整學校常見的借用相關問題，提供各校承辦人員參考。"
+                                                    aria-label="編輯「輔具借用常見問題整理」">編輯</button>
+                                                <button type="button" class="btnIconCircle btnIconCircle-sm btnIconCircle-danger" data-bs-toggle="modal" data-bs-target="#newsDeleteModal" data-js="newsDeleteOpen"
+                                                    data-title="輔具借用常見問題整理" aria-label="刪除「輔具借用常見問題整理」"><i class="bi bi-trash3" aria-hidden="true"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="live">
+                                            <td data-label="標題">
+                                                <span class="newsPage-titleCell">
+                                                    <span class="newsPage-titleText">學生畢業歸還與轉銜續用作業說明</span>
+                                                    <i class="bi bi-paperclip newsPage-fileIcon" aria-hidden="true"></i>
+                                                </span>
+                                            </td>
+                                            <td data-label="分類"><span class="tagPill tag-tealSoft" data-cat="apply">申請公告</span></td>
+                                            <td data-label="上架期間">
+                                                <span class="newsPage-dateRange"><span>2026/09/24</span><span class="newsPage-dateRange-to">至 不限</span></span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>上架中</span></td>
+                                            <td data-label="功能" class="dataTable-actionsRow">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#newsFormModal" data-js="newsEditOpen"
+                                                    data-news-title="學生畢業歸還與轉銜續用作業說明" data-news-cat="apply" data-news-from="2026-09-24" data-news-to=""
+                                                    data-news-pinned="false" data-news-home="true" data-news-enabled="true"
+                                                    data-news-body="說明畢業學生輔具歸還流程，以及轉銜至下一教育階段時續借輔具的申請方式。"
+                                                    data-news-file='{"name":"畢業歸還與轉銜續借說明.pdf","size":"550 KB"}'
+                                                    aria-label="編輯「學生畢業歸還與轉銜續用作業說明」">編輯</button>
+                                                <button type="button" class="btnIconCircle btnIconCircle-sm btnIconCircle-danger" data-bs-toggle="modal" data-bs-target="#newsDeleteModal" data-js="newsDeleteOpen"
+                                                    data-title="學生畢業歸還與轉銜續用作業說明" aria-label="刪除「學生畢業歸還與轉銜續用作業說明」"><i class="bi bi-trash3" aria-hidden="true"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="draft">
+                                            <td data-label="標題">
+                                                <span class="newsPage-titleCell">
+                                                    <span class="newsPage-titleText">116 學年度輔具評估研習報名</span>
+                                                    <i class="bi bi-paperclip newsPage-fileIcon" aria-hidden="true"></i>
+                                                </span>
+                                            </td>
+                                            <td data-label="分類"><span class="tagPill tag-coralLight" data-cat="event">研習活動</span></td>
+                                            <td data-label="上架期間">
+                                                <span class="newsPage-dateRange"><span>2027/01/05</span><span class="newsPage-dateRange-to">至 2027/01/31</span></span>
+                                            </td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>停用・草稿</span></td>
+                                            <td data-label="功能" class="dataTable-actionsRow">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#newsFormModal" data-js="newsEditOpen"
+                                                    data-news-title="116 學年度輔具評估研習報名" data-news-cat="event" data-news-from="2027-01-05" data-news-to="2027-01-31"
+                                                    data-news-pinned="false" data-news-home="false" data-news-enabled="false"
+                                                    data-news-body="開放各校輔具評估人員報名研習課程，詳細課程內容與報名方式請參閱附件。"
+                                                    data-news-file='{"name":"輔具評估研習課程簡介.pdf","size":"780 KB"}'
+                                                    aria-label="編輯「116 學年度輔具評估研習報名」">編輯</button>
+                                                <button type="button" class="btnIconCircle btnIconCircle-sm btnIconCircle-danger" data-bs-toggle="modal" data-bs-target="#newsDeleteModal" data-js="newsDeleteOpen"
+                                                    data-title="116 學年度輔具評估研習報名" aria-label="刪除「116 學年度輔具評估研習報名」"><i class="bi bi-trash3" aria-hidden="true"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <nav class="pageNav mt-6" aria-label="分頁">
+                            <p class="pageNav-summary">顯示第 1 至 9 筆，共 9 筆資料</p>
+                            <ul class="pageNav-list">
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="第一頁"><i class="bi bi-chevron-bar-left" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true"><i class="bi bi-chevron-left" aria-hidden="true"></i>上一頁</span></li>
+                                <li><span class="pageNav-item" aria-current="page">1</span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true">下一頁<i class="bi bi-chevron-right" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="最後一頁"><i class="bi bi-chevron-bar-right" aria-hidden="true"></i></span></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- 新增／編輯消息 modal -->
+        <div class="modal fade" id="newsFormModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="newsFormModalTitle">
+            <div class="modal-dialog modal-dialog-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-head-text">
+                            <h2 class="modal-title" id="newsFormModalTitle" data-js="newsModalTitle">新增消息</h2>
+                        </div>
+                        <button type="button" class="btnIcon" data-bs-dismiss="modal" aria-label="關閉">
+                            <i class="bi bi-x-lg" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body" tabindex="0">
+                        <form id="newsForm" novalidate data-js="newsFormModalForm">
+                            <div class="modal-body-section">
+                                <label for="neTitle" class="formField-label">標題<span class="formField-required">必填</span></label>
+                                <input type="text" id="neTitle" class="form-control" placeholder="例：115 學年度第二次學校輔具申請開放" data-js="neTitleInput" required>
+                            </div>
+
+                            <div class="modal-body-section formGrid formGrid-cols3">
+                                <div>
+                                    <label for="neCat" class="formField-label">分類<span class="formField-required">必填</span></label>
+                                    <select id="neCat" class="form-select" data-js="neCatInput" required>
+                                        <option value="apply">申請公告</option>
+                                        <option value="system">系統公告</option>
+                                        <option value="event">研習活動</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="neFrom" class="formField-label">上架日期<span class="formField-required">必填</span></label>
+                                    <input type="date" id="neFrom" class="form-control" data-js="neFromInput" required>
+                                </div>
+                                <div>
+                                    <label for="neTo" class="formField-label">下架日期</label>
+                                    <input type="date" id="neTo" class="form-control" data-js="neToInput">
+                                    <p class="formField-hint">不填則一直顯示</p>
+                                </div>
+                            </div>
+
+                            <div class="modal-body-section">
+                                <span id="neBodyLabel" class="formField-label">內容<span class="formField-required">必填</span></span>
+                                <div class="newsEditor">
+                                    <div role="toolbar" aria-label="文字格式" class="newsEditor-toolbar">
+                                        <button type="button" class="newsEditor-toolbarBtn" aria-label="粗體"><b>B</b></button>
+                                        <button type="button" class="newsEditor-toolbarBtn" aria-label="小標題">標題</button>
+                                        <button type="button" class="newsEditor-toolbarBtn" aria-label="項目清單"><i class="bi bi-list-ul" aria-hidden="true"></i></button>
+                                        <button type="button" class="newsEditor-toolbarBtn" aria-label="插入連結"><i class="bi bi-link-45deg" aria-hidden="true"></i></button>
+                                        <button type="button" class="newsEditor-toolbarBtn" aria-label="插入圖片"><i class="bi bi-image" aria-hidden="true"></i></button>
+                                    </div>
+                                    <textarea aria-labelledby="neBodyLabel" rows="7" class="newsEditor-textarea" placeholder="請輸入消息內容；圖片請加上替代文字" data-js="neBodyInput"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="modal-body-section">
+                                <span class="formField-label">相關連結</span>
+                                <div class="fileUploadList" data-js="neLinkList">
+                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-js="neLinkAddOpen">
+                                        <i class="bi bi-plus-lg" aria-hidden="true"></i>新增連結
+                                    </button>
+                                </div>
+                                <div class="newsLinkForm" data-js="neLinkForm" hidden>
+                                    <h3 class="newsLinkForm-title" id="neLinkFormTitle">新增連結</h3>
+                                    <div class="formGrid mt-2">
+                                        <div>
+                                            <label for="neLinkText" class="formField-label">連結文字<span class="formField-required">必填</span></label>
+                                            <input type="text" id="neLinkText" class="form-control" placeholder="例：教育部特殊教育通報網" data-js="neLinkTextInput">
+                                        </div>
+                                        <div>
+                                            <label for="neLinkUrl" class="formField-label">網址<span class="formField-required">必填</span></label>
+                                            <input type="url" id="neLinkUrl" class="form-control" placeholder="https://" data-js="neLinkUrlInput">
+                                        </div>
+                                    </div>
+                                    <div class="flex-row-end gap-2 mt-3">
+                                        <button type="button" class="btnPill btn-secondary btnPill-sm" data-js="neLinkCancel">取消</button>
+                                        <button type="button" class="btnPill btn-teal btnPill-sm" data-js="neLinkAdd">加入連結</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-body-section">
+                                <span class="formField-label">附件</span>
+                                <div class="fileUploadList" data-js="neFileList" hidden></div>
+                                <input type="file" id="neFile" class="fileUpload-input" multiple data-js="neFileInput">
+                                <label for="neFile" class="fileUpload fileUpload-lg">
+                                    <i class="bi bi-upload fileUpload-icon" aria-hidden="true"></i>
+                                    <span class="fileUpload-text"><span>點擊或拖曳上傳附件</span><span class="fileUpload-text-sub">可多個檔案，支援 PDF、JPG、PNG，每個檔案 10 MB 以內</span></span>
+                                </label>
+                            </div>
+
+                            <div class="modal-body-section">
+                                <span class="formField-label">狀態</span>
+                                <button type="button" class="newsPage-toggleRow is-on" role="switch" aria-checked="true" aria-labelledby="neOnLabel" data-js="neOnInput">
+                                    <span class="toggleSwitch is-on" aria-hidden="true">
+                                        <span class="toggleSwitch-knob" aria-hidden="true"></span>
+                                    </span>
+                                    <span class="newsPage-toggleRow-label">
+                                        <span id="neOnLabel" class="newsPage-toggleRow-title">啟用</span>
+                                        <span class="newsPage-toggleRow-desc" data-js="neOnDesc">儲存後依上架日期顯示在前台，到了下架日期會自動下架</span>
+                                    </span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body-section flex-row-start flex-wrap gap-5">
+                                <div class="formField-checkRow">
+                                    <input type="checkbox" id="nePinned" class="form-check-input" data-js="nePinnedInput">
+                                    <label for="nePinned" class="formField-checkRow-label">置頂（顯示在列表最上方）</label>
+                                </div>
+                                <div class="formField-checkRow">
+                                    <input type="checkbox" id="neHome" class="form-check-input" data-js="neHomeInput" checked>
+                                    <label for="neHome" class="formField-checkRow-label">顯示在首頁「最新消息」區塊</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" form="newsForm" class="btnPill btn-teal" data-js="neSubmit">儲存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 刪除消息確認 modal -->
+        <div class="modal fade" id="newsDeleteModal" tabindex="-1" aria-hidden="true" aria-labelledby="newsDeleteModalTitle">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-head-text">
+                            <h2 class="modal-title" id="newsDeleteModalTitle">確定要刪除這則消息？</h2>
+                        </div>
+                        <button type="button" class="btnIcon" data-bs-dismiss="modal" aria-label="關閉">
+                            <i class="bi bi-x-lg" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body" tabindex="0">
+                        <p class="textNote">「<strong data-js="ndTitle">○○○</strong>」刪除後無法復原，附件與相關連結也會一併刪除。如果只是暫時不想顯示，可以改用編輯視窗裡的「啟用」開關停用即可。</p>
+                        <div class="noteBox noteBox-red mt-3">
+                            <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>
+                            <span>此操作無法復原。</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="button" class="btnPill btn-danger" data-js="newsDeleteConfirm">確認刪除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分類管理 modal -->
+        <div class="modal fade" id="newsCatModal" tabindex="-1" aria-hidden="true" aria-labelledby="newsCatModalTitle">
+            <div class="modal-dialog modal-dialog-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-head-text">
+                            <h2 class="modal-title" id="newsCatModalTitle">分類管理</h2>
+                        </div>
+                        <button type="button" class="btnIcon" data-bs-dismiss="modal" aria-label="關閉">
+                            <i class="bi bi-x-lg" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body" tabindex="0">
+                        <p class="textNote">分類會成為前台最新消息的頁籤，依這裡的順序排列。</p>
+
+                        <div class="flex-column gap-3 mt-3" data-js="newsCatList">
+                            <div class="newsCatRow" data-cat="apply" data-cat-count="5">
+                                <div class="newsCatRow-moveGroup">
+                                    <button type="button" class="newsCatRow-moveBtn" aria-disabled="true" aria-label="上移 申請公告" data-js="catMoveUp"><i class="bi bi-chevron-up" aria-hidden="true"></i></button>
+                                    <button type="button" class="newsCatRow-moveBtn" aria-label="下移 申請公告" data-js="catMoveDown"><i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                </div>
+                                <span class="tagPill tag-tealSoft" data-js="catTag">申請公告</span>
+                                <input type="text" class="form-control newsCatRow-renameInput" value="申請公告" data-js="catRenameInput" hidden>
+                                <span class="newsCatRow-count" data-js="catCount">5 則</span>
+                                <button type="button" class="btnPill btn-outline btnPill-sm" data-js="catRenameToggle" aria-label="修改分類名稱 申請公告">改名</button>
+                                <button type="button" class="btnIconCircle btnIconCircle-sm btnIconCircle-danger" aria-disabled="true" aria-describedby="catDeleteNote" data-js="catDelete" aria-label="刪除分類 申請公告">
+                                    <i class="bi bi-trash3" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="newsCatRow" data-cat="system" data-cat-count="2">
+                                <div class="newsCatRow-moveGroup">
+                                    <button type="button" class="newsCatRow-moveBtn" aria-label="上移 系統公告" data-js="catMoveUp"><i class="bi bi-chevron-up" aria-hidden="true"></i></button>
+                                    <button type="button" class="newsCatRow-moveBtn" aria-label="下移 系統公告" data-js="catMoveDown"><i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                </div>
+                                <span class="tagPill tag-goldLight" data-js="catTag">系統公告</span>
+                                <input type="text" class="form-control newsCatRow-renameInput" value="系統公告" data-js="catRenameInput" hidden>
+                                <span class="newsCatRow-count" data-js="catCount">2 則</span>
+                                <button type="button" class="btnPill btn-outline btnPill-sm" data-js="catRenameToggle" aria-label="修改分類名稱 系統公告">改名</button>
+                                <button type="button" class="btnIconCircle btnIconCircle-sm btnIconCircle-danger" aria-disabled="true" aria-describedby="catDeleteNote" data-js="catDelete" aria-label="刪除分類 系統公告">
+                                    <i class="bi bi-trash3" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="newsCatRow" data-cat="event" data-cat-count="2">
+                                <div class="newsCatRow-moveGroup">
+                                    <button type="button" class="newsCatRow-moveBtn" aria-label="上移 研習活動" data-js="catMoveUp"><i class="bi bi-chevron-up" aria-hidden="true"></i></button>
+                                    <button type="button" class="newsCatRow-moveBtn" aria-disabled="true" aria-label="下移 研習活動" data-js="catMoveDown"><i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                </div>
+                                <span class="tagPill tag-coralLight" data-js="catTag">研習活動</span>
+                                <input type="text" class="form-control newsCatRow-renameInput" value="研習活動" data-js="catRenameInput" hidden>
+                                <span class="newsCatRow-count" data-js="catCount">2 則</span>
+                                <button type="button" class="btnPill btn-outline btnPill-sm" data-js="catRenameToggle" aria-label="修改分類名稱 研習活動">改名</button>
+                                <button type="button" class="btnIconCircle btnIconCircle-sm btnIconCircle-danger" aria-disabled="true" aria-describedby="catDeleteNote" data-js="catDelete" aria-label="刪除分類 研習活動">
+                                    <i class="bi bi-trash3" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <p class="textNote mt-3" id="catDeleteNote">還有消息的分類不能刪除，請先把消息移到其他分類。</p>
+
+                        <div class="newsCatAdd mt-4">
+                            <div class="newsCatAdd-field">
+                                <label for="newsCatNew" class="formField-label">新增分類</label>
+                                <input type="text" id="newsCatNew" class="form-control" placeholder="例：研習活動" data-js="newsCatNewInput">
+                            </div>
+                            <button type="button" class="btnPill btn-teal" data-js="newsCatAddBtn"><i class="bi bi-plus-lg" aria-hidden="true"></i>加入</button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btnPill btn-teal w-100" data-bs-dismiss="modal">完成</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer" data-layout="../layout/footer.html"></div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

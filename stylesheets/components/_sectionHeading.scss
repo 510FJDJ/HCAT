@@ -1,0 +1,81 @@
+// ============================================================
+// 區塊標題元件（design.md §3、§6.1）：英文小標＋導盲磚圓點標題
+// ============================================================
+
+// 區塊英文小標（NEWS、CATALOG…），純裝飾，旁邊已有中文標題，可用 13–15px（design.md §3）
+.labelCaption {
+    display: block;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: .16em;
+    color: $brand-teal-deep;
+    margin-bottom: 8px;
+    margin-left: 44px; // 對齊導盲磚圓點群寬度＋間距（21px 圓點群＋14px 間距）
+
+    @media (max-width: 720px) {
+        font-size: 13px;
+        margin-left: 40px;
+    }
+}
+
+// 導盲磚圓點（3×3），全站唯一的標題裝飾
+.dotsGrid {
+    display: inline-grid;
+    grid-template-columns: repeat(3, 7px);
+    grid-template-rows: repeat(3, 7px);
+    gap: 0.1px;
+    margin-right: 8px;
+    flex-shrink: 0;
+
+    span {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: $accent-amber;
+    }
+
+    @media (max-width: 720px) {
+        grid-template-columns: repeat(3, 6px);
+        grid-template-rows: repeat(3, 6px);
+        gap: 3px;
+        margin-right: 10px;
+
+        span {
+            width: 6px;
+            height: 6px;
+        }
+    }
+}
+
+.titleSection {
+    display: flex;
+    align-items: center;
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: .04em;
+    line-height: 1.4;
+    margin: 0;
+
+    @media (max-width: 720px) {
+        font-size: 26px;
+    }
+}
+.titleSubsection{
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    line-height: 1.4;
+    margin: 0;
+
+    // 單一橘色方塊取代導盲磚（如 sitemap.html），補上與 dotsGrid 相同的間距
+    .panelCard-icon {
+        margin-right: 8px;
+    }
+
+    @media (max-width: 720px) {
+        font-size: 20px;
+    }
+}

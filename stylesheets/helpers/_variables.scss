@@ -1,0 +1,138 @@
+// ============================================================
+// HCAT 設計 Token（來源：design.md §2–§4）
+// 命名規則：design.md token 名稱 "/" 改為 "-"（design.md §2 開頭說明）
+// 此檔必須在 bootstrap/scss/variables 之前載入（!default 覆寫機制）
+// ============================================================
+
+// ---- 品牌青綠（主色，design.md §2.1）----
+$brand-teal:       #0F7F81; // 主按鈕底、選中頁籤底、頁尾底
+$brand-teal-deep:  #0B6466; // 連結文字、主按鈕 hover、強調數字
+$brand-teal-ink:   #084C4E; // 連結 hover
+$brand-teal-card:  #0B6A6C; // 頁尾內卡片底
+$brand-teal-hover: #095C5E; // 頁尾卡片 hover
+
+// ---- 淡色面／薄荷（design.md §2.2）----
+$surface-mint:        #f7fefd;
+$surface-mint-dots:   #EAF4F1;
+$surface-tint:        #F3F8F7;
+$surface-teal-pale:   #E9F4F3;
+$surface-teal-select: #DDF0ED;
+$surface-teal-soft:   #D6EEEC;
+$surface-marker:      #CDE9E4; // 文字連結螢光筆底（design.md §7.6）
+$surface-marker-deep: #BFD9D5; // kbdKey 按鍵邊框（網站導覽頁鍵盤操作說明）
+$surface-blue-pale:   #F3F6F8; // 淺藍資訊卡底（審核明細「到校評估安排」）
+$deco-hill:           #C7E6DE;
+$deco-dots:           rgba(15, 127, 129, .15);
+
+// ---- 點綴色／琥珀（design.md §2.3，僅裝飾與底色，不可當文字或焦點外框）----
+$accent-amber:      #F2A33A;
+$accent-amber-soft: #F7C25C;
+$accent-amber-pale: #FFF7EA;
+$accent-amber-ink:  #b4590a; // 「暫無可借」、申請增購按鈕字
+$accent-amber-ink-2: #6B4000; // 琥珀提示框內文字
+$focus-ring:        #A86400; // 焦點外框（白底／淡薄荷底皆 ≥3:1；ACCESSIBILITY.md §4.1）
+
+// ---- 中性色（design.md §2.4）----
+$ink-1: #1F2A2E; // 內文、標題
+$ink-2: #3F4D53; // 說明段落、次要文字
+$ink-3: #56656B; // 日期、標註、次要標籤
+$ink-separator: #8A979D; // 快速鍵之間的「+」連接符號（網站導覽頁鍵盤操作說明）
+$line-default: #E3E8E7;
+$line-strong:  #D5DCDA;
+$surface-card: #FFFFFF;
+$state-required: #C0292B; // 必填星號
+
+// ---- 頁尾（深色底）文字（design.md §2.5）----
+$footer-text-primary:   #FFFFFF;
+$footer-text-secondary: #F2FAF9;
+
+// ---- 陰影（design.md §4）----
+$shadow-card:       0 6px 20px rgba(31, 42, 46, .07);
+$shadow-card-hover: 0 14px 30px rgba(31, 42, 46, .10);
+$shadow-panel:      0 10px 30px rgba(31, 42, 46, .06);
+$shadow-float:      0 14px 36px rgba(31, 42, 46, .12);
+$shadow-header:     0 2px 12px rgba(31, 42, 46, .06);
+$shadow-dialog:     0 24px 60px rgba(31, 42, 46, .25);
+
+// ============================================================
+// Bootstrap 5 變數覆寫
+// 只覆寫 design.md 有定義對應色票的主題色（primary／danger），
+// 其餘 Bootstrap 主題色（secondary／success／info／warning）
+// design.md 未定義對應值，暫維持 Bootstrap 預設，不自行發明。
+// ============================================================
+$primary: $brand-teal;
+$danger:  $state-required;
+
+$min-contrast-ratio: 4.5; // WCAG 2.1 AA（design.md §9）
+
+$body-bg:    $surface-card;
+$body-color: $ink-1;
+
+$link-color:       $brand-teal-deep;
+$link-hover-color: $brand-teal-ink;
+
+// 中文用 Noto Sans TC，數字／英文用 Poppins（design.md §3）
+$font-family-sans-serif: "Poppins", "Noto Sans TC", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+$font-size-base:   1rem; // 16px，資訊文字下限（design.md §3）
+$line-height-base: 1.7;
+
+// 間距階（design.md §4：4/6/8/10/12/16/20/24/28/32/40/48/56/64/72）
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: 4px,
+  2: 6px,
+  3: 8px,
+  4: 10px,
+  5: 12px,
+  6: 16px,
+  7: 20px,
+  8: 24px,
+  9: 28px,
+  10: 32px,
+  11: 40px,
+  12: 48px,
+  13: 56px,
+  14: 64px,
+  15: 72px,
+  16: 80px,
+);
+
+// 圓角（design.md §4：radius/xs–xl、pill）
+$border-radius-sm:  12px; // radius/sm：輸入框、下拉、小按鈕
+$border-radius-md:  14px; // radius/md：列表卡、選單卡
+$border-radius:     16px; // radius/md：列表卡、選單卡
+$border-radius-lg:  24px; // radius/lg：內容卡片、表單區塊
+$border-radius-xl:  32px; // radius/xl：對話框、步驟卡
+$border-radius-xxl: 36px;
+$border-radius-pill: 999px;
+
+$border-color: $line-default;
+
+$box-shadow:    $shadow-card;
+$box-shadow-lg: $shadow-dialog;
+
+// 對話框遮罩（design.md §7.8：rgba(31,42,46,.5)）
+$modal-backdrop-bg:      $ink-1;
+$modal-backdrop-opacity: .5;
+
+// 輸入欄位（design.md §7.7）
+$input-border-color:       $line-strong;
+$input-border-radius:      14px;
+$input-focus-border-color: $brand-teal;
+$input-focus-box-shadow:   0 0 0 3px rgba(15, 127, 129, .18);
+$input-placeholder-color:  $ink-3;
+
+$form-check-input-width: 1.25em; // 放大 checkbox／radio，配合觸控目標 ≥44×44（design.md §4）
+
+$grid-gutter-width: 24px;
+
+// 內容最寬 1200px（design.md §4：前台內容最寬 1200、後台最寬 1360）
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1200px,
+);

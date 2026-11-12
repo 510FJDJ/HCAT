@@ -1,0 +1,381 @@
+// ============================================================
+// 按鈕元件（design.md §7.1）：外型命名＋色票修飾子
+// ============================================================
+
+@keyframes btnPill-arrowCycle {
+    0% { transform: translateX(0); opacity: 1; }
+    42% { transform: translateX(16px); opacity: 0; }
+    43% { transform: translateX(-16px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+// 向左方向的鏡像版本：返回類按鈕（返回輔具目錄／回消息列表）使用
+@keyframes btnPill-arrowCycleBack {
+    0% { transform: translateX(0); opacity: 1; }
+    42% { transform: translateX(-16px); opacity: 0; }
+    43% { transform: translateX(16px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+// ---- 主要藥丸按鈕（Primary／Outline／Secondary／Text／Amber 共用外型）----
+.btnPill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 28px;
+    line-height: 1;
+    border-radius: $border-radius-pill;
+    font-size: 17px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: background-color 180ms ease-out, color 180ms ease-out, border-color 180ms ease-out;
+
+    &-lg {
+        padding: 16px 18px;
+        font-size: 19px;
+    }
+
+    &-sm {
+        padding: 10px 24px;
+
+        @media (max-width: 720px) {
+            padding: 10px 16px;
+        }
+    }
+
+    &-arrow {
+        display: inline-flex;
+        font-size: 18px; // 固定大小，不隨按鈕文字級距縮放，避免各按鈕箭頭粗細不一
+    }
+
+    &-iconSm {
+        display: inline-flex;
+        font-size: 15px; // 比按鈕文字小一級，不參與箭頭循環動畫
+    }
+
+    &-arrowBack {
+        display: inline-flex;
+        font-size: 18px;
+    }
+}
+
+.btn-teal {
+    background-color: $brand-teal;
+    color: #FFFFFF;
+    border-color: $brand-teal;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $brand-teal-deep;
+        border-color: $brand-teal-deep;
+        color: #FFFFFF;
+    }
+}
+
+.btn-outline {
+    background-color: $surface-card;
+    color: $brand-teal-deep;
+    border-color: $brand-teal;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-teal-pale;
+        color: $brand-teal-deep;
+    }
+}
+
+.btn-secondary {
+    background-color: $surface-card;
+    color: $ink-1;
+    border-color: $line-strong;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-teal-pale;
+    }
+}
+
+// 次要按鈕的紅字變體（疊在 .btn-secondary 上使用）：
+// 具破壞性但非主要動作的按鈕，如「取消評估」「簽章有誤，請學校重傳」
+.btn-secondaryRed {
+    color: $state-required;
+
+    &:hover,
+    &:focus-visible {
+        background-color: #FBEAEA; // 同 .noteBox-red 底
+        color: $state-required;
+    }
+}
+
+.btn-text {
+    background-color: transparent;
+    border-color: transparent;
+    color: $brand-teal-deep;
+    padding: 0;
+    min-height: auto;
+}
+
+// 破壞性操作（design.md §2.4 state/required 已驗證對比 5.84:1）：刪除確認對話框使用
+.btn-danger {
+    background-color: $state-required;
+    color: #FFFFFF;
+    border-color: $state-required;
+
+    &:hover,
+    &:focus-visible {
+        background-color: #9E2224;
+        border-color: #9E2224;
+    }
+}
+
+.btn-amber {
+    background-color: $surface-card;
+    color: $accent-amber-ink;
+    border-color: #D98B1C;
+
+    &:hover,
+    &:focus-visible {
+        background-color: #FFF1DC;
+    }
+}
+
+// 實心琥珀底（design.md §2.3 搭配 $ink-1 深色字，色票比照 .tag-amberSolid）：
+// 用於待辦事項中需要使用者立即處理的動作，如「前往補件」
+.btn-amberSolid {
+    background-color: $accent-amber;
+    color: $ink-1;
+    border-color: $accent-amber;
+
+    &:hover,
+    &:focus-visible {
+        background-color: #E0912A;
+        border-color: #E0912A;
+    }
+}
+
+// 停用狀態（ACCESSIBILITY.md §12）：一律用 aria-disabled，不用原生 disabled，才能保留 Tab 與 aria-describedby 說明；
+// 同一屬性選擇器蓋掉所有變體色（含 hover），放在各變體色定義之後才能靠來源順序覆寫
+.btnPill[aria-disabled="true"] {
+    background-color: $surface-tint;
+    color: $ink-3;
+    border-color: transparent;
+    cursor: not-allowed;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-tint;
+        color: $ink-3;
+        border-color: transparent;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .btnPill:hover .btnPill-arrow,
+    .btnPill:focus-visible .btnPill-arrow,
+    .siteFooter-navRow:hover .btnPill-arrow,
+    .siteFooter-navRow:focus-visible .btnPill-arrow,
+    .listRow:hover .btnPill-arrow,
+    .listRow:focus-visible .btnPill-arrow,
+    .quickLink:hover .btnPill-arrow,
+    .quickLink:focus-visible .btnPill-arrow,
+    .tileCard:hover .btnPill-arrow,
+    .tileCard:focus-visible .btnPill-arrow {
+        animation: btnPill-arrowCycle 600ms cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .btnPill:hover .btnPill-arrowBack,
+    .btnPill:focus-visible .btnPill-arrowBack {
+        animation: btnPill-arrowCycleBack 600ms cubic-bezier(.4, 0, .2, 1);
+    }
+}
+
+// 白色圓底箭頭（design.md §7.1）：圓底必須 overflow:hidden 讓箭頭循環動畫不溢出
+.btnPill-arrowCircle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    color: $brand-teal-deep;
+    flex-shrink: 0;
+    overflow: hidden;
+
+    .bi {
+        font-size: 20px;
+    }
+}
+
+// 淡薄荷底變體：白底清單上使用（手機選單主選單項目），避免白底白圈看不見
+.btnPill-arrowCircle-soft {
+    background-color: $surface-mint-dots;
+}
+
+// ---- 圖示按鈕：52×52、aria-label 必填 ----
+.btnIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    border: 2px solid $line-strong;
+    background-color: $surface-card;
+    color: $ink-1;
+    cursor: pointer;
+    transition: background-color 180ms ease-out, border-color 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-teal-pale;
+        border-color: $brand-teal;
+    }
+}
+
+// ---- 圓形圖示按鈕（44×44，表格列內編輯／刪除等成對操作共用；aria-label 必填）----
+.btnIconCircle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid $brand-teal;
+    background-color: $surface-card;
+    color: $brand-teal-deep;
+    cursor: pointer;
+    transition: background-color 180ms ease-out, border-color 180ms ease-out, color 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-teal-pale;
+    }
+}
+
+// 較小尺寸（36×36）：分類管理 modal 等欄位較密的列表使用
+.btnIconCircle-sm {
+    width: 36px;
+    height: 36px;
+
+    .bi {
+        font-size: 16px;
+    }
+}
+
+// 破壞性操作變體（刪除）：預設框線較淡，hover／focus 才轉紅，避免列表一片紅框
+.btnIconCircle-danger {
+    border-color: $line-strong;
+    color: $state-required;
+
+    &:hover,
+    &:focus-visible {
+        background-color: #FBEAEA;
+        border-color: $state-required;
+    }
+}
+
+// 停用狀態（ACCESSIBILITY.md §12）：一律用 aria-disabled，不用原生 disabled，才能保留 aria-describedby 說明；
+// 用於分類管理 modal 中「還有消息的分類」暫時不可刪除
+.btnIconCircle[aria-disabled="true"] {
+    border-color: $line-strong;
+    color: $ink-3;
+    background-color: $surface-tint;
+    cursor: not-allowed;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-tint;
+        border-color: $line-strong;
+        color: $ink-3;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btnIconCircle {
+        transition: none;
+    }
+}
+
+// ---- 回到頂部圓形／直式 pill 按鈕（design.md §7.11）----
+.btnFab {
+    position: fixed;
+    right: 25px;
+    bottom: 50px;
+    z-index: 1040;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: none;
+    background-color: $brand-teal-card;
+    color: #FFFFFF;
+    box-shadow: 0 8px 20px rgba(31, 42, 46, .18);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 180ms ease-out, transform 180ms ease-out, box-shadow 180ms ease-out, background-color 60ms ease-out, visibility 180ms;
+
+    &.is-visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 30px rgba(31, 42, 46, .22);
+
+        .btnFab-arrow {
+            transform: translateY(-3px);
+        }
+    }
+
+    &:active {
+        transform: translateY(-2px) scale(.94);
+        box-shadow: 0 6px 14px rgba(31, 42, 46, .14);
+        background-color: $brand-teal-ink;
+    }
+
+    &-arrow {
+        display: inline-flex;
+        transition: transform 180ms ease-out;
+    }
+
+    @media (min-width: 721px) {
+        width: 48px;
+        height: auto;
+        min-height: 128px;
+        border-radius: $border-radius-pill;
+        flex-direction: column;
+        gap: 8px;
+        padding: 16px 0;
+
+        &-label {
+            writing-mode: vertical-rl;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: .04em;
+        }
+    }
+
+    @media (max-width: 720px) {
+        &-label {
+            display: none;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btnFab,
+    .btnFab-arrow {
+        transition: none;
+    }
+}

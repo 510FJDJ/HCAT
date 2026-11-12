@@ -1,0 +1,50 @@
+// ============================================================
+// 薄型功能列（design.md §5.1）：導盲磚定位點、網站導覽、字級切換
+// ============================================================
+
+.barSlim {
+    background-color: $surface-tint;
+    font-size: 16px;
+    color: $ink-2;
+    overflow: hidden;
+    max-height: 60px;
+    transition: max-height 200ms ease-out, opacity 200ms ease-out;
+
+    // 內容已複製一份進手機選單面板（.panelFull-toolbar），手機／平板斷點整條隱藏，
+    // 跟 .siteHeader-nav／.navBar 斷點一致（見 _header.scss、_navBarLogged.scss）
+    @media (max-width: 900px) {
+        display: none;
+    }
+}
+
+// 往下滑動時收合（JS 依捲動位置切換 #header.is-compact，見 js/main.js）
+// 僅在 ≥901px 才收合，與 .siteHeader-nav／.navBar 的斷點一致（見 _header.scss、_navBarLogged.scss）
+@media (min-width: 901px) {
+    #header.is-compact .barSlim {
+        max-height: 0;
+        opacity: 0;
+    }
+}
+
+// 內容寬度跟第二排 .siteHeader-inner 對齊，背景則由 .barSlim 撐滿全寬
+.barSlim-inner {
+    min-height: 40px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 6px 40px;
+
+    @media (max-width: 1280px) {
+        padding: 6px 24px;
+    }
+
+    @media (max-width: 720px) {
+        padding: 6px 16px;
+    }
+}
+
+// 導盲磚定位點 :::（純裝飾文字，不需要被 Tab／朗讀，見 ACCESSIBILITY.md §2）
+.barSlim-anchor {
+    letter-spacing: .2em;
+    color: $ink-3;
+    font-weight: 700;
+}

@@ -1,0 +1,80 @@
+// ============================================================
+// 照片上傳框：未選檔時顯示上傳提示，選檔後直接在框內預覽，
+// 下方提供「重新上傳」「移除照片」兩顆按鈕（行為見 js/all.js 照片上傳預覽區塊）。
+// input[type=file] 沿用 .fileUpload-input 的隱藏手法，放在 label 之前以支援鍵盤聚焦。
+// ============================================================
+
+.uploadTile-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 164px;
+    border: 2px dashed $line-strong;
+    border-radius: $border-radius-lg;
+    background-color: $surface-tint;
+    cursor: pointer;
+    text-align: center;
+    overflow: hidden;
+    transition: border-color 180ms ease-out, background-color 180ms ease-out;
+
+    &:hover {
+        border-color: $brand-teal;
+        background-color: $surface-teal-pale;
+    }
+}
+
+.fileUpload-input:focus-visible + .uploadTile-box {
+    border-color: $brand-teal;
+    background-color: $surface-teal-pale;
+}
+
+.uploadTile-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.uploadTile-icon {
+    font-size: 26px;
+    color: $brand-teal;
+}
+
+.uploadTile-text {
+    font-size: 16px;
+    font-weight: 700;
+    color: $brand-teal-deep;
+}
+
+.uploadTile-sub {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.uploadTile-preview {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+    background-color: $surface-card;
+}
+
+.uploadTile-actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+
+    .btnPill {
+        flex: 1 1 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .uploadTile-box {
+        transition: none;
+    }
+}

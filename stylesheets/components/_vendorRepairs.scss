@@ -1,0 +1,218 @@
+// ============================================================
+// 報修案件共用元件（廠商端報修案件、中心端報修管理共用）：
+// - .dotTimeline：維修紀錄 modal 的「處理進度」垂直時間軸（圓點＋連接線）
+// - .photoViewerFull：報修照片／影片全螢幕放大檢視（疊在對話框之上，純顯示用途）
+// ============================================================
+
+.dotTimeline {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.dotTimeline-item {
+    position: relative;
+    display: flex;
+    gap: 16px;
+    padding-bottom: 20px;
+
+    &:last-child {
+        padding-bottom: 0;
+    }
+}
+
+.dotTimeline-item::before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 20px;
+    bottom: 0;
+    width: 2px;
+    background-color: $line-default;
+}
+
+.dotTimeline-item:last-child::before {
+    content: none;
+}
+
+.dotTimeline-dot {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    border-radius: 50%;
+    background-color: $surface-teal-soft;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 0 0 2px $line-default;
+}
+
+.dotTimeline-item.is-done .dotTimeline-dot {
+    background-color: $brand-teal;
+    box-shadow: 0 0 0 2px $brand-teal;
+}
+
+// 待處理狀態（如中心端申請審核明細「等待中心審核」）：空心圓點搭配琥珀色文字，呼應 .statusPill-gold
+.dotTimeline-item.is-pending .dotTimeline-dot {
+    background-color: #FFFFFF;
+    box-shadow: 0 0 0 2px $accent-amber-ink;
+}
+
+.dotTimeline-content {
+    flex: 1;
+    padding-top: 1px;
+}
+
+.dotTimeline-date {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: $ink-1;
+}
+
+.dotTimeline-text {
+    margin: 2px 0 0;
+    font-size: 16px;
+    color: $ink-2;
+}
+
+.dotTimeline-text-pending {
+    margin: 0;
+    font-weight: 700;
+    color: $accent-amber-ink;
+}
+
+.dotTimeline-date-muted {
+    margin: 2px 0 0;
+    font-weight: 400;
+    color: $ink-3;
+}
+
+// ---- 照片全螢幕放大檢視 ----
+.photoViewerFull {
+    position: fixed;
+    inset: 0;
+    z-index: 1080;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba($ink-1, .94);
+    padding: 24px;
+
+    &[hidden] {
+        display: none;
+    }
+}
+
+.photoViewerFull-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    max-width: min(90vw, 900px);
+}
+
+.photoViewerFull-img,
+.photoViewerFull-video {
+    max-width: 100%;
+    max-height: 76vh;
+    object-fit: contain;
+    border-radius: $border-radius-md;
+}
+
+.photoViewerFull-counter {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #FFFFFF;
+}
+
+.photoViewerFull-close,
+.photoViewerFull-nav,
+.photoViewerFull-download {
+    position: absolute;
+    background-color: rgba(255, 255, 255, .14);
+    color: #FFFFFF;
+    border: 0;
+    transition: background-color 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: rgba(255, 255, 255, .26);
+    }
+}
+
+.photoViewerFull-close {
+    top: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.photoViewerFull-nav {
+    top: 50%;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photoViewerFull-nav-prev {
+    left: 24px;
+}
+
+.photoViewerFull-nav-next {
+    right: 24px;
+}
+
+.photoViewerFull-download {
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 720px) {
+    .photoViewerFull {
+        padding: 16px;
+    }
+
+    .photoViewerFull-nav {
+        width: 44px;
+        height: 44px;
+    }
+
+    .photoViewerFull-nav-prev {
+        left: 12px;
+    }
+
+    .photoViewerFull-nav-next {
+        right: 12px;
+    }
+
+    .photoViewerFull-close {
+        top: 12px;
+        right: 12px;
+    }
+
+    .photoViewerFull-download {
+        bottom: 12px;
+        right: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .photoViewerFull-close,
+    .photoViewerFull-nav,
+    .photoViewerFull-download {
+        transition: none;
+    }
+}

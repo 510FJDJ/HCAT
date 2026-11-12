@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帳號管理 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="特教資源中心管理所有可登入系統的人員帳號，包含中心人員、學校人員與維修廠商">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_Center.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu" src="../img/banner/account.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="accountsPage-container">
+                <div class="bannerWave-inner">
+                    <nav class="crumbNav" aria-label="麵包屑導覽">
+                        <ol>
+                            <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li>資料管理</li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li aria-current="page" class="crumbNav-current">帳號管理</li>
+                        </ol>
+                    </nav>
+
+                    <div class="bannerWave-main">
+                        <h1 class="titleSection bannerWave-title">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            帳號管理
+                        </h1>
+                        <p class="bannerWave-desc">管理所有可登入系統的人員。學校人員以教育部 OpenID 登入，第一次登入後會自動建立帳號；中心人員、廠商與例外的學校人員（職稱不符、跨校）由中心開設帳號密碼。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="accountsPage-content">
+            <div class="accountsPage-container">
+                <section class="cardPanel" aria-label="帳號列表">
+
+                    <div class="flex-row-between flex-wrap accountsPage-tabsRow">
+                        <div class="tabsCount" role="tablist" aria-label="依角色檢視">
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-ac-center" data-category="center" aria-selected="true" aria-controls="panel-acList" tabindex="0">中心人員<span class="tabsCount-badge" aria-hidden="true">4</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-ac-school" data-category="school" aria-selected="false" aria-controls="panel-acList" tabindex="-1">學校人員<span class="tabsCount-badge" aria-hidden="true">236</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-ac-vendor" data-category="vendor" aria-selected="false" aria-controls="panel-acList" tabindex="-1">廠商<span class="tabsCount-badge" aria-hidden="true">13</span></button>
+                        </div>
+                        <button type="button" class="btnPill btn-teal" data-bs-toggle="modal" data-bs-target="#accountFormModal" data-js="accountAddOpen">
+                            <i class="bi bi-plus-lg" aria-hidden="true"></i>新增帳號
+                        </button>
+                    </div>
+
+                    <div class="recordsFilters">
+                        <form class="recordsFilters-form" novalidate>
+                            <div class="recordsFilters-field">
+                                <label for="acfLogin">登入方式</label>
+                                <select id="acfLogin" class="form-select">
+                                    <option value="all" selected>全部</option>
+                                    <option value="openid">教育部 OpenID</option>
+                                    <option value="password">帳號密碼</option>
+                                </select>
+                            </div>
+                            <div class="recordsFilters-field">
+                                <label for="acfStatus">狀態</label>
+                                <select id="acfStatus" class="form-select">
+                                    <option value="all" selected>全部</option>
+                                    <option value="active">啟用</option>
+                                    <option value="off">停用</option>
+                                    <option value="lock">已鎖定</option>
+                                </select>
+                            </div>
+                            <div class="recordsFilters-field">
+                                <label for="acfSearch">關鍵字</label>
+                                <div class="inputGroup">
+                                    <i class="bi bi-search inputGroup-icon" aria-hidden="true"></i>
+                                    <input type="search" id="acfSearch" class="form-control" placeholder="姓名、帳號、所屬單位">
+                                </div>
+                            </div>
+                            <button type="submit" class="btnPill btn-teal btnPill-sm">查詢</button>
+                            <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                <i class="bi bi-download" aria-hidden="true"></i>匯出 Excel
+                            </button>
+                        </form>
+                    </div>
+
+                    <p class="textNote">總筆數：4</p>
+
+                    <div role="tabpanel" id="panel-acList" aria-labelledby="tab-ac-center">
+                        <p class="textNote py-6" data-js="emptyNote" hidden>這個分類目前沒有帳號。</p>
+
+                        <div class="dataTable-wrap">
+                            <div class="dataTable-scroll">
+                                <table class="dataTable dataTable--stickyEnd">
+                                    <caption>帳號列表</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">姓名／帳號</th>
+                                            <th scope="col">角色</th>
+                                            <th scope="col">所屬單位</th>
+                                            <th scope="col">登入方式</th>
+                                            <th scope="col">最近登入</th>
+                                            <th scope="col">狀態</th>
+                                            <th scope="col">功能</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- 中心人員 -->
+                                        <tr data-category="center">
+                                            <td data-label="姓名／帳號">
+                                                <span class="accountsPage-nameCell">
+                                                    <span class="accountsPage-name">王○○</span>
+                                                    <span class="accountsPage-account">wang@center.example.edu.tw</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="角色"><span class="tagPill tag-tealSoft">系統管理者</span></td>
+                                            <td data-label="所屬單位">特教資源中心</td>
+                                            <td data-label="登入方式">帳號密碼</td>
+                                            <td data-label="最近登入"><span class="accountsPage-loginTime">2026/10/29 08:52</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>啟用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <span class="flex-row-start flex-wrap gap-2">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountResetModal" data-js="accountResetOpen"
+                                                        data-name="王○○" data-unit="特教資源中心" data-account="wang@center.example.edu.tw"
+                                                        aria-label="重設 王○○ 的密碼">重設密碼</button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountFormModal" data-js="accountEditOpen"
+                                                        data-role="center" data-perm="admin" data-name="王○○" data-tel="03-5572346 #221" data-mail="wang@center.example.edu.tw"
+                                                        data-unit="新竹縣特殊教育資源中心" data-status="active"
+                                                        aria-label="編輯 王○○">編輯</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="center">
+                                            <td data-label="姓名／帳號">
+                                                <span class="accountsPage-nameCell">
+                                                    <span class="accountsPage-name">陳○○</span>
+                                                    <span class="accountsPage-account">chen@center.example.edu.tw</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="角色"><span class="tagPill tag-tealSoft">輔具承辦</span></td>
+                                            <td data-label="所屬單位">特教資源中心</td>
+                                            <td data-label="登入方式">帳號密碼</td>
+                                            <td data-label="最近登入"><span class="accountsPage-loginTime">2026/10/28 16:20</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>啟用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <span class="flex-row-start flex-wrap gap-2">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountResetModal" data-js="accountResetOpen"
+                                                        data-name="陳○○" data-unit="特教資源中心" data-account="chen@center.example.edu.tw"
+                                                        aria-label="重設 陳○○ 的密碼">重設密碼</button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountFormModal" data-js="accountEditOpen"
+                                                        data-role="center" data-perm="staff" data-name="陳○○" data-tel="03-5572346 #222" data-mail="chen@center.example.edu.tw"
+                                                        data-unit="新竹縣特殊教育資源中心" data-status="active"
+                                                        aria-label="編輯 陳○○">編輯</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="center">
+                                            <td data-label="姓名／帳號">
+                                                <span class="accountsPage-nameCell">
+                                                    <span class="accountsPage-name">李○○</span>
+                                                    <span class="accountsPage-account">lee@center.example.edu.tw</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="角色"><span class="tagPill tag-tealSoft">輔具承辦</span></td>
+                                            <td data-label="所屬單位">特教資源中心</td>
+                                            <td data-label="登入方式">帳號密碼</td>
+                                            <td data-label="最近登入"><span class="accountsPage-loginTime">2026/10/27 10:05</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>啟用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <span class="flex-row-start flex-wrap gap-2">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountResetModal" data-js="accountResetOpen"
+                                                        data-name="李○○" data-unit="特教資源中心" data-account="lee@center.example.edu.tw"
+                                                        aria-label="重設 李○○ 的密碼">重設密碼</button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountFormModal" data-js="accountEditOpen"
+                                                        data-role="center" data-perm="staff" data-name="李○○" data-tel="03-5572346 #223" data-mail="lee@center.example.edu.tw"
+                                                        data-unit="新竹縣特殊教育資源中心" data-status="active"
+                                                        aria-label="編輯 李○○">編輯</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="center">
+                                            <td data-label="姓名／帳號">
+                                                <span class="accountsPage-nameCell">
+                                                    <span class="accountsPage-name">張○○</span>
+                                                    <span class="accountsPage-account">chang@center.example.edu.tw</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="角色"><span class="tagPill tag-tealSoft">輔具承辦</span></td>
+                                            <td data-label="所屬單位">特教資源中心</td>
+                                            <td data-label="登入方式">帳號密碼</td>
+                                            <td data-label="最近登入"><span class="accountsPage-loginTime">2026/06/30 17:44</span></td>
+                                            <td data-label="狀態"><span class="statusPill"><span class="statusPill-dot" aria-hidden="true"></span>停用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <span class="flex-row-start flex-wrap gap-2">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountResetModal" data-js="accountResetOpen"
+                                                        data-name="張○○" data-unit="特教資源中心" data-account="chang@center.example.edu.tw"
+                                                        aria-label="重設 張○○ 的密碼">重設密碼</button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountFormModal" data-js="accountEditOpen"
+                                                        data-role="center" data-perm="staff" data-name="張○○" data-tel="03-5572346 #224" data-mail="chang@center.example.edu.tw"
+                                                        data-unit="新竹縣特殊教育資源中心" data-status="off"
+                                                        aria-label="編輯 張○○">編輯</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <!-- 學校人員 -->
+                                        <tr data-category="school" hidden>
+                                            <td data-label="姓名／帳號">
+                                                <span class="accountsPage-nameCell">
+                                                    <span class="accountsPage-name">王○○</span>
+                                                    <span class="accountsPage-account">OpenID・特教組長</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="角色"><span class="tagPill tag-goldLight">學校人員</span></td>
+                                            <td data-label="所屬單位">竹北國小</td>
+                                            <td data-label="登入方式">教育部 OpenID</td>
+                                            <td data-label="最近登入"><span class="accountsPage-loginTime">2026/10/28 14:20</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>啟用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <span class="flex-row-start flex-wrap gap-2">
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountFormModal" data-js="accountEditOpen"
+                                                        data-role="school" data-name="王○○" data-tel="" data-mail="OpenID・特教組長"
+                                                        data-level="e" data-unit="竹北國小" data-status="active"
+                                                        aria-label="編輯 王○○">編輯</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="school" hidden>
+                                            <td data-label="姓名／帳號">
+                                                <span class="accountsPage-nameCell">
+                                                    <span class="accountsPage-name">周○○</span>
+                                                    <span class="accountsPage-account">OpenID・輔導主任</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="角色"><span class="tagPill tag-goldLight">學校人員</span></td>
+                                            <td data-label="所屬單位">竹北國中</td>
+                                            <td data-label="登入方式">教育部 OpenID</td>
+                                            <td data-label="最近登入"><span class="accountsPage-loginTime">2026/10/25 09:12</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>啟用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <span class="flex-row-start flex-wrap gap-2">
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountFormModal" data-js="accountEditOpen"
+                                                        data-role="school" data-name="周○○" data-tel="" data-mail="OpenID・輔導主任"
+                                                        data-level="j" data-unit="竹北國中" data-status="active"
+                                                        aria-label="編輯 周○○">編輯</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="school" hidden>
+                                            <td data-label="姓名／帳號">
+                                                <span class="accountsPage-nameCell">
+                                                    <span class="accountsPage-name">李○○</span>
+                                                    <span class="accountsPage-account">itinerant@school.example.edu.tw</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="角色"><span class="tagPill tag-goldLight">學校人員（例外）</span></td>
+                                            <td data-label="所屬單位">竹北國小</td>
+                                            <td data-label="登入方式">帳號密碼</td>
+                                            <td data-label="最近登入"><span class="accountsPage-loginTime">2026/10/20 11:30</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>啟用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <span class="flex-row-start flex-wrap gap-2">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountResetModal" data-js="accountResetOpen"
+                                                        data-name="李○○" data-unit="竹北國小" data-account="itinerant@school.example.edu.tw"
+                                                        aria-label="重設 李○○ 的密碼">重設密碼</button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountFormModal" data-js="accountEditOpen"
+                                                        data-role="school" data-name="李○○" data-tel="" data-mail="itinerant@school.example.edu.tw"
+                                                        data-level="e" data-unit="竹北國小" data-status="active"
+                                                        aria-label="編輯 李○○">編輯</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="school" hidden>
+                                            <td data-label="姓名／帳號">
+                                                <span class="accountsPage-nameCell">
+                                                    <span class="accountsPage-name">劉○○</span>
+                                                    <span class="accountsPage-account">OpenID・資源班教師</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="角色"><span class="tagPill tag-goldLight">學校人員</span></td>
+                                            <td data-label="所屬單位">關西國中</td>
+                                            <td data-label="登入方式">教育部 OpenID</td>
+                                            <td data-label="最近登入"><span class="accountsPage-loginTime">2026/09/30 15:02</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>啟用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <span class="flex-row-start flex-wrap gap-2">
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountFormModal" data-js="accountEditOpen"
+                                                        data-role="school" data-name="劉○○" data-tel="" data-mail="OpenID・資源班教師"
+                                                        data-level="j" data-unit="關西國中" data-status="active"
+                                                        aria-label="編輯 劉○○">編輯</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="school" hidden>
+                                            <td data-label="姓名／帳號">
+                                                <span class="accountsPage-nameCell">
+                                                    <span class="accountsPage-name">高○○</span>
+                                                    <span class="accountsPage-account">OpenID・教務主任</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="角色"><span class="tagPill tag-goldLight">學校人員</span></td>
+                                            <td data-label="所屬單位">尖石國小</td>
+                                            <td data-label="登入方式">教育部 OpenID</td>
+                                            <td data-label="最近登入"><span class="accountsPage-loginTime">2026/09/18 10:40</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-red"><span class="statusPill-dot" aria-hidden="true"></span>已鎖定</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <span class="flex-row-start flex-wrap gap-2">
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountFormModal" data-js="accountEditOpen"
+                                                        data-role="school" data-name="高○○" data-tel="" data-mail="OpenID・教務主任"
+                                                        data-level="e" data-unit="尖石國小" data-status="active"
+                                                        aria-label="編輯 高○○">編輯</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <!-- 廠商 -->
+                                        <tr data-category="vendor" hidden>
+                                            <td data-label="姓名／帳號">
+                                                <span class="accountsPage-nameCell">
+                                                    <span class="accountsPage-name">劉○○</span>
+                                                    <span class="accountsPage-account">repair@vendor.example.com</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="角色"><span class="tagPill tag-blueLight">維修廠商</span></td>
+                                            <td data-label="所屬單位">○○醫療器材行</td>
+                                            <td data-label="登入方式">帳號密碼</td>
+                                            <td data-label="最近登入"><span class="accountsPage-loginTime">2026/10/28 13:10</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>啟用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <span class="flex-row-start flex-wrap gap-2">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountResetModal" data-js="accountResetOpen"
+                                                        data-name="劉○○" data-unit="○○醫療器材行" data-account="repair@vendor.example.com"
+                                                        aria-label="重設 劉○○ 的密碼">重設密碼</button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountFormModal" data-js="accountEditOpen"
+                                                        data-role="vendor" data-name="劉○○" data-tel="03-5551111" data-mail="repair@vendor.example.com"
+                                                        data-unit="○○醫療器材行" data-status="active"
+                                                        aria-label="編輯 劉○○">編輯</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="vendor" hidden>
+                                            <td data-label="姓名／帳號">
+                                                <span class="accountsPage-nameCell">
+                                                    <span class="accountsPage-name">陳○○</span>
+                                                    <span class="accountsPage-account">fix@vendor2.example.com</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="角色"><span class="tagPill tag-blueLight">維修廠商</span></td>
+                                            <td data-label="所屬單位">○○輔具科技有限公司</td>
+                                            <td data-label="登入方式">帳號密碼</td>
+                                            <td data-label="最近登入"><span class="accountsPage-loginTime">2026/10/22 09:48</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>啟用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <span class="flex-row-start flex-wrap gap-2">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountResetModal" data-js="accountResetOpen"
+                                                        data-name="陳○○" data-unit="○○輔具科技有限公司" data-account="fix@vendor2.example.com"
+                                                        aria-label="重設 陳○○ 的密碼">重設密碼</button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountFormModal" data-js="accountEditOpen"
+                                                        data-role="vendor" data-name="陳○○" data-tel="02-2555-2222" data-mail="fix@vendor2.example.com"
+                                                        data-unit="○○輔具科技有限公司" data-status="active"
+                                                        aria-label="編輯 陳○○">編輯</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="vendor" hidden>
+                                            <td data-label="姓名／帳號">
+                                                <span class="accountsPage-nameCell">
+                                                    <span class="accountsPage-name">林○○</span>
+                                                    <span class="accountsPage-account">hear@vendor3.example.com</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="角色"><span class="tagPill tag-blueLight">聽障供應商</span></td>
+                                            <td data-label="所屬單位">○○助聽器股份有限公司</td>
+                                            <td data-label="登入方式">帳號密碼</td>
+                                            <td data-label="最近登入"><span class="accountsPage-loginTime">2026/10/15 16:30</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>啟用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <span class="flex-row-start flex-wrap gap-2">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountResetModal" data-js="accountResetOpen"
+                                                        data-name="林○○" data-unit="○○助聽器股份有限公司" data-account="hear@vendor3.example.com"
+                                                        aria-label="重設 林○○ 的密碼">重設密碼</button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#accountFormModal" data-js="accountEditOpen"
+                                                        data-role="vendor" data-name="林○○" data-tel="03-5553333" data-mail="hear@vendor3.example.com"
+                                                        data-unit="○○助聽器股份有限公司" data-status="active"
+                                                        aria-label="編輯 林○○">編輯</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 分頁為靜態示意（尚無真實分頁邏輯） -->
+                        <nav class="pageNav mt-6" aria-label="分頁">
+                            <p class="pageNav-summary">顯示第 1 至 4 筆，共 4 筆資料</p>
+                            <ul class="pageNav-list">
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="第一頁"><i class="bi bi-chevron-bar-left" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="acPagePrevNote"><i class="bi bi-chevron-left" aria-hidden="true"></i>上一頁</span></li>
+                                <li><span class="pageNav-item" aria-current="page">1</span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true">下一頁<i class="bi bi-chevron-right" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="最後一頁"><i class="bi bi-chevron-bar-right" aria-hidden="true"></i></span></li>
+                            </ul>
+                            <span id="acPagePrevNote" class="sr-only">已是第一頁，沒有上一頁</span>
+                        </nav>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <!-- 重設密碼 modal -->
+    <div class="modal fade" id="accountResetModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="accountResetModalTitle">
+        <div class="modal-dialog modal-dialog-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 class="modal-title" id="accountResetModalTitle">重設密碼</h2>
+                    </div>
+                    <button type="button" class="btnIcon" data-bs-dismiss="modal" aria-label="關閉">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body" tabindex="0">
+                    <div class="infoBox accountsPage-resetInfo">
+                        <div class="infoBox-row">
+                            <span class="infoBox-label">姓名</span>
+                            <span class="infoBox-value" data-js="accountResetName">－</span>
+                        </div>
+                        <div class="infoBox-row">
+                            <span class="infoBox-label">所屬單位</span>
+                            <span class="infoBox-value" data-js="accountResetUnit">－</span>
+                        </div>
+                        <div class="infoBox-row">
+                            <span class="infoBox-label">帳號</span>
+                            <span class="infoBox-value infoBox-value-mono" data-js="accountResetAccount">－</span>
+                        </div>
+                    </div>
+
+                    <form id="accountResetForm" novalidate>
+                        <fieldset class="modal-body-section">
+                            <legend class="formField-label">重設方式 <span class="formField-required">必填</span></legend>
+                            <div class="cardChoice-group">
+                                <label class="cardChoice is-selected" data-js="accountResetWayCard">
+                                    <input type="radio" name="acResetWay" value="link" class="cardChoice-input" data-js="accountResetWayInput" checked>
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">寄送重設連結（建議）</span>
+                                        <span class="cardChoice-desc">寄到對方的登入信箱，由本人設定新密碼</span>
+                                    </span>
+                                </label>
+                                <label class="cardChoice" data-js="accountResetWayCard">
+                                    <input type="radio" name="acResetWay" value="temp" class="cardChoice-input" data-js="accountResetWayInput">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">設定臨時密碼</span>
+                                        <span class="cardChoice-desc">對方收不到信時使用，下次登入須立即變更</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </fieldset>
+
+                        <div class="formGrid modal-body-section" data-js="accountResetTempFields" hidden>
+                            <div>
+                                <label for="acResetPw" class="formField-label">臨時密碼 <span class="formField-required">必填</span></label>
+                                <div class="inputGroup">
+                                    <input type="password" id="acResetPw" class="form-control" autocomplete="new-password" placeholder="6–12 碼英數字或半形符號">
+                                    <button type="button" class="inputGroup-btn" data-js="togglePassword" data-target="acResetPw" aria-label="顯示密碼" aria-pressed="false">
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <p class="formField-hint">6–12 碼英數字或半形符號</p>
+                            </div>
+                            <div>
+                                <label for="acResetPw2" class="formField-label">再輸入一次 <span class="formField-required">必填</span></label>
+                                <div class="inputGroup">
+                                    <input type="password" id="acResetPw2" class="form-control" autocomplete="new-password" placeholder="請再輸入一次臨時密碼">
+                                    <button type="button" class="inputGroup-btn" data-js="togglePassword" data-target="acResetPw2" aria-label="顯示密碼" aria-pressed="false">
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="formField-checkRow modal-body-section">
+                            <input type="checkbox" id="acResetUnlock" class="form-check-input" checked>
+                            <label for="acResetUnlock" class="formField-checkRow-label">同時解除登入鎖定（連續輸錯密碼被鎖住時）</label>
+                        </div>
+
+                        <p class="noteBox noteBox-amber modal-body-section">
+                            <i class="bi bi-info-circle" aria-hidden="true"></i>
+                            <span data-js="accountResetHintText">重設連結 24 小時內有效，對方點開後自行設定新密碼，中心不會看到密碼。</span>
+                        </p>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="accountResetForm" class="btnPill btn-teal" data-js="accountResetSubmit">寄送重設連結</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 帳號新增／編輯 modal -->
+    <div class="modal fade" id="accountFormModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="accountFormModalTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 class="modal-title" id="accountFormModalTitle" data-js="accountModalTitle">新增帳號</h2>
+                        <p class="textNote modal-subtitle" data-js="accountModalSub">使用教育部 OpenID 的學校人員不需在這裡新增</p>
+                    </div>
+                    <button type="button" class="btnIcon" data-bs-dismiss="modal" aria-label="關閉">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body" tabindex="0">
+                    <form id="accountForm" novalidate>
+                        <fieldset class="modal-body-section">
+                            <legend class="formField-label">角色 <span class="formField-required">必填</span></legend>
+                            <div class="cardChoice-group cardChoice-group-grid3">
+                                <label class="cardChoice is-selected" data-js="accountRoleCard">
+                                    <input type="radio" name="acRole" value="center" class="cardChoice-input" data-js="accountRoleInput" checked>
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">中心人員</span>
+                                        <span class="cardChoice-desc">審核申請、管理輔具與資料</span>
+                                    </span>
+                                </label>
+                                <label class="cardChoice" data-js="accountRoleCard">
+                                    <input type="radio" name="acRole" value="school" class="cardChoice-input" data-js="accountRoleInput">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">學校人員（例外）</span>
+                                        <span class="cardChoice-desc">職稱不符或跨校，無法用 OpenID</span>
+                                    </span>
+                                </label>
+                                <label class="cardChoice" data-js="accountRoleCard">
+                                    <input type="radio" name="acRole" value="vendor" class="cardChoice-input" data-js="accountRoleInput">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">廠商</span>
+                                        <span class="cardChoice-desc">維修廠商或聽障供應商</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </fieldset>
+
+                        <div class="modal-body-section">
+                            <div class="formGrid">
+                                <div>
+                                    <label for="acName" class="formField-label">姓名 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="acName" class="form-control" placeholder="例：王小明" required>
+                                </div>
+                                <div>
+                                    <label for="acTel" class="formField-label">電話</label>
+                                    <input type="tel" id="acTel" class="form-control" placeholder="例：03-5551234 #215">
+                                </div>
+                                <div class="formGrid-full">
+                                    <label for="acMail" class="formField-label">登入信箱（帳號） <span class="formField-required">必填</span></label>
+                                    <input type="email" id="acMail" class="form-control" placeholder="例：name@example.edu.tw" required>
+                                </div>
+                                <div class="formGrid-full">
+                                    <label for="acUnitCenter" class="formField-label" data-js="accountUnitLabel">所屬單位 <span class="formField-required">必填</span></label>
+                                    <select id="acUnitCenter" class="form-select" data-js="accountUnitSelect" data-role="center">
+                                        <option>新竹縣特殊教育資源中心</option>
+                                    </select>
+
+                                    <div class="formGrid" data-js="accountUnitSelect" data-role="school" hidden>
+                                        <div>
+                                            <label for="acSchoolType" class="formField-label">學校類型</label>
+                                            <select id="acSchoolType" class="form-select" data-js="accountSchoolType">
+                                                <option value="k">幼兒園</option>
+                                                <option value="e" selected>國小</option>
+                                                <option value="j">國中</option>
+                                                <option value="h">高中職</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="acUnitSchool" class="formField-label">學校名稱</label>
+                                            <select id="acUnitSchool" class="form-select" data-js="accountSchoolName">
+                                                <option data-level="k">新豐國小附幼</option>
+                                                <option data-level="e" selected>竹北國小</option>
+                                                <option data-level="e">關西國小</option>
+                                                <option data-level="e">芎林國小</option>
+                                                <option data-level="e">尖石國小</option>
+                                                <option data-level="j">竹北國中</option>
+                                                <option data-level="j">竹東國中</option>
+                                                <option data-level="j">橫山國中</option>
+                                                <option data-level="j">關西國中</option>
+                                                <option data-level="h">湖口高中</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <select id="acUnitVendor" class="form-select" data-js="accountUnitSelect" data-role="vendor" hidden disabled>
+                                        <option>○○醫療器材行</option>
+                                        <option>○○輔具科技有限公司</option>
+                                        <option>○○聽語科技有限公司</option>
+                                    </select>
+                                    <p class="accountsPage-unitHint" data-js="accountUnitHint">中心人員固定為特教資源中心</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <fieldset class="modal-body-section" data-js="accountPermFieldset">
+                            <legend class="formField-label">權限</legend>
+                            <div class="flex-row-start flex-wrap gap-5">
+                                <div class="formField-checkRow">
+                                    <input type="radio" name="acPerm" id="acPermStaff" value="staff" class="form-check-input" checked>
+                                    <label for="acPermStaff" class="formField-checkRow-label">輔具承辦（審核、借用、報修）</label>
+                                </div>
+                                <div class="formField-checkRow">
+                                    <input type="radio" name="acPerm" id="acPermAdmin" value="admin" class="form-check-input">
+                                    <label for="acPermAdmin" class="formField-checkRow-label">系統管理者（含帳號與系統設定）</label>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="modal-body-section">
+                            <label for="acStatus" class="formField-label">帳號狀態</label>
+                            <select id="acStatus" class="form-select">
+                                <option value="active" selected>啟用</option>
+                                <option value="off">停用</option>
+                            </select>
+                        </div>
+
+                        <p class="noteBox noteBox-amber modal-body-section">
+                            <i class="bi bi-info-circle" aria-hidden="true"></i>
+                            <span data-js="accountModalFoot">建立後系統會寄送設定密碼信到登入信箱，連結 24 小時內有效。</span>
+                        </p>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="accountForm" class="btnPill btn-teal" data-js="accountSubmit">建立帳號</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

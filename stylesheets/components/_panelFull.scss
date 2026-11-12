@@ -1,0 +1,184 @@
+// ============================================================
+// 全螢幕面板元件（design.md §5.3）：手機版選單
+// 結構固定：身分區 → 主選單 → 工具列；不使用底部導覽列
+// ============================================================
+
+.panelFull {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    background-color: $surface-card;
+    transform: translateX(100%);
+    transition: transform 220ms ease-out;
+    overflow-y: auto;
+
+    &.is-open {
+        transform: translateX(0);
+    }
+}
+
+.panelFull-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border-bottom: 1px solid $line-default;
+    flex-shrink: 0;
+
+    // 關閉鈕縮小成圓形：通用 .btnIcon 是 52×52 方角，面板頭部這顆用不到那麼大
+    .btnIcon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+}
+
+.panelFull-body {
+    flex: 1 0 auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.panelFull-identity {
+    padding: 6px 16px;
+}
+
+// 未登入身分卡（design.md §2.2 surface/mint-dots：身分區塊底）
+.panelFull-identity-guest {
+    background-color: $surface-mint-dots;
+    border-radius: $border-radius-lg;
+    padding: 20px 16px;
+}
+
+.panelFull-identity-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 4px;
+    min-height: 44px;
+    font-size: 16px;
+    font-weight: 700;
+    color: $brand-teal-deep;
+    text-decoration: none;
+    transition: color 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        color: $brand-teal-ink;
+    }
+}
+
+.panelFull-identity-link-arrow {
+    font-size: 14px;
+    -webkit-text-stroke: .4px currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .panelFull-identity-link {
+        transition: none;
+    }
+}
+
+// 主選單項目（取代 .listRow 預設的 22px 直向內距，手機選單用更緊湊的列高；
+// 列與列之間不留間距，靠 .listRow 自帶的下底線分隔，右側箭頭見 .btnPill-arrowCircle；
+// margin 歸零取消 .listRow 的左右出血，讓清單寬度對齊上方 .panelFull-identity 卡片。
+// 用 .listRow.listRow-menu 複合選擇器拉高優先序：all.scss 載入順序是 panelFull 在 listRow 之前，
+// 若只用單一 class 選擇器，優先序相同時由後載入的 _listRow.scss「.listRow { margin:0 -16px }」勝出）
+.listRow.listRow-menu {
+    padding: 6px 16px;
+    margin: 0;
+    min-height: 52px;
+}
+
+// .listRow-title 在 @media(max-width:720px) 的 flex:none + width:100% 是給新聞列表手機版兩行排版
+// （日期＋分類另起一行）用的；選單列沒有這個兩行結構，仍要維持單行 icon＋文字＋箭頭，
+// 否則標題撐滿整行會把右側箭頭推出容器外。同理用複合選擇器蓋過單一 class 的 .listRow-title
+@media (max-width: 720px) {
+    .listRow-menu .listRow-title {
+        flex: 1;
+        width: auto;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+    }
+}
+
+// 工具列（design.md §5.3）：網站導覽／文字大小。兩個各自獨立，不用共同背景卡片包起來，
+// 靠 .panelFull-toolbar 的 padding（對齊上面 .panelFull-body 的 16px 左右內距）＋ gap 隔開
+.panelFull-toolbar {
+    flex-shrink: 0;
+    padding: 12px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+// 網站導覽：寬度滿版，對齊上面 .panelFull-identity／.listRow-menu；左側 icon＋文字用
+// .panelFull-toolbar-link-label 包成一組，不被 space-between 拆開，箭頭單獨推到最右邊；
+// hover／focus 的圓角底色＋外連箭頭位移，比照 design.md §7.6 頁尾連結（.linkFooter）的做法，
+// 只是改用淺色底配色；下緣加一條細淺綠底線，與下面的文字大小區隔
+.panelFull-toolbar-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 13px 16px;
+    font-size: 17px;
+    font-weight: 700;
+    color: $brand-teal-deep;
+    text-decoration: none;
+    transition: background-color 180ms ease-out;
+
+    .bi:last-child {
+        transition: transform 180ms ease-out;
+    }
+
+    &:hover,
+    &:focus-visible {
+        border-radius: $border-radius-sm;
+        background-color: $surface-teal-pale;
+
+        .bi:last-child {
+            transform: translate(2px, -2px);
+        }
+    }
+}
+
+.panelFull-toolbar-link-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.panelFull-toolbar-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .panelFull-toolbar-link,
+    .panelFull-toolbar-link .bi:last-child {
+        transition: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .panelFull {
+        transition: none;
+    }
+}
+
+// 斷點須與 .siteHeader-menuTrigger（_header.scss，901px 以上隱藏按鈕）對齊，
+// 否則按鈕顯示但面板 display:none 的寬度區間會點不開選單
+@media (min-width: 901px) {
+    .panelFull {
+        display: none;
+    }
+}

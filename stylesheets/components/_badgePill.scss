@@ -1,0 +1,98 @@
+// ============================================================
+// 徽章與狀態元件（design.md §7.9）
+// 狀態色以申請審核列表（CenterReviewA）為準，待該頁建立後再補色票修飾子，
+// 這裡先只定義外型，不自訂新狀態色（design.md §2.7）。
+// ============================================================
+
+.badgePill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 7px;
+    border-radius: $border-radius-pill;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    background-color: $accent-amber;
+    color: $ink-1;
+}
+
+.statusPill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: baseline;
+    padding: 2px 14px;
+    border-radius: $border-radius-pill;
+    font-size: 16px;
+    font-weight: 700;
+    background-color: $line-default;
+    color: $ink-2;
+}
+
+.statusPill-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: currentColor;
+    flex-shrink: 0;
+}
+
+.statusPill-teal {
+    background-color: $surface-mint;
+    color: $brand-teal-deep;
+}
+
+// 以下三色沿用 .tagPill 既有色票（design.md §2.7：狀態色不可自訂），
+// 用於申請紀錄頁「進度」欄：金＝中心處理中、紅＝退回補件、綠＝已完成
+.statusPill-gold {
+    background-color: #FCE7C6;
+    color: #7A4A00;
+}
+
+.statusPill-red {
+    background-color: #FBEAEA;
+    color: $state-required;
+}
+
+.statusPill-green {
+    background-color: #E5F3EA;
+    color: #1E6B3E;
+}
+
+.statusPill-blue {
+    background-color: #E8F1FB;
+    color: #1D4F86;
+}
+
+// 外框方形徽章（頁尾無障礙標章 AA 等級）
+.badgeOutline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 88px;
+    height: 34px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, .6);
+    border-radius: 8px;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: $footer-text-primary;
+    text-decoration: none;
+    transition: background-color 180ms ease-out, border-color 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: rgba(255, 255, 255, .12);
+        border-color: rgba(255, 255, 255, 1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .badgeOutline {
+        transition: none;
+    }
+}

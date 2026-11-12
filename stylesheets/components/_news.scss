@@ -1,0 +1,265 @@
+// ============================================================
+// 中心端最新消息管理（center/news.html）專屬樣式
+// main 用 .bg-green / .bg-green-bleed；container/-content 數值比照 .reviewPage-container/-content
+// ============================================================
+
+.newsPage-container {
+    max-width: 1360px;
+    margin: 40px auto 0;
+    padding: 0 24px;
+
+    @media (max-width: 720px) {
+        margin: 20px auto 0;
+        padding: 0 16px;
+    }
+}
+
+.newsPage-content {
+    position: relative;
+    z-index: 2;
+    margin-top: -160px;
+
+    @media (max-width: 720px) {
+        margin-top: -85px;
+    }
+}
+
+// 頁籤列與右側動作按鈕（分類管理／新增消息）同列，窄幅自動換行
+.newsPage-tabsRow {
+    gap: 14px 20px;
+    margin-bottom: 20px;
+}
+
+// 列表「標題」欄：置頂徽章／標題／附件圖示同列
+.newsPage-titleCell {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+}
+
+.newsPage-titleText {
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.newsPage-fileIcon {
+    display: inline-flex;
+    color: $ink-3;
+    font-size: 16px;
+}
+
+// 「上架期間」欄：起訖日期上下排列，數字用 Poppins（design.md §3）
+.newsPage-dateRange {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5;
+    font-family: "Poppins", "Noto Sans TC", sans-serif;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.newsPage-dateRange-to {
+    color: $ink-3;
+}
+
+// ------------------------------------------------------------
+// 新增／編輯消息 modal：內容格式工具列
+// ------------------------------------------------------------
+.newsEditor {
+    margin-top: 8px;
+    border: 2px solid $line-strong;
+    border-radius: $border-radius-md;
+    overflow: hidden;
+    transition: border-color 180ms ease-out, box-shadow 180ms ease-out;
+
+    &:focus-within {
+        border-color: $brand-teal;
+        box-shadow: 0 0 0 3px rgba(15, 127, 129, .18);
+    }
+}
+
+.newsEditor-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 6px 8px;
+    background-color: $surface-tint;
+    border-bottom: 1px solid $line-default;
+}
+
+.newsEditor-toolbarBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    background-color: transparent;
+    color: $ink-1;
+    font-size: 17px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: background-color 160ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-teal-pale;
+    }
+}
+
+.newsEditor-textarea {
+    display: block;
+    width: 100%;
+    padding: 14px 16px;
+    border: 0;
+    font-family: inherit;
+    font-size: 17px;
+    line-height: 1.75;
+    color: $ink-1;
+    background-color: $surface-card;
+    resize: vertical;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+// ------------------------------------------------------------
+// 相關連結：新增連結的行內表單
+// ------------------------------------------------------------
+.newsLinkForm {
+    margin-top: 8px;
+    padding: 16px 18px 18px;
+    border: 2px solid $brand-teal;
+    border-radius: $border-radius-md;
+    background-color: $surface-mint;
+}
+
+.newsLinkForm-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+// 啟用／停用開關：整列即是開關按鈕，開關放最左邊（貼合使用者操作習慣偏左）；
+// 視覺比重比照下方「置頂」「顯示在首頁」勾選列（.formField-checkRow），不另加框線／底色卡片
+.newsPage-toggleRow {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 14px;
+    padding: 2px 0;
+    border: none;
+    border-radius: $border-radius-sm;
+    background: none;
+    font: inherit;
+    text-align: left;
+    color: inherit;
+    cursor: pointer;
+
+    &:focus-visible {
+        outline: 3px solid $focus-ring;
+        outline-offset: 3px;
+    }
+}
+
+.newsPage-toggleRow-label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    line-height: 1.5;
+}
+
+.newsPage-toggleRow-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.newsPage-toggleRow-desc {
+    font-size: 16px;
+    color: $ink-2;
+}
+
+// ------------------------------------------------------------
+// 分類管理 modal
+// ------------------------------------------------------------
+.newsCatRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 8px 8px 12px;
+    border: 1px solid $line-default;
+    border-radius: $border-radius-md;
+}
+
+.newsCatRow-moveGroup {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.newsCatRow-moveBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 22px;
+    border: none;
+    border-radius: 6px;
+    background-color: transparent;
+    color: $ink-2;
+    cursor: pointer;
+    transition: background-color 160ms ease-out, color 160ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-teal-pale;
+        color: $brand-teal-deep;
+    }
+
+    &[aria-disabled="true"] {
+        color: $line-strong;
+        cursor: not-allowed;
+
+        &:hover,
+        &:focus-visible {
+            background-color: transparent;
+            color: $line-strong;
+        }
+    }
+}
+
+.newsCatRow-renameInput {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.newsCatRow-count {
+    flex: 1 1 auto;
+    font-size: 16px;
+    color: $ink-3;
+    white-space: nowrap;
+}
+
+.newsCatAdd {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.newsCatAdd-field {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .newsEditor,
+    .newsEditor-toolbarBtn,
+    .newsCatRow-moveBtn {
+        transition: none;
+    }
+}

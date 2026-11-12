@@ -1,0 +1,52 @@
+// ============================================================
+// 白色卡片容器元件（design.md §7.4）：以外型命名，可包覆多個子區塊使用
+// ============================================================
+
+.cardPanel {
+    padding: 32px;
+    border-radius: $border-radius-lg;
+    background-color: $surface-card;
+    box-shadow: $shadow-panel;
+
+    @media (max-width: 720px) {
+        padding: 24px;
+    }
+}
+
+// 卡片內的區塊標題＋底線（學校基本資料、帳號登入資料等唯讀資訊卡共用）
+.cardPanel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 14px;
+}
+
+.cardPanel-title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: $brand-teal-deep;
+}
+
+// 標題後方附帶的筆數說明（如「借用紀錄 共 5 次」），字重比標題輕、數字用 Poppins
+.cardPanel-titleCount {
+    margin-left: 6px;
+    font-size: 17px;
+    font-weight: 400;
+    color: $ink-3;
+}
+
+.cardPanel-titleCount-num {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+}
+
+// 卡片內的次標題（如「申請資料」卡片裡再分一段「學生資料」），字級比卡片標題小一階
+.cardPanel-subTitle {
+    margin: 24px 0 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: $ink-1;
+}

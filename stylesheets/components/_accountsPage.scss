@@ -1,0 +1,69 @@
+// ============================================================
+// 中心端帳號管理（center/accounts.html）專屬樣式
+// main 用 .bg-green / .bg-green-bleed；container/-content 數值比照 .vendorsPage-container/-content
+// ============================================================
+
+.accountsPage-container {
+    max-width: 1360px;
+    margin: 40px auto 0;
+    padding: 0 24px;
+
+    @media (max-width: 720px) {
+        margin: 20px auto 0;
+        padding: 0 16px;
+    }
+}
+
+.accountsPage-content {
+    position: relative;
+    z-index: 2;
+    margin-top: -160px;
+
+    @media (max-width: 720px) {
+        margin-top: -85px;
+    }
+}
+
+// 頁籤列：狀態頁籤與「新增帳號」按鈕同列（gap 值不在 Bootstrap gap-* 對應階內，故寫在元件 class 裡）
+.accountsPage-tabsRow {
+    gap: 14px 20px;
+    margin-bottom: 20px;
+}
+
+// 列表「姓名／帳號」欄：姓名與帳號上下排列（不畫姓名圓點）
+.accountsPage-nameCell {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    line-height: 1.5;
+}
+
+.accountsPage-name {
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.accountsPage-account {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    color: $ink-3;
+}
+
+// 列表「最近登入」欄：日期用 Poppins 浮出
+.accountsPage-loginTime {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    color: $ink-2;
+}
+
+// 新增／編輯帳號 modal：所屬單位欄位下方的角色說明提示
+.accountsPage-unitHint {
+    margin: 6px 0 0;
+    font-size: 16px;
+    color: $ink-3;
+}
+
+// 重設密碼 modal：帳號資訊摘要（沿用 .infoBox，不另加頭像）
+.accountsPage-resetInfo {
+    margin-bottom: 18px;
+}

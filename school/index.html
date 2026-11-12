@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首頁 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="學校端首頁，查看申請期間、待辦事項與借用中輔具">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_School.html"></div>
+
+    <main id="goCenter" tabindex="-1">
+        <div class="homeMain-dots" aria-hidden="true"></div>
+
+        <section class="homeMain">
+            <div class="homeGreeting-deco" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+
+            <div class="homeMain-inner">
+                <div class="homeGreeting-meta">
+                    <time datetime="2026-10-30">10 月 30 日</time>
+                    <span>星期五</span>
+                    <span class="homeGreeting-meta-sep" aria-hidden="true"></span>
+                    竹北國小
+                </div>
+
+                <h1 class="homeGreeting-title">
+                    <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                    早安，王老師
+                </h1>
+
+                <p class="homeGreeting-desc">
+                    今天有 <span class="homeGreeting-count">3</span> 件事情等你處理，看看下面的待辦事項。
+                </p>
+            </div>
+        </section>
+
+        <div class="container pt-10 pb-15">
+            <div class="periodCard">
+                <div>
+                    <p class="periodCard-label">輔具申請期間</p>
+                    <h2 class="periodCard-title">115 學年度第一次輔具申請</h2>
+                    <p class="periodCard-range">
+                        <time datetime="2026-09-01">2026/09/01</time>－<time datetime="2026-10-31">2026/10/31</time>，還有 <span class="periodCard-days">2</span> 天截止
+                    </p>
+                </div>
+                <div class="periodCard-actions">
+                    <a href="apply.html" class="btnPill btn-teal btnPill-lg">
+                        <i class="bi bi-plus-lg" aria-hidden="true"></i>
+                        填寫輔具申請表
+                    </a>
+                    <a href="records.html" class="btnPill btn-outline btnPill-lg">申請紀錄</a>
+                </div>
+            </div>
+
+            <ul class="quickLinkGrid">
+                <li class="quickLinkGrid-item">
+                    <a href="apply.html" class="quickLink">
+                        輔具申請表
+                        <span class="btnPill-arrowCircle"><i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i></span>
+                    </a>
+                </li>
+                <li class="quickLinkGrid-item">
+                    <a href="temp-borrow.html" class="quickLink">
+                        臨時借用申請
+                        <span class="btnPill-arrowCircle"><i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i></span>
+                    </a>
+                </li>
+                <li class="quickLinkGrid-item">
+                    <a href="borrowing.html" class="quickLink">
+                        報修・歸還
+                        <span class="btnPill-arrowCircle"><i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i></span>
+                    </a>
+                </li>
+                <li class="quickLinkGrid-item">
+                    <a href="records.html" class="quickLink">
+                        申請紀錄
+                        <span class="btnPill-arrowCircle"><i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i></span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="homeGrid">
+                <section class="panelCard" aria-labelledby="taskPanelTitle">
+                    <div class="panelCard-header">
+                        <h2 class="panelCard-title" id="taskPanelTitle">
+                            <span class="panelCard-icon panelCard-icon-amber" aria-hidden="true"></span>
+                            待辦事項
+                        </h2>
+                        <span class="panelCard-count panelCard-count-amber">3</span>
+                    </div>
+
+                    <ul class="panelCard-list">
+                        <li class="taskRow">
+                            <div class="taskRow-info">
+                                <span class="tagPill tag-tealSoft">待上傳簽章</span>
+                                <div class="flex-column">
+                                    <span class="taskRow-title">借用單｜桌上型擴視機</span>
+                                    <span class="taskRow-sub">林○安｜中心已核准 2026/10/25</span>
+                                </div>
+                                
+                            </div>
+                            <a href="borrowing.html" class="btnPill btn-teal btnPill-sm">上傳簽章檔</a>
+                        </li>
+                        <li class="taskRow">
+                            <div class="taskRow-info">
+                                <span class="tagPill tag-redLight">退回補件</span>
+                                <div class="flex-column">
+                                    <span class="taskRow-title">站立架申請</span>
+                                    <span class="taskRow-sub">劉○妤｜申請表缺少校長核章</span>
+                                </div>
+                                
+                            </div>
+                            <a href="records.html" class="btnPill btn-amberSolid btnPill-sm">前往補件</a>
+                        </li>
+                        <li class="taskRow">
+                            <div class="taskRow-info">
+                                <span class="tagPill tag-tealSoft">待上傳簽章</span>
+                                <div class="flex-column">
+                                    <span class="taskRow-title">歸還單｜一般輪椅</span>
+                                    <span class="taskRow-sub">許○廷｜畢業歸還，中心已核准</span>
+                                </div>
+                                
+                            </div>
+                            <a href="borrowing.html" class="btnPill btn-teal btnPill-sm">上傳簽章檔</a>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="panelCard" aria-labelledby="devicePanelTitle">
+                    <div class="flex-row-between flex-wrap">
+                       
+                        <div class="flex-row-center gap-6">
+                             <h2 class="panelCard-title" id="devicePanelTitle">
+                                <span class="panelCard-icon panelCard-icon-teal" aria-hidden="true"></span>
+                                借用中輔具
+                            </h2>
+                            <span class="panelCard-count panelCard-count-teal">12</span>
+                        </div>
+                        <a href="borrowing.html" class="btnPill btn-text btnPill-arrow">
+                            查看全部
+                            <i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i>
+                        </a>
+                    </div>
+
+                    <ul class="panelCard-list">
+                        <li class="deviceRow">
+                            <img src="../img/devices/cctv.jpg" alt="桌上型擴視機" class="deviceRow-thumb">
+                            <div class="deviceRow-info">
+                                <span class="deviceRow-name">桌上型擴視機 <span class="deviceRow-unit">V-CCTV-0012</span></span>
+                                <span class="deviceRow-meta">林○安（三年甲班）｜<time datetime="2030-06-30">2030/06/30</time> 到期</span>
+                            </div>
+                            <span class="tagPill tag-greenLight">借用中</span>
+                        </li>
+                        <li class="deviceRow">
+                            <img src="../img/devices/fm-system.jpg" alt="調頻輔聽系統" class="deviceRow-thumb">
+                            <div class="deviceRow-info">
+                                <span class="deviceRow-name">調頻輔聽系統 <span class="deviceRow-unit">H-FM-0017</span></span>
+                                <span class="deviceRow-meta">吳○涵（四年乙班）｜<time datetime="2029-06-30">2029/06/30</time> 到期</span>
+                            </div>
+                            <span class="tagPill tag-goldLight">報修中</span>
+                        </li>
+                        <li class="deviceRow">
+                            <img src="../img/devices/wheelchair.jpg" alt="兒童輪椅" class="deviceRow-thumb">
+                            <div class="deviceRow-info">
+                                <span class="deviceRow-name">兒童輪椅 <span class="deviceRow-unit">M-WC-0021</span></span>
+                                <span class="deviceRow-meta">陳○睿（二年丙班）｜<time datetime="2031-06-30">2031/06/30</time> 到期</span>
+                            </div>
+                            <span class="tagPill tag-greenLight">借用中</span>
+                        </li>
+                        <li class="deviceRow">
+                            <img src="../img/devices/communication-board.jpg" alt="溝通板" class="deviceRow-thumb">
+                            <div class="deviceRow-info">
+                                <span class="deviceRow-name">溝通板 <span class="deviceRow-unit">C-CB-0014</span></span>
+                                <span class="deviceRow-meta">黃○恩（一年甲班）｜<time datetime="2032-06-30">2032/06/30</time> 到期</span>
+                            </div>
+                            <span class="tagPill tag-greenLight">借用中</span>
+                        </li>
+                        <li class="deviceRow">
+                            <img src="../img/devices/touch-monitor.jpg" alt="觸摸顯示器" class="deviceRow-thumb">
+                            <div class="deviceRow-info">
+                                <span class="deviceRow-name">觸摸顯示器 <span class="deviceRow-unit">I-TS-0003</span></span>
+                                <span class="deviceRow-meta">資源班（校內使用）｜<time datetime="2027-06-30">2027/06/30</time> 到期</span>
+                            </div>
+                            <span class="tagPill tag-greenLight">借用中</span>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <script src="../js/all.js"></script>
+</body>
+</html>

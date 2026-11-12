@@ -1,0 +1,77 @@
+// ============================================================
+// 廠商端聽障點交專屬元件：
+// - .checkGrid：配件確認清單格線，互動版（checkbox）與點交紀錄唯讀版（打勾圖示）共用同一組格線
+// ============================================================
+
+.checkGrid {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 8px;
+}
+
+.checkGrid-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 12px;
+    border-radius: $border-radius-md;
+    border: 2px solid $line-strong;
+    background-color: $surface-card;
+    font-size: 16px;
+    color: $ink-1;
+    cursor: pointer;
+    transition: border-color 160ms ease-out, background-color 160ms ease-out;
+
+    &:hover {
+        border-color: $brand-teal;
+    }
+
+    &.is-checked {
+        border-color: $brand-teal;
+        background-color: $surface-tint;
+    }
+}
+
+.checkGrid-input {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    accent-color: $brand-teal;
+}
+
+// 唯讀版（點交紀錄 modal）：純顯示，不可互動
+.checkGrid-item-static {
+    cursor: default;
+    border-color: $line-default;
+    background-color: $surface-tint;
+
+    &:hover {
+        border-color: $line-default;
+    }
+}
+
+.checkGrid-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: $brand-teal;
+    color: #FFFFFF;
+    font-size: 13px;
+}
+
+.checkGrid-icon-empty {
+    background-color: $line-default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .checkGrid-item {
+        transition: none;
+    }
+}

@@ -1,0 +1,96 @@
+// ============================================================
+// 報修明細 modal 的照片縮圖與放大檢視（學校端報修紀錄 school/repairs.html）
+// 同一個 modal 內以縮圖格／放大檢視兩個區塊切換顯示（Bootstrap 5 不支援疊加 modal，
+// 故不另開第二層 modal），放大檢視附「返回縮圖」與「下載照片」兩個動作
+// ============================================================
+
+.photoLightbox-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.photoLightbox-thumb {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    padding: 0;
+    border: 1px solid $line-default;
+    border-radius: $border-radius-sm;
+    background-color: $surface-card;
+    overflow: hidden;
+    cursor: pointer;
+
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.photoLightbox-thumb-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(31, 42, 46, .4);
+    color: #FFFFFF;
+    font-size: 20px;
+    opacity: 0;
+    transition: opacity 160ms ease-out;
+}
+
+.photoLightbox-thumb:hover .photoLightbox-thumb-overlay,
+.photoLightbox-thumb:focus-visible .photoLightbox-thumb-overlay {
+    opacity: 1;
+}
+
+// 影片縮圖的播放圖示常駐顯示，不像照片縮圖只在 hover 時才出現放大圖示
+.photoLightbox-thumb-overlay-play {
+    opacity: 1;
+    background-color: rgba(31, 42, 46, .25);
+}
+
+// 影片縮圖時長標籤（如 0:18），常駐顯示於縮圖右下角，與 hover 才出現的 .photoLightbox-thumb-overlay 區隔
+.photoLightbox-thumb-duration {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    padding: 1px 6px;
+    border-radius: 8px;
+    background-color: rgba(31, 42, 46, .7);
+    color: #FFFFFF;
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.photoLightbox-viewer {
+    margin-top: 10px;
+}
+
+.photoLightbox-viewer-img {
+    display: block;
+    width: 100%;
+    max-height: 420px;
+    object-fit: contain;
+    border-radius: $border-radius-md;
+    background-color: $surface-tint;
+}
+
+.photoLightbox-viewer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .photoLightbox-thumb-overlay {
+        transition: none;
+    }
+}

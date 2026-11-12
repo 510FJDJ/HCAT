@@ -1,0 +1,103 @@
+// ============================================================
+// 外框卡元件（design.md §7.4）：友善連結卡
+// ============================================================
+
+.cardBordered {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 22px 56px 22px 24px;
+    border-radius: $border-radius-lg;
+    border: 2px solid $line-default;
+    background-color: $surface-card;
+    text-decoration: none;
+    color: $ink-1;
+    transition: border-color 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        border-color: $brand-teal;
+    }
+
+    // 手機：改為清單列，由外層 .linksGrid 統一畫外框，列之間用下框線分隔
+    @media (max-width: 720px) {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 64px;
+        padding: 8px 18px;
+        border: none;
+        border-bottom: 1px solid $line-default;
+        border-radius: 0;
+    }
+}
+
+// 標籤＋標題分組容器；桌面維持 display:contents，讓子項仍是 .cardBordered 的直接 flex 子項（排版不變）
+.cardBordered-text {
+    display: contents;
+
+    @media (max-width: 720px) {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.4;
+        min-width: 0;
+    }
+}
+
+.cardBordered-label {
+    font-size: 16px;
+    color: $brand-teal-deep;
+    font-weight: 600;
+}
+
+.cardBordered-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.cardBordered-corner {
+    position: absolute;
+    top: 22px;
+    right: 24px;
+    color: $ink-3;
+    flex-shrink: 0;
+
+    @media (max-width: 720px) {
+        position: static;
+        top: auto;
+        right: auto;
+    }
+}
+
+// 手機：清單外層統一外框，最外框導圓，內部不重複畫框
+.linksGrid {
+    @media (max-width: 720px) {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        border: 2px solid $line-default;
+        border-radius: $border-radius-lg;
+        overflow: hidden;
+    }
+}
+
+.linksGrid-item {
+    @media (max-width: 720px) {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+        margin-top:6px;
+
+        &:last-child .cardBordered {
+            border-bottom: none;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cardBordered {
+        transition: none;
+    }
+}

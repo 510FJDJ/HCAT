@@ -1,0 +1,26 @@
+// ============================================================
+// 申請審核列表頁（center/review.html）專屬樣式
+// main 用 .bg-green / .bg-green-bleed；.reviewPage-container/-content 數值比照 .profilePage-container/-content
+// （頁面只有單一卡片，不像 .recordsPage-content 多疊了一張申請流程卡，故數值跟 profilePage 一致而非 recordsPage）
+// ============================================================
+
+.reviewPage-container {
+    max-width: 1360px;
+    margin: 40px auto 0;
+    padding: 0 24px;
+
+    @media (max-width: 720px) {
+        margin: 20px auto 0;
+        padding: 0 16px;
+    }
+}
+
+.reviewPage-content {
+    position: relative;
+    z-index: 2;
+    margin-top: -160px;
+
+    @media (max-width: 720px) {
+        margin-top: -85px;
+    }
+}

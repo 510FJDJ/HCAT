@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <script>
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>輔具目錄｜輔具管理資訊系統｜新竹縣特殊教育資源中心</title>
+    <link rel="icon" type="image/png" href="img/logo/logo.png">
+    <link rel="stylesheet" href="css/all.css">
+</head>
+<body>
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+    <a href="#footerAnchor" class="sr-only focusable" accesskey="Z" title="跳至頁尾資訊區">頁尾資訊區</a>
+
+    <div id="header" data-layout="layout/header.html"></div>
+
+    <main id="goCenter" tabindex="-1">
+
+        <section class="pageBanner">
+            <div class="container pageBanner-inner">
+                <div class="pageBanner-main">
+                    <div class="pageBanner-text">
+                        <span class="labelCaption"><span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>CATALOG</span>
+                        <h1 class="titleSection">輔具目錄</h1>
+                        <p class="pageBanner-desc">中心現有輔具一覽，不需登入即可瀏覽品項與可借數量。</p>
+                    </div>
+                    <img src="img/banner/catalog.png" alt="" class="pageBanner-illustration">
+                </div>
+            </div>
+        </section>
+
+        <section class="sectionBand sectionBand-overlap">
+            <div class="container pt-2 pb-16">
+
+                <p class="noteBox noteBox-amber mb-8">
+                    <i class="bi bi-info-circle" aria-hidden="true"></i>
+                    <span>輔具申請由學校輔具管理人員辦理，家長如有需求請洽孩子就讀的學校。</span>
+                </p>
+
+                <div class="catalogPage-layout">
+
+                    <aside class="catalogPage-sidebar" aria-label="篩選條件">
+                        <div class="catalogPage-panel">
+                            <h2 class="catalogPage-panel-title">輔具分類</h2>
+                            <div class="filterList mt-5" role="tablist" aria-label="輔具分類" aria-orientation="vertical">
+                                <button type="button" class="filterList-item" role="tab" id="filter-all" data-category="all" aria-selected="true" aria-controls="catalogResultsPanel" tabindex="0">
+                                    <span>全部</span>
+                                    <span class="filterList-item-count">17</span>
+                                </button>
+                                <button type="button" class="filterList-item" role="tab" id="filter-mobility" data-category="mobility" aria-selected="false" aria-controls="catalogResultsPanel" tabindex="-1">
+                                    <span>行動與擺位輔具</span>
+                                    <span class="filterList-item-count">7</span>
+                                </button>
+                                <button type="button" class="filterList-item" role="tab" id="filter-visual" data-category="visual" aria-selected="false" aria-controls="catalogResultsPanel" tabindex="-1">
+                                    <span>視障輔具</span>
+                                    <span class="filterList-item-count">4</span>
+                                </button>
+                                <button type="button" class="filterList-item" role="tab" id="filter-hearing" data-category="hearing" aria-selected="false" aria-controls="catalogResultsPanel" tabindex="-1">
+                                    <span>聽障輔具</span>
+                                    <span class="filterList-item-count">1</span>
+                                </button>
+                                <button type="button" class="filterList-item" role="tab" id="filter-communication" data-category="communication" aria-selected="false" aria-controls="catalogResultsPanel" tabindex="-1">
+                                    <span>溝通輔具</span>
+                                    <span class="filterList-item-count">2</span>
+                                </button>
+                                <button type="button" class="filterList-item" role="tab" id="filter-info" data-category="info" aria-selected="false" aria-controls="catalogResultsPanel" tabindex="-1">
+                                    <span>資訊輔具</span>
+                                    <span class="filterList-item-count">3</span>
+                                </button>
+                                <button type="button" class="filterList-item" role="tab" id="filter-reading" data-category="reading" aria-selected="false" aria-controls="catalogResultsPanel" tabindex="-1">
+                                    <span>書寫與閱讀輔具</span>
+                                    <span class="filterList-item-count">0</span>
+                                </button>
+                                <button type="button" class="filterList-item" role="tab" id="filter-other" data-category="other" aria-selected="false" aria-controls="catalogResultsPanel" tabindex="-1">
+                                    <span>其他輔具</span>
+                                    <span class="filterList-item-count">0</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="catalogPage-panel">
+                            <h2 class="catalogPage-panel-title">其他條件</h2>
+                            <div class="formField-checkRow mt-5">
+                                <input type="checkbox" class="form-check-input" id="catalogFreeOnly" data-js="catalogFreeOnly">
+                                <label for="catalogFreeOnly" class="formField-checkRow-label">只看免評估品項</label>
+                            </div>
+                            <p class="formField-hint">免評估品項申請時不須附評估報告書</p>
+                        </div>
+                    </aside>
+
+                    <div class="catalogPage-results">
+                        <div class="catalogPage-resultsHead">
+                            <div class="catalogPage-resultsHead-search">
+                                <label for="catalogSearch" class="formField-label">搜尋輔具名稱</label>
+                                <div class="inputGroup">
+                                    <i class="bi bi-search inputGroup-icon" aria-hidden="true"></i>
+                                    <input type="search" id="catalogSearch" class="form-control" placeholder="例如：擴視機" data-js="catalogSearch">
+                                </div>
+                            </div>
+
+                            <div class="catalogPage-resultsHead-filters">
+                                <div class="catalogPage-resultsHead-categoryMobile">
+                                    <label for="catalogMobileCategory" class="formField-label">輔具分類</label>
+                                    <select id="catalogMobileCategory" class="form-select" data-js="catalogMobileCategory">
+                                        <option value="all" selected>全部（17）</option>
+                                        <option value="mobility">行動與擺位輔具（7）</option>
+                                        <option value="visual">視障輔具（4）</option>
+                                        <option value="hearing">聽障輔具（1）</option>
+                                        <option value="communication">溝通輔具（2）</option>
+                                        <option value="info">資訊輔具（3）</option>
+                                        <option value="reading">書寫與閱讀輔具（0）</option>
+                                        <option value="other">其他輔具（0）</option>
+                                    </select>
+                                </div>
+
+                                <div class="catalogPage-resultsHead-sort">
+                                    <label for="catalogSort">排序</label>
+                                    <select id="catalogSort" class="form-select" data-js="catalogSort">
+                                        <option value="category" selected>依分類</option>
+                                        <option value="stockDesc">可借數量多到少</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="catalogPage-resultsHead-freeOnlyMobile">
+                                <input type="checkbox" class="form-check-input" id="catalogFreeOnlyMobile" data-js="catalogFreeOnlyMobile">
+                                <label for="catalogFreeOnlyMobile" class="formField-checkRow-label">只看免評估品項</label>
+                            </div>
+                        </div>
+
+                        <p class="textNote" data-js="catalogCount">共 <span data-js="catalogCountNum">17</span> 項</p>
+
+                        <div role="tabpanel" id="catalogResultsPanel" aria-labelledby="filter-all">
+                            <p class="textNote py-6" data-js="emptyNote" hidden>此條件目前沒有符合的輔具，請調整分類或篩選條件。</p>
+
+                            <div class="catalogPage-grid" data-js="catalogGrid">
+
+                                <div class="cardPhoto" data-category="visual" data-free="true" data-name="擴視機" data-stock="3">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-goldLight">
+                                        <img src="img/devices/cctv.jpg" alt="擴視機">
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-goldLight">視障輔具</span>
+                                            <span class="tagPill tag-greenLight">免評估</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">擴視機</a>
+                                        <span class="cardPhoto-stock">目前可借 <strong>3</strong> 件</span>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="visual" data-free="false" data-name="放大鏡" data-stock="6">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-goldLight">
+                                        <img src="img/devices/magnifier.jpg" alt="放大鏡">
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-goldLight">視障輔具</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">放大鏡</a>
+                                        <span class="cardPhoto-stock">目前可借 <strong>6</strong> 件</span>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="visual" data-free="true" data-name="攜帶型擴視機" data-stock="4">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-goldLight">
+                                        <img src="img/devices/portable-cctv.jpg" alt="攜帶型擴視機">
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-goldLight">視障輔具</span>
+                                            <span class="tagPill tag-greenLight">免評估</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">攜帶型擴視機</a>
+                                        <span class="cardPhoto-stock">目前可借 <strong>4</strong> 件</span>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="visual" data-free="true" data-name="白杖" data-stock="8">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-goldLight">
+                                        <div class="cardPhoto-empty">
+                                            <i class="bi bi-image" aria-hidden="true"></i>
+                                            尚無照片
+                                        </div>
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-goldLight">視障輔具</span>
+                                            <span class="tagPill tag-greenLight">免評估</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">白杖</a>
+                                        <span class="cardPhoto-stock">目前可借 <strong>8</strong> 件</span>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="hearing" data-free="false" data-name="調頻輔聽系統" data-stock="5">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-cyanLight">
+                                        <img src="img/devices/fm-system.jpg" alt="調頻輔聽系統">
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-cyanLight">聽障輔具</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">調頻輔聽系統</a>
+                                        <span class="cardPhoto-stock">目前可借 <strong>5</strong> 件</span>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="mobility" data-free="false" data-name="兒童輪椅" data-stock="2">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-tealSoft">
+                                        <img src="img/devices/wheelchair.jpg" alt="兒童輪椅">
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-tealSoft">行動與擺位輔具</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">兒童輪椅</a>
+                                        <span class="cardPhoto-stock">目前可借 <strong>2</strong> 件</span>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="mobility" data-free="false" data-name="助行器" data-stock="3">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-tealSoft">
+                                        <img src="img/devices/walker.jpg" alt="助行器">
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-tealSoft">行動與擺位輔具</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">助行器</a>
+                                        <span class="cardPhoto-stock">目前可借 <strong>3</strong> 件</span>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="mobility" data-free="false" data-name="站立架" data-stock="0">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-tealSoft">
+                                        <div class="cardPhoto-noStock">暫無可借</div>
+                                        <img src="img/devices/stander.jpg" alt="站立架">
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-tealSoft">行動與擺位輔具</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">站立架</a>
+                                        <div class="cardPhoto-stockRow">
+                                            <span class="cardPhoto-stock">目前可借 <strong class="cardPhoto-stock-zero">0</strong> 件</span>
+                                            <a href="device.html" class="btnPill btn-amber btnPill-sm">申請增購</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="mobility" data-free="true" data-name="T 型椅" data-stock="4">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-tealSoft">
+                                        <div class="cardPhoto-empty">
+                                            <i class="bi bi-image" aria-hidden="true"></i>
+                                            尚無照片
+                                        </div>
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-tealSoft">行動與擺位輔具</span>
+                                            <span class="tagPill tag-greenLight">免評估</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">T 型椅</a>
+                                        <span class="cardPhoto-stock">目前可借 <strong>4</strong> 件</span>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="mobility" data-free="false" data-name="擺位椅" data-stock="2">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-tealSoft">
+                                        <img src="img/devices/positioning-chair.jpg" alt="擺位椅">
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-tealSoft">行動與擺位輔具</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">擺位椅</a>
+                                        <span class="cardPhoto-stock">目前可借 <strong>2</strong> 件</span>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="mobility" data-free="true" data-name="安全頭套" data-stock="5">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-tealSoft">
+                                        <div class="cardPhoto-empty">
+                                            <i class="bi bi-image" aria-hidden="true"></i>
+                                            尚無照片
+                                        </div>
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-tealSoft">行動與擺位輔具</span>
+                                            <span class="tagPill tag-greenLight">免評估</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">安全頭套</a>
+                                        <span class="cardPhoto-stock">目前可借 <strong>5</strong> 件</span>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="mobility" data-free="true" data-name="副木" data-stock="6">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-tealSoft">
+                                        <div class="cardPhoto-empty">
+                                            <i class="bi bi-image" aria-hidden="true"></i>
+                                            尚無照片
+                                        </div>
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-tealSoft">行動與擺位輔具</span>
+                                            <span class="tagPill tag-greenLight">免評估</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">副木</a>
+                                        <span class="cardPhoto-stock">目前可借 <strong>6</strong> 件</span>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="communication" data-free="false" data-name="溝通板" data-stock="0">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-purpleLight">
+                                        <div class="cardPhoto-noStock">暫無可借</div>
+                                        <img src="img/devices/communication-board.jpg" alt="溝通板">
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-purpleLight">溝通輔具</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">溝通板</a>
+                                        <div class="cardPhoto-stockRow">
+                                            <span class="cardPhoto-stock">目前可借 <strong class="cardPhoto-stock-zero">0</strong> 件</span>
+                                            <a href="device.html" class="btnPill btn-amber btnPill-sm">申請增購</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="communication" data-free="false" data-name="語音溝通器" data-stock="0">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-purpleLight">
+                                        <div class="cardPhoto-noStock">暫無可借</div>
+                                        <img src="img/devices/aac-device.jpg" alt="語音溝通器">
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-purpleLight">溝通輔具</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">語音溝通器</a>
+                                        <div class="cardPhoto-stockRow">
+                                            <span class="cardPhoto-stock">目前可借 <strong class="cardPhoto-stock-zero">0</strong> 件</span>
+                                            <a href="device.html" class="btnPill btn-amber btnPill-sm">申請增購</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="info" data-free="true" data-name="觸摸顯示器" data-stock="2">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-greyLight">
+                                        <img src="img/devices/touch-monitor.jpg" alt="觸摸顯示器">
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-greyLight">資訊輔具</span>
+                                            <span class="tagPill tag-greenLight">免評估</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">觸摸顯示器</a>
+                                        <span class="cardPhoto-stock">目前可借 <strong>2</strong> 件</span>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="info" data-free="false" data-name="搖桿滑鼠" data-stock="3">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-greyLight">
+                                        <img src="img/devices/joystick-mouse.jpg" alt="搖桿滑鼠">
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-greyLight">資訊輔具</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">搖桿滑鼠</a>
+                                        <span class="cardPhoto-stock">目前可借 <strong>3</strong> 件</span>
+                                    </div>
+                                </div>
+
+                                <div class="cardPhoto" data-category="info" data-free="false" data-name="鍵盤保護框" data-stock="4">
+                                    <div class="cardPhoto-thumb cardPhoto-thumb-greyLight">
+                                        <img src="img/devices/keyguard.jpg" alt="鍵盤保護框">
+                                    </div>
+                                    <div class="cardPhoto-body">
+                                        <div class="flex-row-start flex-wrap gap-2">
+                                            <span class="tagPill tag-greyLight">資訊輔具</span>
+                                        </div>
+                                        <a href="device.html" class="linkCardTitle cardPhoto-title stretched-link">鍵盤保護框</a>
+                                        <span class="cardPhoto-stock">目前可借 <strong>4</strong> 件</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <nav class="pageNav" aria-label="分頁">
+                            <p class="pageNav-summary">顯示第 1 至 17 筆，共 17 筆資料</p>
+                            <ul class="pageNav-list">
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="第一頁"><i class="bi bi-chevron-bar-left" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="catalogPagePrevNote"><i class="bi bi-chevron-left" aria-hidden="true"></i>上一頁</span></li>
+                                <li><span class="pageNav-item" aria-current="page">1</span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="catalogPageNextNote">下一頁<i class="bi bi-chevron-right" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="最後一頁"><i class="bi bi-chevron-bar-right" aria-hidden="true"></i></span></li>
+                            </ul>
+                            <span id="catalogPagePrevNote" class="sr-only">已是第一頁，沒有上一頁</span>
+                            <span id="catalogPageNextNote" class="sr-only">已是最後一頁，沒有下一頁</span>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <div data-layout="layout/footer.html"></div>
+
+    <script src="js/all.js"></script>
+</body>
+</html>

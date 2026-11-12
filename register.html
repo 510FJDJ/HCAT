@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <script>
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>維修廠商帳號申請｜新竹縣特殊教育資源中心</title>
+    <link rel="icon" type="image/png" href="img/logo/logo.png">
+    <link rel="stylesheet" href="css/all.css">
+</head>
+<body class="bg-green">
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+    <a href="#footerAnchor" class="sr-only focusable" accesskey="Z" title="跳至頁尾資訊區">頁尾資訊區</a>
+
+    <div class="authShell">
+        <div id="header" data-layout="layout/header.html"></div>
+
+        <main id="goCenter" tabindex="-1">
+
+            <section class="authBanner">
+                <img class="authDeco authDeco-leaf" src="img/deco/leaf-1.webp" alt="" aria-hidden="true">
+                <img class="authDeco authDeco-flower" src="img/deco/flower.webp" alt="" aria-hidden="true">
+
+                <div class="container">
+                    <div class="flex-row-between gap-2 flex-wrap">
+                        <div class="authBanner-head">
+                            <span class="labelCaption">REGISTER</span>
+                            <h1 class="titleSection">
+                                <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                                維修廠商帳號申請
+                            </h1>
+                            <p class="textNote authBanner-subtitle">送出後由特教資源中心審核資料，通過後以電子郵件通知啟用</p>
+                        </div>
+                        <a href="login.html" class="btnPill btn-outline">
+                            <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                            返回登入
+                        </a>
+                    </div>
+                    
+                </div>
+            </section>
+
+            <div class="container">
+
+                <div data-js="registerFormView">
+                    <div class="cardForm">
+                        <form id="registerForm" data-js="registerForm" novalidate>
+                            <div class="formGrid">
+                                <div class="formField">
+                                    <label class="formField-label" for="companyName">公司名稱<span class="formField-required">必填</span></label>
+                                    <input class="form-control" type="text" id="companyName" name="companyName" placeholder="請輸入公司名稱" required>
+                                </div>
+                                <div class="formField">
+                                    <label class="formField-label" for="companyTaxId">統一編號<span class="formField-required">必填</span></label>
+                                    <input class="form-control" type="text" id="companyTaxId" name="companyTaxId" placeholder="請輸入統一編號" inputmode="numeric" maxlength="8" required>
+                                    <p class="formField-hint">統一編號為 8 碼數字</p>
+                                </div>
+                                <div class="formField">
+                                    <label class="formField-label" for="contactName">聯絡人<span class="formField-required">必填</span></label>
+                                    <input class="form-control" type="text" id="contactName" name="contactName" placeholder="請輸入聯絡人姓名" required>
+                                </div>
+                                <div class="formField">
+                                    <label class="formField-label" for="contactPhone">聯絡電話<span class="formField-required">必填</span></label>
+                                    <input class="form-control" type="tel" id="contactPhone" name="contactPhone" placeholder="請輸入聯絡電話" required>
+                                </div>
+                                <div class="formField formGrid-full">
+                                    <label class="formField-label" for="contactEmail">電子信箱<span class="formField-required">必填</span></label>
+                                    <input class="form-control" type="email" id="contactEmail" name="contactEmail" placeholder="請輸入電子信箱" required>
+                                    <p class="formField-hint">審核結果將寄送至此信箱</p>
+                                </div>
+
+                                <hr class="cardForm-divider">
+
+                                <div class="formField formGrid-full">
+                                    <label class="formField-label" for="registerAccount">帳號<span class="formField-required">必填</span></label>
+                                    <input class="form-control" type="text" id="registerAccount" name="account" placeholder="請設定帳號" autocomplete="username" minlength="4" maxlength="20" required>
+                                    <p class="formField-hint">4–20 碼英文或數字</p>
+                                </div>
+
+                                <div class="formField">
+                                    <label class="formField-label" for="registerPassword">密碼<span class="formField-required">必填</span></label>
+                                    <div class="inputGroup">
+                                        <input class="form-control" type="password" id="registerPassword" name="password" placeholder="請設定密碼" autocomplete="new-password" minlength="6" maxlength="12" required>
+                                        <button type="button" class="inputGroup-btn" data-js="togglePassword" data-target="registerPassword" aria-label="顯示密碼" aria-pressed="false">
+                                            <i class="bi bi-eye" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <p class="formField-hint">6–12 碼英數字或半形符號</p>
+                                </div>
+
+                                <div class="formField">
+                                    <label class="formField-label" for="registerPasswordConfirm">確認密碼<span class="formField-required">必填</span></label>
+                                    <input class="form-control" type="password" id="registerPasswordConfirm" name="passwordConfirm" placeholder="請再輸入一次密碼" autocomplete="new-password" minlength="6" maxlength="12" required>
+                                    <p class="formField-error" data-js="passwordMatchError" hidden></p>
+                                </div>
+
+                                <div class="formField formGrid-full">
+                                    <label class="formField-label" for="registerCaptcha">驗證碼<span class="formField-required">必填</span></label>
+                                    <div class="captchaRow" data-js="captchaGroup">
+                                        <input class="form-control" type="text" id="registerCaptcha" name="captcha" placeholder="請輸入驗證碼" inputmode="text" maxlength="4" autocomplete="off" aria-describedby="registerCaptchaSr" required>
+                                        <span class="captchaDisplay" data-js="captchaText" aria-hidden="true">----</span>
+                                        <span class="sr-only" id="registerCaptchaSr" data-js="captchaSrText"></span>
+                                        <button type="button" class="btnIcon" data-js="captchaVoice" aria-label="播放驗證碼語音">
+                                            <i class="bi bi-volume-up-fill" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btnIcon" data-js="captchaRefresh" aria-label="重新產生驗證碼">
+                                            <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <p class="formField-error" data-js="registerFormError" hidden></p>
+                                </div>
+                            </div>
+
+                            <div class="formField-checkRow mt-8 mb-8">
+                                <input class="form-check-input" type="checkbox" id="agreePolicy" name="agreePolicy" required>
+                                <label class="formField-checkRow-label" for="agreePolicy">我已閱讀並同意<button type="button" class="linkMarker" data-js="openPrivacyModal">資訊安全及隱私權政策</button></label>
+                            </div>
+
+                            <button type="submit" class="btnPill btn-teal btnPill-lg w-100">送出申請</button>
+
+                            <p class="textNote authFooterLink mt-8 mb-0">學校人員請使用教育部 OpenID 登入；若為跨校、職稱不符等例外情形，請電洽特教資源中心 03-5572346 分機221，由中心協助開通帳號。</p>
+                        </form>
+                    </div>
+                </div>
+
+                <div data-js="registerDoneView" hidden>
+                    <div class="cardDone">
+                        <div class="cardDone-icon" aria-hidden="true"><i class="bi bi-check-lg"></i></div>
+                        <h2 class="cardDone-title" tabindex="-1">申請已送出</h2>
+                        <p class="textNote cardDone-desc">我們已收到您的申請，將由特教資源中心審核資料。 <br>審核通過後以電子郵件通知啟用帳號。</p>
+                        <a href="login.html" class="btnPill btn-teal">回到登入</a>
+                        <p class="textNote cardDone-note">審核約需 3–5 個工作日，如有任何問題<br>請電洽特教資源中心 03-5572346 分機221。</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <div data-layout="layout/footer.html"></div>
+
+    <!-- 資訊安全及隱私權政策 Modal -->
+    <div class="modal fade" data-js="privacyModal" tabindex="-1" aria-hidden="true" aria-labelledby="privacyTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 class="modal-title" id="privacyTitle">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            資訊安全及隱私權政策
+                        </h2>
+                        <p class="textNote modal-subtitle">最後更新：2026/11/01</p>
+                    </div>
+                    <button type="button" class="btnIcon" data-bs-dismiss="modal" aria-label="關閉">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body" tabindex="0">
+                    <div class="noteBox mb-4">
+                        <i class="bi bi-shield-check" aria-hidden="true"></i>
+                        <span>本系統依個人資料保護法及相關法規辦理，您送出申請即表示已閱讀並同意以下內容。</span>
+                    </div>
+
+                    <div class="modal-body-section">
+                        <h3>一、適用範圍</h3>
+                        <p class="textNote">本政策適用於新竹縣特殊教育資源中心輔具管理資訊系統（以下稱本系統）之維修廠商註冊與使用相關事宜。</p>
+                    </div>
+                    <div class="modal-body-section">
+                        <h3>二、資料蒐集項目</h3>
+                        <p class="textNote">註冊時蒐集公司名稱、統一編號、聯絡人姓名、聯絡電話、電子信箱及帳號資料，供審核身分與後續聯繫之用。</p>
+                    </div>
+                    <div class="modal-body-section">
+                        <h3>三、蒐集目的</h3>
+                        <p class="textNote">僅用於廠商身分審核、報修案件指派與聯繫、系統帳號管理，不作其他目的使用。</p>
+                    </div>
+                    <div class="modal-body-section">
+                        <h3>四、資料保存方式</h3>
+                        <p class="textNote">相關資料以加密方式儲存於本系統資料庫，僅限特教資源中心授權人員查閱。</p>
+                    </div>
+                    <div class="modal-body-section">
+                        <h3>五、資料保存期限</h3>
+                        <p class="textNote">帳號有效期間持續保存；終止合作關係後，依法令規定期限保存後銷毀。</p>
+                    </div>
+                    <div class="modal-body-section">
+                        <h3>六、第三方提供</h3>
+                        <p class="textNote">除法令要求或主管機關要求外，不會將您的資料提供予本系統以外之第三方。</p>
+                    </div>
+                    <div class="modal-body-section">
+                        <h3>七、資料安全措施</h3>
+                        <p class="textNote">本系統採用加密傳輸、權限控管等機制，防止資料遭未經授權存取、竄改或洩漏。</p>
+                    </div>
+                    <div class="modal-body-section">
+                        <h3>八、您的權利</h3>
+                        <p class="textNote">您得依個人資料保護法向特教資源中心查詢、請求閱覽、更正或刪除您的個人資料。</p>
+                    </div>
+                    <div class="modal-body-section">
+                        <h3>九、政策修訂</h3>
+                        <p class="textNote">本政策如有修訂，將於本系統公告，請留意最新政策內容。</p>
+                    </div>
+                    <div class="modal-body-section">
+                        <h3>十、聯絡我們</h3>
+                        <p class="textNote">如對本政策有任何疑問，請電洽新竹縣特殊教育資源中心 03-5572346 分機221。</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">關閉</button>
+                    <button type="button" class="btnPill btn-teal" data-js="policyAgree">同意並返回註冊</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="js/all.js"></script>
+</body>
+</html>

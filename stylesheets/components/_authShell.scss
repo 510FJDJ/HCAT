@@ -1,0 +1,262 @@
+// ============================================================
+// 登入／註冊頁骨架（design.md §5.1 單欄驗證頁變化版）
+// ============================================================
+
+.authBanner {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 56px 0 0;
+
+    @media (max-width: 720px) {
+        padding: 40px 0 0;
+    }
+}
+
+.bg-green {
+    background-color: $surface-mint;
+}
+
+// 背景延伸到頁尾插圖淡入區下方，避免背景在插圖區出現空白（做法同首頁 .homeMain-dots，見 CLAUDE.md §7.2）
+.bg-green-bleed {
+    position: relative;
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        bottom: -220px;
+        z-index: -1;
+        background-color: inherit;
+        pointer-events: none;
+    }
+}
+
+.authBanner-subtitle {
+    margin: 8px 0 0 44px;
+
+    @media (max-width: 720px) {
+        margin-left: 40px;
+    }
+}
+
+// 葉子／小花裝飾（design.md §6.4：純裝飾）
+.authDeco {
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+
+    @media (max-width: 720px) {
+        display: none;
+    }
+}
+
+.authDeco-leaf {
+    top: 70px;
+    right: 7%;
+    width: 55px;
+}
+
+.authDeco-flower {
+    bottom: 0px;
+    left: 5%;
+    width: 39px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .authDeco {
+        animation: authDecoFloat 6s ease-in-out infinite;
+    }
+}
+
+@keyframes authDecoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+// ---- 登入頁：雙卡並排 ----
+.authGrid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 32px;
+    margin-top: 40px;
+    padding-bottom: 64px;
+
+    @media (max-width: 720px) {
+        margin-top: 28px;
+        padding-bottom: 48px;
+    }
+}
+
+.cardAuth {
+    background-color: $surface-card;
+    border-radius: $border-radius-xxl;
+    box-shadow: $shadow-panel;
+    overflow: hidden;
+}
+
+.cardAuth-openid {
+    flex: 1 1 360px;
+    display: flex;
+    flex-direction: column;
+    align-self:baseline;
+}
+
+.cardAuth-account {
+    flex: 1 1 440px;
+}
+
+.cardAuth-visual {
+    position: relative;
+    height: 200px;
+    background-color: $surface-mint-dots;
+    border-radius: 0 0 0 $border-radius-xl;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        margin-top:8px;
+        object-fit: contain;
+        object-position: bottom center;
+    }
+}
+
+.cardAuth-body {
+    padding: 28px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    @media (max-width: 720px) {
+        padding: 24px 20px 28px;
+    }
+}
+
+.cardAuth-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    color: $brand-teal-deep;
+    margin-bottom: 8px;
+}
+
+.cardAuth-eyebrow-dot {
+    background-color: $accent-amber;
+}
+
+.cardAuth-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: $ink-1;
+    margin: 0;
+
+    @media (max-width: 720px) {
+        font-size: 22px;
+    }
+}
+
+.cardAuth-desc {
+    margin-top: 6px;
+}
+
+// 「維修廠商還沒有帳號？」提示（卡片內，登入按鈕下方）
+.authPrompt {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid $line-default;
+
+    @media (max-width: 720px) {
+        text-align: center;
+    }
+}
+
+.authPrompt-text {
+    font-size: 16px;
+    font-weight: 700;
+    color: $ink-2;
+    margin: 0;
+}
+
+.authFooterLink {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+// ---- 註冊頁：單欄表單卡 ----
+.cardForm {
+    max-width: 760px;
+    margin: 40px auto 48px;
+    background-color: $surface-card;
+    border-radius: $border-radius-xxl;
+    box-shadow: $shadow-panel;
+    padding: 36px 40px;
+
+    @media (max-width: 720px) {
+        margin: 28px auto 36px;
+        padding: 28px 20px;
+    }
+}
+
+.cardForm-divider {
+    grid-column: 1 / -1;
+    border: none;
+    border-top: 1px solid $line-strong;
+    margin: 4px 0;
+}
+
+// 申請已送出：成功狀態卡
+.cardDone {
+    max-width: 640px;
+    margin: 40px auto 56px;
+    background-color: $surface-card;
+    border-radius: $border-radius-xxl;
+    box-shadow: $shadow-panel;
+    padding: 48px 40px;
+    text-align: center;
+
+    @media (max-width: 720px) {
+        margin: 28px auto 40px;
+        padding: 36px 24px;
+    }
+}
+
+.cardDone-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background-color: $surface-teal-soft;
+    color: $brand-teal-deep;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+}
+
+.cardDone-title {
+    font-size: 26px;
+    font-weight: 900;
+    color: $ink-1;
+    margin: 0 0 8px;
+}
+
+.cardDone-desc {
+    margin: 0 0 24px;
+}
+
+.cardDone-note {
+    margin-top: 20px;
+}

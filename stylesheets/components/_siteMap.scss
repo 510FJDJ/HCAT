@@ -1,0 +1,146 @@
+// ============================================================
+// 網站導覽頁（sitemap.html）：鍵盤操作快速鍵列、網站架構卡片
+// ============================================================
+
+// ---- 鍵盤操作：快速鍵列（按鍵｜區域｜說明），手機收為單欄 ----
+.kbdRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+    padding: 14px 0;
+    border-bottom: 1px solid $line-default;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    @media (max-width: 720px) {
+        gap: 6px;
+        padding: 16px 0;
+    }
+}
+
+.kbdRow-keys {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.kbdKey {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 10px;
+    border: 2px solid $surface-marker-deep;
+    border-bottom-width: 4px;
+    border-radius: $border-radius-sm;
+    background-color: $surface-card;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: $ink-1;
+}
+
+// 快速鍵之間的「+」連接符號，kbdRow 內與 textNote／noteBox 說明文字裡共用
+.kbdPlus {
+    color: $ink-separator;
+}
+
+.kbdRow-region {
+    font-size: 16px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.kbdRow-desc {
+    font-size: 16px;
+    color: $ink-2;
+}
+
+// ---- 網站架構：2 欄瀑布流卡片（CSS columns），單一群組可跨欄滿版 ----
+.siteMapGrid {
+    columns: 2 380px;
+    column-gap: 20px;
+
+    @media (max-width: 720px) {
+        columns: 1;
+    }
+}
+
+.cardGroup {
+    display: block;
+    margin-bottom: 20px;
+    padding: 22px 24px;
+    border: 2px solid $line-default;
+    border-radius: $border-radius-lg;
+    background-color: $surface-card;
+    break-inside: avoid;
+}
+
+.cardGroup-full {
+    column-span: all;
+    margin-top: 20px;
+    @media (max-width: 992px) {
+        margin-top: 0;
+    }
+}
+
+.cardGroup-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+}
+
+.cardGroup-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.cardGroup-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cardGroup-item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 7px 0;
+}
+
+.cardGroup-item-sub {
+    padding-left: 30px;
+}
+
+.cardGroup-index {
+    flex-shrink: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.cardGroup-link {
+    font-size: 17px;
+    font-weight: 700;
+    color: $brand-teal-deep;
+}
+
+.cardGroup-link-sub {
+    font-size: 16px;
+    font-weight: 500;
+    color: $ink-2;
+}
+
+.cardGroup-groupLabel {
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-1;
+}

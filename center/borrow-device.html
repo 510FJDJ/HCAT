@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>擴視機 V-CCTV-0012 借用紀錄 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="特教資源中心查看單台輔具在竹北國小的完整借用歷程">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_Center.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu" src="../img/banner/borrow.png" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="reviewPage-container">
+                <div class="bannerWave-inner">
+                    <div class="pageBanner-top flex-row-between flex-wrap gap-8">
+                        <nav class="crumbNav" aria-label="麵包屑導覽">
+                            <ol>
+                                <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                                <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                                <li><a href="borrow.html" class="linkGhost">借用管理</a></li>
+                                <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                                <li><a href="borrow-school.html" class="linkGhost">竹北國小</a></li>
+                                <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                                <li aria-current="page" class="crumbNav-current">擴視機 V-CCTV-0012</li>
+                            </ol>
+                        </nav>
+                        <a href="borrow-school.html" class="btnPill btn-outline btnPill-sm bannerWave-backBtn-top">
+                            <i class="bi bi-arrow-left" aria-hidden="true"></i>返回竹北國小
+                        </a>
+                    </div>
+
+                    <div class="bannerWave-main">
+                        <div class="flex-row-between flex-wrap gap-8">
+                            <h1 class="titleSection bannerWave-title">
+                                <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                                擴視機
+                                <span class="tagPill tag-tealSoft tagPill-mono">V-CCTV-0012</span>
+                            </h1>
+                            <a href="borrow-school.html" class="btnPill btn-outline btnPill-sm bannerWave-backBtn-inline">
+                                <i class="bi bi-arrow-left" aria-hidden="true"></i>返回竹北國小
+                            </a>
+                        </div>
+                        <p class="bannerWave-desc">這台輔具在竹北國小歷年的借用與歸還紀錄，點「審核記錄」可查看對應的申請審核明細。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="reviewPage-content">
+            <div class="reviewPage-container">
+                <section class="cardPanel" aria-label="借用紀錄">
+                    <div class="cardPanel-head">
+                        <h2 class="cardPanel-title">
+                            借用紀錄
+                            <span class="cardPanel-titleCount">共 <span class="cardPanel-titleCount-num">5</span> 次</span>
+                        </h2>
+                        <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                            <i class="bi bi-download" aria-hidden="true"></i>匯出 Excel
+                        </button>
+                    </div>
+
+                    <div class="dataTable-wrap">
+                        <div class="dataTable-scroll">
+                            <table class="dataTable dataTable--stickyEnd">
+                                <caption>擴視機 V-CCTV-0012 借用紀錄</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">借用期間</th>
+                                        <th scope="col">學校</th>
+                                        <th scope="col">使用者</th>
+                                        <th scope="col">結束方式</th>
+                                        <th scope="col">報修</th>
+                                        <th scope="col">申請編號</th>
+                                        <th scope="col" class="dataTable-cellNext">功能</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td data-label="借用期間"><span class="dataTable-cellTitle-main">2026-02-18 ～ 借用中</span></td>
+                                        <td data-label="學校">竹北國小</td>
+                                        <td data-label="使用者">王小明</td>
+                                        <td data-label="結束方式"><span class="statusPill statusPill-teal"><span class="statusPill-dot" aria-hidden="true"></span>借用中</span></td>
+                                        <td data-label="報修" class="text-muted">—</td>
+                                        <td data-label="申請編號"><span class="dataTable-cellTitle-main">A1150923-012</span></td>
+                                        <td data-label="功能" class="dataTable-cellNext">
+                                            <a href="review-detail.html" class="btnPill btn-teal btnPill-sm" aria-label="查看申請編號 A1150923-012 審核記錄">審核記錄</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="借用期間"><span class="dataTable-cellTitle-main">2025-02-05 ～ 2026-01-20</span></td>
+                                        <td data-label="學校">竹北國小</td>
+                                        <td data-label="使用者">吳小婷</td>
+                                        <td data-label="結束方式">轉銜續借</td>
+                                        <td data-label="報修" class="text-muted">—</td>
+                                        <td data-label="申請編號"><span class="dataTable-cellTitle-main">A1140905-031</span></td>
+                                        <td data-label="功能" class="dataTable-cellNext">
+                                            <a href="review-detail.html" class="btnPill btn-teal btnPill-sm" aria-label="查看申請編號 A1140905-031 審核記錄">審核記錄</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="借用期間"><span class="dataTable-cellTitle-main">2023-09-04 ～ 2025-01-20</span></td>
+                                        <td data-label="學校">竹北國小</td>
+                                        <td data-label="使用者">周小傑</td>
+                                        <td data-label="結束方式">畢業歸還</td>
+                                        <td data-label="報修"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>曾報修 1 次</span></td>
+                                        <td data-label="申請編號"><span class="dataTable-cellTitle-main">A1120912-017</span></td>
+                                        <td data-label="功能" class="dataTable-cellNext">
+                                            <a href="review-detail.html" class="btnPill btn-teal btnPill-sm" aria-label="查看申請編號 A1120912-017 審核記錄">審核記錄</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="借用期間"><span class="dataTable-cellTitle-main">2022-03-01 ～ 2023-06-30</span></td>
+                                        <td data-label="學校">竹北國小</td>
+                                        <td data-label="使用者">林小安</td>
+                                        <td data-label="結束方式">停止借用</td>
+                                        <td data-label="報修" class="text-muted">—</td>
+                                        <td data-label="申請編號"><span class="dataTable-cellTitle-main">A1110221-004</span></td>
+                                        <td data-label="功能" class="dataTable-cellNext">
+                                            <a href="review-detail.html" class="btnPill btn-teal btnPill-sm" aria-label="查看申請編號 A1110221-004 審核記錄">審核記錄</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="借用期間"><span class="dataTable-cellTitle-main">2020-09-10 ～ 2022-01-31</span></td>
+                                        <td data-label="學校">竹北國小</td>
+                                        <td data-label="使用者">黃小宇</td>
+                                        <td data-label="結束方式">畢業歸還</td>
+                                        <td data-label="報修" class="text-muted">—</td>
+                                        <td data-label="申請編號"><span class="dataTable-cellTitle-main">A1090903-009</span></td>
+                                        <td data-label="功能" class="dataTable-cellNext">
+                                            <a href="review-detail.html" class="btnPill btn-teal btnPill-sm" aria-label="查看申請編號 A1090903-009 審核記錄">審核記錄</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

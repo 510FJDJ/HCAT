@@ -1,0 +1,189 @@
+<div class="appBar">
+    <div class="appBar-inner">
+        <a href="index.html" class="siteHeader-logo">
+            <img src="../img/logo/logo.png" alt="新竹縣政府教育局">
+            <span class="siteHeader-logoText">
+                <span class="siteHeader-logoText-small">新竹縣特殊教育資源中心</span>
+                <span class="siteHeader-logoText-main">輔具管理資訊系統</span>
+            </span>
+        </a>
+
+        <div class="appBar-tools">
+
+            <div class="tabsPill tabsPill-sm" role="group" aria-label="文字大小">
+                <button type="button" class="tabsPill-item" data-js="fontSize" data-size="1" aria-pressed="true">A</button>
+                <button type="button" class="tabsPill-item" data-js="fontSize" data-size="2" aria-pressed="false">A+</button>
+                <button type="button" class="tabsPill-item" data-js="fontSize" data-size="3" aria-pressed="false">A++</button>
+            </div>
+
+            <span class="appBar-divider" aria-hidden="true"></span>
+
+            <span class="appBar-userText">
+                <span class="appBar-userName">王○○</span>
+                <span class="appBar-userRole">特教資源中心・輔具承辦</span>
+            </span>
+
+            <a href="../login.html" class="btnPill btn-secondary btnPill-sm">
+                <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
+                登出
+            </a>
+        </div>
+
+        <button type="button" class="btnPill btn-outline btnPill-sm siteHeader-menuTrigger" data-js="menuOpen" aria-haspopup="true" aria-expanded="false">
+            <i class="bi bi-list" aria-hidden="true"></i>
+            選單
+        </button>
+    </div>
+</div>
+
+<nav class="navBar" id="headerNav" aria-label="主選單">
+    <div class="navBar-inner">
+        <ul class="navBar-list">
+            <li class="navBar-item">
+                <a href="index.html" class="navBar-link" aria-current="page">總覽</a>
+            </li>
+
+            <li class="navBar-item">
+                <a href="review.html" class="navBar-link">
+                    申請審核
+                    <span class="badgePill">18</span>
+                </a>
+            </li>
+
+            <li class="navBar-item">
+                <a href="borrow.html" class="navBar-link">借用管理</a>
+            </li>
+
+            <li class="navBar-item">
+                <a href="repair.html" class="navBar-link">
+                    報修管理
+                    <span class="badgePill">4</span>
+                </a>
+            </li>
+
+            <li class="navBar-item">
+                <button type="button" class="navBar-trigger" data-js="navDropdown" aria-haspopup="true" aria-expanded="false" aria-controls="navDropdown-data">
+                    資料管理
+                    <i class="bi bi-chevron-down navBar-trigger-icon" aria-hidden="true"></i>
+                </button>
+                <ul class="navBar-dropdown" id="navDropdown-data" hidden>
+                    <li><a href="devices.html" class="navBar-dropdownLink">輔具管理</a></li>
+                    <li><a href="schools.html" class="navBar-dropdownLink">學校管理</a></li>
+                    <li><a href="vendors.html" class="navBar-dropdownLink">廠商管理 <span class="badgePill">1</span></a></li>
+                    <li><a href="accounts.html" class="navBar-dropdownLink">帳號管理</a></li>
+                </ul>
+            </li>
+
+            <li class="navBar-item">
+                <button type="button" class="navBar-trigger" data-js="navDropdown" aria-haspopup="true" aria-expanded="false" aria-controls="navDropdown-site">
+                    網站與設定
+                    <i class="bi bi-chevron-down navBar-trigger-icon" aria-hidden="true"></i>
+                </button>
+                <ul class="navBar-dropdown" id="navDropdown-site" hidden>
+                    <li><a href="news.html" class="navBar-dropdownLink">最新消息管理</a></li>
+                    <li><a href="settings.html" class="navBar-dropdownLink">系統設定</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="panelFull" data-js="menuPanel" role="dialog" aria-modal="true" aria-label="選單">
+    <div class="panelFull-head">
+        <a href="index.html" class="siteHeader-logo siteHeader-logo-sm">
+            <img src="../img/logo/logo.png" alt="新竹縣政府教育局">
+            <span class="siteHeader-logoText">
+                <span class="siteHeader-logoText-small">新竹縣特殊教育資源中心</span>
+                <span class="siteHeader-logoText-main">輔具管理資訊系統</span>
+            </span>
+        </a>
+        <button type="button" class="btnIcon" data-js="menuClose" aria-label="關閉選單">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <div class="panelFull-body">
+        <div class="panelFull-identity panelFull-identity-user">
+            <span class="appBar-userText">
+                <span class="appBar-userName">王○○</span>
+                <span class="appBar-userRole">特教資源中心・輔具承辦</span>
+            </span>
+        </div>
+
+        <nav aria-label="主選單">
+            <ul class="flex-column list-unstyled mb-0">
+                <li><a href="index.html" class="listRow listRow-menu" data-nav-skip-current>
+                    <span class="listRow-icon" aria-hidden="true"><i class="bi bi-house-door-fill"></i></span>
+                    <span class="listRow-title">總覽</span>
+                    <span class="btnPill-arrowCircle btnPill-arrowCircle-soft"><i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i></span>
+                </a></li>
+
+                <li><a href="review.html" class="listRow listRow-menu">
+                    <span class="listRow-icon" aria-hidden="true"><i class="bi bi-clipboard2-check-fill"></i></span>
+                    <span class="listRow-title">申請審核</span>
+                    <span class="badgePill">18</span>
+                </a></li>
+
+                <li><a href="borrow.html" class="listRow listRow-menu">
+                    <span class="listRow-icon" aria-hidden="true"><i class="bi bi-box-seam-fill"></i></span>
+                    <span class="listRow-title">借用管理</span>
+                    <span class="btnPill-arrowCircle btnPill-arrowCircle-soft"><i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i></span>
+                </a></li>
+
+                <li><a href="repair.html" class="listRow listRow-menu">
+                    <span class="listRow-icon" aria-hidden="true"><i class="bi bi-tools"></i></span>
+                    <span class="listRow-title">報修管理</span>
+                    <span class="badgePill">4</span>
+                </a></li>
+
+                <li class="navMobile-group" data-js="navMobileGroup">
+                    <button type="button" class="listRow listRow-menu navMobile-toggle" data-js="navMobileToggle" aria-expanded="false" aria-controls="navMobile-data">
+                        <span class="listRow-icon" aria-hidden="true"><i class="bi bi-folder2-open"></i></span>
+                        <span class="listRow-title">資料管理</span>
+                        <span class="btnPill-arrowCircle btnPill-arrowCircle-soft navMobile-toggle-icon"><i class="bi bi-chevron-down" aria-hidden="true"></i></span>
+                    </button>
+                    <ul class="navMobile-sublist" id="navMobile-data" hidden>
+                        <li><a href="devices.html" class="navMobile-sublistLink">輔具管理</a></li>
+                        <li><a href="schools.html" class="navMobile-sublistLink">學校管理</a></li>
+                        <li><a href="vendors.html" class="navMobile-sublistLink">廠商管理 <span class="badgePill">1</span></a></li>
+                        <li><a href="accounts.html" class="navMobile-sublistLink">帳號管理</a></li>
+                    </ul>
+                </li>
+
+                <li class="navMobile-group" data-js="navMobileGroup">
+                    <button type="button" class="listRow listRow-menu navMobile-toggle" data-js="navMobileToggle" aria-expanded="false" aria-controls="navMobile-site">
+                        <span class="listRow-icon" aria-hidden="true"><i class="bi bi-gear-fill"></i></span>
+                        <span class="listRow-title">網站與設定</span>
+                        <span class="btnPill-arrowCircle btnPill-arrowCircle-soft navMobile-toggle-icon"><i class="bi bi-chevron-down" aria-hidden="true"></i></span>
+                    </button>
+                    <ul class="navMobile-sublist" id="navMobile-site" hidden>
+                        <li><a href="news.html" class="navMobile-sublistLink">最新消息管理</a></li>
+                        <li><a href="settings.html" class="navMobile-sublistLink">系統設定</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="panelFull-toolbar">
+        <a href="../sitemap.html" class="panelFull-toolbar-link">
+            <span class="panelFull-toolbar-link-label">
+                <i class="bi bi-signpost-split-fill" aria-hidden="true"></i>
+                網站導覽
+            </span>
+            <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+        </a>
+        <a href="../login.html" class="btnPill btn-teal">
+            <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
+            登出
+        </a>
+        <div class="panelFull-toolbar-row">
+            <span class="textNote">文字大小</span>
+            <div class="tabsPill" role="group" aria-label="文字大小">
+                <button type="button" class="tabsPill-item" data-js="fontSize" data-size="1" aria-pressed="true">A</button>
+                <button type="button" class="tabsPill-item" data-js="fontSize" data-size="2" aria-pressed="false">A+</button>
+                <button type="button" class="tabsPill-item" data-js="fontSize" data-size="3" aria-pressed="false">A++</button>
+            </div>
+        </div>
+    </div>
+</div>

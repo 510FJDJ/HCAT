@@ -1,0 +1,55 @@
+// ============================================================
+// 唯讀資訊格線：標籤在上、值在下，用於卡片內顯示不可編輯的基本資料
+// （如學校基本資料的學校名稱／代碼、帳號頁的登入資料）
+// ============================================================
+
+.infoGrid {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px 24px;
+
+    @media (max-width: 900px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+.infoGrid-label {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.infoGrid-value {
+    margin: 4px 0 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+// 編號、代碼一律用 Poppins（design.md §3）
+.infoGrid-value-mono {
+    font-family: "Poppins", sans-serif;
+}
+
+// 加框底色變體：用於對話框內需要與下方內容區隔的資訊區塊（如廠商端報修案件 modal）
+.infoGrid-boxed {
+    margin-top: 0;
+    padding: 18px 20px;
+    background-color: $surface-tint;
+    border-radius: $border-radius-lg;
+}
+
+// 三欄變體：用於較寬的主欄內、欄位數不足 4 欄的資訊卡（如申請審核明細的到校評估安排）
+.infoGrid-cols3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// 整列變體：內容較長的欄位（如損壞說明）獨占一整列，不與其他欄位並排
+.infoGrid-full {
+    grid-column: 1 / -1;
+}

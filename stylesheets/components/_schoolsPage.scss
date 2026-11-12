@@ -1,0 +1,287 @@
+// ============================================================
+// 中心端學校管理（center/schools.html）專屬樣式
+// main 用 .bg-green / .bg-green-bleed；container/-content 數值比照 .reviewPage-container/-content
+// ============================================================
+
+.schoolsPage-container {
+    max-width: 1360px;
+    margin: 40px auto 0;
+    padding: 0 24px;
+
+    @media (max-width: 720px) {
+        margin: 20px auto 0;
+        padding: 0 16px;
+    }
+}
+
+.schoolsPage-content {
+    position: relative;
+    z-index: 2;
+    margin-top: -160px;
+
+    @media (max-width: 720px) {
+        margin-top: -85px;
+    }
+}
+
+.schoolsPage-panelTitle {
+    margin: 0;
+    flex-shrink: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: $brand-teal-deep;
+}
+
+// 篩選列第一行：標題與 4 個篩選欄同列，「新增學校」推到最右（與其他列表頁的右上角位置一致）
+.schoolsPage-filtersRow-top {
+    align-items: center;
+}
+
+.schoolsPage-addBtn {
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+// 列表「輔具管理人員」欄：姓名職稱同行、電話另起一行（Poppins）
+.schoolsPage-mgrCell {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    line-height: 1.5;
+}
+
+.schoolsPage-mgrName {
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.schoolsPage-mgrTitle {
+    color: $ink-3;
+}
+
+.schoolsPage-mgrPhone {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    color: $ink-2;
+}
+
+// 列表「借用中輔具」欄：數字用 Poppins 浮出，單位字淡化
+.schoolsPage-borrowCount {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: $brand-teal-deep;
+    white-space: nowrap;
+}
+
+.schoolsPage-borrowUnit {
+    margin-left: 2px;
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: $ink-3;
+}
+
+.schoolsPage-borrowCount-zero {
+    color: $ink-3;
+}
+
+// ------------------------------------------------------------
+// 編輯／新增學校 modal：現有輔具管理人員清單
+// ------------------------------------------------------------
+.schoolMgrList {
+    margin: 0 0 14px;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.schoolMgrRow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 1px solid $line-default;
+    border-radius: $border-radius-md;
+    background-color: $surface-card;
+}
+
+// 這次編輯過程中新加入、尚未儲存的人員：用淡青框與底色標示
+.schoolMgrRow-new {
+    border: 2px solid $brand-teal;
+    background-color: $surface-teal-pale;
+    padding: 9px 13px;
+}
+
+.schoolMgrRow-avatar {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $surface-mint-dots;
+    color: $brand-teal-deep;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.schoolMgrRow-body {
+    flex: 1 1 220px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.schoolMgrRow-nameLine {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.schoolMgrRow-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.schoolMgrRow-title {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.schoolMgrRow-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    color: $ink-2;
+}
+
+.schoolMgrRow-iconBtn {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid $line-strong;
+    background-color: $surface-card;
+    color: $ink-3;
+    cursor: pointer;
+    transition: background-color 160ms ease-out, border-color 160ms ease-out, color 160ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        border-color: $state-required;
+        color: $state-required;
+        background-color: #FBEAEA;
+    }
+}
+
+// 新學校尚無人員時的說明（沿用 .noteBox-blue，不另建色票）
+.schoolMgrList + .noteBox {
+    margin-bottom: 14px;
+}
+
+// ------------------------------------------------------------
+// 新增管理人員：收合切換鈕與展開面板
+// ------------------------------------------------------------
+.mgrAdd-toggle {
+    width: 100%;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 2px dashed $line-strong;
+    border-radius: $border-radius-md;
+    background-color: $surface-tint;
+    color: $brand-teal-deep;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color 160ms ease-out, background-color 160ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        border-color: $brand-teal;
+        background-color: $surface-teal-pale;
+    }
+}
+
+.mgrAdd-panel {
+    margin-top: 12px;
+    padding: 18px;
+    border: 2px solid $brand-teal;
+    border-radius: $border-radius-lg;
+    background-color: $surface-mint;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.mgrAdd-panelHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.mgrAdd-panelTitle {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.mgrAdd-closeBtn {
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: transparent;
+    color: $ink-3;
+    cursor: pointer;
+    transition: background-color 160ms ease-out, color 160ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-card;
+        color: $ink-1;
+    }
+}
+
+.mgrAdd-hint {
+    margin: 0;
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.mgrAdd-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .schoolMgrRow-iconBtn,
+    .mgrAdd-toggle,
+    .mgrAdd-closeBtn {
+        transition: none;
+    }
+}

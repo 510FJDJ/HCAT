@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>廠商管理 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="特教資源中心管理維修廠商與聽障輔具供應商，審核廠商的註冊申請">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_Center.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu" src="../img/banner/vendor.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="vendorsPage-container">
+                <div class="bannerWave-inner">
+                    <nav class="crumbNav" aria-label="麵包屑導覽">
+                        <ol>
+                            <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li>資料管理</li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li aria-current="page" class="crumbNav-current">廠商管理</li>
+                        </ol>
+                    </nav>
+
+                    <div class="bannerWave-main">
+                        <h1 class="titleSection bannerWave-title">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            廠商管理
+                        </h1>
+                        <p class="bannerWave-desc">管理維修廠商與聽障輔具供應商。廠商在前台申請註冊後，由中心審核通過才會啟用帳號；維修廠商負責報修案件，聽障供應商負責聽障輔具點交。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="vendorsPage-content">
+            <div class="vendorsPage-container">
+                <section class="cardPanel" aria-label="廠商列表">
+
+                    <div class="flex-row-between flex-wrap vendorsPage-tabsRow">
+                        <div class="tabsCount" role="tablist" aria-label="依類型檢視">
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-vd-all" data-category="all" aria-selected="true" aria-controls="panel-vdList" tabindex="0">全部<span class="tabsCount-badge" aria-hidden="true">14</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-vd-pending" data-category="pending" aria-selected="false" aria-controls="panel-vdList" tabindex="-1">待審核註冊<span class="tabsCount-badge" aria-hidden="true">1</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-vd-fix" data-category="fix" aria-selected="false" aria-controls="panel-vdList" tabindex="-1">維修廠商<span class="tabsCount-badge" aria-hidden="true">8</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-vd-hear" data-category="hear" aria-selected="false" aria-controls="panel-vdList" tabindex="-1">聽障供應商<span class="tabsCount-badge" aria-hidden="true">5</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-vd-off" data-category="off" aria-selected="false" aria-controls="panel-vdList" tabindex="-1">已停用<span class="tabsCount-badge" aria-hidden="true">2</span></button>
+                        </div>
+                        <button type="button" class="btnPill btn-teal" data-bs-toggle="modal" data-bs-target="#vendorModal" data-js="vendorAddOpen">
+                            <i class="bi bi-plus-lg" aria-hidden="true"></i>新增廠商
+                        </button>
+                    </div>
+
+                    <div class="recordsFilters">
+                        <form class="recordsFilters-form" novalidate>
+                            <div class="recordsFilters-field">
+                                <label for="vdfCat">服務輔具類別</label>
+                                <select id="vdfCat" class="form-select">
+                                    <option value="all" selected>全部類別</option>
+                                    <option value="mobility">行動與擺位輔具</option>
+                                    <option value="vision">視障輔具</option>
+                                    <option value="hearing">聽障輔具</option>
+                                    <option value="comm">溝通輔具</option>
+                                    <option value="it">資訊輔具</option>
+                                    <option value="read">書寫與閱讀輔具</option>
+                                    <option value="other">其他輔具</option>
+                                </select>
+                            </div>
+                            <div class="recordsFilters-field">
+                                <label for="vdfSearch">關鍵字</label>
+                                <div class="inputGroup">
+                                    <i class="bi bi-search inputGroup-icon" aria-hidden="true"></i>
+                                    <input type="search" id="vdfSearch" class="form-control" placeholder="廠商名稱、統一編號、聯絡人">
+                                </div>
+                            </div>
+                            <button type="submit" class="btnPill btn-teal btnPill-sm">查詢</button>
+                            <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                <i class="bi bi-download" aria-hidden="true"></i>匯出 Excel
+                            </button>
+                        </form>
+                    </div>
+
+                    <p class="textNote">總筆數：14</p>
+
+                    <div role="tabpanel" id="panel-vdList" aria-labelledby="tab-vd-all">
+                        <p class="textNote py-6" data-js="emptyNote" hidden>這個分類目前沒有廠商。</p>
+
+                        <div class="dataTable-wrap">
+                            <div class="dataTable-scroll">
+                                <table class="dataTable dataTable--stickyEnd">
+                                    <caption>廠商列表</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">廠商</th>
+                                            <th scope="col">類型</th>
+                                            <th scope="col">服務輔具類別</th>
+                                            <th scope="col">聯絡人</th>
+                                            <th scope="col">報修／點交</th>
+                                            <th scope="col">狀態</th>
+                                            <th scope="col">功能</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-category="pending">
+                                            <td data-label="廠商">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">○○聽語科技有限公司</span>
+                                                    <span class="dataTable-cellTitle-sub">統編 〔統一編號〕</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型"><span class="tagPill tag-violetLight">聽障供應商</span></td>
+                                            <td data-label="服務輔具類別">聽障輔具</td>
+                                            <td data-label="聯絡人">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">張○○</span>
+                                                    <span class="dataTable-cellTitle-sub">03-5550000</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="報修／點交">—</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待審核</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <button type="button" class="btnPill btn-amberSolid btnPill-sm" data-bs-toggle="modal" data-bs-target="#vendorReviewModal" data-js="vendorReviewOpen"
+                                                    data-name="○○聽語科技有限公司" data-time="2026/10/27 15:42" data-typelabel="聽障輔具供應商" data-tax="〔統一編號〕"
+                                                    data-contact="張○○ 業務經理" data-tel="03-5550000" data-mail="service@vendor.example.com"
+                                                    data-service="助聽器、調頻輔聽系統（FM）之點交、配件檢查與維修"
+                                                    aria-label="審核 ○○聽語科技有限公司 的註冊申請">審核註冊</button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="fix">
+                                            <td data-label="廠商">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">○○醫療器材行</span>
+                                                    <span class="dataTable-cellTitle-sub">統編 〔統一編號〕</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型"><span class="tagPill tag-blueLight">維修廠商</span></td>
+                                            <td data-label="服務輔具類別">行動與擺位、溝通</td>
+                                            <td data-label="聯絡人">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">劉○○</span>
+                                                    <span class="dataTable-cellTitle-sub">03-5551111</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="報修／點交">處理中 <span class="vendorsPage-caseNum">3</span> 件</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>啟用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#vendorModal" data-js="vendorEditOpen"
+                                                    data-type="fix" data-name="○○醫療器材行" data-tax="〔統一編號〕" data-contact="劉○○" data-tel="03-5551111"
+                                                    data-mail="repair@vendor.example.com" data-cats="mobility,comm" data-status="active"
+                                                    aria-label="編輯 ○○醫療器材行">編輯</button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="fix">
+                                            <td data-label="廠商">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">○○輔具科技有限公司</span>
+                                                    <span class="dataTable-cellTitle-sub">統編 〔統一編號〕</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型"><span class="tagPill tag-blueLight">維修廠商</span></td>
+                                            <td data-label="服務輔具類別">視障、資訊</td>
+                                            <td data-label="聯絡人">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">陳○○</span>
+                                                    <span class="dataTable-cellTitle-sub">02-2555-2222</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="報修／點交">處理中 <span class="vendorsPage-caseNum">1</span> 件</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>啟用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#vendorModal" data-js="vendorEditOpen"
+                                                    data-type="fix" data-name="○○輔具科技有限公司" data-tax="〔統一編號〕" data-contact="陳○○" data-tel="02-2555-2222"
+                                                    data-mail="aid@vendor.example.com" data-cats="vision,it" data-status="active"
+                                                    aria-label="編輯 ○○輔具科技有限公司">編輯</button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="hear">
+                                            <td data-label="廠商">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">○○助聽器股份有限公司</span>
+                                                    <span class="dataTable-cellTitle-sub">統編 〔統一編號〕</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型"><span class="tagPill tag-violetLight">聽障供應商</span></td>
+                                            <td data-label="服務輔具類別">聽障輔具</td>
+                                            <td data-label="聯絡人">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">林○○</span>
+                                                    <span class="dataTable-cellTitle-sub">03-5553333</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="報修／點交">本學年點交 <span class="vendorsPage-caseNum">12</span> 次</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>啟用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#vendorModal" data-js="vendorEditOpen"
+                                                    data-type="hear" data-name="○○助聽器股份有限公司" data-tax="〔統一編號〕" data-contact="林○○" data-tel="03-5553333"
+                                                    data-mail="hearing@vendor.example.com" data-cats="hearing" data-status="active"
+                                                    aria-label="編輯 ○○助聽器股份有限公司">編輯</button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="fix">
+                                            <td data-label="廠商">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">○○復健器材社</span>
+                                                    <span class="dataTable-cellTitle-sub">統編 〔統一編號〕</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型"><span class="tagPill tag-blueLight">維修廠商</span></td>
+                                            <td data-label="服務輔具類別">行動與擺位</td>
+                                            <td data-label="聯絡人">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">黃○○</span>
+                                                    <span class="dataTable-cellTitle-sub">03-5954444</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="報修／點交">處理中 <span class="vendorsPage-caseNum">0</span> 件</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>啟用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#vendorModal" data-js="vendorEditOpen"
+                                                    data-type="fix" data-name="○○復健器材社" data-tax="〔統一編號〕" data-contact="黃○○" data-tel="03-5954444"
+                                                    data-mail="rehab@vendor.example.com" data-cats="mobility" data-status="active"
+                                                    aria-label="編輯 ○○復健器材社">編輯</button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="hear">
+                                            <td data-label="廠商">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">○○聽覺科技有限公司</span>
+                                                    <span class="dataTable-cellTitle-sub">統編 〔統一編號〕</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型"><span class="tagPill tag-violetLight">聽障供應商</span></td>
+                                            <td data-label="服務輔具類別">聽障輔具</td>
+                                            <td data-label="聯絡人">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">吳○○</span>
+                                                    <span class="dataTable-cellTitle-sub">02-2555-5555</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="報修／點交">本學年點交 <span class="vendorsPage-caseNum">6</span> 次</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>啟用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#vendorModal" data-js="vendorEditOpen"
+                                                    data-type="hear" data-name="○○聽覺科技有限公司" data-tax="〔統一編號〕" data-contact="吳○○" data-tel="02-2555-5555"
+                                                    data-mail="acoustic@vendor.example.com" data-cats="hearing" data-status="active"
+                                                    aria-label="編輯 ○○聽覺科技有限公司">編輯</button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="off">
+                                            <td data-label="廠商">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">○○電子維修行</span>
+                                                    <span class="dataTable-cellTitle-sub">統編 〔統一編號〕</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型"><span class="tagPill tag-blueLight">維修廠商</span></td>
+                                            <td data-label="服務輔具類別">資訊</td>
+                                            <td data-label="聯絡人">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">鍾○○</span>
+                                                    <span class="dataTable-cellTitle-sub">03-5556666</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="報修／點交">—</td>
+                                            <td data-label="狀態"><span class="statusPill"><span class="statusPill-dot" aria-hidden="true"></span>停用</span></td>
+                                            <td data-label="功能" class="dataTable-cellActions">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-bs-toggle="modal" data-bs-target="#vendorModal" data-js="vendorEditOpen"
+                                                    data-type="fix" data-name="○○電子維修行" data-tax="〔統一編號〕" data-contact="鍾○○" data-tel="03-5556666"
+                                                    data-mail="electronics@vendor.example.com" data-cats="it" data-status="off"
+                                                    aria-label="編輯 ○○電子維修行">編輯</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 分頁為靜態示意（尚無真實分頁邏輯），預設顯示多頁狀態供工程參考 -->
+                        <nav class="pageNav mt-6" aria-label="分頁">
+                            <p class="pageNav-summary">顯示第 1 至 10 筆，共 14 筆資料</p>
+                            <ul class="pageNav-list">
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="第一頁"><i class="bi bi-chevron-bar-left" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="vdPagePrevNote"><i class="bi bi-chevron-left" aria-hidden="true"></i>上一頁</span></li>
+                                <li><span class="pageNav-item" aria-current="page">1</span></li>
+                                <li><a href="#" class="pageNav-item" aria-label="第 2 頁">2</a></li>
+                                <li><a href="#" class="pageNav-item pageNav-item-label">下一頁<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
+                                <li><a href="#" class="pageNav-item" aria-label="最後一頁"><i class="bi bi-chevron-bar-right" aria-hidden="true"></i></a></li>
+                            </ul>
+                            <span id="vdPagePrevNote" class="sr-only">已是第一頁，沒有上一頁</span>
+                        </nav>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <!-- 審核註冊申請 modal -->
+    <div class="modal fade" id="vendorReviewModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="vendorReviewModalTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 class="modal-title" id="vendorReviewModalTitle">審核註冊申請</h2>
+                        <p class="textNote modal-subtitle"><span data-js="vendorReviewCompany">－</span>｜申請時間 <span data-js="vendorReviewTime">－</span></p>
+                    </div>
+                    <button type="button" class="btnIcon" data-bs-dismiss="modal" aria-label="關閉">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body" tabindex="0">
+                    <dl class="infoGrid infoGrid-boxed infoGrid-cols3 modal-body-section">
+                        <div>
+                            <dt class="infoGrid-label">申請類型</dt>
+                            <dd class="infoGrid-value" data-js="vendorReviewType">－</dd>
+                        </div>
+                        <div>
+                            <dt class="infoGrid-label">統一編號</dt>
+                            <dd class="infoGrid-value infoGrid-value-mono" data-js="vendorReviewTax">－</dd>
+                        </div>
+                        <div>
+                            <dt class="infoGrid-label">聯絡人</dt>
+                            <dd class="infoGrid-value" data-js="vendorReviewContact">－</dd>
+                        </div>
+                        <div>
+                            <dt class="infoGrid-label">電話</dt>
+                            <dd class="infoGrid-value infoGrid-value-mono" data-js="vendorReviewTel">－</dd>
+                        </div>
+                        <div class="infoGrid-full">
+                            <dt class="infoGrid-label">信箱（登入帳號）</dt>
+                            <dd class="infoGrid-value infoGrid-value-mono" data-js="vendorReviewMail">－</dd>
+                        </div>
+                        <div class="infoGrid-full">
+                            <dt class="infoGrid-label">服務項目</dt>
+                            <dd class="infoGrid-value" data-js="vendorReviewService">－</dd>
+                        </div>
+                    </dl>
+
+                    <div class="modal-body-section">
+                        <h3>附件</h3>
+                        <div class="fileRow fileRow-preview">
+                            <span class="fileRow-icon" aria-hidden="true"><i class="bi bi-file-earmark-pdf"></i></span>
+                            <span class="fileRow-body">
+                                <span class="fileRow-name">公司登記證明.pdf</span>
+                                <span class="fileRow-meta">廠商上傳．820 KB</span>
+                            </span>
+                            <span class="fileRow-actions">
+                                <a href="../files/demo/company-registration.pdf" target="_blank" rel="noopener" class="btnPill btn-outline btnPill-sm fileRow-action">
+                                    <i class="bi bi-eye" aria-hidden="true"></i>
+                                    檢視<span class="sr-only">公司登記證明.pdf（另開新視窗）</span>
+                                </a>
+                                <a href="../files/demo/company-registration.pdf" download="公司登記證明.pdf" class="btnPill btn-outline btnPill-sm fileRow-action">
+                                    <i class="bi bi-download" aria-hidden="true"></i>
+                                    下載<span class="sr-only">公司登記證明.pdf</span>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <form id="vendorReviewForm" class="modal-body-section" novalidate>
+                        <fieldset>
+                            <legend class="formField-label">審核結果 <span class="formField-required">必填</span></legend>
+                            <div class="cardChoice-group cardChoice-group-grid2">
+                                <label class="cardChoice cardChoice-plain is-selected" data-js="vendorDecisionCard">
+                                    <input type="radio" name="vdDecision" value="approve" class="cardChoice-input" data-js="vendorDecisionInput" checked>
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">核准並啟用</span>
+                                    </span>
+                                </label>
+                                <label class="cardChoice cardChoice-plain cardChoice-danger" data-js="vendorDecisionCard">
+                                    <input type="radio" name="vdDecision" value="reject" class="cardChoice-input" data-js="vendorDecisionInput">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">不核准</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </fieldset>
+
+                        <div class="mt-5">
+                            <label for="vdReviewNote" class="formField-label">審核意見 <span class="formField-required" data-js="vendorReviewNoteRequired" hidden>必填</span></label>
+                            <textarea id="vdReviewNote" class="form-control" rows="3" placeholder="選填" data-js="vendorReviewNoteInput"></textarea>
+                            <p class="formField-error" data-js="vendorReviewNoteError" hidden>請說明不核准的原因</p>
+                        </div>
+                    </form>
+
+                    <p class="noteBox noteBox-amber mt-5 mb-0" data-js="vendorReviewHint">
+                        <i class="bi bi-info-circle" aria-hidden="true"></i>
+                        <span data-js="vendorReviewHintText">核准後系統會寄送啟用通知到廠商信箱，廠商即可用註冊的帳號登入。</span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="vendorReviewForm" class="btnPill btn-teal" data-js="vendorReviewSubmit">核准並寄送啟用通知</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增／編輯廠商 modal -->
+    <div class="modal fade" id="vendorModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="vendorModalTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 class="modal-title" id="vendorModalTitle" data-js="vendorModalTitle">新增廠商</h2>
+                        <p class="textNote modal-subtitle" data-js="vendorModalSub">由中心直接建立的廠商不需審核，建立後會寄送設定密碼信。</p>
+                    </div>
+                    <button type="button" class="btnIcon" data-bs-dismiss="modal" aria-label="關閉">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body" tabindex="0">
+                    <form id="vendorForm" novalidate>
+                        <fieldset class="modal-body-section">
+                            <legend class="formField-label">廠商類型 <span class="formField-required">必填</span></legend>
+                            <div class="cardChoice-group cardChoice-group-grid2">
+                                <label class="cardChoice is-selected" data-js="vendorTypeCard">
+                                    <input type="radio" name="vdType" value="fix" class="cardChoice-input" data-js="vendorTypeInput" checked>
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">維修廠商</span>
+                                        <span class="cardChoice-desc">處理學校報修案件</span>
+                                    </span>
+                                </label>
+                                <label class="cardChoice" data-js="vendorTypeCard">
+                                    <input type="radio" name="vdType" value="hear" class="cardChoice-input" data-js="vendorTypeInput">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">聽障輔具供應商</span>
+                                        <span class="cardChoice-desc">負責聽障輔具點交與配件檢查</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </fieldset>
+
+                        <div class="modal-body-section">
+                            <div class="formGrid">
+                                <div>
+                                    <label for="vdName" class="formField-label">廠商名稱 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="vdName" class="form-control" placeholder="例：○○醫療器材行" required>
+                                </div>
+                                <div>
+                                    <label for="vdTax" class="formField-label">統一編號 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="vdTax" class="form-control" placeholder="請輸入 8 碼統一編號" inputmode="numeric" required>
+                                </div>
+                                <div>
+                                    <label for="vdContact" class="formField-label">聯絡人 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="vdContact" class="form-control" placeholder="例：王小明" required>
+                                </div>
+                                <div>
+                                    <label for="vdTel" class="formField-label">電話 <span class="formField-required">必填</span></label>
+                                    <input type="tel" id="vdTel" class="form-control" placeholder="例：03-5551234" required>
+                                </div>
+                                <div class="formGrid-full">
+                                    <label for="vdMail" class="formField-label">登入信箱（帳號） <span class="formField-required">必填</span></label>
+                                    <input type="email" id="vdMail" class="form-control" placeholder="作為廠商的登入帳號" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <fieldset class="modal-body-section">
+                            <legend class="formField-label">服務輔具類別</legend>
+                            <div class="vendorsPage-catGrid">
+                                <div class="formField-checkRow">
+                                    <input type="checkbox" id="vdCatMobility" value="mobility" class="form-check-input" data-js="vendorCatCheck">
+                                    <label for="vdCatMobility" class="formField-checkRow-label">行動與擺位輔具</label>
+                                </div>
+                                <div class="formField-checkRow">
+                                    <input type="checkbox" id="vdCatVision" value="vision" class="form-check-input" data-js="vendorCatCheck">
+                                    <label for="vdCatVision" class="formField-checkRow-label">視障輔具</label>
+                                </div>
+                                <div class="formField-checkRow">
+                                    <input type="checkbox" id="vdCatHearing" value="hearing" class="form-check-input" data-js="vendorCatCheck">
+                                    <label for="vdCatHearing" class="formField-checkRow-label">聽障輔具</label>
+                                </div>
+                                <div class="formField-checkRow">
+                                    <input type="checkbox" id="vdCatComm" value="comm" class="form-check-input" data-js="vendorCatCheck">
+                                    <label for="vdCatComm" class="formField-checkRow-label">溝通輔具</label>
+                                </div>
+                                <div class="formField-checkRow">
+                                    <input type="checkbox" id="vdCatIt" value="it" class="form-check-input" data-js="vendorCatCheck">
+                                    <label for="vdCatIt" class="formField-checkRow-label">資訊輔具</label>
+                                </div>
+                                <div class="formField-checkRow">
+                                    <input type="checkbox" id="vdCatRead" value="read" class="form-check-input" data-js="vendorCatCheck">
+                                    <label for="vdCatRead" class="formField-checkRow-label">書寫與閱讀輔具</label>
+                                </div>
+                                <div class="formField-checkRow">
+                                    <input type="checkbox" id="vdCatOther" value="other" class="form-check-input" data-js="vendorCatCheck">
+                                    <label for="vdCatOther" class="formField-checkRow-label">其他輔具</label>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="modal-body-section">
+                            <label for="vdStatus" class="formField-label">帳號狀態</label>
+                            <select id="vdStatus" class="form-select">
+                                <option value="active" selected>啟用</option>
+                                <option value="off">停用</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="vendorForm" class="btnPill btn-teal" data-js="vendorSubmit">建立廠商</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

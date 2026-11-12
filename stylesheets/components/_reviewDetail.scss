@@ -1,0 +1,216 @@
+// ============================================================
+// 中心端申請審核明細頁（center/review-detail.html）專屬樣式
+// Banner 版面沿用 review.html 的 .reviewPage-container/-content，這裡只補
+// 左右兩欄 sticky 排版、審核卡依狀態飾色、以及明細頁才有的檔案列／提示區塊變體
+// ============================================================
+
+.reviewDetail-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 32px;
+    align-items: start;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.reviewDetail-main {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+}
+
+.reviewDetail-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: sticky;
+    // #header 是 position:sticky（_base.scss），往下捲動即收合成只剩 .navBar（≈57px，見 _navBarLogged.scss），
+    // 這裡的 top 需蓋過收合後的頭部高度，卡片才不會滑到頁首下方；80px ≈ 57px 頭部 + 24px 間距
+    top: 80px;
+
+    @media (max-width: 900px) {
+        position: static;
+        order: -1; // 手機單欄版面時，審核狀態卡移到最上方，不排在主要內容後面
+    }
+}
+
+// 審核卡：依狀態用上緣色條呼應 .statusPill 的文字色，不另創新狀態色（design.md §2.7）
+// 卡片本身改為三段式 flex 直欄：標題（頂）／內容（中，可捲動）／操作按鈕與返回連結（底），
+// 頂與底固定不動，只有中間內容隨捲動，取代原本整張卡片內捲的做法
+.reviewDetail-panel {
+    padding: 0; // 蓋掉 .cardPanel 統一的 32px，改由三段各自分配
+    border-top: 4px solid $line-default;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 104px); // 80px 頂部間距 + 24px 底部間距
+
+    @media (max-width: 900px) {
+        max-height: none;
+    }
+}
+
+.reviewDetail-panelHead {
+    flex: 0 0 auto;
+    padding: 28px 28px 0;
+    border-bottom: 1px solid $line-default;
+
+    .cardPanel-head {
+        padding-bottom: 20px;
+    }
+
+    @media (max-width: 720px) {
+        padding: 24px 24px 0;
+    }
+}
+
+.reviewDetail-panelBody {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 4px 28px 20px;
+
+    @media (max-width: 900px) {
+        overflow-y: visible;
+    }
+
+    @media (max-width: 720px) {
+        padding: 4px 24px 20px;
+    }
+}
+
+.reviewDetail-panelFoot {
+    flex: 0 0 auto;
+    padding: 16px 28px 28px;
+    border-top: 1px solid $line-default;
+
+    @media (max-width: 720px) {
+        padding: 16px 24px 24px;
+    }
+}
+
+.reviewDetail-panel-review,
+.reviewDetail-panel-evalDone {
+    border-top-color: #D98B1C; // 同 .tag-amberOutline 框線色
+}
+
+.reviewDetail-panel-eval {
+    border-top-color: #1D4F86; // 同 .statusPill-blue 文字色
+}
+
+.reviewDetail-panel-handover {
+    border-top-color: $brand-teal;
+}
+
+.reviewDetail-panel-returned {
+    border-top-color: $state-required;
+}
+
+.reviewDetail-panel-done {
+    border-top-color: #1E6B3E; // 同 .statusPill-green 文字色
+}
+
+// 評估報告區塊標題下方的評估方式提示（治療師協助填寫／中心安排到校評估），依審核狀態切換其中一句
+.evalMethodPill {
+    margin: 16px 0 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: $border-radius-pill;
+    background-color: $surface-teal-pale;
+    color: $brand-teal-deep;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+// 評估報告區塊內，到校評估已安排／已完成時的評估資訊卡（含狀態徽章＋評估時間／地點／治療師）
+.reviewDetail-evalInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px 0;
+    padding: 16px 18px;
+    border-radius: $border-radius-md;
+    background-color: $surface-blue-pale;
+
+    .infoGrid {
+        margin-top: 0;
+    }
+}
+
+.reviewDetail-evalInfo-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+}
+
+.reviewDetail-evalInfo-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+// 學校簽章完成的借用單檔案列高亮（點交確認狀態用）：白底＋青綠框線
+.fileRow-signed {
+    border-color: $brand-teal;
+}
+
+// 安排評估對話框：評估地點欄位由 JS 依選擇的評估方式自動帶入，維持可編輯
+.reviewDetail-modalHint {
+    margin-top: 6px;
+    font-size: 16px;
+    color: $ink-3;
+}
+
+// 審核卡底部列（返回列表／改為安排到校評估）：純文字連結，不是按鈕，靠上方框線與內容區隔
+.reviewDetail-footerRow {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid $line-default;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 16px;
+}
+
+.reviewDetail-footerLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    color: $ink-3;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        color: $brand-teal-deep;
+    }
+}
+
+.reviewDetail-footerLink-accent {
+    color: $brand-teal-deep;
+
+    &:hover,
+    &:focus-visible {
+        color: $brand-teal-ink;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reviewDetail-footerLink {
+        transition: none;
+    }
+}

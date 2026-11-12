@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聽障點交 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="聽障設備供應商辦理聽障輔具借用與歸還的到校點交作業">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_Vendor.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu dec-hearing" src="../img/banner/hearing.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="reviewPage-container">
+                <div class="bannerWave-inner">
+                    <nav class="crumbNav" aria-label="麵包屑導覽">
+                        <ol>
+                            <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li aria-current="page" class="crumbNav-current">聽障點交</li>
+                        </ol>
+                    </nav>
+
+                    <div class="bannerWave-main">
+                        <h1 class="titleSection bannerWave-title">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            聽障點交
+                        </h1>
+                        <p class="bannerWave-desc">中心核准聽障輔具借用或歸還後，由貴公司到校交付或收回輔具，勾選配件並註記是否需要維修即可。借用單、歸還單的簽章仍由學校上傳、中心確認。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="reviewPage-content">
+            <div class="reviewPage-container">
+
+                <section class="applyForm-section cardPanel" aria-labelledby="vh-list">
+                    <h2 id="vh-list" class="applyForm-sectionHead">點交列表</h2>
+                    <div class="applyForm-sectionBody">
+
+                        <div class="flex-row-between flex-wrap gap-3">
+                            <div class="tabsCount" role="tablist" aria-label="依狀態檢視">
+                                <button type="button" class="tabsCount-item" role="tab" id="tab-vh-out" data-category="out" aria-selected="true" aria-controls="panel-vhList" tabindex="0">待點交借出<span class="tabsCount-badge" aria-hidden="true">2</span></button>
+                                <button type="button" class="tabsCount-item" role="tab" id="tab-vh-back" data-category="back" aria-selected="false" aria-controls="panel-vhList" tabindex="-1">待點交歸還<span class="tabsCount-badge" aria-hidden="true">1</span></button>
+                                <button type="button" class="tabsCount-item" role="tab" id="tab-vh-done" data-category="done" aria-selected="false" aria-controls="panel-vhList" tabindex="-1">已完成<span class="tabsCount-badge" aria-hidden="true">2</span></button>
+                            </div>
+
+                            <div class="selectInline">
+                                <label for="vhYear" class="selectInline-label">學年度</label>
+                                <select id="vhYear" class="form-select">
+                                    <option value="115">115 學年度</option>
+                                    <option value="114">114 學年度</option>
+                                    <option value="113">113 學年度</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <p class="textNote">總筆數：5</p>
+
+                        <div role="tabpanel" id="panel-vhList" aria-labelledby="tab-vh-out">
+                            <p class="textNote py-6" data-js="emptyNote" hidden>這個分類目前沒有點交案件。</p>
+
+                            <div class="dataTable-wrap">
+                                <div class="dataTable-scroll">
+                                    <table class="dataTable dataTable--stickyEnd">
+                                        <caption>聽障點交列表</caption>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">申請編號／核准日</th>
+                                                <th scope="col">點交</th>
+                                                <th scope="col">學校／學生</th>
+                                                <th scope="col">輔具</th>
+                                                <th scope="col">狀態</th>
+                                                <th scope="col">功能</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr data-category="out">
+                                                <td data-label="申請編號／核准日">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">A1150922-008</span>
+                                                        <span class="dataTable-cellTitle-sub">2026/10/27</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="點交"><span class="tagPill tag-blueLight">借出</span></td>
+                                                <td data-label="學校／學生">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">新豐國中</span>
+                                                        <span class="dataTable-cellTitle-sub">陳○宇（國二）</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="輔具">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">調頻輔聽系統</span>
+                                                        <span class="dataTable-cellTitle-sub">H-FM-0021</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="狀態">
+                                                    <span class="dataTable-cellActions">
+                                                        <span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待點交</span>
+                                                        <span class="dataTable-cellTitle-sub">請與學校約定時間</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="功能" class="dataTable-cellNext">
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="hearingHandover"
+                                                        data-case="A1150922-008" data-kind="out" data-school="新豐國中" data-student="陳○宇（國二）"
+                                                        data-device="調頻輔聽系統" data-property="H-FM-0021" data-missing="保固卡"
+                                                        aria-label="點交 A1150922-008">點交</button>
+                                                </td>
+                                            </tr>
+                                            <tr data-category="out">
+                                                <td data-label="申請編號／核准日">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">A1150930-015</span>
+                                                        <span class="dataTable-cellTitle-sub">2026/10/28</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="點交"><span class="tagPill tag-blueLight">借出</span></td>
+                                                <td data-label="學校／學生">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">竹北國小</span>
+                                                        <span class="dataTable-cellTitle-sub">吳○涵（小四）</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="輔具">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">助聽器（左右耳）</span>
+                                                        <span class="dataTable-cellTitle-sub">H-HA-0108 / 0109</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="狀態">
+                                                    <span class="dataTable-cellActions">
+                                                        <span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待點交</span>
+                                                        <span class="dataTable-cellTitle-sub">請與學校約定時間</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="功能" class="dataTable-cellNext">
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="hearingHandover"
+                                                        data-case="A1150930-015" data-kind="out" data-school="竹北國小" data-student="吳○涵（小四）"
+                                                        data-device="助聽器（左右耳）" data-property="H-HA-0108 / 0109" data-missing=""
+                                                        aria-label="點交 A1150930-015">點交</button>
+                                                </td>
+                                            </tr>
+                                            <tr data-category="back" hidden>
+                                                <td data-label="申請編號／核准日">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">A1150915-022</span>
+                                                        <span class="dataTable-cellTitle-sub">2026/10/25</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="點交"><span class="tagPill tag-violetLight">歸還</span></td>
+                                                <td data-label="學校／學生">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">芎林國中</span>
+                                                        <span class="dataTable-cellTitle-sub">許○廷（畢業）</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="輔具">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">調頻輔聽系統</span>
+                                                        <span class="dataTable-cellTitle-sub">H-FM-0014</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="狀態">
+                                                    <span class="dataTable-cellActions">
+                                                        <span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待點交</span>
+                                                        <span class="dataTable-cellTitle-sub">請與學校約定時間</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="功能" class="dataTable-cellNext">
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="hearingHandover"
+                                                        data-case="A1150915-022" data-kind="back" data-school="芎林國中" data-student="許○廷（畢業）"
+                                                        data-device="調頻輔聽系統" data-property="H-FM-0014" data-missing=""
+                                                        aria-label="點交 A1150915-022">點交</button>
+                                                </td>
+                                            </tr>
+                                            <tr data-category="done" hidden>
+                                                <td data-label="申請編號／核准日">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">A1150901-004</span>
+                                                        <span class="dataTable-cellTitle-sub">2026/09/12</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="點交"><span class="tagPill tag-blueLight">借出</span></td>
+                                                <td data-label="學校／學生">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">湖口國小</span>
+                                                        <span class="dataTable-cellTitle-sub">劉○安（小二）</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="輔具">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">助聽器（右耳）</span>
+                                                        <span class="dataTable-cellTitle-sub">H-HA-0097</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="狀態">
+                                                    <span class="dataTable-cellActions">
+                                                        <span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>已完成</span>
+                                                        <span class="dataTable-cellTitle-sub">2026/09/18 完成・需維修 1 項</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="功能" class="dataTable-cellNext">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-js="hearingRecord"
+                                                        data-case="A1150901-004" data-kind="out" data-school="湖口國小" data-student="劉○安（小二）"
+                                                        data-device="助聽器（右耳）" data-property="H-HA-0097" data-missing=""
+                                                        data-handover-time="2026/09/18 14:20" data-handover-by="林○○"
+                                                        data-needs-fix="true" data-repair-note="右耳接收器充電接點鬆動，已帶回原廠更換，預計 2 週內送回學校。"
+                                                        aria-label="查看點交紀錄 A1150901-004">查看</button>
+                                                </td>
+                                            </tr>
+                                            <tr data-category="done" hidden>
+                                                <td data-label="申請編號／核准日">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">A1150828-010</span>
+                                                        <span class="dataTable-cellTitle-sub">2026/09/02</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="點交"><span class="tagPill tag-violetLight">歸還</span></td>
+                                                <td data-label="學校／學生">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">關西國中</span>
+                                                        <span class="dataTable-cellTitle-sub">彭○哲（轉出）</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="輔具">
+                                                    <span class="dataTable-cellTitle">
+                                                        <span class="dataTable-cellTitle-main">調頻輔聽系統</span>
+                                                        <span class="dataTable-cellTitle-sub">H-FM-0009</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="狀態">
+                                                    <span class="dataTable-cellActions">
+                                                        <span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>已完成</span>
+                                                        <span class="dataTable-cellTitle-sub">2026/09/05 完成</span>
+                                                    </span>
+                                                </td>
+                                                <td data-label="功能" class="dataTable-cellNext">
+                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-js="hearingRecord"
+                                                        data-case="A1150828-010" data-kind="back" data-school="關西國中" data-student="彭○哲（轉出）"
+                                                        data-device="調頻輔聽系統" data-property="H-FM-0009" data-missing=""
+                                                        data-handover-time="2026/09/05 10:05" data-handover-by="林○○"
+                                                        data-needs-fix="false" data-repair-note=""
+                                                        aria-label="查看點交紀錄 A1150828-010">查看</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- 分頁為靜態示意（尚無真實分頁邏輯，現有樣本資料剛好一頁） -->
+                            <nav class="pageNav mt-6" aria-label="分頁">
+                                <p class="pageNav-summary">顯示第 1 至 5 筆，共 5 筆資料</p>
+                                <ul class="pageNav-list">
+                                    <li><span class="pageNav-item" aria-disabled="true" aria-label="第一頁"><i class="bi bi-chevron-bar-left" aria-hidden="true"></i></span></li>
+                                    <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="vhPagePrevNote"><i class="bi bi-chevron-left" aria-hidden="true"></i>上一頁</span></li>
+                                    <li><span class="pageNav-item" aria-current="page">1</span></li>
+                                    <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="vhPageNextNote">下一頁<i class="bi bi-chevron-right" aria-hidden="true"></i></span></li>
+                                    <li><span class="pageNav-item" aria-disabled="true" aria-label="最後一頁"><i class="bi bi-chevron-bar-right" aria-hidden="true"></i></span></li>
+                                </ul>
+                                <span id="vhPagePrevNote" class="sr-only">已是第一頁，沒有上一頁</span>
+                                <span id="vhPageNextNote" class="sr-only">已是最後一頁，沒有下一頁</span>
+                            </nav>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- 點交勾選 modal（需填寫資料，遮罩不可點擊關閉） -->
+    <div class="modal fade" data-js="hearingHandoverModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="hhTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 id="hhTitle" class="modal-title">
+                            點交勾選
+                            <span class="tagPill ms-2" data-js="hhKindTag">－</span>
+                        </h2>
+                        <p class="modal-subtitle textNote" data-js="hhSubtitle">－</p>
+                    </div>
+                    <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <form novalidate>
+                    <div class="modal-body">
+                        <fieldset class="modal-body-section">
+                            <legend class="formField-label">配件確認 <span data-js="hhPartsCount">12 / 12</span></legend>
+                            <div class="flex-row-end">
+                                <button type="button" class="btnPill btn-text" data-js="hhCheckAll">全部勾選</button>
+                            </div>
+                            <div class="checkGrid" data-js="hhPartsGrid"></div>
+                        </fieldset>
+
+                        <fieldset class="modal-body-section">
+                            <legend class="formField-label">是否需要維修 <span class="formField-required">必填</span></legend>
+                            <div class="cardChoice-group cardChoice-group-row" data-js="hhFixGroup">
+                                <label class="cardChoice cardChoice-plain">
+                                    <input type="radio" name="hhFix" value="no" class="cardChoice-input" data-js="hhFixInput" required>
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">不需要</span>
+                                    </span>
+                                </label>
+                                <label class="cardChoice cardChoice-plain">
+                                    <input type="radio" name="hhFix" value="yes" class="cardChoice-input" data-js="hhFixInput">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">需要維修</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </fieldset>
+
+                        <div class="modal-body-section" data-js="hhReasonField" hidden>
+                            <label for="hhReason" class="formField-label">維修說明 <span class="formField-required">必填</span></label>
+                            <textarea id="hhReason" class="form-control" rows="3" data-js="hhReasonInput" placeholder="例：右耳接收器充電接點鬆動，需送回原廠更換"></textarea>
+                            <p class="formField-hint">送出後會通知中心。</p>
+                        </div>
+
+                        <p class="textNote">點交時間與帳號由系統自動記錄。</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" class="btnPill btn-teal">完成點交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 點交紀錄 modal（純顯示，不需輸入，遮罩可點擊關閉） -->
+    <div class="modal fade" data-js="hearingRecordModal" tabindex="-1" aria-hidden="true" aria-labelledby="hrTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 id="hrTitle" class="modal-title">
+                            點交紀錄
+                            <span class="tagPill ms-2" data-js="hrKindTag">－</span>
+                        </h2>
+                        <p class="modal-subtitle textNote" data-js="hrSubtitle">－</p>
+                        <p class="modal-subtitle textNote" data-js="hrTimeLine">－</p>
+                    </div>
+                    <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body-section">
+                        <h3>配件 <span data-js="hrPartsCount">12 / 12</span></h3>
+                        <div class="checkGrid" data-js="hrPartsGrid"></div>
+                    </div>
+
+                    <div class="modal-body-section">
+                        <h3>是否需要維修</h3>
+                        <p class="noteBox noteBox-red" data-js="hrFixNote" hidden>
+                            <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+                            <span><b>需要維修：</b><span data-js="hrFixNoteText"></span></span>
+                        </p>
+                        <p class="textNote" data-js="hrNoFixNote" hidden>不需要維修。</p>
+                    </div>
+
+                    <p class="noteBox noteBox-blue">
+                        <i class="bi bi-lock" aria-hidden="true"></i>
+                        <span>點交已完成，紀錄無法修改。如需更正，請聯繫特教資源中心。</span>
+                    </p>
+                </div>
+                <div class="modal-footer modal-footer-single modal-footer-single-wide">
+                    <button type="button" class="btnPill btn-teal" data-bs-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

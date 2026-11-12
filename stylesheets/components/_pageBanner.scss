@@ -1,0 +1,191 @@
+// ============================================================
+// 前台內頁標題 Banner（news.html／news-detail.html 等內頁共用）
+// 點點底＋麵包屑＋導盲磚標題＋插圖；下方內容區塊用 .sectionBand-overlap 疊上來遮住底部
+// ============================================================
+
+.pageBanner {
+    position: relative;
+}
+
+// 標題區後方的點點底：弧線遮罩（design.md §6.3）＋由上往下淡出融入白底，
+// 兩個遮罩圖層以 mask-composite: intersect 疊加，滿版鋪在 .pageBanner 整個寬度
+// 手機版用另一條振幅較小的曲線：同一條曲線在較矮的手機版高度下，弧度比例會被拉得過於誇張
+$pageBanner-curveMask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 240' preserveAspectRatio='none'><path d='M0 22 C 260 30 440 98 660 112 C 900 126 1160 84 1440 16 L1440 240 L0 240 Z' fill='black'/></svg>");
+$pageBanner-curveMask-mobile: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 240' preserveAspectRatio='none'><path d='M0 60 C 260 64 440 82 660 88 C 900 94 1160 78 1440 56 L1440 240 L0 240 Z' fill='black'/></svg>");
+
+.pageBanner::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 320px;
+    background-color: $surface-mint-dots;
+    background-image: radial-gradient($deco-dots 1.1px, transparent 1.6px);
+    background-size: 10px 10px;
+    mask-image: $pageBanner-curveMask, linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, .45) 40%, transparent 85%);
+    -webkit-mask-image: $pageBanner-curveMask, linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, .45) 40%, transparent 85%);
+    mask-size: 100% 100%, 100% 100%;
+    -webkit-mask-size: 100% 100%, 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+    pointer-events: none;
+
+    @media (max-width: 720px) {
+        height: 220px;
+        mask-image: $pageBanner-curveMask-mobile, linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, .45) 40%, transparent 85%);
+        -webkit-mask-image: $pageBanner-curveMask-mobile, linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, .45) 40%, transparent 85%);
+    }
+}
+
+// pageBanner 內的導盲磚：圓點放在英文小標「NEWS」左側，不疊在 h1 主標題上
+// （蓋過 _sectionHeading.scss 預設把圓點留給 h1、.labelCaption 用 margin-left 對齊的寫法）
+.pageBanner-text .labelCaption {
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+}
+
+.pageBanner-inner {
+    position: relative;
+    z-index: 1; // 疊在波浪點點漸層之上
+    padding-bottom: 40px;
+
+    @media (max-width: 720px) {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+}
+
+.pageBanner-top {
+    margin-bottom: 20px;
+
+    @media (max-width: 720px) {
+        margin-bottom: 0;
+    }
+}
+
+// 返回按鈕有兩個位置：桌面版跟麵包屑同一排、手機版跟日期標籤同一排
+// 麵包屑隱藏時桌面版按鈕也跟著隱藏，兩顆同時只會有一顆顯示（display:none 不會進無障礙樹，不會重複唸兩次）
+// 疊 .btnPill 複合選擇器提高優先度，避免被後載入的 _btn.scss 的 .btnPill{display:inline-flex} 蓋掉
+.btnPill.pageBanner-backBtn-top {
+    @media (max-width: 720px) {
+        display: none;
+    }
+}
+
+.btnPill.pageBanner-backBtn-inline {
+    display: none;
+
+    @media (max-width: 720px) {
+        display: inline-flex;
+    }
+}
+
+.pageBanner-main {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.pageBanner-text {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.pageBanner-desc {
+    margin: 10px 0 0;
+    font-size: 18px;
+    color: $ink-2;
+    max-width: 56ch;
+
+    @media (max-width: 720px) {
+        font-size: 16px;
+    }
+}
+
+.pageBanner-illustration {
+    flex-shrink: 0;
+    width: 230px;
+    height: auto;
+
+    @media (max-width: 720px) {
+        display: none;
+    }
+}
+
+// ---- 麵包屑（design.md §7.6：麵包屑連結沿用 .linkGhost 螢光筆掃入效果）----
+// 手機版空間有限，麵包屑隱藏，只留返回按鈕（已移到日期標籤同一排）
+.crumbNav {
+    @media (max-width: 720px) {
+        display: none;
+    }
+}
+
+.crumbNav ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.crumbNav li {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+.crumbNav li a{
+    text-decoration: none;
+}
+
+.crumbNav-home {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: $surface-teal-pale;
+    color: $brand-teal-deep;
+    text-decoration: none;
+    transition: background-color 180ms ease-out, color 180ms ease-out;
+
+    .bi {
+        font-size: 15px;
+    }
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-teal-select;
+        color: $brand-teal-ink;
+    }
+}
+
+.crumbNav-sep {
+    font-size: 16px;
+    color: $ink-3;
+    flex-shrink: 0;
+}
+
+// 目前頁面（文章標題）：過長時換行顯示，不得撐出水平捲軸
+.crumbNav-current {
+    min-width: 0;
+    color: $ink-1;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .crumbNav-home {
+        transition: none;
+    }
+}

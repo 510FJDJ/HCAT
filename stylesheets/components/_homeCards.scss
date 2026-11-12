@@ -1,0 +1,271 @@
+// ============================================================
+// 學校端首頁內容卡片：申請期間卡／常用功能／待辦事項／借用中輔具
+// 「查看全部」連結沿用首頁已驗證的 .btnPill.btn-text.btnPill-arrow（design.md §7.1）
+// ============================================================
+
+// ---- 申請期間卡 ----
+.periodCard {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px 28px;
+    padding: 28px 32px;
+    border-radius: 28px;
+    background-color: #FFFFFF;
+    box-shadow: $shadow-panel;
+
+    @media (max-width: 720px) {
+        padding: 22px 20px;
+    }
+}
+
+.periodCard-label {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: $brand-teal-deep;
+}
+
+.periodCard-title {
+    margin: 6px 0 0;
+    font-size: 26px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.periodCard-range {
+    margin: 6px 0 0;
+    font-size: 17px;
+    color: $ink-2;
+
+    time {
+        font-family: "Poppins", sans-serif;
+    }
+}
+
+.periodCard-days {
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: $accent-amber-ink;
+}
+
+.periodCard-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+// ---- 常用功能（快速前往四個入口）----
+.quickLinkGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    list-style: none;
+    margin: 24px 0 0;
+    padding: 0;
+}
+
+.quickLinkGrid-item {
+    flex: 1 1 220px;
+    min-width: 0;
+}
+
+.quickLink {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 60px;
+    padding: 0 12px 0 22px;
+    border-radius: 16px;
+    background-color: #FFFFFF;
+    border: 1px solid $line-default;
+    font-size: 18px;
+    font-weight: 700;
+    color: $ink-1;
+    text-decoration: none;
+    transition: border-color 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        border-color: $brand-teal;
+    }
+
+    // 快速前往的箭頭圓底改實心青綠（與首頁箭頭圓底的白底版本區分）
+    .btnPill-arrowCircle {
+        width: 34px;
+        height: 34px;
+        background-color: $brand-teal;
+        color: #FFFFFF;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .quickLink {
+        transition: none;
+    }
+}
+
+// ---- 內容卡片共用：待辦事項／借用中輔具 ----
+.homeGrid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 28px;
+    margin-top: 28px;
+}
+
+.panelCard {
+    flex: 1 1 520px;
+    min-width: 0;
+    padding: 26px 28px 18px;
+    border-radius: 28px;
+    background-color: #FFFFFF;
+    box-shadow: $shadow-panel;
+}
+
+.panelCard-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.panelCard-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.panelCard-icon {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    border-radius: 4px;
+}
+
+.panelCard-icon-amber { background-color: $accent-amber; }
+.panelCard-icon-teal  { background-color: $brand-teal; }
+
+.panelCard-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30px;
+    height: 26px;
+    padding: 0 9px;
+    border-radius: $border-radius-pill;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.panelCard-count-amber {
+    background-color: $accent-amber-pale;
+    color: $accent-amber-ink-2;
+}
+
+.panelCard-count-teal {
+    background-color: $surface-teal-pale;
+    color: $brand-teal-ink;
+}
+
+.panelCard-list {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+}
+
+// ---- 待辦事項列 ----
+.taskRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    padding: 16px 0;
+    border-top: 1px solid $line-default;
+}
+
+.taskRow-info {
+    flex: 1 1 200px;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    line-height: 1.45;
+}
+
+.taskRow-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.taskRow-sub {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+// ---- 借用中輔具列 ----
+.deviceRow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-top: 1px solid $line-default;
+}
+
+.deviceRow-thumb {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    padding: 4px;
+    border-radius: 12px;
+    border: 1px solid $line-default;
+    background-color: #FFFFFF;
+    object-fit: contain;
+}
+
+.deviceRow-thumb-placeholder {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    border: 1.5px dashed $line-strong;
+    background-color: $surface-tint;
+}
+
+.deviceRow-info {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.45;
+}
+
+.deviceRow-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.deviceRow-unit {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: $ink-3;
+}
+
+.deviceRow-meta {
+    font-size: 16px;
+    color: $ink-3;
+
+    time {
+        font-family: "Poppins", sans-serif;
+    }
+}

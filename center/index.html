@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>總覽 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="中心端總覽，查看待審核申請、到校評估排程與報修進度">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_Center.html"></div>
+
+    <main id="goCenter" tabindex="-1">
+        <div class="homeMain-dots" aria-hidden="true"></div>
+
+        <section class="homeMain">
+            <div class="homeGreeting-deco" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+
+            <div class="homeMain-inner">
+                <div class="homeGreeting-meta">
+                    <time datetime="2026-10-30">10 月 30 日</time>
+                    <span>星期五</span>
+                    <span class="homeGreeting-meta-sep" aria-hidden="true"></span>
+                    特教資源中心
+                </div>
+
+                <h1 class="homeGreeting-title">
+                    <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                    午安，王○○
+                </h1>
+
+                <p class="homeGreeting-desc">
+                    今天需要處理的事情。點方塊可以直接進到對應的清單。
+                </p>
+            </div>
+        </section>
+
+        <div class="container pt-10 pb-15">
+            <ul class="tileGrid" aria-label="待辦數量">
+                <li>
+                    <a href="review.html" class="tileCard tileCard-amber">
+                        <span class="flex-row-between">
+                            <span class="tileCard-label">待審核</span>
+                            <span class="btnPill-arrowCircle btnPill-arrowCircle-soft" aria-hidden="true"><i class="bi bi-arrow-right btnPill-arrow"></i></span>
+                        </span>
+                        <span class="tileCard-number">
+                            <span class="tileCard-count">5</span>
+                            <span class="tileCard-unit">件</span>
+                        </span>
+                        <span class="tileCard-note">含 1 件評估報告已上傳</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="review.html" class="tileCard tileCard-blue">
+                        <span class="flex-row-between">
+                            <span class="tileCard-label">待到校評估</span>
+                            <span class="btnPill-arrowCircle btnPill-arrowCircle-soft" aria-hidden="true"><i class="bi bi-arrow-right btnPill-arrow"></i></span>
+                        </span>
+                        <span class="tileCard-number">
+                            <span class="tileCard-count">2</span>
+                            <span class="tileCard-unit">件</span>
+                        </span>
+                        <span class="tileCard-note">最近一場 <time datetime="2026-10-30">10/30（五）</time></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="review.html" class="tileCard tileCard-teal">
+                        <span class="flex-row-between">
+                            <span class="tileCard-label">待點交確認</span>
+                            <span class="btnPill-arrowCircle btnPill-arrowCircle-soft" aria-hidden="true"><i class="bi bi-arrow-right btnPill-arrow"></i></span>
+                        </span>
+                        <span class="tileCard-number">
+                            <span class="tileCard-count">2</span>
+                            <span class="tileCard-unit">件</span>
+                        </span>
+                        <span class="tileCard-note">學校已上傳簽章檔</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="repair.html" class="tileCard tileCard-red">
+                        <span class="flex-row-between">
+                            <span class="tileCard-label">報修中</span>
+                            <span class="btnPill-arrowCircle btnPill-arrowCircle-soft" aria-hidden="true"><i class="bi bi-arrow-right btnPill-arrow"></i></span>
+                        </span>
+                        <span class="tileCard-number">
+                            <span class="tileCard-count">7</span>
+                            <span class="tileCard-unit">件</span>
+                        </span>
+                        <span class="tileCard-note">待指派 3・維修中 2・待結案 2</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="panelGrid">
+                <section class="panelCard" aria-labelledby="periodPanelTitle">
+                    <div class="flex-row-between">
+                        <h2 class="panelCard-title" id="periodPanelTitle">本期申請期間</h2>
+                        <span class="statusText-green">進行中</span>
+                    </div>
+                    <p class="periodPanel-name">115 學年度第一次申請</p>
+                    <p class="periodPanel-range">
+                        <time datetime="2026-09-01">2026/09/01</time> – <time datetime="2026-10-31">2026/10/31</time>
+                    </p>
+                    <div class="periodPanel-progress">
+                        <div role="progressbar" aria-label="申請期間進度" aria-valuenow="97" aria-valuemin="0" aria-valuemax="100" class="progressTrack">
+                            <div class="progressTrack-fill" style="width: 97%;"></div>
+                        </div>
+                        <p class="periodPanel-days">
+                            <span>還有 <span class="periodPanel-daysCount">2</span> 天截止</span>
+                            <a href="settings.html" class="linkMarker">調整期間</a>
+                        </p>
+                    </div>
+                    <dl class="statGridSm">
+                        <div>
+                            <dt class="statGridSm-label">本期收件</dt>
+                            <dd class="statGridSm-value">64</dd>
+                        </div>
+                        <div>
+                            <dt class="statGridSm-label">已核准</dt>
+                            <dd class="statGridSm-value">41</dd>
+                        </div>
+                        <div>
+                            <dt class="statGridSm-label">退回補件</dt>
+                            <dd class="statGridSm-value">6</dd>
+                        </div>
+                    </dl>
+                </section>
+
+                <section class="panelCard" aria-labelledby="evalPanelTitle">
+                    <h2 class="panelCard-title" id="evalPanelTitle">近期到校評估</h2>
+                    <ol class="panelCard-list">
+                        <li class="evalRow">
+                            <span class="evalRow-date" aria-hidden="true">
+                                <span class="evalRow-date-month">10月</span>
+                                <span class="evalRow-date-day">30</span>
+                            </span>
+                            <span class="evalRow-info">
+                                <span class="evalRow-title">寶山國小・特製輪椅</span>
+                                <span class="evalRow-meta">上午 10:00｜李○○ 物理治療師</span>
+                            </span>
+                        </li>
+                        <li class="evalRow">
+                            <span class="evalRow-date" aria-hidden="true">
+                                <span class="evalRow-date-month">11月</span>
+                                <span class="evalRow-date-day">04</span>
+                            </span>
+                            <span class="evalRow-info">
+                                <span class="evalRow-title">橫山國小・溝通板</span>
+                                <span class="evalRow-meta">下午 13:30｜張○○ 語言治療師</span>
+                            </span>
+                        </li>
+                        <li class="evalRow">
+                            <span class="evalRow-date" aria-hidden="true">
+                                <span class="evalRow-date-month">11月</span>
+                                <span class="evalRow-date-day">12</span>
+                            </span>
+                            <span class="evalRow-info">
+                                <span class="evalRow-title">竹北國小・桌上型擴視機</span>
+                                <span class="evalRow-meta">上午 09:30｜陳○○ 職能治療師</span>
+                            </span>
+                        </li>
+                    </ol>
+                </section>
+
+                <section class="panelCard" aria-labelledby="remindPanelTitle">
+                    <h2 class="panelCard-title" id="remindPanelTitle">
+                        <span class="panelCard-icon panelCard-icon-amber" aria-hidden="true"></span>
+                        其他提醒
+                    </h2>
+                    <ul class="panelCard-list">
+                        <li>
+                            <a href="vendors.html" class="remindRow">
+                                <span class="remindRow-title">廠商註冊待審核</span>
+                                <span class="panelCard-count panelCard-count-amber">1</span>
+                                <i class="bi bi-chevron-right remindRow-arrow" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="devices.html" class="remindRow">
+                                <span class="remindRow-title">財產一年內屆滿使用年限</span>
+                                <span class="panelCard-count panelCard-count-amber">12</span>
+                                <i class="bi bi-chevron-right remindRow-arrow" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="devices.html" class="remindRow">
+                                <span class="remindRow-title">配發品項庫存偏低</span>
+                                <span class="panelCard-count panelCard-count-amber">1</span>
+                                <i class="bi bi-chevron-right remindRow-arrow" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <script src="../js/all.js"></script>
+</body>
+</html>

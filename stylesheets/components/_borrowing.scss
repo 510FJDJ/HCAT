@@ -1,0 +1,134 @@
+// ============================================================
+// 借用中輔具頁（school/borrowing.html）專屬樣式
+// main 用 .bg-green / .bg-green-bleed；.borrowingPage-container 寬度比照 center/borrow.html 的
+// .reviewPage-container（後台最寬 1360），banner 與主要內容卡共用同一個容器 class
+// ============================================================
+
+.borrowingPage-container {
+    max-width: 1360px;
+    margin: 40px auto 0;
+    padding: 0 24px;
+
+    @media (max-width: 720px) {
+        margin: 20px auto 0;
+        padding: 0 16px;
+    }
+}
+
+.borrowingPage-content {
+    position: relative;
+    z-index: 2;
+    margin-top: -200px;
+
+    @media (max-width: 720px) {
+        margin-top: -125px;
+    }
+}
+
+// ------------------------------------------------------------
+// 篩選列：排版比照 .recordsFilters，但借用中輔具頁沒有進度頁籤，
+// 只有狀態／輔具類別／關鍵字三個下拉與查詢按鈕，故另立專屬 class 不直接共用
+// ------------------------------------------------------------
+.borrowingFilters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px 18px;
+    margin-bottom: 20px;
+}
+
+.borrowingFilters-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px 18px;
+}
+
+.borrowingFilters-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+
+    label {
+        font-size: 16px;
+        font-weight: 700;
+        color: $ink-1;
+    }
+
+    .form-select,
+    .form-control {
+        width: auto;
+        min-width: 160px;
+    }
+
+    @media (max-width: 720px) {
+        flex: 1 1 140px;
+
+        .form-select,
+        .form-control {
+            width: 100%;
+            min-width: 0;
+        }
+    }
+}
+
+// ------------------------------------------------------------
+// 借用期間欄：起始日／歸還日兩行式（日期用 Poppins，與 .dataTable-cellTitle-main
+// 的粗體不同，借用期間兩行字重一致，故另立專屬 class）
+// ------------------------------------------------------------
+.borrowing-period {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5;
+    font-family: "Poppins", "Noto Sans TC", sans-serif;
+    font-size: 16px;
+}
+
+.borrowing-period-start {
+    color: $ink-3;
+}
+
+.borrowing-period-due {
+    color: $ink-1;
+}
+
+// 到期提醒文字（借用期間欄內的「剩 N 個月」提醒）
+.borrowing-dueWarn {
+    color: $state-required;
+    font-weight: 700;
+}
+
+// ------------------------------------------------------------
+// 操作欄：報修／歸還．轉銜兩顆按鈕並排（不比照 .dataTable-cellNext
+// 手機強制 100% 寬度，因為這裡一欄有兩顆按鈕要並排）
+// ------------------------------------------------------------
+.borrowing-cellActions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+
+    @media (max-width: 720px) {
+        justify-content: flex-start;
+    }
+}
+
+// 辦理中（busy）列：顯示說明文字＋「前往申請紀錄」連結
+.borrowing-busyNote {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    line-height: 1.4;
+
+    @media (max-width: 720px) {
+        align-items: flex-start;
+    }
+}
+
+.borrowing-busyNote-text {
+    font-size: 16px;
+    color: $ink-3;
+}

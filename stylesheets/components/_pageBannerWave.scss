@@ -1,0 +1,238 @@
+// ============================================================
+// bannerWave：學校端輔具申請表專用頁首，點點背景由下往上漸層，
+// 底部為虛線波浪曲面遮罩，與 pageBanner 的遮罩方向相反。
+// ============================================================
+
+$bannerWave-curveMask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 330' preserveAspectRatio='none'><path d='M0 0 L1440 0 L1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222 Z' fill='black'/></svg>");
+// 平板（721–900px）：與桌面同 viewBox，波浪幅度壓低約一半，弧度更平緩
+$bannerWave-curveMask-tablet: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 330' preserveAspectRatio='none'><path d='M0 0 L1440 0 L1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222 Z' fill='black'/></svg>");
+$bannerWave-curveMask-mobile: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 220' preserveAspectRatio='none'><path d='M0 0 L1440 0 L1440 144 C 1160 168 900 182 660 177 C 440 173 260 150 0 148 Z' fill='black'/></svg>");
+
+.bannerWave {
+    position: relative;
+    overflow: hidden;
+    height: 340px;
+
+    @media (max-width: 720px) {
+        height: 220px;
+    }
+}
+
+.bannerWave-bg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 330px;
+    background-color: $surface-mint-dots;
+    background-image: radial-gradient($deco-dots 1.1px, transparent 1.6px);
+    background-size: 10px 10px;
+    mask-image: $bannerWave-curveMask, linear-gradient(to bottom, transparent 10%, rgba(0, 0, 0, .55) 55%, #000 100%);
+    -webkit-mask-image: $bannerWave-curveMask, linear-gradient(to bottom, transparent 10%, rgba(0, 0, 0, .55) 55%, #000 100%);
+    mask-size: 100% 100%, 100% 100%;
+    -webkit-mask-size: 100% 100%, 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+    pointer-events: none;
+
+    @media (max-width: 900px) {
+        mask-image: $bannerWave-curveMask-tablet, linear-gradient(to bottom, transparent 10%, rgba(0, 0, 0, .55) 55%, #000 100%);
+        -webkit-mask-image: $bannerWave-curveMask-tablet, linear-gradient(to bottom, transparent 10%, rgba(0, 0, 0, .55) 55%, #000 100%);
+    }
+
+    @media (max-width: 720px) {
+        height: 220px;
+        mask-image: $bannerWave-curveMask-mobile, linear-gradient(to bottom, transparent 10%, rgba(0, 0, 0, .55) 55%, #000 100%);
+        -webkit-mask-image: $bannerWave-curveMask-mobile, linear-gradient(to bottom, transparent 10%, rgba(0, 0, 0, .55) 55%, #000 100%);
+    }
+}
+
+// 波浪虛線（視覺邊界，疊在點點遮罩上方，preserveAspectRatio="none" 會自動配合容器高度縮放）
+.bannerWave-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 330px;
+    pointer-events: none;
+
+    @media (max-width: 720px) {
+        height: 220px;
+    }
+}
+
+// 右側插圖裁切容器：套用相同波浪形狀遮罩（無漸層，單純形狀裁切）
+.bannerWave-illuClip {
+    position: absolute;
+    inset: 0;
+    max-width: 1360px;
+    margin: 0 auto;
+    mask-image: $bannerWave-curveMask;
+    -webkit-mask-image: $bannerWave-curveMask;
+    mask-size: 100% 100%;
+    -webkit-mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    pointer-events: none;
+
+    @media (max-width: 900px) {
+        mask-image: $bannerWave-curveMask-tablet;
+        -webkit-mask-image: $bannerWave-curveMask-tablet;
+    }
+
+    @media (max-width: 720px) {
+        mask-image: $bannerWave-curveMask-mobile;
+        -webkit-mask-image: $bannerWave-curveMask-mobile;
+    }
+}
+
+.bannerWave-illu {
+    position: absolute;
+    right: 9%;
+    top: 57px;
+    height: 200px;
+    width: auto;
+
+    @media (max-width: 720px) {
+        height: 96px;
+        right: 12px;
+        top: 80px;
+        opacity: .35;
+    }
+}
+.dec-records{
+    right:0;
+    top:-12px;
+     @media (max-width: 720px) {
+       top:20px;
+    }
+}
+.dec-borrowing{
+    top:6px;
+     @media (max-width: 720px) {
+       top:20px;
+    }
+}
+.dec-repair{
+    top:10px;
+     @media (max-width: 720px) {
+       top:40px;
+    }
+}
+.dec-hearing{
+    top:4px;
+     @media (max-width: 720px) {
+       top:40px;
+    }
+}
+.dec-settings{
+    top:4px;
+     @media (max-width: 720px) {
+       top:20px;
+    }
+}
+.bannerWave-leaf {
+    position: absolute;
+    pointer-events: none;
+
+    @media (max-width: 720px) {
+        display: none;
+    }
+}
+
+.bannerWave-leaf-1 {
+    right: calc(8% + 360px);
+    top: 64px;
+    width: 40px;
+}
+
+.bannerWave-leaf-2 {
+    right: calc(8% - 40px);
+    top: 118px;
+    width: 30px;
+}
+
+// 虛線曲線本體：桌面／平板／手機三份路徑依斷點切換顯示，座標對應各自的遮罩曲線
+.bannerWave-line-tablet,
+.bannerWave-line-mobile {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .bannerWave-line-desktop {
+        display: none;
+    }
+
+    .bannerWave-line-tablet {
+        display: block;
+    }
+}
+
+@media (max-width: 720px) {
+    .bannerWave-line-tablet {
+        display: none;
+    }
+
+    .bannerWave-line-mobile {
+        display: block;
+    }
+}
+
+// 內容層（麵包屑／標題），需在遮罩層之上
+.bannerWave-inner {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+// 麵包屑同排的返回按鈕（design.md §7.6 麵包屑列延伸）：手機版 .crumbNav 整排隱藏，
+// 返回動線改由側欄審核卡底部的「返回列表」連結承接，此列一併隱藏
+.bannerWave-topRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 14px;
+
+    @media (max-width: 720px) {
+        display: none;
+    }
+}
+
+.bannerWave-main {
+    max-width: 640px;
+}
+
+.bannerWave-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.bannerWave-desc {
+    margin-top: 8px;
+    color: $ink-2;
+}
+
+// 返回按鈕（借用管理等多層級頁面用）：桌面版跟麵包屑同一排、手機版（麵包屑隱藏後）跟標題同一排
+// 疊 .btnPill 複合選擇器提高優先度，避免被後載入的 _btn.scss 的 .btnPill{display:inline-flex} 蓋掉
+.btnPill.bannerWave-backBtn-top {
+    @media (max-width: 720px) {
+        display: none;
+    }
+}
+
+.btnPill.bannerWave-backBtn-inline {
+    display: none;
+
+    @media (max-width: 720px) {
+        display: inline-flex;
+    }
+}

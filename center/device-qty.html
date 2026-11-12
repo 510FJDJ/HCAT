@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>輔具品項：安全頭套 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="配發類輔具品項頁：只管理數量，配發後不用歸還，學校申請核准後自動扣除庫存">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_Center.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu" src="../img/banner/devices.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="devicesPage-container">
+                <div class="bannerWave-inner">
+                    <div class="bannerWave-topRow">
+                        <nav class="crumbNav" aria-label="麵包屑導覽">
+                            <ol>
+                                <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                                <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                                <li>資料管理</li>
+                                <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                                <li><a href="devices.html">輔具管理</a></li>
+                                <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                                <li aria-current="page" class="crumbNav-current">安全頭套</li>
+                            </ol>
+                        </nav>
+                        <a href="devices.html" class="btnPill btn-outline btnPill-sm bannerWave-backBtn">
+                            <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                            返回輔具管理
+                        </a>
+                    </div>
+
+                    <div class="bannerWave-main">
+                        <div class="devicesPage-titleRow">
+                            <h1 class="titleSection bannerWave-title">
+                                <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                                安全頭套
+                            </h1>
+                            <span class="tagPill tag-purpleLight">配發・數量</span>
+                        </div>
+                        <p class="bannerWave-desc">只管理數量，配發後不用歸還。學校申請核准後會自動扣除庫存。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="devicesPage-content">
+            <div class="devicesPage-container">
+                <section class="cardPanel" aria-labelledby="deviceInfoTitle">
+                    <div class="devicesPage-panelHead">
+                        <h2 id="deviceInfoTitle" class="devicesPage-panelTitle">品項資訊</h2>
+                        <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceItemModal">
+                            <i class="bi bi-pencil" aria-hidden="true"></i>編輯品項
+                        </button>
+                    </div>
+
+                    <div class="deviceSummary">
+                        <span class="deviceSummary-noPhoto" role="img" aria-label="尚未上傳照片">
+                            <i class="bi bi-image" aria-hidden="true"></i>尚未上傳照片
+                        </span>
+                        <div class="deviceSummary-main">
+                            <dl class="infoGrid">
+                                <div>
+                                    <dt class="infoGrid-label">分類</dt>
+                                    <dd class="infoGrid-value">行動與擺位輔具</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">管理方式</dt>
+                                    <dd class="infoGrid-value">配發・數量</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">申請時需填寫</dt>
+                                    <dd class="infoGrid-value">頭圍</dd>
+                                </div>
+                                <div>
+                                    <dt class="infoGrid-label">安全庫存</dt>
+                                    <dd class="infoGrid-value">5 頂</dd>
+                                </div>
+                            </dl>
+                            <div class="deviceSummary-tags">
+                                <span class="tagPill tag-greenLight">免評估</span>
+                                <span class="tagPill tag-purpleLight">配發後不用歸還</span>
+                            </div>
+                            <p class="deviceSummary-desc"><b>使用說明</b>　保護頭部，降低跌倒碰撞的傷害。依學生頭圍訂製，配發後由學校留用，不需歸還。</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="cardPanel mt-5" aria-labelledby="deviceStockTitle">
+                    <div class="devicesPage-panelHead">
+                        <h2 id="deviceStockTitle" class="devicesPage-panelTitle">庫存與配發</h2>
+                        <button type="button" class="btnPill btn-teal" data-bs-toggle="modal" data-bs-target="#deviceStockModal">
+                            <i class="bi bi-plus-lg" aria-hidden="true"></i>入庫
+                        </button>
+                    </div>
+
+                    <div class="statCard-group mt-4">
+                        <div class="statCard statCard-alert">
+                            <p class="statCard-label">目前庫存<span class="statCard-badge">低於安全庫存 5</span></p>
+                            <p class="statCard-value"><b class="statCard-num">3</b> 頂</p>
+                        </div>
+                        <div class="statCard">
+                            <p class="statCard-label">本學年已配發</p>
+                            <p class="statCard-value"><b class="statCard-num">7</b> 頂・5 校</p>
+                        </div>
+                        <div class="statCard">
+                            <p class="statCard-label">最近入庫</p>
+                            <p class="statCard-value"><b class="statCard-num statCard-num-md">2026/03/11</b>　8 頂</p>
+                        </div>
+                    </div>
+
+                    <div class="devicesPage-panelHead mt-5">
+                        <h3 class="devicesPage-subTitle">異動明細</h3>
+                        <div class="tabsCount" role="tablist" aria-label="依類型檢視">
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-mv-all" data-category="all" aria-selected="true" aria-controls="panel-moveList" tabindex="0">全部<span class="tabsCount-badge" aria-hidden="true">8</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-mv-in" data-category="in" aria-selected="false" aria-controls="panel-moveList" tabindex="-1">入庫<span class="tabsCount-badge" aria-hidden="true">2</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-mv-give" data-category="give" aria-selected="false" aria-controls="panel-moveList" tabindex="-1">配發<span class="tabsCount-badge" aria-hidden="true">6</span></button>
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" id="panel-moveList" aria-labelledby="tab-mv-all" class="mt-4">
+                        <p class="textNote py-6" data-js="emptyNote" hidden>這個類型目前沒有異動明細。</p>
+
+                        <div class="dataTable-wrap">
+                            <div class="dataTable-scroll">
+                                <table class="dataTable">
+                                    <caption>安全頭套入庫與配發明細</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">日期</th>
+                                            <th scope="col">類型</th>
+                                            <th scope="col">數量</th>
+                                            <th scope="col">學校／學生</th>
+                                            <th scope="col">頭圍</th>
+                                            <th scope="col">申請編號／來源</th>
+                                            <th scope="col">經手人</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-category="give">
+                                            <td data-label="日期"><span class="dataTable-cellTitle-main">2026/10/02</span></td>
+                                            <td data-label="類型"><span class="tagPill tag-purpleLight">配發</span></td>
+                                            <td data-label="數量"><span class="devicesPage-qtyDelta">-1</span></td>
+                                            <td data-label="學校／學生">竹東國小附幼・黃○恩</td>
+                                            <td data-label="頭圍">52 公分</td>
+                                            <td data-label="申請編號／來源"><span class="dataTable-cellTitle-main">A1150920-004</span></td>
+                                            <td data-label="經手人">王○○</td>
+                                        </tr>
+                                        <tr data-category="give">
+                                            <td data-label="日期"><span class="dataTable-cellTitle-main">2026/09/26</span></td>
+                                            <td data-label="類型"><span class="tagPill tag-purpleLight">配發</span></td>
+                                            <td data-label="數量"><span class="devicesPage-qtyDelta">-1</span></td>
+                                            <td data-label="學校／學生">寶山國小・李○婷</td>
+                                            <td data-label="頭圍">54 公分</td>
+                                            <td data-label="申請編號／來源"><span class="dataTable-cellTitle-main">A1150918-030</span></td>
+                                            <td data-label="經手人">王○○</td>
+                                        </tr>
+                                        <tr data-category="give">
+                                            <td data-label="日期"><span class="dataTable-cellTitle-main">2026/05/14</span></td>
+                                            <td data-label="類型"><span class="tagPill tag-purpleLight">配發</span></td>
+                                            <td data-label="數量"><span class="devicesPage-qtyDelta">-1</span></td>
+                                            <td data-label="學校／學生">湖口國小・張○晴</td>
+                                            <td data-label="頭圍">53 公分</td>
+                                            <td data-label="申請編號／來源"><span class="dataTable-cellTitle-main">A1150512-011</span></td>
+                                            <td data-label="經手人">王○○</td>
+                                        </tr>
+                                        <tr data-category="give">
+                                            <td data-label="日期"><span class="dataTable-cellTitle-main">2026/04/08</span></td>
+                                            <td data-label="類型"><span class="tagPill tag-purpleLight">配發</span></td>
+                                            <td data-label="數量"><span class="devicesPage-qtyDelta">-2</span></td>
+                                            <td data-label="學校／學生">新豐國中・陳○宇 等 2 人</td>
+                                            <td data-label="頭圍">56、57 公分</td>
+                                            <td data-label="申請編號／來源"><span class="dataTable-cellTitle-main">A1150406-007</span></td>
+                                            <td data-label="經手人">王○○</td>
+                                        </tr>
+                                        <tr data-category="in">
+                                            <td data-label="日期"><span class="dataTable-cellTitle-main">2026/03/11</span></td>
+                                            <td data-label="類型"><span class="tagPill tag-greenLight">入庫</span></td>
+                                            <td data-label="數量"><span class="devicesPage-qtyDelta devicesPage-qtyDelta-pos">+8</span></td>
+                                            <td data-label="學校／學生">—</td>
+                                            <td data-label="頭圍">S×3、M×5</td>
+                                            <td data-label="申請編號／來源">採購 115-012</td>
+                                            <td data-label="經手人">王○○</td>
+                                        </tr>
+                                        <tr data-category="give">
+                                            <td data-label="日期"><span class="dataTable-cellTitle-main">2026/03/02</span></td>
+                                            <td data-label="類型"><span class="tagPill tag-purpleLight">配發</span></td>
+                                            <td data-label="數量"><span class="devicesPage-qtyDelta">-1</span></td>
+                                            <td data-label="學校／學生">峨眉國小・劉○妤</td>
+                                            <td data-label="頭圍">51 公分</td>
+                                            <td data-label="申請編號／來源"><span class="dataTable-cellTitle-main">A1150227-002</span></td>
+                                            <td data-label="經手人">王○○</td>
+                                        </tr>
+                                        <tr data-category="give">
+                                            <td data-label="日期"><span class="dataTable-cellTitle-main">2025/10/21</span></td>
+                                            <td data-label="類型"><span class="tagPill tag-purpleLight">配發</span></td>
+                                            <td data-label="數量"><span class="devicesPage-qtyDelta">-1</span></td>
+                                            <td data-label="學校／學生">北埔國小・鄭○哲</td>
+                                            <td data-label="頭圍">55 公分</td>
+                                            <td data-label="申請編號／來源"><span class="dataTable-cellTitle-main">A1141020-015</span></td>
+                                            <td data-label="經手人">王○○</td>
+                                        </tr>
+                                        <tr data-category="in">
+                                            <td data-label="日期"><span class="dataTable-cellTitle-main">2025/09/03</span></td>
+                                            <td data-label="類型"><span class="tagPill tag-greenLight">入庫</span></td>
+                                            <td data-label="數量"><span class="devicesPage-qtyDelta devicesPage-qtyDelta-pos">+6</span></td>
+                                            <td data-label="學校／學生">—</td>
+                                            <td data-label="頭圍">S×2、M×4</td>
+                                            <td data-label="申請編號／來源">採購 114-033</td>
+                                            <td data-label="經手人">王○○</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 分頁為靜態示意（尚無真實分頁邏輯） -->
+                        <nav class="pageNav mt-6" aria-label="分頁">
+                            <p class="pageNav-summary">顯示第 1 至 8 筆，共 8 筆資料</p>
+                            <ul class="pageNav-list">
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="第一頁"><i class="bi bi-chevron-bar-left" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="mvPagePrevNote"><i class="bi bi-chevron-left" aria-hidden="true"></i>上一頁</span></li>
+                                <li><span class="pageNav-item" aria-current="page">1</span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true">下一頁<i class="bi bi-chevron-right" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="最後一頁"><i class="bi bi-chevron-bar-right" aria-hidden="true"></i></span></li>
+                            </ul>
+                            <span id="mvPagePrevNote" class="sr-only">已是第一頁，沒有上一頁</span>
+                        </nav>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <!-- 入庫 modal -->
+    <div class="modal fade" id="deviceStockModal" data-js="deviceStockModal" data-sm-current="3" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="smTitle">
+        <div class="modal-dialog modal-dialog-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 id="smTitle" class="modal-title">入庫</h2>
+                        <p class="modal-subtitle textNote">安全頭套・目前庫存 3 頂</p>
+                    </div>
+                    <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <form novalidate data-js="deviceModalForm">
+                    <div class="modal-body">
+                        <div class="modal-body-section formGrid">
+                            <div>
+                                <label for="smQty" class="formField-label">入庫數量 <span class="formField-required">必填</span></label>
+                                <input type="number" id="smQty" class="form-control" min="1" value="8" data-js="smQty">
+                            </div>
+                            <div>
+                                <label for="smDate" class="formField-label">入庫日期 <span class="formField-required">必填</span></label>
+                                <input type="date" id="smDate" class="form-control" value="2026-11-11">
+                            </div>
+                            <div>
+                                <label for="smSource" class="formField-label">來源</label>
+                                <select id="smSource" class="form-select">
+                                    <option selected>採購</option>
+                                    <option>捐贈</option>
+                                    <option>學校退回未使用</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="smRef" class="formField-label">採購案號／單據</label>
+                                <input type="text" id="smRef" class="form-control" placeholder="選填">
+                            </div>
+                        </div>
+                        <div class="modal-body-section">
+                            <label for="smNote" class="formField-label">備註</label>
+                            <textarea id="smNote" class="form-control" rows="2" placeholder="例：S 號 3 頂、M 號 5 頂"></textarea>
+                        </div>
+                        <p class="noteBox modal-body-section" aria-live="polite">
+                            <i class="bi bi-box-seam" aria-hidden="true"></i>入庫後庫存：3 → <b data-js="smAfter">11</b> 頂
+                        </p>
+                        <p class="noteBox noteBox-grey modal-body-section">
+                            <i class="bi bi-info-circle" aria-hidden="true"></i>配發由申請審核核准後自動扣除庫存，不需在這裡手動調整。
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" class="btnPill btn-teal">確認入庫</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 編輯品項 modal（管理方式已鎖定為配發・數量） -->
+    <div class="modal fade" id="deviceItemModal" data-js="deviceItemModal" data-dm-locked="qty" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="dmTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 id="dmTitle" class="modal-title">編輯品項</h2>
+                        <p class="modal-subtitle textNote">安全頭套・配發・數量</p>
+                    </div>
+                    <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <form novalidate data-js="deviceModalForm">
+                    <div class="modal-body">
+                        <fieldset class="modal-body-section">
+                            <legend class="formField-label">管理方式</legend>
+                            <div class="cardChoice-group cardChoice-group-row">
+                                <label class="cardChoice is-locked">
+                                    <input type="radio" name="dmType" value="unit" class="cardChoice-input" aria-disabled="true" aria-describedby="dmTypeLockNote" data-js="dmTypeRadio">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">財產・單台</span>
+                                        <span class="cardChoice-desc">以財產編號逐台管理，借出後需歸還</span>
+                                    </span>
+                                </label>
+                                <label class="cardChoice is-selected is-locked">
+                                    <input type="radio" name="dmType" value="qty" class="cardChoice-input" checked aria-disabled="true" aria-describedby="dmTypeLockNote" data-js="dmTypeRadio">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">配發・數量</span>
+                                        <span class="cardChoice-desc">客製或消耗品只管數量，配發後不用歸還</span>
+                                    </span>
+                                </label>
+                            </div>
+                            <p class="formField-hint" id="dmTypeLockNote">品項建立後不可變更管理方式。</p>
+                        </fieldset>
+
+                        <div class="modal-body-section devicesPage-photoRow">
+                            <div>
+                                <span class="formField-label">照片</span>
+                                <div data-js="uploadTile">
+                                    <input type="file" id="dmPhoto" class="fileUpload-input" accept="image/*" aria-describedby="dmPhotoHint" data-js="uploadTileInput">
+                                    <label for="dmPhoto" class="uploadTile-box">
+                                        <span class="uploadTile-empty" data-js="uploadTileEmpty">
+                                            <i class="bi bi-upload uploadTile-icon" aria-hidden="true"></i>
+                                            <span class="uploadTile-text">上傳照片</span>
+                                            <span class="uploadTile-sub" id="dmPhotoHint">JPG、PNG</span>
+                                        </span>
+                                        <img class="uploadTile-preview" alt="已選擇的照片預覽" hidden data-js="uploadTilePreview">
+                                    </label>
+                                    <div class="uploadTile-actions" hidden data-js="uploadTileActions">
+                                        <button type="button" class="btnPill btn-outline btnPill-sm" data-js="uploadTileReplace">重新上傳</button>
+                                        <button type="button" class="btnPill btn-secondary btnPill-sm" data-js="uploadTileRemove">移除照片</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="devicesPage-photoRow-fields">
+                                <div>
+                                    <label for="dmName" class="formField-label">品項名稱 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="dmName" class="form-control" value="安全頭套" placeholder="例：安全頭套">
+                                </div>
+                                <div>
+                                    <label for="dmCat" class="formField-label">輔具分類 <span class="formField-required">必填</span></label>
+                                    <select id="dmCat" class="form-select">
+                                        <option selected>行動與擺位輔具</option>
+                                        <option>視障輔具</option>
+                                        <option>聽障輔具</option>
+                                        <option>溝通輔具</option>
+                                        <option>資訊輔具</option>
+                                        <option>書寫與閱讀輔具</option>
+                                        <option>其他輔具</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-body-section">
+                            <label for="dmDesc" class="formField-label">使用說明</label>
+                            <textarea id="dmDesc" class="form-control" rows="3" placeholder="簡短介紹用途與適用對象，會顯示在前台輔具目錄。">保護頭部，降低跌倒碰撞的傷害。依學生頭圍訂製，配發後由學校留用，不需歸還。</textarea>
+                        </div>
+
+                        <div class="modal-body-section formGrid">
+                            <div data-js="dmQtyOnly">
+                                <label for="dmNeed" class="formField-label">申請時需填寫</label>
+                                <select id="dmNeed" class="form-select">
+                                    <option>不需填寫</option>
+                                    <option>公分數</option>
+                                    <option selected>頭圍</option>
+                                    <option>身高</option>
+                                </select>
+                            </div>
+                            <div data-js="dmQtyOnly">
+                                <label for="dmSafe" class="formField-label">安全庫存</label>
+                                <input type="number" id="dmSafe" class="form-control" min="0" value="5" aria-describedby="dmSafeHint">
+                                <p class="formField-hint" id="dmSafeHint">庫存低於此數量時提醒入庫</p>
+                            </div>
+                            <fieldset>
+                                <legend class="formField-label">申請設定</legend>
+                                <div class="flex-column gap-2">
+                                    <div class="formField-checkRow">
+                                        <input type="checkbox" id="dmFree" class="form-check-input" checked>
+                                        <label for="dmFree" class="formField-checkRow-label">免評估（學校申請不需評估報告）</label>
+                                    </div>
+                                    <div class="formField-checkRow">
+                                        <input type="checkbox" id="dmShow" class="form-check-input" checked>
+                                        <label for="dmShow" class="formField-checkRow-label">顯示在前台輔具目錄</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" class="btnPill btn-teal">儲存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+// ============================================================
+// 「選擇人員」欄位，兩種使用情境共用同一組 class：
+// 1. 收合式下拉單選（school/staff.html 新增管理人員）：trigger／panel／outside-click
+//    模式，候選人清單為純按鈕（無 checkbox），選定後收合並在下方顯示已選人員卡片。
+// 2. 常駐清單多選（center/schools.html 編輯學校的「新增管理人員」）：不用 trigger／
+//    panel 收合（面板本身已在 .mgrAdd-panel 收合開關），搜尋框＋清單直接展開，清單項目
+//    為 checkbox（.staffPicker-item-checkbox），可一次選多位再按「加入」。
+// 編輯 Modal 的「目前人員」唯讀區塊另見 .staffPicker-fixed。
+// ============================================================
+
+.staffPicker {
+    position: relative;
+}
+
+.staffPicker-trigger {
+    width: 100%;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0 16px;
+    border: 2px solid $line-strong;
+    border-radius: $border-radius-sm;
+    background-color: $surface-card;
+    font-family: inherit;
+    font-size: 17px;
+    color: $ink-1;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 160ms ease-out;
+
+    &:focus-visible {
+        outline: none;
+        border-color: $brand-teal;
+        box-shadow: 0 0 0 3px rgba(15, 127, 129, .18);
+    }
+
+    &[aria-expanded="true"] {
+        border-color: $brand-teal;
+    }
+}
+
+.staffPicker-trigger-placeholder {
+    color: $ink-3;
+}
+
+.staffPicker-trigger-value {
+    color: $ink-1;
+    font-weight: 700;
+}
+
+.staffPicker-chevron {
+    flex: 0 0 auto;
+    display: inline-flex;
+    color: $ink-2;
+    transition: transform 160ms ease-out;
+}
+
+.staffPicker-trigger[aria-expanded="true"] .staffPicker-chevron {
+    transform: rotate(180deg);
+}
+
+.staffPicker-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 40;
+    margin-top: 6px;
+    padding: 10px;
+    border: 1px solid $line-default;
+    border-radius: $border-radius-lg;
+    background-color: $surface-card;
+    box-shadow: 0 16px 40px rgba(31, 42, 46, .18);
+}
+
+.staffPicker-panel[hidden] {
+    display: none;
+}
+
+.staffPicker-search {
+    position: relative;
+}
+
+.staffPicker-search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $ink-3;
+    display: inline-flex;
+    pointer-events: none;
+}
+
+.staffPicker-search-input {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px 0 42px;
+    box-sizing: border-box;
+    border: 2px solid $line-strong;
+    border-radius: $border-radius-sm;
+    font-family: inherit;
+    font-size: 17px;
+    color: $ink-1;
+    background-color: $surface-card;
+
+    &:focus-visible {
+        outline: none;
+        border-color: $brand-teal;
+        box-shadow: 0 0 0 3px rgba(15, 127, 129, .18);
+    }
+}
+
+.staffPicker-list {
+    margin: 8px 0 0;
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.staffPicker-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px 14px;
+    border: none;
+    border-radius: $border-radius-sm;
+    background-color: transparent;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 160ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-tint;
+    }
+
+    &[aria-pressed="true"] {
+        background-color: $surface-teal-pale;
+    }
+}
+
+.staffPicker-itemMain {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.staffPicker-itemName {
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.staffPicker-itemTitle {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.staffPicker-itemEmail {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    color: $ink-2;
+}
+
+.staffPicker-empty {
+    padding: 24px 16px;
+    text-align: center;
+    font-size: 16px;
+    color: $ink-3;
+}
+
+// 多選版清單項目（center/schools.html 新增管理人員）：checkbox 置左＋姓名職稱信箱橫向排列，
+// 本身是 <label>，點擊文字範圍即可切換 checkbox，不需要額外的 JS 點擊處理
+.staffPicker-item-checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+
+    &:has(.staffPicker-item-check:checked) {
+        background-color: $surface-teal-pale;
+    }
+}
+
+.staffPicker-item-check {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    accent-color: $brand-teal;
+}
+
+// 選定人員後，在下拉下方顯示的已選人員卡片
+.staffPicker-selected {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: $border-radius-md;
+    background-color: $surface-mint-dots;
+}
+
+.staffPicker-selected[hidden] {
+    display: none;
+}
+
+.staffPicker-selected-avatar {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $surface-card;
+    color: $brand-teal-deep;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.staffPicker-selected-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .staffPicker-trigger,
+    .staffPicker-chevron,
+    .staffPicker-item {
+        transition: none;
+    }
+}
+
+// 編輯管理人員 Modal：固定顯示目前人員（不可更換），唯讀資訊區塊保留大頭貼
+.staffPicker-fixed {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 14px;
+    border-radius: $border-radius-md;
+    background-color: $surface-mint-dots;
+}
+
+.staffPicker-fixed-avatar {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $surface-card;
+    color: $brand-teal-deep;
+    font-family: "Poppins", sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.staffPicker-fixed-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.staffPicker-fixed-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.staffPicker-fixed-meta {
+    font-size: 16px;
+    color: $ink-3;
+}

@@ -1,0 +1,129 @@
+// ============================================================
+// 消息內容文章排版：內文段落、附件下載列、相關連結列、上下則導覽卡
+// ============================================================
+
+.articleBody {
+    font-size: 17px;
+    line-height: 1.8;
+    color: $ink-2;
+    max-width: 760px;
+
+    p {
+        margin-bottom: 16px;
+    }
+
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// 子標題前的琥珀圓點（design.md §6.1 導盲磚意象的縮小版，僅用於文章內子段落）
+.articleBody-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 32px 0 16px;
+    font-size: 20px;
+    font-weight: 700;
+    color: $ink-1;
+
+    &::before {
+        content: "";
+        flex-shrink: 0;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: $accent-amber;
+    }
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.articleBody-list {
+    margin: 0 0 16px;
+    padding-left: 0;
+    list-style: none;
+    counter-reset: articleBody-counter;
+
+    li {
+        position: relative;
+        padding-left: 32px;
+        margin-bottom: 10px;
+        counter-increment: articleBody-counter;
+
+        &::before {
+            content: counter(articleBody-counter) ".";
+            position: absolute;
+            left: 0;
+            font-family: "Poppins", sans-serif;
+            font-weight: 700;
+            color: $brand-teal-deep;
+        }
+    }
+
+    li:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// ---- 上一則／下一則導覽卡 ----
+.articleNav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.articleNav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    padding: 20px 24px;
+    border-radius: $border-radius-lg;
+    border: 2px solid $line-default;
+    text-decoration: none;
+    color: $ink-1;
+    transition: border-color 180ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        border-color: $brand-teal;
+    }
+}
+
+.articleNav-link-next {
+    align-items: flex-end;
+    text-align: right;
+}
+
+.articleNav-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    color: $brand-teal-deep;
+}
+
+.articleNav-title {
+    width: 100%;
+    max-width: 100%;
+    font-size: 17px;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .articleNav-link {
+        transition: none;
+    }
+}

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>輔具管理人員 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="學校端管理輔具管理人員名單，可新增、編輯、移除學校輔具管理人員">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_School.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu" src="../img/banner/school.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="profilePage-container">
+                <div class="bannerWave-inner">
+                    <nav class="crumbNav" aria-label="麵包屑導覽">
+                        <ol>
+                            <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li>學校與帳號</li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li aria-current="page" class="crumbNav-current">輔具管理人員</li>
+                        </ol>
+                    </nav>
+
+                    <div class="bannerWave-main">
+                        <h1 class="titleSection bannerWave-title">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            輔具管理人員
+                        </h1>
+                        <p class="bannerWave-desc">管理本校負責輔具借用申請與報修的聯絡人員，新增或異動人員請確認已具備教育部 OpenID 帳號。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="profilePage-content">
+            <div class="profilePage-container">
+                <section class="cardPanel" aria-labelledby="staffHeading">
+                    <div class="cardPanel-head">
+                        <h2 id="staffHeading" class="cardPanel-title">輔具管理人員</h2>
+                        <button type="button" class="btnPill btn-teal" data-js="staffAddOpen">
+                            <i class="bi bi-plus-lg" aria-hidden="true"></i>新增管理人員
+                        </button>
+                    </div>
+
+                    <p class="textNote mb-4">管理人員需為本校教職員，且已持有教育部 OpenID 帳號；主要聯絡人會優先收到審核結果與報修通知。</p>
+
+                    <div data-js="staffList">
+                        <div class="staffRow" data-js="staffRow">
+                            <div class="staffRow-main">
+                                <div class="staffRow-nameLine">
+                                    <span class="staffRow-name">王淑芬</span>
+                                    <span class="staffRow-title">特教組長</span>
+                                </div>
+                            </div>
+                            <div class="staffRow-contact">
+                                <span>03-5551234 分機12</span>
+                                <span>wang.sf@mail.hcc.edu.tw</span>
+                            </div>
+                            <div class="staffRow-badges">
+                                <span class="tagPill tag-goldLight tagPill-withIcon"><i class="bi bi-star-fill" aria-hidden="true"></i>主要聯絡人</span>
+                                <span class="tagPill tag-greyLight">教育部 OpenID</span>
+                            </div>
+                            <div class="staffRow-actions">
+                                <button type="button" class="staffRow-iconBtn" data-js="staffEditOpen" data-name="王淑芬" data-title="特教組長" data-phone="03-5551234" data-ext="12" data-email="wang.sf@mail.hcc.edu.tw" data-primary="true" aria-label="編輯 王淑芬">
+                                    <i class="bi bi-pencil" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="staffRow-iconBtn staffRow-iconBtn-danger" aria-disabled="true" aria-describedby="staffPrimaryNote" aria-label="移除 王淑芬">
+                                    <i class="bi bi-trash3" aria-hidden="true"></i>
+                                </button>
+                                <span id="staffPrimaryNote" class="sr-only">主要聯絡人無法直接移除，請先至編輯將其他人員設為主要聯絡人後再移除。</span>
+                            </div>
+                        </div>
+
+                        <div class="staffRow" data-js="staffRow">
+                            <div class="staffRow-main">
+                                <div class="staffRow-nameLine">
+                                    <span class="staffRow-name">李雅婷</span>
+                                    <span class="staffRow-title">特教老師</span>
+                                </div>
+                            </div>
+                            <div class="staffRow-contact">
+                                <span>03-5551234 分機15</span>
+                                <span>li.yt@mail.hcc.edu.tw</span>
+                            </div>
+                            <div class="staffRow-badges">
+                                <span class="tagPill tag-greyLight">教育部 OpenID</span>
+                            </div>
+                            <div class="staffRow-actions">
+                                <button type="button" class="staffRow-iconBtn" data-js="staffEditOpen" data-name="李雅婷" data-title="特教老師" data-phone="03-5551234" data-ext="15" data-email="li.yt@mail.hcc.edu.tw" data-primary="false" aria-label="編輯 李雅婷">
+                                    <i class="bi bi-pencil" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="staffRow-iconBtn staffRow-iconBtn-danger" data-js="staffDeleteOpen" data-name="李雅婷" aria-label="移除 李雅婷">
+                                    <i class="bi bi-trash3" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="staffRow" data-js="staffRow">
+                            <div class="staffRow-main">
+                                <div class="staffRow-nameLine">
+                                    <span class="staffRow-name">張文傑</span>
+                                    <span class="staffRow-title">特教助理員</span>
+                                </div>
+                            </div>
+                            <div class="staffRow-contact">
+                                <span>03-5551234 分機18</span>
+                                <span>chang.wj@mail.hcc.edu.tw</span>
+                            </div>
+                            <div class="staffRow-badges">
+                                <span class="tagPill tag-greyLight">教育部 OpenID</span>
+                            </div>
+                            <div class="staffRow-actions">
+                                <button type="button" class="staffRow-iconBtn" data-js="staffEditOpen" data-name="張文傑" data-title="特教助理員" data-phone="03-5551234" data-ext="18" data-email="chang.wj@mail.hcc.edu.tw" data-primary="false" aria-label="編輯 張文傑">
+                                    <i class="bi bi-pencil" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="staffRow-iconBtn staffRow-iconBtn-danger" data-js="staffDeleteOpen" data-name="張文傑" aria-label="移除 張文傑">
+                                    <i class="bi bi-trash3" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <!-- 新增管理人員 modal -->
+    <div class="modal fade" data-js="addStaffModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="addStaffTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 class="modal-title" id="addStaffTitle">
+                            新增管理人員
+                        </h2>
+                        <p class="textNote modal-subtitle">只能選擇已持有教育部 OpenID 帳號的本校教職員</p>
+                    </div>
+                    <button type="button" class="btnIcon" data-bs-dismiss="modal" aria-label="關閉">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body" tabindex="0">
+                    <form id="addStaffForm">
+                        <div class="modal-body-section">
+                            <h3>選擇人員 <span class="formField-required">必填</span></h3>
+                            <p class="textNote mb-3">從本校教職員（教育部 OpenID 帳號）中選擇一位設為輔具管理人員。</p>
+
+                            <div class="staffPicker" data-js="staffPicker">
+                                <button type="button" id="staffPickerTrigger" class="staffPicker-trigger" aria-expanded="false" aria-controls="staffPickerPanel" data-js="staffPickerTrigger">
+                                    <span class="staffPicker-trigger-placeholder" data-js="staffPickerTriggerText">請選擇人員</span>
+                                    <span class="staffPicker-chevron" aria-hidden="true"><i class="bi bi-chevron-down"></i></span>
+                                </button>
+
+                                <div id="staffPickerPanel" class="staffPicker-panel" data-js="staffPickerPanel" hidden>
+                                    <div class="staffPicker-search">
+                                        <span class="staffPicker-search-icon" aria-hidden="true"><i class="bi bi-search"></i></span>
+                                        <label for="staffPickerSearch" class="sr-only">搜尋人員姓名</label>
+                                        <input type="search" id="staffPickerSearch" class="staffPicker-search-input" placeholder="輸入姓名搜尋" autocomplete="off" data-js="staffPickerSearch">
+                                    </div>
+                                    <div class="staffPicker-list" aria-label="選擇人員" data-js="staffPickerList">
+                                        <button type="button" class="staffPicker-item" data-js="staffPickerItem" data-filter="陳建宏" data-name="陳建宏" data-title="專任輔導教師" data-email="chen.jh@mail.hcc.edu.tw" aria-pressed="false">
+                                            <span class="staffPicker-itemMain">
+                                                <span class="staffPicker-itemName">陳建宏</span>
+                                                <span class="staffPicker-itemTitle">專任輔導教師</span>
+                                            </span>
+                                            <span class="staffPicker-itemEmail">chen.jh@mail.hcc.edu.tw</span>
+                                        </button>
+                                        <button type="button" class="staffPicker-item" data-js="staffPickerItem" data-filter="林美玉" data-name="林美玉" data-title="特教班導師" data-email="lin.my@mail.hcc.edu.tw" aria-pressed="false">
+                                            <span class="staffPicker-itemMain">
+                                                <span class="staffPicker-itemName">林美玉</span>
+                                                <span class="staffPicker-itemTitle">特教班導師</span>
+                                            </span>
+                                            <span class="staffPicker-itemEmail">lin.my@mail.hcc.edu.tw</span>
+                                        </button>
+                                        <button type="button" class="staffPicker-item" data-js="staffPickerItem" data-filter="黃志強" data-name="黃志強" data-title="事務組長" data-email="huang.zc@mail.hcc.edu.tw" aria-pressed="false">
+                                            <span class="staffPicker-itemMain">
+                                                <span class="staffPicker-itemName">黃志強</span>
+                                                <span class="staffPicker-itemTitle">事務組長</span>
+                                            </span>
+                                            <span class="staffPicker-itemEmail">huang.zc@mail.hcc.edu.tw</span>
+                                        </button>
+                                    </div>
+                                    <p class="staffPicker-empty" data-js="staffPickerEmpty" hidden>找不到符合的人員</p>
+                                </div>
+
+                                <input type="hidden" id="staffPickerValue" data-js="staffPickerValue">
+                                <p class="formField-error" data-js="staffPickerError" hidden>請選擇一位人員</p>
+
+                                <div class="staffPicker-selected" data-js="staffPickerSelected" hidden>
+                                    <span class="staffPicker-selected-avatar" aria-hidden="true" data-js="staffPickerSelectedAvatar"></span>
+                                    <span class="staffPicker-selected-text">
+                                        <span class="staffPicker-itemMain">
+                                            <span class="staffPicker-itemName" data-js="staffPickerSelectedName"></span>
+                                            <span class="staffPicker-itemTitle" data-js="staffPickerSelectedTitle"></span>
+                                        </span>
+                                        <span class="staffPicker-itemEmail" data-js="staffPickerSelectedEmail"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-body-section">
+                            <h3>擔任職務</h3>
+                            <div class="formGrid">
+                                <div>
+                                    <label for="asTitle" class="formField-label">職稱 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="asTitle" class="form-control" placeholder="例：特教老師" required>
+                                </div>
+                                <div>
+                                    <label for="asExt" class="formField-label">聯絡分機</label>
+                                    <input type="text" id="asExt" class="form-control" placeholder="例：15">
+                                </div>
+                                <div class="formGrid-full">
+                                    <div class="formField-checkRow">
+                                        <input type="checkbox" id="asPrimary" class="form-check-input">
+                                        <label for="asPrimary" class="formField-checkRow-label">設為主要聯絡人（將取代目前的主要聯絡人）</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="addStaffForm" class="btnPill btn-teal" data-js="staffAddSubmit">新增人員</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 編輯管理人員 modal -->
+    <div class="modal fade" data-js="editStaffModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="editStaffTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 class="modal-title" id="editStaffTitle">
+                            編輯管理人員
+                        </h2>
+                        <p class="textNote modal-subtitle">人員需重新移除後再新增才能更換</p>
+                    </div>
+                    <button type="button" class="btnIcon" data-bs-dismiss="modal" aria-label="關閉">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body" tabindex="0">
+                    <form id="editStaffForm">
+                        <div class="modal-body-section">
+                            <h3>目前人員</h3>
+                            <div class="staffPicker-fixed">
+                                <span class="staffPicker-fixed-avatar" aria-hidden="true" data-js="esAvatar">王</span>
+                                <span class="staffPicker-fixed-text">
+                                    <span class="staffPicker-fixed-name" data-js="esName">王淑芬</span>
+                                    <span class="staffPicker-fixed-meta" data-js="esEmail">wang.sf@mail.hcc.edu.tw</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="modal-body-section">
+                            <h3>擔任職務</h3>
+                            <div class="formGrid">
+                                <div>
+                                    <label for="esTitle" class="formField-label">職稱 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="esTitle" class="form-control" required>
+                                </div>
+                                <div>
+                                    <label for="esExt" class="formField-label">聯絡分機</label>
+                                    <input type="text" id="esExt" class="form-control">
+                                </div>
+                                <div class="formGrid-full">
+                                    <div class="formField-checkRow">
+                                        <input type="checkbox" id="esPrimary" class="form-check-input">
+                                        <label for="esPrimary" class="formField-checkRow-label">設為主要聯絡人（將取代目前的主要聯絡人）</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="editStaffForm" class="btnPill btn-teal" data-js="staffEditSubmit">儲存變更</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 移除管理人員確認 modal -->
+    <div class="modal fade" data-js="deleteStaffModal" tabindex="-1" aria-hidden="true" aria-labelledby="deleteStaffTitle">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 class="modal-title" id="deleteStaffTitle">
+                            移除管理人員
+                        </h2>
+                    </div>
+                    <button type="button" class="btnIcon" data-bs-dismiss="modal" aria-label="關閉">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body" tabindex="0">
+                    <p class="textNote">確定要將 <strong data-js="dsName">○○○</strong> 從輔具管理人員名單中移除嗎？移除後將無法再收到借用申請與報修通知。</p>
+                    <div class="noteBox noteBox-red mt-3">
+                        <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>
+                        <span>此操作無法復原。</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btnPill btn-danger" data-js="staffDeleteConfirm">確認移除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

@@ -1,0 +1,395 @@
+// ============================================================
+// 首頁各區塊專用排版（design.md §8.2 手機版重新排序）
+// 只服務單一區塊、不重複使用於其他元件，故直接以區塊名稱命名、各自成一個 grid（CLAUDE.md §7.1 例外）
+// ============================================================
+
+// #news：手機版收緊首尾間距，避免頁面被拉長
+// Bootstrap 的 pt-*/pb-* 工具類別編譯後自帶 !important，且版面斷點 720px 與 Bootstrap
+// 內建響應式字首斷點不同，無法用 pt-lg-* 搭配，故在此用等同或更高特異度 + !important 覆寫
+#news .container {
+    @media (max-width: 720px) {
+        padding-top: 24px !important;
+        padding-bottom: 40px !important;
+    }
+}
+
+// #newsList：分類頁籤靠左、年度／搜尋篩選並排靠右；手機時篩選欄位各自撐滿寬度
+.newsLayout-filters {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.newsLayout-filters-group {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    @media (max-width: 720px) {
+        width: 100%;
+    }
+}
+
+.newsLayout-filters-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+
+    // 表單標籤（design.md §7.7：16px 700，標籤在欄位上方）
+    label {
+        font-size: 16px;
+        font-weight: 700;
+        color: $ink-1;
+    }
+
+    .form-select,
+    .form-control {
+        width: auto;
+        min-width: 160px;
+    }
+
+    @media (max-width: 720px) {
+        flex: 1 1 140px;
+
+        .form-select,
+        .form-control {
+            width: 100%;
+            min-width: 0;
+        }
+    }
+}
+
+// #catalog：桌面標題與「查看全部輔具」同列；手機時按鈕移到卡片下方
+.catalogLayout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 16px;
+    align-items: center;
+    grid-template-areas:
+        "head action"
+        "tabs tabs"
+        "panel panel";
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "head"
+            "tabs"
+            "panel"
+            "action";
+    }
+}
+
+// 手機版收緊首尾間距（理由同 #news，複合選擇器對齊元素上 .container.catalogLayout 的實際 class 組合）
+.container.catalogLayout {
+    @media (max-width: 720px) {
+        padding-top: 32px !important;
+        padding-bottom: 40px !important;
+    }
+}
+
+.catalogLayout-head {
+    grid-area: head;
+    margin-bottom: 24px;
+}
+
+.catalogLayout-action {
+    grid-area: action;
+    justify-self: end;
+
+    @media (max-width: 720px) {
+        justify-self: center;
+        margin-top: 24px;
+    }
+}
+
+.catalogLayout-tabs {
+    grid-area: tabs;
+}
+
+.catalogLayout-panel {
+    grid-area: panel;
+}
+
+// #flow：桌面標題與「新竹縣特教輔具借用要點」連結同列；手機時連結移到步驟卡下方
+.flowLayout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 16px;
+    align-items: center;
+    grid-template-areas:
+        "head link"
+        "cards cards"
+        "dots dots";
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "head"
+            "cards"
+            "dots"
+            "link";
+    }
+}
+
+.flowLayout-head {
+    grid-area: head;
+    margin-bottom: 24px;
+}
+
+.flowLayout-link {
+    grid-area: link;
+    justify-self: end;
+
+    @media (max-width: 720px) {
+        justify-self: center;
+        margin-top: 20px;
+    }
+}
+
+.flowLayout-cards {
+    grid-area: cards;
+
+    // 手機：橫向 row 的 col-6 col-lg 格線改成直式列表，數字圓圈之間用虛線相連
+    @media (max-width: 720px) {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin: 0;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 25px;
+            top: 26px;
+            bottom: 40px;
+            border-left: 2px dashed #8CC7BF;
+            pointer-events: none;
+        }
+    }
+}
+
+.flowLayout-card {
+    @media (max-width: 720px) {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+    }
+}
+
+.flowLayout-dots {
+    grid-area: dots;
+}
+
+// 手機版收緊首尾間距（理由同 #news）
+.container.flowLayout {
+    @media (max-width: 720px) {
+        padding-top: 24px !important;
+        padding-bottom: 32px !important;
+    }
+}
+
+// catalog.html：側邊分類篩選＋右側結果區（搜尋／排序／卡片格線）
+.catalogPage-layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+.catalogPage-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: sticky;
+    top: 24px;
+
+    // 手機版改用 .catalogPage-resultsHead-categoryMobile／-freeOnlyMobile 下拉與勾選取代，
+    // 直排分類清單在窄螢幕會把下方輔具卡片推到很下面，故整個側欄隱藏不堆疊
+    @media (max-width: 900px) {
+        display: none;
+    }
+}
+
+.catalogPage-results {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+}
+
+.catalogPage-resultsHead {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.catalogPage-resultsHead-search {
+    flex: 1 1 280px;
+    min-width: 0;
+}
+
+.catalogPage-resultsHead-sort {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+
+    label {
+        font-size: 16px;
+        font-weight: 700;
+        color: $ink-1;
+    }
+
+    .form-select {
+        width: auto;
+        min-width: 160px;
+    }
+
+    // 手機版改與分類下拉並排，改直式排列（標籤在上）並平分寬度
+    @media (max-width: 900px) {
+        flex-direction: column;
+        align-items: stretch;
+        min-width: 0;
+
+        .form-select {
+            width: 100%;
+            min-width: 0;
+        }
+    }
+}
+
+// 桌面版：用 display:contents 讓內層分類下拉（隱藏）與排序選單維持原本直接排在 .catalogPage-resultsHead 下的版面
+// 手機版：切成真正的 flex 容器，讓分類下拉與排序選單並排平分寬度
+.catalogPage-resultsHead-filters {
+    display: contents;
+
+    @media (max-width: 900px) {
+        display: flex;
+        gap: 12px;
+        width: 100%;
+    }
+}
+
+// 手機版專用：取代 .catalogPage-sidebar 的分類頁籤，桌面版隱藏
+.catalogPage-resultsHead-categoryMobile {
+    display: none;
+    flex-direction: column;
+
+    @media (max-width: 900px) {
+        display: flex;
+        flex: 1 1 0;
+        min-width: 0;
+    }
+}
+
+// 手機版專用：取代 .catalogPage-sidebar 的「只看免評估品項」勾選，桌面版隱藏
+.catalogPage-resultsHead-freeOnlyMobile {
+    display: none;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+
+    .form-check-input {
+        margin-top: 3px;
+    }
+
+    @media (max-width: 900px) {
+        display: flex;
+    }
+}
+
+.catalogPage-grid {
+    display: grid;
+    gap: 24px;
+    
+    /* 1. 預設（手機板）：強制固定為 2 欄，完美平分 */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* 2. 當螢幕夠寬時（這裡以 592px 為界），切換回你原本的自動排列 */
+@media (min-width: 780px) {
+    .catalogPage-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+}
+
+
+// 側邊欄白卡（分類篩選、其他條件）
+.catalogPage-panel {
+    padding: 22px 24px;
+    border-radius: $border-radius-lg;
+    background-color: $surface-card;
+    box-shadow: $shadow-panel;
+}
+
+.catalogPage-panel-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: $ink-1;
+    margin: 0;
+}
+
+// device.html：左側照片卡、右側資訊卡並排，窄螢幕改直式堆疊
+.deviceLayout {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.deviceLayout-photo {
+    flex: 1 1 480px;
+    min-width: 0;
+}
+
+.deviceLayout-info {
+    flex: 1 1 420px;
+    min-width: 0;
+}
+
+// device.html：大張輔具照片（非列表縮圖）
+.devicePhoto {
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    box-shadow: $shadow-card;
+    background-color: $surface-mint-dots;
+
+    img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: contain;
+    }
+}
+
+// device.html：使用說明步驟（行內條列，非獨立卡片）
+.deviceSteps {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.deviceSteps-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 17px;
+    line-height: 1.7;
+    color: $ink-2;
+}

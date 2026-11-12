@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>申請審核 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="特教資源中心審核學校送出的輔具申請，安排到校評估與確認點交">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_Center.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu" src="../img/banner/review.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="reviewPage-container">
+                <div class="bannerWave-inner">
+                    <nav class="crumbNav" aria-label="麵包屑導覽">
+                        <ol>
+                            <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li aria-current="page" class="crumbNav-current">申請審核</li>
+                        </ol>
+                    </nav>
+
+                    <div class="bannerWave-main">
+                        <h1 class="titleSection bannerWave-title">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            申請審核
+                        </h1>
+                        <p class="bannerWave-desc">審核學校送出的輔具申請。待到校評估的案件可在這裡安排日期；核准後，學校上傳簽章的借用單，再由中心確認點交。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="reviewPage-content">
+            <div class="reviewPage-container">
+                <section class="cardPanel" aria-label="申請列表">
+
+                    <div class="recordsFilters">
+                        <div class="tabsCount" role="tablist" aria-label="依狀態檢視">
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-rv-pending" data-category="pending" aria-selected="true" aria-controls="panel-rvList" tabindex="0">待審核<span class="tabsCount-badge" aria-hidden="true">6</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-rv-eval" data-category="eval" aria-selected="false" aria-controls="panel-rvList" tabindex="-1">待到校評估<span class="tabsCount-badge" aria-hidden="true">2</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-rv-handover" data-category="handover" aria-selected="false" aria-controls="panel-rvList" tabindex="-1">待點交確認<span class="tabsCount-badge" aria-hidden="true">2</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-rv-returned" data-category="returned" aria-selected="false" aria-controls="panel-rvList" tabindex="-1">退回補件<span class="tabsCount-badge" aria-hidden="true">1</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-rv-done" data-category="done" aria-selected="false" aria-controls="panel-rvList" tabindex="-1">已完成<span class="tabsCount-badge" aria-hidden="true">1</span></button>
+                        </div>
+
+                        <form class="recordsFilters-form" novalidate>
+                            <div class="recordsFilters-field">
+                                <label for="rvType">申請類型</label>
+                                <select id="rvType" class="form-select">
+                                    <option value="all" selected>全部類型</option>
+                                    <option value="first">首次借用</option>
+                                    <option value="temp">臨時借用</option>
+                                    <option value="renew">轉銜續借</option>
+                                    <option value="return">畢業歸還</option>
+                                    <option value="stop">停止借用</option>
+                                    <option value="school">校內使用</option>
+                                </select>
+                            </div>
+                            <div class="recordsFilters-field">
+                                <label for="rvCat">輔具分類</label>
+                                <select id="rvCat" class="form-select">
+                                    <option value="all" selected>全部分類</option>
+                                    <option value="mobility">行動與擺位輔具</option>
+                                    <option value="vision">視障輔具</option>
+                                    <option value="hearing">聽障輔具</option>
+                                    <option value="comm">溝通輔具</option>
+                                    <option value="it">資訊輔具</option>
+                                    <option value="read">書寫與閱讀輔具</option>
+                                    <option value="other">其他輔具</option>
+                                </select>
+                            </div>
+                            <div class="recordsFilters-field">
+                                <label for="rvLevel">學制</label>
+                                <select id="rvLevel" class="form-select">
+                                    <option value="all" selected>全部學制</option>
+                                    <option value="kg">幼兒園</option>
+                                    <option value="elem">國小</option>
+                                    <option value="jr">國中</option>
+                                    <option value="sr">高中職</option>
+                                </select>
+                            </div>
+                            <div class="recordsFilters-field">
+                                <label for="rvSearch">關鍵字</label>
+                                <div class="inputGroup">
+                                    <i class="bi bi-search inputGroup-icon" aria-hidden="true"></i>
+                                    <input type="search" id="rvSearch" class="form-control" placeholder="申請編號、學校、學生姓名">
+                                </div>
+                            </div>
+                            <button type="submit" class="btnPill btn-teal btnPill-sm">查詢</button>
+                            <button type="button" class="btnPill btn-amberSolid btnPill-sm">
+                                <i class="bi bi-download" aria-hidden="true"></i>匯出 Excel
+                            </button>
+                        </form>
+                    </div>
+
+                    <p class="textNote">總筆數：6</p>
+
+                    <div role="tabpanel" id="panel-rvList" aria-labelledby="tab-rv-pending">
+                        <p class="textNote py-6" data-js="emptyNote" hidden>這個分類目前沒有申請案件。</p>
+
+                        <div class="dataTable-wrap">
+                            <div class="dataTable-scroll">
+                                <table class="dataTable dataTable--stickyEnd">
+                                    <caption>申請審核列表</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">申請編號／日期</th>
+                                            <th scope="col">學校</th>
+                                            <th scope="col">學生／借用人</th>
+                                            <th scope="col">申請輔具</th>
+                                            <th scope="col">類型</th>
+                                            <th scope="col">狀態</th>
+                                            <th scope="col">功能</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-category="pending">
+                                            <td data-label="申請編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">A1150923-012</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/09/23</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">竹北國小</td>
+                                            <td data-label="學生／借用人">林○安</td>
+                                            <td data-label="申請輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">桌上型擴視機</span>
+                                                    <span class="dataTable-cellTitle-sub">視障輔具</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型">首次借用</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待審核</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="review-detail.html" class="btnPill btn-teal btnPill-sm" aria-label="審核 A1150923-012">審核</a>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="pending">
+                                            <td data-label="申請編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">A1150922-008</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/09/22</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">新豐國中</td>
+                                            <td data-label="學生／借用人">陳○宇</td>
+                                            <td data-label="申請輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">FM 調頻系統</span>
+                                                    <span class="dataTable-cellTitle-sub">聽障輔具</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型">首次借用</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待審核</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="review-detail.html" class="btnPill btn-teal btnPill-sm" aria-label="審核 A1150922-008">審核</a>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="pending">
+                                            <td data-label="申請編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">A1150922-003</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/09/22</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">竹東國中</td>
+                                            <td data-label="學生／借用人">彭○傑</td>
+                                            <td data-label="申請輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="flex-row-start flex-wrap gap-2">
+                                                        <span class="dataTable-cellTitle-main">語音溝通器</span>
+                                                        <span class="tagPill tag-amberOutline" title="目前無庫存，核准後需採購或調配">待購置</span>
+                                                    </span>
+                                                    <span class="dataTable-cellTitle-sub">溝通輔具</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型">首次借用</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待審核</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="review-detail.html" class="btnPill btn-teal btnPill-sm" aria-label="審核 A1150922-003">審核</a>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="pending">
+                                            <td data-label="申請編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">A1150921-031</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/09/21</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">湖口國小</td>
+                                            <td data-label="學生／借用人">張○晴</td>
+                                            <td data-label="申請輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">擺位椅</span>
+                                                    <span class="dataTable-cellTitle-sub">行動與擺位輔具</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型">轉銜續借</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待審核</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="review-detail.html" class="btnPill btn-teal btnPill-sm" aria-label="審核 A1150921-031">審核</a>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="pending">
+                                            <td data-label="申請編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">A1150920-004</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/09/20</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">竹東國小附幼</td>
+                                            <td data-label="學生／借用人">黃○恩</td>
+                                            <td data-label="申請輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">副木</span>
+                                                    <span class="dataTable-cellTitle-sub">行動與擺位輔具</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型">首次借用</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待審核</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="review-detail.html" class="btnPill btn-teal btnPill-sm" aria-label="審核 A1150920-004">審核</a>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="pending">
+                                            <td data-label="申請編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">A1150919-017</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/09/19</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">關西國中</td>
+                                            <td data-label="學生／借用人">資源班</td>
+                                            <td data-label="申請輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">攜帶型擴視機</span>
+                                                    <span class="dataTable-cellTitle-sub">視障輔具</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型">校內使用</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待審核</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="review-detail.html" class="btnPill btn-teal btnPill-sm" aria-label="審核 A1150919-017">審核</a>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="eval" hidden>
+                                            <td data-label="申請編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">A1150918-022</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/09/18</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">寶山國小</td>
+                                            <td data-label="學生／借用人">李○婷</td>
+                                            <td data-label="申請輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">特製輪椅</span>
+                                                    <span class="dataTable-cellTitle-sub">行動與擺位輔具</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型">首次借用</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>待到校評估</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="review-detail.html?state=eval" class="btnPill btn-teal btnPill-sm" aria-label="安排評估 A1150918-022">安排評估</a>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="eval" hidden>
+                                            <td data-label="申請編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">A1150917-009</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/09/17</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">橫山國小</td>
+                                            <td data-label="學生／借用人">吳○翔</td>
+                                            <td data-label="申請輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="flex-row-start flex-wrap gap-2">
+                                                        <span class="dataTable-cellTitle-main">溝通板</span>
+                                                        <span class="tagPill tag-amberOutline" title="目前無庫存，核准後需採購或調配">待購置</span>
+                                                    </span>
+                                                    <span class="dataTable-cellTitle-sub">溝通輔具</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型">首次借用</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>待到校評估</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="review-detail.html?state=eval" class="btnPill btn-teal btnPill-sm" aria-label="安排評估 A1150917-009">安排評估</a>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="handover" hidden>
+                                            <td data-label="申請編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">A1150915-014</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/09/15</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">竹北國中</td>
+                                            <td data-label="學生／借用人">周○涵</td>
+                                            <td data-label="申請輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">搖桿滑鼠</span>
+                                                    <span class="dataTable-cellTitle-sub">資訊輔具</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型">首次借用</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-teal"><span class="statusPill-dot" aria-hidden="true"></span>待點交確認</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="review-detail.html?state=handover" class="btnPill btn-teal btnPill-sm" aria-label="確認點交 A1150915-014">確認點交</a>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="handover" hidden>
+                                            <td data-label="申請編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">A1150912-006</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/09/12</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">芎林國中</td>
+                                            <td data-label="學生／借用人">許○廷</td>
+                                            <td data-label="申請輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">一般輪椅</span>
+                                                    <span class="dataTable-cellTitle-sub">行動與擺位輔具</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型">畢業歸還</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-teal"><span class="statusPill-dot" aria-hidden="true"></span>待點交確認</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="review-detail.html?state=handover" class="btnPill btn-teal btnPill-sm" aria-label="確認點交 A1150912-006">確認點交</a>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="returned" hidden>
+                                            <td data-label="申請編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">A1150910-019</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/09/10</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">峨眉國小</td>
+                                            <td data-label="學生／借用人">劉○妤</td>
+                                            <td data-label="申請輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="flex-row-start flex-wrap gap-2">
+                                                        <span class="dataTable-cellTitle-main">站立架</span>
+                                                        <span class="tagPill tag-amberOutline" title="目前無庫存，核准後需採購或調配">待購置</span>
+                                                    </span>
+                                                    <span class="dataTable-cellTitle-sub">行動與擺位輔具</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型">首次借用</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-red"><span class="statusPill-dot" aria-hidden="true"></span>退回補件</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="review-detail.html?state=returned" class="btnPill btn-teal btnPill-sm" aria-label="查看 A1150910-019">查看</a>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="done" hidden>
+                                            <td data-label="申請編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">A1150905-002</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/09/05</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="學校">北埔國小</td>
+                                            <td data-label="學生／借用人">鄭○哲</td>
+                                            <td data-label="申請輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">助行器</span>
+                                                    <span class="dataTable-cellTitle-sub">行動與擺位輔具</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="類型">臨時借用</td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>已完成</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <a href="review-detail.html?state=done" class="btnPill btn-teal btnPill-sm" aria-label="查看 A1150905-002">查看</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 分頁為靜態示意（尚無真實分頁邏輯），預設顯示多頁狀態供工程參考 -->
+                        <nav class="pageNav mt-6" aria-label="分頁">
+                            <p class="pageNav-summary">顯示第 1 至 6 筆，共 6 筆資料</p>
+                            <ul class="pageNav-list">
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="第一頁"><i class="bi bi-chevron-bar-left" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="rvPagePrevNote"><i class="bi bi-chevron-left" aria-hidden="true"></i>上一頁</span></li>
+                                <li><span class="pageNav-item" aria-current="page">1</span></li>
+                                <li><span class="pageNav-item pageNav-item-label" aria-disabled="true">下一頁<i class="bi bi-chevron-right" aria-hidden="true"></i></span></li>
+                                <li><span class="pageNav-item" aria-disabled="true" aria-label="最後一頁"><i class="bi bi-chevron-bar-right" aria-hidden="true"></i></span></li>
+                            </ul>
+                            <span id="rvPagePrevNote" class="sr-only">已是第一頁，沒有上一頁</span>
+                        </nav>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

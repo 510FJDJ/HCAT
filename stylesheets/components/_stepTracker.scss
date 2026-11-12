@@ -1,0 +1,99 @@
+// ============================================================
+// 水平步驟追蹤器（送出申請成功 modal 專用，5 步驟，目前僅第 1 步完成）
+// ============================================================
+
+.stepTracker {
+    margin: 22px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+}
+
+.stepTracker-item {
+    flex: 1 1 0;
+    min-width: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+}
+
+// 連接線：每個項目左半段畫到前一個項目，第一個項目不畫
+.stepTracker-item:not(:first-child)::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 14px;
+    right: 50%;
+    width: 100%;
+    height: 2px;
+    background-color: $line-default;
+}
+
+.stepTracker-circle {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    background-color: $surface-card;
+    color: #8A979D;
+    border: 2px solid $line-default;
+}
+
+.stepTracker-circle.is-active {
+    background-color: #E08A12;
+    color: #FFFFFF;
+    border: none;
+    box-shadow: 0 0 0 5px #FDF3E4;
+}
+
+// 已完成步驟（報修進度追蹤等多階段流程，需要「完成」與「出錯」兩種額外狀態）
+.stepTracker-circle.is-done {
+    background-color: $brand-teal-deep;
+    color: #FFFFFF;
+    border: none;
+    font-size: 15px;
+}
+
+.stepTracker-circle.is-error {
+    background-color: $state-required;
+    color: #FFFFFF;
+    border: none;
+    font-size: 15px;
+}
+
+// 已完成步驟前方的連接線同步轉為青綠色，標示「這一段已經走過」
+.stepTracker-item--lineDone::before {
+    background-color: $brand-teal-deep;
+}
+
+.stepTracker-label {
+    font-size: 16px;
+    line-height: 1.35;
+    color: #8A979D;
+}
+
+.stepTracker-label.is-active {
+    font-weight: 700;
+    color: #7A4705;
+}
+
+.stepTracker-label.is-done {
+    color: $ink-1;
+}
+
+.stepTracker-label.is-error {
+    font-weight: 700;
+    color: $state-required;
+}

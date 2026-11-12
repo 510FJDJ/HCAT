@@ -1,0 +1,44 @@
+// ============================================================
+// 中心端報修管理專屬元件：
+// - .textAmberBold：列表「尚未指派」等需要立即處理的文字提示（同 design.md §2.3 暫無可借用色）
+// - .reportBox：結案／查看 modal 內顯示廠商回報內容的卡片
+// ============================================================
+
+.textAmberBold {
+    font-weight: 700;
+    color: $accent-amber-ink;
+}
+
+.reportBox {
+    margin-top: 10px;
+    padding: 16px 18px;
+    border-radius: $border-radius-md;
+    border: 1px solid $line-default;
+    background-color: $surface-tint;
+}
+
+.reportBox-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+}
+
+.reportBox-meta {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.reportBox-note {
+    margin: 10px 0 0;
+    font-size: 16px;
+    line-height: 1.7;
+    color: $ink-2;
+}
+
+// 廠商回報「無法修復」狀態：底與框線沿用 .noteBox-red／.tag-redLight 同一組紅色調
+.reportBox-danger {
+    border-color: rgba($state-required, .35);
+    background-color: #FBEAEA;
+}

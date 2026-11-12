@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <script>
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>最新消息｜輔具管理資訊系統｜新竹縣特殊教育資源中心</title>
+    <link rel="icon" type="image/png" href="img/logo/logo.png">
+    <link rel="stylesheet" href="css/all.css">
+</head>
+<body>
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+    <a href="#footerAnchor" class="sr-only focusable" accesskey="Z" title="跳至頁尾資訊區">頁尾資訊區</a>
+
+    <div id="header" data-layout="layout/header.html"></div>
+
+    <main id="goCenter" tabindex="-1">
+
+        <section class="pageBanner">
+            <div class="container pageBanner-inner">
+                <div class="pageBanner-main">
+                    <div class="pageBanner-text">
+                        <span class="labelCaption"><span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>NEWS</span>
+                        <h1 class="titleSection">最新消息</h1>
+                        <p class="pageBanner-desc">公告申請期間、系統維護與研習活動，請用分類頁籤或下方條件篩選。</p>
+                    </div>
+                    <img src="img/banner/news.png" alt="" class="pageBanner-illustration">
+                </div>
+            </div>
+        </section>
+
+        <section class="sectionBand-overlap">
+            <div class="container pt-12 pb-16">
+
+                <div class="newsLayout-filters mb-8">
+                    <div class="tabsPill" role="tablist" aria-label="最新消息分類">
+                        <button type="button" class="tabsPill-item" role="tab" id="tab-newsList-all" data-category="all" aria-selected="true" aria-controls="panel-newsList" tabindex="0">全部</button>
+                        <button type="button" class="tabsPill-item" role="tab" id="tab-newsList-apply" data-category="apply" aria-selected="false" aria-controls="panel-newsList" tabindex="-1">申請公告</button>
+                        <button type="button" class="tabsPill-item" role="tab" id="tab-newsList-system" data-category="system" aria-selected="false" aria-controls="panel-newsList" tabindex="-1">系統公告</button>
+                        <button type="button" class="tabsPill-item" role="tab" id="tab-newsList-event" data-category="event" aria-selected="false" aria-controls="panel-newsList" tabindex="-1">研習活動</button>
+                    </div>
+
+                    <div class="newsLayout-filters-group">
+                        <div class="newsLayout-filters-field">
+                            <label for="newsYear">年度</label>
+                            <select id="newsYear" class="form-select">
+                                <option value="all" selected>全部年度</option>
+                                <option value="2026">2026</option>
+                            </select>
+                        </div>
+
+                        <div class="newsLayout-filters-field">
+                            <label for="newsSearch">搜尋標題</label>
+                            <div class="inputGroup">
+                                <i class="bi bi-search inputGroup-icon" aria-hidden="true"></i>
+                                <input type="search" id="newsSearch" class="form-control" placeholder="輸入關鍵字">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="textNote mb-6" data-js="newsCount">共 8 則消息</p>
+
+                <div class="panelInset" role="tabpanel" id="panel-newsList" aria-labelledby="tab-newsList-all">
+                    <p class="textNote py-6" data-js="emptyNote" hidden>此分類目前沒有消息。</p>
+                    <ul class="list-unstyled mb-0">
+                        <li data-category="apply">
+                            <a href="news-detail.html" class="listRow">
+                                <span class="listRow-body">
+                                    <span class="listRow-meta">
+                                        <span class="listRow-date">2026/07/15</span>
+                                        <span class="tagPill tag-amberSolid tagPill-withIcon"><i class="bi bi-pin-angle-fill" aria-hidden="true"></i>置頂</span>
+                                        <span class="tagPill tag-tealSoft">申請公告</span>
+                                    </span>
+                                    <span class="listRow-title">114 學年度第二次輔具申請簡章公告<i class="bi bi-paperclip listRow-attachIcon" aria-hidden="true"></i><span class="sr-only">（含附件）</span></span>
+                                </span>
+                                <i class="bi bi-chevron-right listRow-arrow" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li data-category="system">
+                            <a href="news-detail.html" class="listRow">
+                                <span class="listRow-body">
+                                    <span class="listRow-meta">
+                                        <span class="listRow-date">2026/10/06</span>
+                                        <span class="tagPill tag-goldLight">系統公告</span>
+                                    </span>
+                                    <span class="listRow-title">系統維護暫停服務通知</span>
+                                </span>
+                                <i class="bi bi-chevron-right listRow-arrow" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li data-category="apply">
+                            <a href="news-detail.html" class="listRow">
+                                <span class="listRow-body">
+                                    <span class="listRow-meta">
+                                        <span class="listRow-date">2026/09/24</span>
+                                        <span class="tagPill tag-tealSoft">申請公告</span>
+                                    </span>
+                                    <span class="listRow-title">輔具歸還與報修作業說明</span>
+                                </span>
+                                <i class="bi bi-chevron-right listRow-arrow" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li data-category="event">
+                            <a href="news-detail.html" class="listRow">
+                                <span class="listRow-body">
+                                    <span class="listRow-meta">
+                                        <span class="listRow-date">2026/09/10</span>
+                                        <span class="tagPill tag-coralLight">研習活動</span>
+                                    </span>
+                                    <span class="listRow-title">輔具評估研習報名</span>
+                                </span>
+                                <i class="bi bi-chevron-right listRow-arrow" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li data-category="apply">
+                            <a href="news-detail.html" class="listRow">
+                                <span class="listRow-body">
+                                    <span class="listRow-meta">
+                                        <span class="listRow-date">2026/08/25</span>
+                                        <span class="tagPill tag-tealSoft">申請公告</span>
+                                    </span>
+                                    <span class="listRow-title">115 年度第二次學校輔具申請開放</span>
+                                </span>
+                                <i class="bi bi-chevron-right listRow-arrow" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li data-category="system">
+                            <a href="news-detail.html" class="listRow">
+                                <span class="listRow-body">
+                                    <span class="listRow-meta">
+                                        <span class="listRow-date">2026/06/20</span>
+                                        <span class="tagPill tag-goldLight">系統公告</span>
+                                    </span>
+                                    <span class="listRow-title">系統新增線上簽核功能</span>
+                                </span>
+                                <i class="bi bi-chevron-right listRow-arrow" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li data-category="event">
+                            <a href="news-detail.html" class="listRow">
+                                <span class="listRow-body">
+                                    <span class="listRow-meta">
+                                        <span class="listRow-date">2026/05/18</span>
+                                        <span class="tagPill tag-coralLight">研習活動</span>
+                                    </span>
+                                    <span class="listRow-title">輔具評估與適配實務研習</span>
+                                </span>
+                                <i class="bi bi-chevron-right listRow-arrow" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li data-category="apply">
+                            <a href="news-detail.html" class="listRow">
+                                <span class="listRow-body">
+                                    <span class="listRow-meta">
+                                        <span class="listRow-date">2026/04/02</span>
+                                        <span class="tagPill tag-tealSoft">申請公告</span>
+                                    </span>
+                                    <span class="listRow-title">聽障輔具點交作業流程調整通知</span>
+                                </span>
+                                <i class="bi bi-chevron-right listRow-arrow" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <nav class="pageNav" aria-label="分頁">
+                    <p class="pageNav-summary">顯示第 1 至 8 筆，共 24 筆資料</p>
+                    <ul class="pageNav-list">
+                        <li><span class="pageNav-item" aria-disabled="true" aria-label="第一頁"><i class="bi bi-chevron-bar-left" aria-hidden="true"></i></span></li>
+                        <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="newsPagePrevNote"><i class="bi bi-chevron-left" aria-hidden="true"></i>上一頁</span></li>
+                        <li><span class="pageNav-item" aria-current="page">1</span></li>
+                        <li><a href="#" class="pageNav-item">2</a></li>
+                        <li><a href="#" class="pageNav-item">3</a></li>
+                        <li><a href="#" class="pageNav-item pageNav-item-label">下一頁<i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="pageNav-item" aria-label="最後一頁"><i class="bi bi-chevron-bar-right" aria-hidden="true"></i></a></li>
+                    </ul>
+                    <span id="newsPagePrevNote" class="sr-only">已是第一頁，沒有上一頁</span>
+                </nav>
+
+            </div>
+        </section>
+
+    </main>
+
+    <div data-layout="layout/footer.html"></div>
+
+    <script src="js/all.js"></script>
+</body>
+</html>

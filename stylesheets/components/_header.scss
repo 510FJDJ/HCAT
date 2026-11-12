@@ -1,0 +1,145 @@
+// ============================================================
+// 頁首版位（design.md §5.1、§5.3）：landmark 命名，內部元件外型命名
+// 注意：position:sticky 掛在 #header 包裹 div（見 base/_base.scss），這裡只處理外觀
+// ============================================================
+
+.siteHeader {
+    background-color: rgba(255, 255, 255, .72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.siteHeader-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 14px 40px;
+    transition: padding 200ms ease-out, height 200ms ease-out;
+
+    @media (max-width: 1280px) {
+        padding: 8px 24px;
+    }
+
+    @media (max-width: 720px) {
+        height: 64px;
+        padding: 8px 16px;
+    }
+}
+
+// 往下滑動時第二排也收合上下內距（JS 依捲動位置切換 #header.is-compact，見 js/main.js）
+#header.is-compact .siteHeader-inner {
+    padding: 8px 40px;
+
+    @media (max-width: 1280px) {
+        padding: 6px 24px;
+    }
+
+    @media (max-width: 720px) {
+        padding: 6px 16px;
+    }
+}
+
+.siteHeader-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.siteHeader-logo img {
+    height: 36px;
+    width: auto;
+
+    @media (max-width: 720px) {
+        height: 28px;
+    }
+}
+
+.siteHeader-logoText {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+}
+
+.siteHeader-logoText-small {
+    font-size: 14px;
+    color: $ink-3;
+}
+
+.siteHeader-logoText-main {
+    font-size: 19px;
+    font-weight: 700;
+    color: $ink-1;
+    letter-spacing: .08em;
+
+    @media (max-width: 720px) {
+        font-size: 17px;
+    }
+}
+
+.siteHeader-nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    @media (max-width: 900px) {
+        display: none;
+    }
+}
+
+.siteHeader-navList {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 17px;
+    font-weight: 500;
+
+    a {
+        
+        box-shadow: inset 0 -3px 0 transparent;
+        transition: color 180ms ease-out, box-shadow 180ms ease-out;
+    }
+
+    a[aria-current="page"]:not(.btnPill) {
+        color: $brand-teal-deep;
+        font-weight: 700;
+        background-image: none;
+        box-shadow: inset 0 -3px 0 $accent-amber;
+    }
+}
+
+.siteHeader-menuTrigger {
+    @media (min-width: 901px) {
+        display: none;
+    }
+}
+
+// 選單面板頭部的縮小版 Logo（design.md §5.3：手機選單頂部身分區，與 .siteHeader-logo 同時掛在同一個 <a> 上）
+.siteHeader-logo-sm {
+    gap: 10px;
+
+    img {
+        height: 28px;
+    }
+
+    .siteHeader-logoText-small {
+        font-size: 12px;
+    }
+
+    .siteHeader-logoText-main {
+        font-size: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .siteHeader-navList a {
+        transition: none;
+    }
+}

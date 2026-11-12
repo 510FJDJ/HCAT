@@ -1,0 +1,180 @@
+// ============================================================
+// 對話框元件（design.md §7.8）：Bootstrap 5 標準結構（.modal/.modal-dialog/.modal-content），
+// 開關、遮罩、Escape、焦點交回全部交給 bootstrap.Modal 處理，這裡只補視覺樣式
+// ============================================================
+
+.modal-dialog {
+    max-width: 520px;
+}
+
+.modal-dialog-md {
+    max-width: 640px;
+}
+
+.modal-dialog.modal-lg {
+    max-width: 760px;
+}
+
+// 內容欄位較多的表單 modal（如最新消息新增／編輯）專用加寬變體，不影響其他頁面共用的 .modal-lg
+.modal-dialog.modal-dialog-xl {
+    max-width: 900px;
+}
+
+.modal-content {
+    border: 0;
+    border-radius: $border-radius-xxl;
+    box-shadow: $shadow-dialog;
+    overflow: hidden;
+}
+
+.modal-header {
+    align-items: flex-start;
+    gap: 16px;
+    padding: 28px 32px 20px;
+    border-bottom: 0;
+    flex-shrink: 0;
+
+    .btnIcon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 720px) {
+        padding: 24px 20px 16px;
+    }
+}
+
+.modal-head-text {
+    flex: 1;
+}
+
+.modal-title {
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: $ink-1;
+    margin: 0;
+}
+
+.modal-subtitle {
+    margin-top: 4px;
+}
+
+.modal-body {
+    flex: 1;
+    padding: 0 32px 28px;
+
+    @media (max-width: 720px) {
+        padding: 0 20px 24px;
+    }
+}
+
+.modal-body-section + .modal-body-section {
+    margin-top: 24px;
+}
+
+.modal-body-section h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: $ink-1;
+    margin: 0 0 6px;
+}
+
+.modal-body-section .noteBox {
+    margin-bottom: 24px;
+}
+
+// 對話框按鈕列（design.md §7.8）：與內容區同底色、不另加背景色，兩顆按鈕滿版置中、
+// 依重要性分配寬度（次要：主要約 1:2），按鈕上下 padding 加大至 Primary 按鈕最高階高度（60px）
+.modal-footer {
+    gap: 12px;
+    padding: 24px 32px 28px;
+    border-top: 1px solid $line-default;
+    background-color: transparent;
+    flex-shrink: 0;
+
+    .btnPill {
+        flex: 1 1 0;
+        min-height: 60px;
+        padding-top: 18px;
+        padding-bottom: 18px;
+    }
+
+    .btn-teal {
+        flex: 2 1 0;
+    }
+
+    @media (max-width: 720px) {
+        padding: 20px 20px 24px;
+    }
+}
+
+// 只有一顆按鈕的對話框（純顯示、無需輸入）：靠右對齊、按鈕維持原寬，不撐滿
+.modal-footer-single {
+    justify-content: flex-end;
+
+    .btnPill {
+        flex: 0 0 auto;
+        min-width: 160px;
+    }
+}
+
+// 單顆按鈕但需滿版置中（如廠商端唯讀紀錄 modal 的「關閉」鈕），疊加於 .modal-footer-single 之後
+.modal-footer-single-wide {
+    .btnPill {
+        flex: 1 1 auto;
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+// 對話框底部按鈕之後的補充說明（例如忘記密碼 modal 的聯絡資訊）
+.modal-foot-note {
+    padding: 10px 0;
+    flex-shrink: 0;
+
+    @media (max-width: 720px) {
+        padding: 8px 0;
+    }
+}
+
+// 按鈕列下方空間較緊湊的 modal-body（按鈕緊接在欄位下方，後面接通欄提示時使用）
+.modal-body-flush {
+    padding-bottom: 8px;
+
+    @media (max-width: 720px) {
+        padding-bottom: 6px;
+    }
+}
+
+// 對話框內需要左右並排兩個區塊時使用（如報修 modal 的照片與影片／學校聯繫廠商），
+// 寬度不足時（720px 以下，同 design.md 手機斷點）疊成單欄
+.modal-splitRow {
+    display: flex;
+    gap: 32px;
+
+    @media (max-width: 720px) {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+.modal-splitRow-col {
+    flex: 1;
+    min-width: 0;
+}
+
+// 通欄提示框（例如忘記密碼 modal 底部）：貼齊 modal-content 左右與下緣，
+// 圓角交由 .modal-content 的 overflow:hidden 裁切，不自帶 margin／圓角
+.modal-noteFull {
+    margin: 0;
+    border-radius: 0;
+    padding: 18px 32px 20px;
+
+    @media (max-width: 720px) {
+        padding: 14px 20px 16px;
+    }
+}

@@ -1,0 +1,157 @@
+// ============================================================
+// 照片卡元件（design.md §7.4、§8.2）：輔具卡
+// ============================================================
+
+.cardPhoto {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: $border-radius-xl;
+    background-color: $surface-card;
+    box-shadow: $shadow-card;
+    overflow: hidden;
+    transition: transform 180ms ease-out, box-shadow 180ms ease-out;
+
+    &:hover,
+    &:focus-within {
+        transform: translateY(-4px);
+        box-shadow: $shadow-card-hover;
+    }
+
+    @media (max-width: 720px) {
+        border-radius: $border-radius-lg;
+    }
+}
+
+.cardPhoto-thumb {
+    position: relative;
+    height: 150px;
+    overflow: hidden;
+    background-color: $surface-mint-dots;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 400ms ease-out;
+    }
+
+    @media (max-width: 720px) {
+        height: 112px;
+    }
+}
+
+.cardPhoto:hover .cardPhoto-thumb img,
+.cardPhoto:focus-within .cardPhoto-thumb img {
+    transform: scale(1.08);
+}
+
+// 分類色底（無照片時與有照片時統一套用，對應 _tagPill.scss 同色票）
+.cardPhoto-thumb-goldLight { background-color: #FCE7C6; }
+.cardPhoto-thumb-cyanLight { background-color: #D8EFF1; }
+.cardPhoto-thumb-tealSoft { background-color: $surface-teal-soft; }
+.cardPhoto-thumb-purpleLight { background-color: #E4E0F3; }
+.cardPhoto-thumb-greyLight { background-color: $line-default; }
+
+.cardPhoto-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 100%;
+    color: $ink-3;
+    font-size: 16px;
+
+    .bi {
+        font-size: 28px;
+    }
+}
+
+.cardPhoto-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+
+    @media (max-width: 720px) {
+        gap: 6px;
+        padding: 12px 14px 14px;
+    }
+}
+
+.cardPhoto-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: $ink-1;
+
+    &.stretched-link:focus-visible {
+        outline: none;
+
+        &::after {
+            outline: 3px solid var(--focus-ring);
+            outline-offset: -3px;
+            border-radius: $border-radius-xl;
+
+            @media (max-width: 720px) {
+                border-radius: $border-radius-lg;
+            }
+        }
+    }
+}
+
+.cardPhoto-stock {
+    font-size: 16px;
+    color: $ink-2;
+    flex: 1 1 auto;
+    min-width: 0;
+
+    strong {
+        font-family: "Poppins", sans-serif;
+        color: $brand-teal-deep;
+    }
+}
+
+.cardPhoto-stockRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 36px;
+
+    .btnPill {
+        position: relative;
+        z-index: 2;
+        flex-shrink: 0;
+        margin-left: auto;
+    }
+}
+
+.cardPhoto-stock-zero {
+    color: $accent-amber-ink;
+}
+
+.cardPhoto-noStock {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 12px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 700;
+    background-color: white;
+    color: $accent-amber-ink;
+    box-shadow: 0 2px 8px rgba(31, 42, 46, .1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cardPhoto,
+    .cardPhoto-thumb img {
+        transition: none;
+    }
+}

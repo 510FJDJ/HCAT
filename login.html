@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <script>
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登入｜新竹縣特殊教育資源中心</title>
+    <link rel="icon" type="image/png" href="img/logo/logo.png">
+    <link rel="stylesheet" href="css/all.css">
+</head>
+<body  class="bg-green">
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+    <a href="#footerAnchor" class="sr-only focusable" accesskey="Z" title="跳至頁尾資訊區">頁尾資訊區</a>
+
+    <div class="authShell">
+        <div id="header" data-layout="layout/header.html"></div>
+
+        <main id="goCenter" tabindex="-1" >
+
+            <section class="authBanner">
+                <img class="authDeco authDeco-leaf" src="img/deco/leaf-2.webp" alt="" aria-hidden="true">
+                <img class="authDeco authDeco-flower" src="img/deco/flower.webp" alt="" aria-hidden="true">
+
+                <div class="container">
+                    <div class="authBanner-head">
+                        <span class="labelCaption">LOGIN</span>
+                        <h1 class="titleSection">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            登入系統
+                        </h1>
+                        <p class="textNote authBanner-subtitle">請依您的身分選擇登入方式</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="container">
+                <div class="authGrid">
+                    <div class="cardAuth cardAuth-openid">
+                        <div class="cardAuth-visual">
+                            <img src="img/banner/login-school.webp" alt="老師與學生一起使用輔具的插畫">
+                        </div>
+                        <div class="cardAuth-body">
+                            <h2 class="cardAuth-title">學校人員</h2>
+                            <p class="textNote cardAuth-desc">使用教育部 OpenID，跨縣市教師皆可用同一組帳號登入。</p>
+                            <div class="mt-5"></div>
+                            <a href="school/index.html" class="btnPill btn-teal btnPill-lg w-100" title="將另開新視窗，前往教育部教育雲登入頁" target="_blank">
+                                <i class="bi bi-cloud-fill" aria-hidden="true"></i>
+                                使用教育部 OpenID 登入
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="cardAuth cardAuth-account">
+                        <div class="cardAuth-body">
+                            <div class="cardAuth-eyebrow">
+                                <span class="statusPill-dot cardAuth-eyebrow-dot" aria-hidden="true"></span>
+                                特教資源中心・維修廠商
+                            </div>
+                            <h2 class="cardAuth-title mb-4">帳號登入</h2>
+
+                            <form data-js="loginForm" novalidate>
+
+                                <div class="formField mb-5">
+                                    <label class="formField-label" for="loginAccount">帳號<span class="formField-required">必填</span></label>
+                                    <input class="form-control" type="text" id="loginAccount" name="account" placeholder="請輸入帳號" autocomplete="username" required>
+                                </div>
+
+                                <div class="formField mb-5">
+                                    <label class="formField-label" for="loginPassword">密碼<span class="formField-required">必填</span></label>
+                                    <div class="inputGroup">
+                                        <input class="form-control" type="password" id="loginPassword" name="password" placeholder="請輸入密碼" autocomplete="current-password" required>
+                                        <button type="button" class="inputGroup-btn" data-js="togglePassword" data-target="loginPassword" aria-label="顯示密碼" aria-pressed="false">
+                                            <i class="bi bi-eye" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <p class="formField-hint">6–12 碼英數字或半形符號</p>
+                                </div>
+
+                                <div class="formField mb-5">
+                                    <label class="formField-label" for="loginCaptcha">驗證碼<span class="formField-required">必填</span></label>
+                                    <div class="captchaRow" data-js="captchaGroup">
+                                        <input class="form-control" type="text" id="loginCaptcha" name="captcha" placeholder="請輸入驗證碼" inputmode="text" maxlength="4" autocomplete="off" aria-describedby="loginCaptchaSr" required>
+                                        <span class="captchaDisplay" data-js="captchaText" aria-hidden="true">----</span>
+                                        <span class="sr-only" id="loginCaptchaSr" data-js="captchaSrText"></span>
+                                        <button type="button" class="btnIcon" data-js="captchaVoice" aria-label="播放驗證碼語音">
+                                            <i class="bi bi-volume-up-fill" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btnIcon" data-js="captchaRefresh" aria-label="重新產生驗證碼">
+                                            <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <p class="formField-error" data-js="loginFormError" hidden></p>
+                                </div>
+
+                                <div class="flex-row-between flex-wrap gap-5 mb-5">
+                                    <div class="formField-checkRow">
+                                        <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
+                                        <label class="formField-checkRow-label" for="rememberMe">記住帳號</label>
+                                    </div>
+                                    <button type="button" class="btn-text" data-js="openForgotPassword">忘記密碼？</button>
+                                </div>
+
+                                <p class="textNote mb-7" role="status" aria-live="polite" data-js="loginFormStatus" hidden></p>
+
+                                <button type="submit" class="btnPill btn-teal btnPill-lg w-100">登入</button>
+                            </form>
+
+                            <div class="authPrompt">
+                                <p class="authPrompt-text">維修廠商還沒有帳號？</p>
+                                <a href="register.html" class="btnPill btn-outline">申請註冊</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="textNote authFooterLink">家長與一般民眾不需登入，可直接<a href="catalog.html" class="linkMarker">瀏覽輔具目錄</a></p>
+            </div>
+
+        </main>
+    </div>
+
+    <div data-layout="layout/footer.html"></div>
+
+    <!-- 忘記密碼 Modal -->
+    <div class="modal fade" data-js="forgotPasswordModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="forgotTitle">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div data-js="forgotStateForm">
+                    <div class="modal-header">
+                        <div class="modal-head-text">
+                            <h2 class="modal-title" id="forgotTitle">忘記密碼</h2>
+                            <p class="textNote modal-subtitle">請輸入您的帳號，系統會寄送重設密碼的連結到帳號登記的電子信箱。</p>
+                        </div>
+                        <button type="button" class="btnIcon" data-bs-dismiss="modal" aria-label="關閉">
+                            <i class="bi bi-x-lg" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body modal-body-flush">
+                        <form id="forgotPasswordForm" data-js="forgotPasswordForm" novalidate>
+                            <div class="formField mb-8">
+                                <label class="formField-label" for="forgotAccount">帳號<span class="formField-required">必填</span></label>
+                                <div class="inputGroup">
+                                    <i class="bi bi-person inputGroup-icon" aria-hidden="true"></i>
+                                    <input class="form-control" type="text" id="forgotAccount" name="account" placeholder="請輸入帳號" autocomplete="username" required>
+                                </div>
+                                <p class="formField-error" data-js="forgotFormError" hidden></p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" form="forgotPasswordForm" class="btnPill btn-teal">送出</button>
+                    </div>
+                    <div class="noteBox noteBox-amber modal-noteFull">
+                        <i class="bi bi-info-circle" aria-hidden="true"></i>
+                        <span>學校人員使用教育部 OpenID 登入，密碼請至教育雲重設。</span>
+                    </div>
+                </div>
+                <div data-js="forgotStateSent" hidden>
+                    <div class="modal-header">
+                        <div class="modal-head-text">
+                            <h2 class="modal-title" id="forgotSentTitle">重設密碼信件已寄出</h2>
+                        </div>
+                        <button type="button" class="btnIcon" data-bs-dismiss="modal" aria-label="關閉">
+                            <i class="bi bi-x-lg" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="textNote mb-8">請至帳號登記的電子信箱收信，依信件說明重設密碼。若沒有收到信件，請聯繫特教資源中心 03-5572346。</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btnPill btn-teal" data-bs-dismiss="modal">回到登入</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="js/all.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+// ============================================================
+// 中心端廠商管理（center/vendors.html）專屬樣式
+// main 用 .bg-green / .bg-green-bleed；container/-content 數值比照 .schoolsPage-container/-content
+// ============================================================
+
+.vendorsPage-container {
+    max-width: 1360px;
+    margin: 40px auto 0;
+    padding: 0 24px;
+
+    @media (max-width: 720px) {
+        margin: 20px auto 0;
+        padding: 0 16px;
+    }
+}
+
+.vendorsPage-content {
+    position: relative;
+    z-index: 2;
+    margin-top: -160px;
+
+    @media (max-width: 720px) {
+        margin-top: -85px;
+    }
+}
+
+// 頁籤列：狀態頁籤與「新增廠商」按鈕同列（方向與對齊用 flex utility 疊在 HTML 上，
+// gap 值不在 Bootstrap gap-* 對應階內，故寫在元件 class 裡）
+.vendorsPage-tabsRow {
+    gap: 14px 20px;
+    margin-bottom: 20px;
+}
+
+// 列表「報修／點交」欄的數字：Poppins 浮出（design.md §3）
+.vendorsPage-caseNum {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+}
+
+// 新增／編輯廠商 modal：服務輔具類別勾選格線（桌面三欄，比照畫布）
+.vendorsPage-catGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px 16px;
+
+    @media (max-width: 720px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+    }
+}

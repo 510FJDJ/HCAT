@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <script>
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>輔具管理資訊系統｜新竹縣特殊教育資源中心</title>
+    <link rel="icon" type="image/png" href="img/logo/logo.png">
+    <link rel="stylesheet" href="css/all.css">
+</head>
+<body>
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+    <a href="#footerAnchor" class="sr-only focusable" accesskey="Z" title="跳至頁尾資訊區">頁尾資訊區</a>
+
+    <div id="header" data-layout="layout/header.html"></div>
+
+    <main id="goCenter" tabindex="-1">
+
+        <section class="container">
+            <div class="heroBanner">
+                <div class="heroBanner-field" aria-hidden="true"></div>
+
+                <div class="heroBanner-rail">
+                    <span class="heroBanner-rail-text">往下看看</span>
+                    <span class="heroBanner-rail-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                    <a href="#news" class="heroBanner-rail-btn" aria-label="往下看看，前往最新消息">
+                        <i class="bi bi-arrow-down" aria-hidden="true"></i>
+                    </a>
+                </div>
+
+                <div class="heroBanner-copy">
+                    <h1 class="heroBanner-title">輔具借用與報修<br>線上一次辦好</h1>
+                    <p class="heroBanner-desc">學校以 OpenID 登入申請，民眾免登入也能瀏覽輔具。</p>
+                </div>
+
+                <div class="heroBanner-visual">
+                    <img src="img/hero/hero-kids.webp" alt="孩子們開心使用輪椅、放大鏡等輔具學習與活動的插畫">
+                    <div class="cardFloating">
+                        <div class="cardFloating-main">
+                            <span class="statusPill statusPill-teal mb-2"><span class="statusPill-dot" aria-hidden="true"></span>輔具申請開放中</span>
+                            <span class="cardFloating-title">115 年度第二次申請</span>
+                            <span class="cardFloating-range">2026/09/01 – 2026/10/31</span>
+                        </div>
+                        <div class="cardFloating-divider" aria-hidden="true"></div>
+                        <div class="cardFloating-countdown">
+                            <span class="cardFloating-countdown-label">剩</span>
+                            <span class="cardFloating-countdown-value">10</span>
+                            <span class="cardFloating-countdown-unit">天</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="heroBanner-actions">
+                    <a href="center/index.html" class="btnPill btn-teal btnPill-lg">
+                        教育部 OpenID 登入
+                        <span class="btnPill-arrowCircle"><i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i></span>
+                    </a>
+                    <a href="catalog.html" class="btnPill btn-text btnPill-arrow">
+                        瀏覽輔具目錄
+                        <i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="news" class="sectionBand sectionBand-tint">
+            <div class="container pt-12 pb-16">
+                <div class="flex-row-between mb-8 flex-wrap gap-8">
+                    <div>
+                        <span class="labelCaption">NEWS</span>
+                        <h2 class="titleSection">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            最新消息
+                        </h2>
+                    </div>
+                    <a href="news.html" class="btnPill btn-text btnPill-arrow">
+                        查看全部
+                        <i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i>
+                    </a>
+                </div>
+
+                <div class="tabsPill mb-8" role="tablist" aria-label="最新消息分類">
+                    <button type="button" class="tabsPill-item" role="tab" id="tab-news-all" data-category="all" aria-selected="true" aria-controls="panel-news" tabindex="0">全部</button>
+                    <button type="button" class="tabsPill-item" role="tab" id="tab-news-apply" data-category="apply" aria-selected="false" aria-controls="panel-news" tabindex="-1">申請公告</button>
+                    <button type="button" class="tabsPill-item" role="tab" id="tab-news-system" data-category="system" aria-selected="false" aria-controls="panel-news" tabindex="-1">系統公告</button>
+                    <button type="button" class="tabsPill-item" role="tab" id="tab-news-event" data-category="event" aria-selected="false" aria-controls="panel-news" tabindex="-1">研習活動</button>
+                </div>
+
+                <div class="panelInset" role="tabpanel" id="panel-news" aria-labelledby="tab-news-all">
+                    <ul class="list-unstyled mb-0">
+                        <li data-category="system">
+                            <a href="news-detail.html" class="listRow">
+                                <span class="listRow-body">
+                                    <span class="listRow-meta">
+                                        <span class="listRow-date">2026/10/06</span>
+                                        <span class="tagPill tag-goldLight">系統公告</span>
+                                    </span>
+                                    <span class="listRow-title">系統維護暫停服務通知</span>
+                                </span>
+                                <i class="bi bi-chevron-right listRow-arrow" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li data-category="apply">
+                            <a href="news-detail.html" class="listRow">
+                                <span class="listRow-body">
+                                    <span class="listRow-meta">
+                                        <span class="listRow-date">2026/09/24</span>
+                                        <span class="tagPill tag-tealSoft">申請公告</span>
+                                    </span>
+                                    <span class="listRow-title">輔具歸還與報修作業說明</span>
+                                </span>
+                                <i class="bi bi-chevron-right listRow-arrow" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li data-category="event">
+                            <a href="news-detail.html" class="listRow">
+                                <span class="listRow-body">
+                                    <span class="listRow-meta">
+                                        <span class="listRow-date">2026/09/10</span>
+                                        <span class="tagPill tag-coralLight">研習活動</span>
+                                    </span>
+                                    <span class="listRow-title">輔具評估研習報名</span>
+                                </span>
+                                <i class="bi bi-chevron-right listRow-arrow" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li data-category="apply">
+                            <a href="news-detail.html" class="listRow">
+                                <span class="listRow-body">
+                                    <span class="listRow-meta">
+                                        <span class="listRow-date">2026/08/25</span>
+                                        <span class="tagPill tag-tealSoft">申請公告</span>
+                                    </span>
+                                    <span class="listRow-title">115 年度第二次學校輔具申請開放</span>
+                                </span>
+                                <i class="bi bi-chevron-right listRow-arrow" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="catalog" class="sectionBand sectionBand-white sectionBand-overlap">
+            <div class="container pt-14 pb-16 catalogLayout">
+            <div class="catalogLayout-head">
+                <span class="labelCaption">CATALOG</span>
+                <h2 class="titleSection">
+                    <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                    輔具目錄
+                </h2>
+                <p class="textNote mb-0">中心現有輔具一覽，不需登入即可瀏覽品項與可借數量</p>
+            </div>
+            <a href="catalog.html" class="btnPill btn-outline catalogLayout-action">
+                查看全部輔具
+                <i class="bi bi-arrow-right btnPill-arrow" aria-hidden="true"></i>
+            </a>
+
+            <div class="tabsPill mb-8 catalogLayout-tabs" role="tablist" aria-label="輔具分類">
+                <button type="button" class="tabsPill-item" role="tab" id="tab-catalog-all" data-category="all" aria-selected="true" aria-controls="panel-catalog" tabindex="0">全部</button>
+                <button type="button" class="tabsPill-item" role="tab" id="tab-catalog-mobility" data-category="mobility" aria-selected="false" aria-controls="panel-catalog" tabindex="-1">行動與擺位輔具</button>
+                <button type="button" class="tabsPill-item" role="tab" id="tab-catalog-visual" data-category="visual" aria-selected="false" aria-controls="panel-catalog" tabindex="-1">視障輔具</button>
+                <button type="button" class="tabsPill-item" role="tab" id="tab-catalog-hearing" data-category="hearing" aria-selected="false" aria-controls="panel-catalog" tabindex="-1">聽障輔具</button>
+                <button type="button" class="tabsPill-item" role="tab" id="tab-catalog-communication" data-category="communication" aria-selected="false" aria-controls="panel-catalog" tabindex="-1">溝通輔具</button>
+                <button type="button" class="tabsPill-item" role="tab" id="tab-catalog-info" data-category="info" aria-selected="false" aria-controls="panel-catalog" tabindex="-1">資訊輔具</button>
+                <button type="button" class="tabsPill-item" role="tab" id="tab-catalog-reading" data-category="reading" aria-selected="false" aria-controls="panel-catalog" tabindex="-1">書寫與閱讀輔具</button>
+                <button type="button" class="tabsPill-item" role="tab" id="tab-catalog-other" data-category="other" aria-selected="false" aria-controls="panel-catalog" tabindex="-1">其他輔具</button>
+            </div>
+
+            <div role="tabpanel" id="panel-catalog" class="catalogLayout-panel" aria-labelledby="tab-catalog-all">
+                <p class="textNote" data-js="emptyNote" hidden>此分類目前沒有可借輔具，請至<a href="catalog.html">輔具目錄</a>查看完整清單。</p>
+                <div class="row g-8">
+                <div class="col-6 col-lg-3" data-category="visual">
+                    <div class="cardPhoto">
+                        <div class="cardPhoto-thumb cardPhoto-thumb-goldLight">
+                            <div class="cardPhoto-empty">
+                                <i class="bi bi-image" aria-hidden="true"></i>
+                                尚無照片
+                            </div>
+                        </div>
+                        <div class="cardPhoto-body">
+                            <div class="flex-row-start flex-wrap gap-2">
+                                <span class="tagPill tag-goldLight">視障輔具</span>
+                                <span class="tagPill tag-greenLight">免評估</span>
+                            </div>
+                            <a href="device.html" class="linkCardTitle cardPhoto-title">擴視機</a>
+                            <span class="cardPhoto-stock">目前可借 <strong>3</strong> 件</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3" data-category="visual">
+                    <div class="cardPhoto">
+                        <div class="cardPhoto-thumb cardPhoto-thumb-goldLight">
+                            <img src="img/devices/magnifier-home.webp" alt="手持放大鏡">
+                        </div>
+                        <div class="cardPhoto-body">
+                            <div class="flex-row-start flex-wrap gap-2">
+                                <span class="tagPill tag-goldLight">視障輔具</span>
+                            </div>
+                            <a href="device.html" class="linkCardTitle cardPhoto-title">放大鏡</a>
+                            <span class="cardPhoto-stock">目前可借 <strong>8</strong> 件</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3" data-category="hearing">
+                    <div class="cardPhoto">
+                        <div class="cardPhoto-thumb cardPhoto-thumb-cyanLight">
+                            <div class="cardPhoto-empty">
+                                <i class="bi bi-image" aria-hidden="true"></i>
+                                尚無照片
+                            </div>
+                        </div>
+                        <div class="cardPhoto-body">
+                            <div class="flex-row-start flex-wrap gap-2">
+                                <span class="tagPill tag-cyanLight">聽障輔具</span>
+                            </div>
+                            <a href="device.html" class="linkCardTitle cardPhoto-title">調頻輔聽系統</a>
+                            <span class="cardPhoto-stock">目前可借 <strong>5</strong> 件</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3" data-category="mobility">
+                    <div class="cardPhoto">
+                        <div class="cardPhoto-thumb cardPhoto-thumb-tealSoft">
+                            <img src="img/devices/wheelchair-home.webp" alt="兒童輪椅">
+                        </div>
+                        <div class="cardPhoto-body">
+                            <div class="flex-row-start flex-wrap gap-2">
+                                <span class="tagPill tag-tealSoft">行動與擺位輔具</span>
+                            </div>
+                            <a href="device.html" class="linkCardTitle cardPhoto-title">兒童輪椅</a>
+                            <span class="cardPhoto-stock">目前可借 <strong>12</strong> 件</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3" data-category="mobility">
+                    <div class="cardPhoto">
+                        <div class="cardPhoto-thumb cardPhoto-thumb-tealSoft">
+                            <div class="cardPhoto-empty">
+                                <i class="bi bi-image" aria-hidden="true"></i>
+                                尚無照片
+                            </div>
+                        </div>
+                        <div class="cardPhoto-body">
+                            <div class="flex-row-start flex-wrap gap-2">
+                                <span class="tagPill tag-tealSoft">行動與擺位輔具</span>
+                                <span class="tagPill tag-greenLight">免評估</span>
+                            </div>
+                            <a href="device.html" class="linkCardTitle cardPhoto-title">T型椅</a>
+                            <span class="cardPhoto-stock">目前可借 <strong>4</strong> 件</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3" data-category="visual">
+                    <div class="cardPhoto">
+                        <div class="cardPhoto-thumb cardPhoto-thumb-goldLight">
+                            <div class="cardPhoto-noStock">暫無可借</div>
+                            <div class="cardPhoto-empty">
+                                <i class="bi bi-image" aria-hidden="true"></i>
+                                尚無照片
+                            </div>
+                        </div>
+                        <div class="cardPhoto-body">
+                            <div class="flex-row-start flex-wrap gap-2">
+                                <span class="tagPill tag-goldLight">視障輔具</span>
+                                <span class="tagPill tag-greenLight">免評估</span>
+                            </div>
+                            <a href="device.html" class="linkCardTitle cardPhoto-title">攜帶型擴視機</a>
+                            <div class="cardPhoto-stockRow">
+                                <span class="cardPhoto-stock">目前可借 <strong class="cardPhoto-stock-zero">0</strong> 件</span>
+                                <a href="device.html" class="btnPill btn-amber btnPill-sm">申請增購</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3" data-category="communication">
+                    <div class="cardPhoto">
+                        <div class="cardPhoto-thumb cardPhoto-thumb-purpleLight">
+                            <div class="cardPhoto-empty">
+                                <i class="bi bi-image" aria-hidden="true"></i>
+                                尚無照片
+                            </div>
+                        </div>
+                        <div class="cardPhoto-body">
+                            <div class="flex-row-start flex-wrap gap-2">
+                                <span class="tagPill tag-purpleLight">溝通輔具</span>
+                            </div>
+                            <a href="device.html" class="linkCardTitle cardPhoto-title">溝通板</a>
+                            <span class="cardPhoto-stock">目前可借 <strong>6</strong> 件</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3" data-category="info">
+                    <div class="cardPhoto">
+                        <div class="cardPhoto-thumb cardPhoto-thumb-greyLight">
+                            <div class="cardPhoto-empty">
+                                <i class="bi bi-image" aria-hidden="true"></i>
+                                尚無照片
+                            </div>
+                        </div>
+                        <div class="cardPhoto-body">
+                            <div class="flex-row-start flex-wrap gap-2">
+                                <span class="tagPill tag-greyLight">資訊輔具</span>
+                                <span class="tagPill tag-greenLight">免評估</span>
+                            </div>
+                            <a href="device.html" class="linkCardTitle cardPhoto-title">觸摸顯示器</a>
+                            <span class="cardPhoto-stock">目前可借 <strong>2</strong> 件</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <section id="flow" class="bgWave">
+            <svg class="bgWave-hill" aria-hidden="true">
+                <defs>
+                    <linearGradient id="flowHill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stop-color="#C7E6DE" stop-opacity="0.4"></stop>
+                        <stop offset="0.4" stop-color="#C7E6DE" stop-opacity="0.2"></stop>
+                        <stop offset="1" stop-color="#C7E6DE" stop-opacity="0"></stop>
+                    </linearGradient>
+                    <mask id="flowHillMask" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%">
+                        <svg x="0" y="0" width="100%" height="120" viewBox="0 0 1440 120" preserveAspectRatio="none">
+                            <path d="M0 80 C 240 10, 480 10, 720 60 S 1200 110, 1440 30 L1440 120 L0 120 Z" fill="#FFFFFF"></path>
+                        </svg>
+                        <rect x="0" y="119" width="100%" height="100%" fill="#FFFFFF"></rect>
+                    </mask>
+                </defs>
+                <rect x="0" y="0" width="100%" height="100%" fill="url(#flowHill)" mask="url(#flowHillMask)"></rect>
+            </svg>
+            <div class="bgWave-hillMobile" aria-hidden="true"></div>
+            <img src="img/deco/leaf-1.webp" alt="" class="bgWave-leaf bgWave-leaf-1">
+            <img src="img/deco/flower.webp" alt="" class="bgWave-leaf bgWave-leaf-2">
+            <img src="img/deco/leaf-2.webp" alt="" class="bgWave-leaf bgWave-leaf-3">
+            <div class="container pt-12 pb-14 flowLayout">
+                <div class="flowLayout-head">
+                    <span class="labelCaption">FLOW</span>
+                    <h2 class="titleSection">
+                        <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                        借用流程
+                    </h2>
+                </div>
+                <a href="#" class="btnPill btn-text flowLayout-link">
+                    新竹縣特教輔具借用要點
+                    <i class="bi bi-box-arrow-up-right btnPill-iconSm" aria-hidden="true"></i>
+                    <span class="sr-only">（另開新視窗）</span>
+                </a>
+
+                <div class="row g-8 flowLayout-cards">
+                    <div class="col-6 col-lg flowLayout-card">
+                        <div class="cardNumbered">
+                            <span class="cardNumbered-num">01</span>
+                            <span class="cardNumbered-body">
+                                <span class="cardNumbered-title">學校線上申請</span>
+                                <p class="cardNumbered-desc">學校代填申請表，下載並完成簽核</p>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg flowLayout-card">
+                        <div class="cardNumbered">
+                            <span class="cardNumbered-num">02</span>
+                            <span class="cardNumbered-body">
+                                <span class="cardNumbered-title">輔具評估</span>
+                                <p class="cardNumbered-desc">上傳治療師評估報告，或申請中心到校評估</p>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg flowLayout-card">
+                        <div class="cardNumbered">
+                            <span class="cardNumbered-num">03</span>
+                            <span class="cardNumbered-body">
+                                <span class="cardNumbered-title">中心審核</span>
+                                <p class="cardNumbered-desc">中心審核並指定財產編號，結果將寄信通知</p>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg flowLayout-card">
+                        <div class="cardNumbered">
+                            <span class="cardNumbered-num">04</span>
+                            <span class="cardNumbered-body">
+                                <span class="cardNumbered-title">簽收借用</span>
+                                <p class="cardNumbered-desc">學校簽章上傳，中心確認點交後開始借用</p>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg flowLayout-card">
+                        <div class="cardNumbered">
+                            <span class="cardNumbered-num">05</span>
+                            <span class="cardNumbered-body">
+                                <span class="cardNumbered-title">歸還或續借</span>
+                                <p class="cardNumbered-desc">學生畢業歸還、轉銜續用或停止借用</p>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flowDots flowLayout-dots" aria-hidden="true">
+                    <span class="flowDots-item"></span>
+                    <span class="flowDots-item"></span>
+                    <span class="flowDots-item"></span>
+                    <span class="flowDots-item"></span>
+                    <span class="flowDots-item"></span>
+                </div>
+            </div>
+        </section>
+
+        <section id="links" class="sectionBand sectionBand-white sectionBand-overlap">
+            <div class="container py-12">
+            <div class="mb-8">
+                <span class="labelCaption">LINKS</span>
+                <h2 class="titleSection">
+                    <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                    友善連結
+                </h2>
+            </div>
+
+            <div class="row g-8 linksGrid">
+                <div class="col-6 col-lg-3 linksGrid-item">
+                    <a href="#" class="cardBordered">
+                        <span class="cardBordered-text">
+                            <span class="cardBordered-label">輔具借用規定</span>
+                            <span class="cardBordered-title">新竹縣特教輔具借用要點<span class="sr-only">（另開新視窗）</span></span>
+                        </span>
+                        <i class="bi bi-box-arrow-up-right cardBordered-corner" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-6 col-lg-3 linksGrid-item">
+                    <a href="#" class="cardBordered">
+                        <span class="cardBordered-text">
+                            <span class="cardBordered-label">輔具專區</span>
+                            <span class="cardBordered-title">輔具相關資源<span class="sr-only">（另開新視窗）</span></span>
+                        </span>
+                        <i class="bi bi-box-arrow-up-right cardBordered-corner" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-6 col-lg-3 linksGrid-item">
+                    <a href="#" class="cardBordered">
+                        <span class="cardBordered-text">
+                            <span class="cardBordered-label">新竹縣</span>
+                            <span class="cardBordered-title">新竹縣特殊教育資源中心<span class="sr-only">（另開新視窗）</span></span>
+                        </span>
+                        <i class="bi bi-box-arrow-up-right cardBordered-corner" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-6 col-lg-3 linksGrid-item">
+                    <a href="https://www.hceb.edu.tw/" target="_blank" rel="noopener" class="cardBordered">
+                        <span class="cardBordered-text">
+                            <span class="cardBordered-label">新竹縣</span>
+                            <span class="cardBordered-title">新竹縣政府教育局<span class="sr-only">（另開新視窗）</span></span>
+                        </span>
+                        <i class="bi bi-box-arrow-up-right cardBordered-corner" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-6 col-lg-3 linksGrid-item">
+                    <a href="https://www.set.edu.tw/" target="_blank" rel="noopener" class="cardBordered">
+                        <span class="cardBordered-text">
+                            <span class="cardBordered-label">教育部</span>
+                            <span class="cardBordered-title">特殊教育通報網<span class="sr-only">（另開新視窗）</span></span>
+                        </span>
+                        <i class="bi bi-box-arrow-up-right cardBordered-corner" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-6 col-lg-3 linksGrid-item">
+                    <a href="#" class="cardBordered">
+                        <span class="cardBordered-text">
+                            <span class="cardBordered-label">全國</span>
+                            <span class="cardBordered-title">全國特殊教育資訊網<span class="sr-only">（另開新視窗）</span></span>
+                        </span>
+                        <i class="bi bi-box-arrow-up-right cardBordered-corner" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div data-layout="layout/footer.html"></div>
+
+    <script src="js/all.js"></script>
+</body>
+</html>

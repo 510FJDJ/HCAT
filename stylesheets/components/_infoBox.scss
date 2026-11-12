@@ -1,0 +1,37 @@
+// ============================================================
+// 灰底資訊小卡：側欄等窄版面的唯讀摘要（財產編號、核准日期…）
+// 比例比 .infoGrid-boxed 小，標題與內容水平並排、一列一筆、無分隔線
+// ============================================================
+
+.infoBox {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px 18px;
+    border-radius: $border-radius-md;
+    background-color: $surface-tint;
+}
+
+.infoBox-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+}
+
+.infoBox-label {
+    flex: 0 0 auto;
+    min-width: 4em; // 對齊常見的四字標題（財產編號／核准日期…）
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.infoBox-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+// 內容為編號／日期時改用 Poppins（design.md §3）
+.infoBox-value-mono {
+    font-family: "Poppins", sans-serif;
+}

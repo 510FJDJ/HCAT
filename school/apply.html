@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>輔具申請表 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="學校端輔具申請表，填寫申請類別、選擇輔具與學生資料後送出申請">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_School.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu" src="../img/banner/apply.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="applyForm-container">
+                <div class="bannerWave-inner">
+                    <nav class="crumbNav" aria-label="麵包屑導覽">
+                        <ol>
+                            <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li>輔具申請</li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li aria-current="page" class="crumbNav-current">輔具申請表</li>
+                        </ol>
+                    </nav>
+
+                    <div class="bannerWave-main">
+                        <h1 class="titleSection bannerWave-title">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            輔具申請表
+                        </h1>
+                        <p class="bannerWave-desc">填寫完成並送出後，可在「申請紀錄」下載申請表進行校內簽核，再上傳簽核後的掃描檔。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="applyForm-content">
+            <div class="applyForm-container">
+                <form class="applyForm" id="applyForm" novalidate>
+
+                    <!-- ① 申請類別 -->
+                    <section class="applyForm-section cardPanel" aria-labelledby="ap-use">
+                        <h2 id="ap-use" class="applyForm-sectionHead"><span class="cardNumbered-num-sm" aria-hidden="true">1</span>申請類別</h2>
+                        <div class="applyForm-sectionBody">
+                            <fieldset class="cardChoice-group cardChoice-group-row">
+                                <legend class="sr-only">申請類別</legend>
+                                <label class="cardChoice is-selected" data-js="use-card">
+                                    <input type="radio" name="use" value="student" class="cardChoice-input" data-js="use-radio" checked>
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">學生借用</span>
+                                        <span class="cardChoice-desc">為特定學生申請，需填寫學生資料</span>
+                                    </span>
+                                </label>
+                                <label class="cardChoice" data-js="use-card">
+                                    <input type="radio" name="use" value="school" class="cardChoice-input" data-js="use-radio">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">校內使用</span>
+                                        <span class="cardChoice-desc">資源班或全校共用，只能申請免評估品項</span>
+                                    </span>
+                                </label>
+                            </fieldset>
+                        </div>
+                    </section>
+
+
+                    <!-- ② 學生資料 -->
+                    <section class="applyForm-section cardPanel" aria-labelledby="ap-student" data-js="section-student">
+                        <h2 id="ap-student" class="applyForm-sectionHead"><span class="cardNumbered-num-sm" aria-hidden="true">2</span>學生資料</h2>
+                        <div class="applyForm-sectionBody">
+                            <div class="formGrid formGrid-cols3">
+                                <div>
+                                    <label for="stName" class="formField-label">學生姓名 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="stName" class="form-control" placeholder="例：林小安">
+                                </div>
+                                <div>
+                                    <label for="stId" class="formField-label">身分證字號 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="stId" class="form-control" maxlength="10" autocomplete="off" placeholder="例：J123456789" style="text-transform:uppercase">
+                                </div>
+                                <div>
+                                    <label for="stGrade" class="formField-label">年級 <span class="formField-required">必填</span></label>
+                                    <select id="stGrade" class="form-select">
+                                        <option>請選擇</option>
+                                        <optgroup label="幼兒園"><option>小班</option><option>中班</option><option>大班</option></optgroup>
+                                        <optgroup label="國小"><option>一年級</option><option>二年級</option><option selected>三年級</option><option>四年級</option><option>五年級</option><option>六年級</option></optgroup>
+                                        <optgroup label="國中"><option>七年級</option><option>八年級</option><option>九年級</option></optgroup>
+                                        <optgroup label="高中職"><option>高一</option><option>高二</option><option>高三</option></optgroup>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="stClass" class="formField-label">班級 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="stClass" class="form-control" placeholder="例：甲班、資源班">
+                                </div>
+                                <div>
+                                    <label for="stDue" class="formField-label">預計歸還日期 <span class="formField-required">必填</span></label>
+                                    <input type="date" id="stDue" class="form-control" value="2030-06-30">
+                                </div>
+                            </div>
+                            <!-- <p class="formField-hint">年級選單只列出本校的學制；預計歸還日期預設為學生畢業時。</p> -->
+
+                            <p class="formField-hint d-flex align-items-start gap-2">
+                                <i class="bi bi-info-circle" aria-hidden="true"></i>
+                                <span>身分證字號僅供中心核對學生身分，系統加密保存，畫面上只顯示部分號碼。</span>
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- ③ 選擇輔具 -->
+                    <section class="applyForm-section cardPanel" aria-labelledby="ap-sel">
+                        <h2 id="ap-sel" class="applyForm-sectionHead"><span class="cardNumbered-num-sm" aria-hidden="true" data-js="sel-badge">3</span>選擇輔具</h2>
+                        <div class="applyForm-sectionBody">
+                            <p class="noteBox noteBox-amber" data-js="schooluse-notice" hidden>
+                                <i class="bi bi-info-circle" aria-hidden="true"></i>
+                                <span>校內使用只能選擇免評估品項。</span>
+                            </p>
+
+                            <div class="applyForm-pickerRow">
+                                <div class="applyForm-pickerRow-cat">
+                                    <label for="pickerCat" class="formField-label">輔具分類</label>
+                                    <select id="pickerCat" class="form-select" data-js="picker-cat">
+                                        <option value="all">全部分類（17）</option>
+                                        <option value="vision">視障輔具（4）</option>
+                                        <option value="hearing">聽障輔具（1）</option>
+                                        <option value="mobility">行動與擺位輔具（7）</option>
+                                        <option value="comm">溝通輔具（2）</option>
+                                        <option value="computer">資訊輔具（3）</option>
+                                    </select>
+                                </div>
+
+                                <div class="applyForm-pickerRow-item comboPicker">
+                                    <label for="pickerTrigger" class="formField-label">輔具品項 <span class="formField-required">必填</span></label>
+                                    <button type="button" id="pickerTrigger" class="comboPicker-trigger" aria-expanded="false" aria-controls="pickerPanel" data-js="picker-trigger">
+                                        <img class="comboPicker-thumb" data-js="picker-thumb-img" src="../img/devices/wheelchair.jpg" alt="" hidden>
+                                        <span class="comboPicker-thumb-empty" data-js="picker-thumb-empty" aria-hidden="true"></span>
+                                        <span class="comboPicker-selected">
+                                            <span class="comboPicker-selected-placeholder" data-js="picker-name">請選擇</span>
+                                            <span class="tagPill tag-greyLight" data-js="picker-tag" hidden>需評估</span>
+                                            <span class="comboPicker-selected-cat" data-js="picker-cat-label" hidden>行動與擺位輔具</span>
+                                        </span>
+                                        <span class="comboPicker-chevron" aria-hidden="true"><i class="bi bi-chevron-down"></i></span>
+                                    </button>
+
+                                    <div id="pickerPanel" class="comboPicker-panel" data-js="picker-panel" hidden>
+                                        <div class="comboPicker-search">
+                                            <span class="comboPicker-search-icon" aria-hidden="true"><i class="bi bi-search"></i></span>
+                                            <input type="search" id="pickerSearch" class="comboPicker-search-input" placeholder="輸入輔具名稱搜尋" autocomplete="off" data-js="picker-search">
+                                        </div>
+                                        <ul class="comboPicker-list" aria-label="輔具品項" id="pickerList" data-js="picker-list"></ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="noteBox noteBox-amberBordered" role="note" data-js="picker-restock" hidden>
+                                <i class="bi bi-box-seam" aria-hidden="true"></i>
+                                <span>
+                                    <strong data-js="picker-restock-name">「站立架」目前沒有可借庫存，送出後會列為增購需求</strong><br>
+                                    中心會依需求安排採購或調配，到貨後依申請順序通知。申請內容和一般申請相同，仍需完成評估。
+                                </span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 聽障輔具專用（選到聽障輔具才出現，緊接在「選擇輔具」之後，符合選取後的閱讀順序） -->
+                    <section class="applyForm-section cardPanel" aria-labelledby="ap-hearing" data-js="section-hearing" hidden>
+                        <h2 id="ap-hearing" class="applyForm-sectionHead" style="color:#4B2E83">
+                            <span class="cardNumbered-num-sm" aria-hidden="true" data-js="hearing-badge">4</span>聽障輔具專用<span class="applyForm-sectionHead-itemName">｜依「聽障輔具專用申請表」欄位</span>
+                        </h2>
+                        <div class="applyForm-sectionBody">
+                            <div class="formGrid formGrid-cols4">
+                                <div>
+                                    <label for="stSex" class="formField-label">性別 <span class="formField-required">必填</span></label>
+                                    <select id="stSex" class="form-select"><option>請選擇</option><option>男</option><option>女</option></select>
+                                </div>
+                                <div>
+                                    <label for="stBday" class="formField-label">生日 <span class="formField-required">必填</span></label>
+                                    <input type="date" id="stBday" class="form-control">
+                                </div>
+                                <div>
+                                    <label for="stPname" class="formField-label">家長姓名 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="stPname" class="form-control" placeholder="例：林大明">
+                                </div>
+                                <div>
+                                    <label for="stPtel" class="formField-label">家長電話 <span class="formField-required">必填</span></label>
+                                    <input type="tel" id="stPtel" class="form-control" placeholder="例：0912-345-678">
+                                </div>
+                            </div>
+
+                            <fieldset>
+                                <legend class="formField-label">身障證明 <span class="formField-required">必填</span></legend>
+                                <div class="d-flex gap-4 flex-wrap mt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="dis" id="disNo" value="no" data-js="dis-radio">
+                                        <label class="form-check-label" for="disNo">無</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="dis" id="disYes" value="yes" data-js="dis-radio" checked>
+                                        <label class="form-check-label" for="disYes">有</label>
+                                    </div>
+                                </div>
+
+                                <div data-js="dis-detail" class="mt-3">
+                                    <div class="formGrid formGrid-cols3">
+                                        <div>
+                                            <label for="stDcat" class="formField-label">障礙類別 <span class="formField-required">必填</span></label>
+                                            <select id="stDcat" class="form-select">
+                                                <option>請選擇</option><option>智能障礙</option><option>視覺障礙</option><option selected>聽覺障礙</option><option>語言障礙</option><option>肢體障礙</option><option>腦性麻痺</option><option>身體病弱</option><option>情緒行為障礙</option><option>學習障礙</option><option>多重障礙</option><option>自閉症</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="stDlv" class="formField-label">程度 <span class="formField-required">必填</span></label>
+                                            <select id="stDlv" class="form-select"><option>輕度</option><option selected>中度</option><option>重度</option><option>極重度</option></select>
+                                        </div>
+                                        <div>
+                                            <label for="stDnew" class="formField-label">新制類別／亞型</label>
+                                            <input type="text" id="stDnew" class="form-control" placeholder="例：第 2 類 b230">
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <span class="formField-label">身障證明影本 <span class="fw-normal">（選填，正反面）</span></span>
+                                        <input type="file" id="disFile" class="fileUpload-input" multiple accept="image/*,.pdf">
+                                        <label for="disFile" class="fileUpload" style="max-width:420px">
+                                            <i class="bi bi-upload fileUpload-icon" aria-hidden="true"></i>點擊或拖曳上傳身障證明（JPG、PNG、PDF）
+                                        </label>
+                                        <div class="fileUploadList" data-js="dis-file-list" hidden></div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <div>
+                                <label for="stDoc" class="formField-label">鑑定安置文號及日期</label>
+                                <input type="text" id="stDoc" class="form-control" placeholder="例：府教特字第 1150001234 號（115/03/15）；無鑑定史請填個案包編號">
+                            </div>
+
+                            <fieldset>
+                                <legend class="formField-label">近期學籍異動（半年內） <span class="formField-required">必填</span></legend>
+                                <div class="cardChoice-group cardChoice-group-row mt-2">
+                                    <label class="cardChoice cardChoice-plain is-selected" data-js="mv-card">
+                                        <input type="radio" name="mv" value="none" class="cardChoice-input" data-js="mv-radio" checked>
+                                        <span class="cardChoice-text"><span class="cardChoice-title">無</span></span>
+                                    </label>
+                                    <label class="cardChoice cardChoice-plain" data-js="mv-card">
+                                        <input type="radio" name="mv" value="local" class="cardChoice-input" data-js="mv-radio">
+                                        <span class="cardChoice-text"><span class="cardChoice-title">預計轉學或升學至本縣學校</span></span>
+                                    </label>
+                                    <label class="cardChoice cardChoice-plain" data-js="mv-card">
+                                        <input type="radio" name="mv" value="other" class="cardChoice-input" data-js="mv-radio">
+                                        <span class="cardChoice-text"><span class="cardChoice-title">預計轉學或升學至外縣市學校</span></span>
+                                    </label>
+                                </div>
+
+                                <div class="cardChoice-sub" data-js="mv-local" hidden>
+                                    <label for="mvSchool" class="formField-label">新學校 <span class="formField-required">必填</span></label>
+                                    <input type="text" id="mvSchool" class="form-control" list="mvList" placeholder="輸入學校名稱搜尋" style="max-width:420px">
+                                    <datalist id="mvList">
+                                        <option value="竹北國中"></option>
+                                        <option value="博愛國中"></option>
+                                        <option value="縣立湖口高中"></option>
+                                    </datalist>
+                                </div>
+                                <div class="cardChoice-sub" data-js="mv-other" hidden>
+                                    <div class="formGrid" style="max-width:620px; grid-template-columns:200px minmax(0,1fr)">
+                                        <div>
+                                            <label for="mvCity" class="formField-label">縣市 <span class="formField-required">必填</span></label>
+                                            <select id="mvCity" class="form-select"><option>新竹市</option><option>桃園市</option><option>苗栗縣</option><option>其他</option></select>
+                                        </div>
+                                        <div>
+                                            <label for="mvOschool" class="formField-label">校名 <span class="formField-required">必填</span></label>
+                                            <input type="text" id="mvOschool" class="form-control" placeholder="例：新竹市立光華國中">
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="formField-hint">讓中心評估借用期間。實際轉學時，再由「借用中輔具」提報轉銜續借或歸還。</p>
+                            </fieldset>
+                        </div>
+                    </section>
+
+                    <!-- ④ 申請內容 -->
+                    <section class="applyForm-section cardPanel" aria-labelledby="ap-det">
+                        <h2 id="ap-det" class="applyForm-sectionHead">
+                            <span class="cardNumbered-num-sm" aria-hidden="true" data-js="det-badge">4</span>申請內容<span class="applyForm-sectionHead-itemName" data-js="det-item-name-wrap">｜<span data-js="det-item-name">兒童輪椅</span></span>
+                        </h2>
+                        <div class="applyForm-sectionBody">
+
+                            <p class="noteBox" data-js="det-empty-hint" hidden>
+                                <i class="bi bi-info-circle" aria-hidden="true"></i>
+                                <span>請先在上方「選擇輔具」選擇輔具品項，才能填寫申請內容。</span>
+                            </p>
+
+                            <!-- 一般 -->
+                            <div data-js="det-general">
+                                <div>
+                                    <label for="apSpec" class="formField-label">相關配備或規格</label>
+                                    <input type="text" id="apSpec" class="form-control" placeholder="例：仰躺式；無治療師的學校，請具體說明輔具特徵">
+                                </div>
+                                <div class="mt-3">
+                                    <label for="apWhy" class="formField-label">申請原因 <span class="formField-required">必填</span></label>
+                                    <textarea id="apWhy" class="form-control" rows="3" placeholder="例：學生閱讀課本時需貼近紙面，放大後可獨立閱讀"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- 聽障 -->
+                            <div data-js="det-hearing" hidden>
+                                <fieldset>
+                                    <legend class="formField-label">學生現有助聽器機型 <span class="formField-required">必填</span></legend>
+                                    <div class="applyForm-earGrid mt-2">
+                                        <div class="applyForm-earBox">
+                                            <p class="applyForm-earBox-title">左耳</p>
+                                            <div>
+                                                <label for="earLType" class="formField-label">類型</label>
+                                                <select id="earLType" class="form-select"><option>耳掛式助聽器</option><option>耳內式助聽器</option><option>骨導式助聽器</option><option>電子耳</option><option>無</option><option>不需輔具（只申請單邊）</option></select>
+                                            </div>
+                                            <div class="formGrid">
+                                                <div><label for="earLBrand" class="formField-label">廠牌</label><input type="text" id="earLBrand" class="form-control" placeholder="例：Phonak"></div>
+                                                <div><label for="earLModel" class="formField-label">型號</label><input type="text" id="earLModel" class="form-control" placeholder="例：Sky L-M"></div>
+                                            </div>
+                                        </div>
+                                        <div class="applyForm-earBox">
+                                            <p class="applyForm-earBox-title">右耳</p>
+                                            <div>
+                                                <label for="earRType" class="formField-label">類型</label>
+                                                <select id="earRType" class="form-select"><option>耳掛式助聽器</option><option>耳內式助聽器</option><option>骨導式助聽器</option><option>電子耳</option><option>無</option><option>不需輔具（只申請單邊）</option></select>
+                                            </div>
+                                            <div class="formGrid">
+                                                <div><label for="earRBrand" class="formField-label">廠牌</label><input type="text" id="earRBrand" class="form-control" placeholder="例：Phonak"></div>
+                                                <div><label for="earRModel" class="formField-label">型號</label><input type="text" id="earRModel" class="form-control" placeholder="例：Sky L-M"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset class="mt-3">
+                                    <legend class="formField-label">相容性確認</legend>
+                                    <div class="formGrid">
+                                        <div class="formField-checkRow"><input class="form-check-input" type="checkbox" id="chk1"><label for="chk1" class="formField-checkRow-label">已確認助聽器或電子耳具連接調頻系統功能</label></div>
+                                        <div class="formField-checkRow"><input class="form-check-input" type="checkbox" id="chk2"><label for="chk2" class="formField-checkRow-label">已確認具備連接音靴介面</label></div>
+                                        <div class="formField-checkRow"><input class="form-check-input" type="checkbox" id="chk3"><label for="chk3" class="formField-checkRow-label">已確認具備連接連接器介面</label></div>
+                                        <div class="formField-checkRow"><input class="form-check-input" type="checkbox" id="chk4"><label for="chk4" class="formField-checkRow-label">1 年內助聽器不會更新</label></div>
+                                    </div>
+                                </fieldset>
+
+                                <div class="formGrid mt-3">
+                                    <div>
+                                        <label for="hrFreq" class="formField-label">已有輔具使用頻率</label>
+                                        <select id="hrFreq" class="form-select"><option>經常</option><option>偶爾</option><option>很少</option></select>
+                                    </div>
+                                    <div>
+                                        <label for="hrNow" class="formField-label">輔具使用現況 <span class="formField-required">必填</span></label>
+                                        <select id="hrNow" class="form-select"><option>尚未有此項輔具，需要評估適用性</option><option>目前的輔具可以使用，需要額外增添</option><option>目前的輔具不適合使用，需要更換</option></select>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <label for="hrStatus" class="formField-label">目前學生狀況及建議使用原因 <span class="formField-required">必填</span></label>
+                                    <textarea id="hrStatus" class="form-control" rows="3" placeholder="請詳述學生目前狀況，例：上課距離教師較遠時聽不清楚指令"></textarea>
+                                </div>
+                                <div class="mt-3">
+                                    <label for="hrGoal" class="formField-label">預期教學目標 <span class="formField-required">必填</span></label>
+                                    <textarea id="hrGoal" class="form-control" rows="2" placeholder="預期對學生的效益，例：能在一般教室中跟上課堂討論"></textarea>
+                                </div>
+                                <div class="formGrid mt-3">
+                                    <div>
+                                        <label for="hrDate" class="formField-label">聽力檢查日期 <span class="formField-required">必填</span></label>
+                                        <input type="date" id="hrDate" class="form-control" value="2026-08-20">
+                                        <p class="formField-hint">聽力圖需為一年內的檢查結果</p>
+                                    </div>
+                                    <div>
+                                        <span class="formField-label">聽力圖 <span class="formField-required">必填</span></span>
+                                        <input type="file" id="hrFile" class="fileUpload-input" accept="image/*,.pdf">
+                                        <label for="hrFile" class="fileUpload"><i class="bi bi-upload fileUpload-icon" aria-hidden="true"></i>點擊或拖曳上傳聽力圖照片或 PDF</label>
+                                        <div class="fileUploadList" data-js="hr-file-list" hidden></div>
+                                        <p class="formField-hint">照片請拍清楚檢查日期與適用期限</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 免評估 -->
+                            <div class="applyForm-freeBox" data-js="det-free" hidden>
+                                <div class="applyForm-freeBox-head">
+                                    <span class="applyForm-freeBox-name" data-js="free-name">攜帶型擴視機</span>
+                                    <span class="tagPill tag-greenLight">免評估</span>
+                                </div>
+                                <div class="formGrid">
+                                    <div data-js="free-field-wrap" hidden>
+                                        <label for="frSize" class="formField-label"><span data-js="free-field-label">數量說明</span> <span class="formField-required">必填</span></label>
+                                        <input type="number" min="0" id="frSize" class="form-control" data-js="free-field-input" placeholder="">
+                                    </div>
+                                    <div>
+                                        <label for="frQty" class="formField-label">數量 <span class="formField-required">必填</span></label>
+                                        <input type="number" min="1" value="1" id="frQty" class="form-control" placeholder="1">
+                                    </div>
+                                </div>
+                                <p class="applyForm-freeBox-note" data-js="free-note">免評估品項不需附評估報告書，送出後由中心直接審核。</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ⑤ 評估方式 -->
+                    <section class="applyForm-section cardPanel" aria-labelledby="ap-eval" data-js="section-eval">
+                        <h2 id="ap-eval" class="applyForm-sectionHead"><span class="cardNumbered-num-sm" aria-hidden="true" data-js="eval-badge">5</span>評估方式</h2>
+                        <div class="applyForm-sectionBody">
+                            <fieldset class="cardChoice-group cardChoice-group-row">
+                                <legend class="sr-only">評估方式</legend>
+                                <label class="cardChoice is-selected" data-js="ev-card">
+                                    <input type="radio" name="ev" value="ther" class="cardChoice-input" data-js="ev-radio" checked>
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">已有治療師協助填寫</span>
+                                        <span class="cardChoice-desc">請上傳治療師的評估報告書</span>
+                                    </span>
+                                </label>
+                                <label class="cardChoice" data-js="ev-card">
+                                    <input type="radio" name="ev" value="center" class="cardChoice-input" data-js="ev-radio">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">需要中心協助評估</span>
+                                        <span class="cardChoice-desc">由中心安排治療師到校評估</span>
+                                    </span>
+                                </label>
+                            </fieldset>
+
+                            <div data-js="ev-therapist">
+                                <span class="formField-label">評估報告書 <span class="formField-required">必填</span></span>
+                                <input type="file" id="evFile" class="fileUpload-input" multiple>
+                                <label for="evFile" class="fileUpload fileUpload-lg">
+                                    <i class="bi bi-upload fileUpload-icon" aria-hidden="true"></i>
+                                    <span class="fileUpload-text"><span>點擊或拖曳上傳檔案</span><span class="fileUpload-text-sub">可上傳多個檔案，支援 PDF、JPG、PNG</span></span>
+                                </label>
+                                <div class="fileUploadList" data-js="ev-file-list" hidden></div>
+                            </div>
+
+                            <p class="noteBox noteBox-blue" data-js="ev-center" hidden>
+                                <i class="bi bi-info-circle" aria-hidden="true"></i>
+                                送出後，中心會安排治療師到校評估，並以電子郵件通知評估日期。
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- 送出 -->
+                    <section class="applyForm-section cardPanel applyForm-submitBar" aria-label="送出申請">
+                        <p class="applyForm-submitNote">
+                            <i class="bi bi-info-circle" aria-hidden="true"></i>
+                            <span>送出後請下載申請表，校內簽核後到「申請紀錄」上傳，中心才會開始審核。</span>
+                        </p>
+                        <div class="applyForm-submitActions">
+                            <a href="index.html" class="btnPill btn-outline">取消</a>
+                            <button type="submit" class="btnPill btn-teal" data-js="submit-btn">送出申請</button>
+                        </div>
+                    </section>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- 送出成功 modal -->
+    <div class="modal fade" id="doneModal" data-js="doneModal" tabindex="-1" aria-hidden="true" aria-labelledby="dnTitle" aria-describedby="dnDesc">
+        <div class="modal-dialog modal-dialog-md">
+            <div class="modal-content">
+                <div class="modalDone">
+                    <button type="button" class="modalDone-close" aria-label="關閉" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                    <h2 id="dnTitle" class="modalDone-title">申請已送出，還需上傳簽核申請表</h2>
+                    <p id="dnDesc" class="modalDone-desc">申請編號 <b class="modalDone-code">A1151029-004</b>。<br>請下載申請表，校內簽核後上傳，中心收到後才會開始審核。</p>
+
+                    <ol class="stepTracker modalDone-steps" aria-label="申請流程，目前在第 1 步">
+                        <li class="stepTracker-item" aria-current="step">
+                            <span class="stepTracker-circle is-active" aria-hidden="true">1</span>
+                            <span class="stepTracker-label is-active">簽核申請表</span>
+                        </li>
+                        <li class="stepTracker-item">
+                            <span class="stepTracker-circle" aria-hidden="true">2</span>
+                            <span class="stepTracker-label">中心審核</span>
+                        </li>
+                        <li class="stepTracker-item">
+                            <span class="stepTracker-circle" aria-hidden="true">3</span>
+                            <span class="stepTracker-label">簽章借用單</span>
+                        </li>
+                        <li class="stepTracker-item">
+                            <span class="stepTracker-circle" aria-hidden="true">4</span>
+                            <span class="stepTracker-label">中心確認</span>
+                        </li>
+                        <li class="stepTracker-item">
+                            <span class="stepTracker-circle" aria-hidden="true">5</span>
+                            <span class="stepTracker-label">開始借用</span>
+                        </li>
+                    </ol>
+
+                    <a href="#" download class="btnPill btn-teal modalDone-download">
+                        <i class="bi bi-download" aria-hidden="true"></i>下載申請表（PDF）
+                    </a>
+                    <p class="modalDone-caption">已帶入剛才填寫的內容，列印後即可簽核</p>
+
+                    <div class="modalDone-links">
+                        <button type="button" class="modalDone-link" data-js="done-modal-records">前往申請紀錄上傳<i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+                        <button type="button" class="modalDone-secondary" data-bs-dismiss="modal">稍後再處理</button>
+                    </div>
+                    <p class="modalDone-divider">還沒上傳的申請會留在首頁「待辦事項」提醒你。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>

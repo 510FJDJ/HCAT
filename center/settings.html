@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script>
+        // 無障礙：清掉網址列殘留的錨點 hash（例如按過跳過導覽連結後留下的 #goCenter），
+        // 避免重新整理時瀏覽器原生錨點跳轉把捲動位置與焦點帶到該錨點，而非停留頁首
+        if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系統設定 - 輔具管理資訊系統</title>
+    <link rel="icon" type="image/png" href="../img/logo/logo.png">
+    <meta name="description" content="設定每學年兩次的輔具申請期間、系統寄送的通知信，以及前台頁尾的聯絡資訊">
+    <meta name="robots" content="noindex">
+
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+    <!-- 無障礙：跳過導覽列，進入主要內容區 -->
+    <a href="#goCenter" class="sr-only focusable" accesskey="C" title="跳過導覽列，進入主要內容區">主要內容區</a>
+    <!-- 無障礙：跳至上方導覽列（不進入一般 Tab 順序，僅供 Alt+U 快速鍵定位） -->
+    <a href="#headerNav" class="sr-only focusable" accesskey="U" title="跳至上方導覽列" tabindex="-1">上方導覽列</a>
+
+    <div id="header" data-layout="../layout/header_Center.html"></div>
+
+    <main id="goCenter" tabindex="-1" class="bg-green bg-green-bleed">
+        <section class="bannerWave">
+            <div class="bannerWave-bg" aria-hidden="true"></div>
+
+            <svg class="bannerWave-line bannerWave-line-desktop" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 284 900 326 660 312 C 440 298 260 230 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-tablet" aria-hidden="true" viewBox="0 0 1440 330" preserveAspectRatio="none">
+                <path d="M1440 216 C 1160 255 900 278 660 270 C 440 262 260 225 0 222" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <svg class="bannerWave-line bannerWave-line-mobile" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+                <path d="M1440 144 C1160 168 900 182 660 177 C440 173 260 150 0 148" fill="none" stroke="#8EC3BF" stroke-width="1.5" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"></path>
+            </svg>
+
+            <div class="bannerWave-illuClip" aria-hidden="true">
+                <img class="bannerWave-illu dec-settings" src="../img/banner/settings.webp" alt="">
+            </div>
+            <img class="bannerWave-leaf bannerWave-leaf-1" src="../img/deco/leaf-1.webp" alt="" aria-hidden="true">
+            <img class="bannerWave-leaf bannerWave-leaf-2" src="../img/deco/flower.webp" alt="" aria-hidden="true">
+
+            <div class="settingsPage-container">
+                <div class="bannerWave-inner">
+                    <nav class="crumbNav" aria-label="麵包屑導覽">
+                        <ol>
+                            <li><a href="index.html" class="crumbNav-home" aria-label="首頁"><i class="bi bi-house-door" aria-hidden="true"></i></a></li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li>網站與設定</li>
+                            <li><span class="crumbNav-sep" aria-hidden="true">/</span></li>
+                            <li aria-current="page" class="crumbNav-current">系統設定</li>
+                        </ol>
+                    </nav>
+
+                    <div class="bannerWave-main">
+                        <h1 class="titleSection bannerWave-title">
+                            <span class="dotsGrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                            系統設定
+                        </h1>
+                        <p class="bannerWave-desc">設定每學年兩次的輔具申請期間、系統寄送的通知信，以及前台頁尾的聯絡資訊。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="settingsPage-content">
+            <div class="settingsPage-container">
+                <div class="settingsPage-layout">
+                    <nav class="settingsPage-nav" aria-label="設定項目" data-js="settingsNav">
+                        <ul class="settingsPage-navList">
+                            <li><a href="#set-period" class="settingsPage-navLink is-active" aria-current="true" data-js="settingsNavLink"><i class="bi bi-calendar3" aria-hidden="true"></i>申請期間</a></li>
+                            <li><a href="#set-mail" class="settingsPage-navLink" data-js="settingsNavLink"><i class="bi bi-envelope" aria-hidden="true"></i>通知信</a></li>
+                            <li><a href="#set-contact" class="settingsPage-navLink" data-js="settingsNavLink"><i class="bi bi-geo-alt" aria-hidden="true"></i>網站聯絡資訊</a></li>
+                        </ul>
+                    </nav>
+
+                    <div class="settingsPage-sections">
+                        <section class="cardPanel" id="set-period" aria-labelledby="sp-h">
+                            <div class="cardPanel-head settingsPage-head">
+                                <h2 id="sp-h" class="cardPanel-title">申請期間</h2>
+                                <div class="selectInline">
+                                    <label for="spYear" class="selectInline-label">學年度</label>
+                                    <select id="spYear" class="form-select">
+                                        <option selected>115 學年度</option>
+                                        <option>116 學年度</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <p class="noteBox noteBox-teal settingsPage-note">
+                                <i class="bi bi-calendar3" aria-hidden="true"></i>
+                                目前為 115 學年度第一次申請期間，還有 <span class="settingsPage-noteNum">2</span> 天截止
+                            </p>
+
+                            <div class="settingsPage-periodList">
+                                <div class="settingsPage-periodRow">
+                                    <div class="settingsPage-periodInfo">
+                                        <p class="settingsPage-periodName">115 學年度第一次申請</p>
+                                        <p class="settingsPage-periodStatus"><span class="statusPill statusPill-green"><span class="statusPill-dot" aria-hidden="true"></span>進行中</span></p>
+                                    </div>
+                                    <div>
+                                        <label for="pdFrom0" class="formField-label">開始日期</label>
+                                        <input id="pdFrom0" type="date" class="form-control" value="2026-09-01">
+                                    </div>
+                                    <div>
+                                        <label for="pdTo0" class="formField-label">截止日期</label>
+                                        <input id="pdTo0" type="date" class="form-control" value="2026-10-31">
+                                    </div>
+                                </div>
+                                <div class="settingsPage-periodRow">
+                                    <div class="settingsPage-periodInfo">
+                                        <p class="settingsPage-periodName">115 學年度第二次申請</p>
+                                        <p class="settingsPage-periodStatus"><span class="statusPill"><span class="statusPill-dot" aria-hidden="true"></span>未開始</span></p>
+                                    </div>
+                                    <div>
+                                        <label for="pdFrom1" class="formField-label">開始日期</label>
+                                        <input id="pdFrom1" type="date" class="form-control" value="2027-02-01">
+                                    </div>
+                                    <div>
+                                        <label for="pdTo1" class="formField-label">截止日期</label>
+                                        <input id="pdTo1" type="date" class="form-control" value="2027-03-31">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="formField-hint settingsPage-periodHint">預設第一次為 9 月至 10 月、第二次為隔年 2 月至 3 月，可依實際情況調整。非申請期間，學校只能申請臨時借用中心現有輔具。</p>
+
+                            <details class="settingsPage-details">
+                                <summary class="settingsPage-detailsSummary">查看過去的申請期間</summary>
+                                <ul class="settingsPage-pastList">
+                                    <li class="settingsPage-pastRow"><span>114 學年度第二次</span><span class="settingsPage-pastDate">2026/02/02 – 2026/03/31</span></li>
+                                    <li class="settingsPage-pastRow"><span>114 學年度第一次</span><span class="settingsPage-pastDate">2025/09/01 – 2025/10/31</span></li>
+                                </ul>
+                            </details>
+
+                            <div class="settingsPage-actions">
+                                <button type="button" class="btnPill btn-teal">儲存申請期間</button>
+                            </div>
+                        </section>
+
+                        <section class="cardPanel" id="set-mail" aria-labelledby="sm-h">
+                            <div class="cardPanel-head settingsPage-head">
+                                <h2 id="sm-h" class="cardPanel-title">通知信</h2>
+                            </div>
+
+                            <div class="formGrid settingsPage-mailForm">
+                                <div>
+                                    <label for="smFrom" class="formField-label">寄件者名稱<span class="formField-required">必填</span></label>
+                                    <input id="smFrom" type="text" class="form-control" value="新竹縣特殊教育資源中心">
+                                </div>
+                                <div>
+                                    <label for="smReply" class="formField-label">回覆信箱<span class="formField-required">必填</span></label>
+                                    <input id="smReply" type="email" class="form-control" placeholder="例：aids@center.example.edu.tw">
+                                </div>
+                            </div>
+
+                            <h3 class="cardPanel-subTitle">自動寄送</h3>
+                            <ul class="settingsPage-mailList">
+                                <li class="settingsPage-mailRow">
+                                    <span class="settingsPage-mailText">
+                                        <span id="mail-result" class="settingsPage-mailLabel">審核結果通知學校</span>
+                                        <span class="settingsPage-mailDesc">核准、退回補件時寄給學校承辦人</span>
+                                    </span>
+                                    <button type="button" class="toggleSwitch is-on" role="switch" aria-checked="true" aria-labelledby="mail-result" data-js="mailToggle">
+                                        <span class="toggleSwitch-knob" aria-hidden="true"></span>
+                                    </button>
+                                </li>
+                                <li class="settingsPage-mailRow">
+                                    <span class="settingsPage-mailText">
+                                        <span id="mail-eval" class="settingsPage-mailLabel">到校評估通知</span>
+                                        <span class="settingsPage-mailDesc">安排或修改評估時間時寄給學校</span>
+                                    </span>
+                                    <button type="button" class="toggleSwitch is-on" role="switch" aria-checked="true" aria-labelledby="mail-eval" data-js="mailToggle">
+                                        <span class="toggleSwitch-knob" aria-hidden="true"></span>
+                                    </button>
+                                </li>
+                                <li class="settingsPage-mailRow">
+                                    <span class="settingsPage-mailText">
+                                        <span id="mail-period" class="settingsPage-mailLabel">申請期間開始提醒</span>
+                                        <span class="settingsPage-mailDesc">開始前 7 天寄給全縣學校輔具管理人員</span>
+                                    </span>
+                                    <button type="button" class="toggleSwitch is-on" role="switch" aria-checked="true" aria-labelledby="mail-period" data-js="mailToggle">
+                                        <span class="toggleSwitch-knob" aria-hidden="true"></span>
+                                    </button>
+                                </li>
+                                <li class="settingsPage-mailRow">
+                                    <span class="settingsPage-mailText">
+                                        <span id="mail-repair" class="settingsPage-mailLabel">報修指派通知廠商</span>
+                                        <span class="settingsPage-mailDesc">指派後寄給維修廠商</span>
+                                    </span>
+                                    <button type="button" class="toggleSwitch is-on" role="switch" aria-checked="true" aria-labelledby="mail-repair" data-js="mailToggle">
+                                        <span class="toggleSwitch-knob" aria-hidden="true"></span>
+                                    </button>
+                                </li>
+                                <li class="settingsPage-mailRow">
+                                    <span class="settingsPage-mailText">
+                                        <span id="mail-return" class="settingsPage-mailLabel">預計歸還日提醒</span>
+                                        <span class="settingsPage-mailDesc">到期前 30 天寄給學校</span>
+                                    </span>
+                                    <button type="button" class="toggleSwitch" role="switch" aria-checked="false" aria-labelledby="mail-return" data-js="mailToggle">
+                                        <span class="toggleSwitch-knob" aria-hidden="true"></span>
+                                    </button>
+                                </li>
+                            </ul>
+
+                            <div class="settingsPage-actions">
+                                <button type="button" class="btnPill btn-teal">儲存通知設定</button>
+                            </div>
+                        </section>
+
+                        <section class="cardPanel" id="set-contact" aria-labelledby="sc-h">
+                            <div class="cardPanel-head settingsPage-head">
+                                <h2 id="sc-h" class="cardPanel-title">網站聯絡資訊</h2>
+                                <span class="settingsPage-headNote">會顯示在全站頁尾</span>
+                            </div>
+
+                            <div class="formGrid">
+                                <div>
+                                    <label for="scTel" class="formField-label">電話</label>
+                                    <input id="scTel" type="tel" class="form-control" value="03-5572346 #221">
+                                </div>
+                                <div>
+                                    <label for="scHours" class="formField-label">服務時間</label>
+                                    <input id="scHours" type="text" class="form-control" placeholder="例：週一至週五 08:00–16:00">
+                                </div>
+                                <div class="formGrid-full">
+                                    <label for="scAddr" class="formField-label">地址</label>
+                                    <input id="scAddr" type="text" class="form-control" placeholder="例：新竹縣竹北市○○路○號">
+                                </div>
+                                <div>
+                                    <label for="scOrg" class="formField-label">主辦單位</label>
+                                    <input id="scOrg" type="text" class="form-control" value="新竹縣政府教育局">
+                                </div>
+                                <div>
+                                    <label for="scHost" class="formField-label">承辦學校</label>
+                                    <input id="scHost" type="text" class="form-control" value="新竹縣山崎國民小學">
+                                </div>
+                            </div>
+
+                            <div class="settingsPage-actions">
+                                <button type="button" class="btnPill btn-teal">儲存聯絡資訊</button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div data-layout="../layout/footer.html"></div>
+
+    <script src="../js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.js"></script>
+</body>
+</html>
