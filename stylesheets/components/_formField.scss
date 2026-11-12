@@ -9,7 +9,6 @@
     gap: 20px 24px;
 
     @media (max-width: 720px) {
-        grid-template-columns: 1fr;
         gap: 16px;
     }
 }
@@ -181,6 +180,15 @@
     }
 }
 
+// 左窄固定欄＋右彈性欄（如「縣市」＋「校名」），手機收為單欄
+.formGrid-narrowWide {
+    grid-template-columns: 200px minmax(0, 1fr);
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+    }
+}
+
 .formGrid-cols4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
 
@@ -199,7 +207,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    height: 48px;
+    padding: 8px 12px;
     border: 2px dashed #BFCAC7;
     border-radius: $border-radius-sm;
     background-color: $surface-card;

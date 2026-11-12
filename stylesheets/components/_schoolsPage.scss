@@ -116,21 +116,6 @@
     padding: 9px 13px;
 }
 
-.schoolMgrRow-avatar {
-    flex: 0 0 auto;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: $surface-mint-dots;
-    color: $brand-teal-deep;
-    font-family: "Poppins", sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-}
-
 .schoolMgrRow-body {
     flex: 1 1 220px;
     min-width: 0;

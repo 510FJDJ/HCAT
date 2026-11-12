@@ -22,13 +22,19 @@
         }
 
         slots.forEach(function (slot) {
-            fetch(slot.getAttribute('data-layout'))
+            var layoutPath = slot.getAttribute('data-layout');
+            var basePrefix = layoutPath.indexOf('../') === 0 ? '../' : '';
+
+            fetch(layoutPath)
                 .then(function (res) { return res.text(); })
                 .then(function (html) {
+                    // layout 內共用檔案（如 footer.html）以根目錄絕對路徑書寫，
+                    // 依載入頁面的深度動態改寫成正確的相對路徑
+                    html = html.replace(/(href|src)="\/(?!\/)/g, '$1="' + basePrefix);
                     slot.innerHTML = html;
                 })
                 .catch(function (err) {
-                    console.error('載入版面失敗：' + slot.getAttribute('data-layout'), err);
+                    console.error('載入版面失敗：' + layoutPath, err);
                 })
                 .finally(function () {
                     pending -= 1;
@@ -275,9 +281,12 @@
         var header = document.getElementById('header');
         if (!header) { return; }
         var collapsibles = header.querySelectorAll('.barSlim, .appBar');
+        var collapseQuery = window.matchMedia('(min-width: 901px)');
 
         function update() {
-            var isCompact = window.scrollY > 0;
+            // 收合樣式（_navBarLogged.scss／_barSlim.scss）只在 ≥901px 生效，
+            // inert 切換須對齊同一斷點，否則手機寬度選單按鈕看得到卻點不開
+            var isCompact = collapseQuery.matches && window.scrollY > 0;
             header.classList.toggle('is-compact', isCompact);
             collapsibles.forEach(function (el) {
                 if (isCompact) {
@@ -835,6 +844,8 @@
         disDetail: q('dis-detail'),
         mvLocal: q('mv-local'),
         mvOther: q('mv-other'),
+        mvStage: q('mv-stage'),
+        mvSchool: q('mv-school'),
         detBadge: q('det-badge'),
         detItemNameWrap: q('det-item-name-wrap'),
         detItemName: q('det-item-name'),
@@ -1114,6 +1125,26 @@
     wireCardGroup('use-radio', 'use-card', function (v) { state.use = v; });
     wireCardGroup('ev-radio', 'ev-card', function (v) { state.ev = v; });
     wireCardGroup('mv-radio', 'mv-card', function (v) { state.mv = v; });
+
+    // 轉入本縣學校：依學制篩選學校清單（比照「借用中輔具」轉銜續借 modal 的作法）
+    var MV_STAGE_LABEL = { k: '幼兒園', e: '國小', j: '國中', h: '高中職' };
+    var MV_STAGE_SCHOOLS = {
+        k: ['竹北市 竹北國小附設幼兒園', '竹東鎮 竹東國小附設幼兒園', '湖口鄉 湖口國小附設幼兒園', '縣立 竹北幼兒園'],
+        e: ['竹北市 博愛國小', '竹北市 東海國小', '竹北市 十興國小', '竹東鎮 竹東國小', '湖口鄉 湖口國小', '新豐鄉 新豐國小'],
+        j: ['竹北市 竹北國中', '竹北市 博愛國中', '竹東鎮 竹東國中', '新豐鄉 新豐國中'],
+        h: ['縣立 湖口高中', '縣立 竹北高中', '縣立 六家高中']
+    };
+
+    function renderMvSchoolOptions(stage) {
+        var options = MV_STAGE_SCHOOLS[stage] || [];
+        var html = '<option value="">請選擇' + MV_STAGE_LABEL[stage] + '</option>';
+        options.forEach(function (name) { html += '<option>' + name + '</option>'; });
+        el.mvSchool.innerHTML = html;
+    }
+
+    if (el.mvStage && el.mvSchool) {
+        el.mvStage.addEventListener('change', function () { renderMvSchoolOptions(el.mvStage.value); });
+    }
 
     qa('dis-radio').forEach(function (radio) {
         radio.addEventListener('change', function () {
@@ -2306,7 +2337,6 @@
         var pickerValue = document.getElementById('staffPickerValue');
         var pickerError = document.querySelector('[data-js="staffPickerError"]');
         var pickerSelected = document.querySelector('[data-js="staffPickerSelected"]');
-        var pickerSelectedAvatar = document.querySelector('[data-js="staffPickerSelectedAvatar"]');
         var pickerSelectedName = document.querySelector('[data-js="staffPickerSelectedName"]');
         var pickerSelectedTitle = document.querySelector('[data-js="staffPickerSelectedTitle"]');
         var pickerSelectedEmail = document.querySelector('[data-js="staffPickerSelectedEmail"]');
@@ -2401,7 +2431,6 @@
                 }
 
                 if (pickerSelected) { pickerSelected.hidden = false; }
-                if (pickerSelectedAvatar) { pickerSelectedAvatar.textContent = name.charAt(0); }
                 if (pickerSelectedName) { pickerSelectedName.textContent = name; }
                 if (pickerSelectedTitle) { pickerSelectedTitle.textContent = title; }
                 if (pickerSelectedEmail) { pickerSelectedEmail.textContent = email; }
@@ -3469,11 +3498,6 @@
     var viewModalEl = document.querySelector('[data-js="repairViewModal"]');
     if (!assignModalEl || !closeModalEl || !viewModalEl) { return; }
 
-    var STATUS_INFO = {
-        fixing: { cls: 'statusPill-blue', text: '維修中' },
-        closed: { cls: '', text: '已結案' }
-    };
-
     // ------------------------------------------------------------
     // 照片與影片縮圖（指派／結案／查看 modal 共用），點擊縮圖開啟全螢幕放大檢視
     // ------------------------------------------------------------
@@ -3770,8 +3794,6 @@
         var fail = status === 'report-fail';
 
         closeModalEl.setAttribute('data-fail', fail ? 'true' : 'false');
-        closeModalEl.querySelector('[data-js="rcStatusPill"]').className = 'statusPill ms-2 ' + (fail ? 'statusPill-red' : 'statusPill-teal');
-        closeModalEl.querySelector('[data-js="rcStatusText"]').textContent = fail ? '廠商回報：無法修復' : '廠商回報：完成維修';
 
         closeModalEl.querySelector('[data-js="rcSubtitle"]').textContent = '報修編號 ' + caseNo;
         closeModalEl.querySelector('[data-js="rcSchool"]').textContent = school;
@@ -3836,15 +3858,10 @@
         var property = trigger.getAttribute('data-property') || '';
         var desc = trigger.getAttribute('data-desc') || '－';
         var vendor = trigger.getAttribute('data-vendor') || '－';
-        var status = trigger.getAttribute('data-status') || 'fixing';
         var reportDate = trigger.getAttribute('data-report-date') || '';
         var reportNote = trigger.getAttribute('data-report-note') || '';
         var log = [];
         try { log = JSON.parse(trigger.getAttribute('data-log') || '[]'); } catch (e) { log = []; }
-
-        var statusInfo = STATUS_INFO[status] || STATUS_INFO.fixing;
-        viewModalEl.querySelector('[data-js="rvStatusPill"]').className = 'statusPill ms-2' + (statusInfo.cls ? ' ' + statusInfo.cls : '');
-        viewModalEl.querySelector('[data-js="rvStatusText"]').textContent = statusInfo.text;
 
         viewModalEl.querySelector('[data-js="rvSubtitle"]').textContent = '報修編號 ' + caseNo + '　維修廠商　' + vendor;
         viewModalEl.querySelector('[data-js="rvSchool"]').textContent = school;
@@ -4084,10 +4101,6 @@
     var pickConfirmBtn = schoolModal.querySelector('[data-js="mgrPickConfirm"]');
     var pickCountEl = schoolModal.querySelector('[data-js="mgrPickCount"]');
 
-    function avatarChar(name) {
-        return name ? name.charAt(0) : '？';
-    }
-
     function toggleEmptyNote() {
         if (!mgrNewNote || !mgrList) { return; }
         mgrNewNote.hidden = mgrList.children.length > 0;
@@ -4102,7 +4115,6 @@
         var wayClass = data.way === 'center' ? 'tag-goldLight' : 'tag-greyLight';
 
         li.innerHTML =
-            '<span class="schoolMgrRow-avatar" aria-hidden="true"></span>' +
             '<span class="schoolMgrRow-body">' +
                 '<span class="schoolMgrRow-nameLine">' +
                     '<span class="schoolMgrRow-name"></span>' +
@@ -4118,7 +4130,6 @@
                 '<i class="bi bi-x-lg" aria-hidden="true"></i>' +
             '</button>';
 
-        li.querySelector('.schoolMgrRow-avatar').textContent = avatarChar(data.name);
         li.querySelector('.schoolMgrRow-name').textContent = data.name || '';
         li.querySelector('.schoolMgrRow-title').textContent = data.title || '';
         li.querySelector('[data-js="mgrRowMail"]').textContent = data.email || '';

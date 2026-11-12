@@ -282,16 +282,32 @@
                                 </div>
 
                                 <div class="cardChoice-sub" data-js="mv-local" hidden>
-                                    <label for="mvSchool" class="formField-label">新學校 <span class="formField-required">必填</span></label>
-                                    <input type="text" id="mvSchool" class="form-control" list="mvList" placeholder="輸入學校名稱搜尋" style="max-width:420px">
-                                    <datalist id="mvList">
-                                        <option value="竹北國中"></option>
-                                        <option value="博愛國中"></option>
-                                        <option value="縣立湖口高中"></option>
-                                    </datalist>
+                                    <div class="formGrid mt-2" style="max-width:620px">
+                                        <div>
+                                            <label for="mvStage" class="formField-label">轉入學校學制 <span class="formField-required">必填</span></label>
+                                            <select id="mvStage" class="form-select" data-js="mv-stage">
+                                                <option value="k">幼兒園</option>
+                                                <option value="e" selected>國小</option>
+                                                <option value="j">國中</option>
+                                                <option value="h">高中職</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="mvSchool" class="formField-label">轉入學校 <span class="formField-required">必填</span></label>
+                                            <select id="mvSchool" class="form-select" data-js="mv-school">
+                                                <option value="">請選擇國小</option>
+                                                <option>竹北市 博愛國小</option>
+                                                <option>竹北市 東海國小</option>
+                                                <option>竹北市 十興國小</option>
+                                                <option>竹東鎮 竹東國小</option>
+                                                <option>湖口鄉 湖口國小</option>
+                                                <option>新豐鄉 新豐國小</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="cardChoice-sub" data-js="mv-other" hidden>
-                                    <div class="formGrid" style="max-width:620px; grid-template-columns:200px minmax(0,1fr)">
+                                    <div class="formGrid formGrid-narrowWide mt-2" style="max-width:620px">
                                         <div>
                                             <label for="mvCity" class="formField-label">縣市 <span class="formField-required">必填</span></label>
                                             <select id="mvCity" class="form-select"><option>新竹市</option><option>桃園市</option><option>苗栗縣</option><option>其他</option></select>
@@ -299,6 +315,7 @@
                                         <div>
                                             <label for="mvOschool" class="formField-label">校名 <span class="formField-required">必填</span></label>
                                             <input type="text" id="mvOschool" class="form-control" placeholder="例：新竹市立光華國中">
+                                            <p class="formField-hint">請填寫完整正式校名，方便中心後續查詢與聯繫。</p>
                                         </div>
                                     </div>
                                 </div>

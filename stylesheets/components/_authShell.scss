@@ -35,11 +35,14 @@
 }
 
 .authBanner-subtitle {
-    margin: 8px 0 0 44px;
+    margin: 8px 0 0;
+}
 
-    @media (max-width: 720px) {
-        margin-left: 40px;
-    }
+// 導盲磚圓點改放在英文小標左側，不再疊在 h1 主標題上（同 _pageBanner.scss 的作法）
+.authBanner-head .labelCaption {
+    display: flex;
+    align-items: center;
+    margin-left: 0;
 }
 
 // 葉子／小花裝飾（design.md §6.4：純裝飾）

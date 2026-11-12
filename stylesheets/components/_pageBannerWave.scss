@@ -235,4 +235,9 @@ $bannerWave-curveMask-mobile: url("data:image/svg+xml;utf8,<svg xmlns='http://ww
     @media (max-width: 720px) {
         display: inline-flex;
     }
+
+    // 跟標題同排，寬度有限，手機版只留「返回」，目的地名稱文字不顯示
+    .bannerWave-backBtn-label {
+        display: none;
+    }
 }
