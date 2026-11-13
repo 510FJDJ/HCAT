@@ -471,6 +471,7 @@
                     <i class="bi bi-x-lg" aria-hidden="true"></i>
                 </button>
             </div>
+            <form novalidate>
             <div class="modal-body">
                 <fieldset class="cardChoice-group cardChoice-group-row">
                     <legend class="formField-label">申請類型 <span class="formField-required">必填</span></legend>
@@ -506,28 +507,23 @@
                     <div class="formGrid formGrid-cols3 mt-4">
                         <div>
                             <label for="chStage" class="formField-label">轉入學校學制 <span class="formField-required">必填</span></label>
-                            <select id="chStage" class="form-select" data-js="ch-stage">
+                            <select id="chStage" class="form-select" data-js="ch-stage" required>
+                                <option value="" selected disabled>請選擇</option>
                                 <option value="k">幼兒園</option>
-                                <option value="e" selected>國小</option>
+                                <option value="e">國小</option>
                                 <option value="j">國中</option>
                                 <option value="h">高中職</option>
                             </select>
                         </div>
                         <div>
                             <label for="chSchool" class="formField-label">轉入學校 <span class="formField-required">必填</span></label>
-                            <select id="chSchool" class="form-select" data-js="ch-school">
-                                <option value="">請選擇國小</option>
-                                <option>竹北市 博愛國小</option>
-                                <option>竹北市 東海國小</option>
-                                <option>竹北市 十興國小</option>
-                                <option>竹東鎮 竹東國小</option>
-                                <option>湖口鄉 湖口國小</option>
-                                <option>新豐鄉 新豐國小</option>
+                            <select id="chSchool" class="form-select" data-js="ch-school" required>
+                                <option value="" selected disabled>請先選擇學制</option>
                             </select>
                         </div>
                         <div>
                             <label for="chDate" class="formField-label">轉出日期 <span class="formField-required">必填</span></label>
-                            <input type="date" id="chDate" class="form-control" value="2026-11-16">
+                            <input type="date" id="chDate" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -537,7 +533,7 @@
                     <div class="formGrid">
                         <div>
                             <label for="chRetGrad" class="formField-label">預計歸還日期 <span class="formField-required">必填</span></label>
-                            <input type="date" id="chRetGrad" class="form-control" value="2027-06-30">
+                            <input type="date" id="chRetGrad" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -547,8 +543,8 @@
                     <div class="formGrid">
                         <div>
                             <label for="chWhy" class="formField-label">停止原因 <span class="formField-required">必填</span></label>
-                            <select id="chWhy" class="form-select">
-                                <option value="">請選擇原因</option>
+                            <select id="chWhy" class="form-select" required>
+                                <option value="" selected disabled>請選擇原因</option>
                                 <option>學生已不需要</option>
                                 <option>改用其他輔具</option>
                                 <option>輔具不適合學生</option>
@@ -557,7 +553,7 @@
                         </div>
                         <div>
                             <label for="chRetStop" class="formField-label">預計歸還日期 <span class="formField-required">必填</span></label>
-                            <input type="date" id="chRetStop" class="form-control">
+                            <input type="date" id="chRetStop" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -571,8 +567,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
-                <button type="button" class="btnPill btn-teal" data-js="changeSubmit">送出給中心審核</button>
+                <button type="submit" class="btnPill btn-teal" data-js="changeSubmit">送出給中心審核</button>
             </div>
+            </form>
             </div>
         </div>
     </div>
@@ -589,6 +586,7 @@
                     <i class="bi bi-x-lg" aria-hidden="true"></i>
                 </button>
             </div>
+            <form novalidate>
             <div class="modal-body">
                 <div class="deviceInfo">
                     <img class="deviceInfo-photo" data-js="rpPhoto" src="" alt="">
@@ -600,7 +598,7 @@
 
                 <div class="modal-body-section mt-5">
                     <label for="rpDesc" class="formField-label">損壞說明 <span class="formField-required">必填</span></label>
-                    <textarea id="rpDesc" class="form-control" rows="3" placeholder="請描述狀況，例如：右側煞車失靈、開機後畫面一直閃爍"></textarea>
+                    <textarea id="rpDesc" class="form-control" rows="3" placeholder="請描述狀況，例如：右側煞車失靈、開機後畫面一直閃爍" required></textarea>
                 </div>
 
                 <div class="modal-body-section">
@@ -624,11 +622,11 @@
                     <div class="formGrid mt-4">
                         <div>
                             <label for="rpName" class="formField-label">聯絡人 <span class="formField-required">必填</span></label>
-                            <input type="text" id="rpName" class="form-control" value="王○○" placeholder="例：王小明">
+                            <input type="text" id="rpName" class="form-control" placeholder="例：王小明" required>
                         </div>
                         <div>
                             <label for="rpTel" class="formField-label">聯絡電話 <span class="formField-required">必填</span></label>
-                            <input type="tel" id="rpTel" class="form-control" value="03-5551234 #215" placeholder="例：03-5551234 #215">
+                            <input type="tel" id="rpTel" class="form-control" placeholder="例：03-5551234 #215" required>
                         </div>
                     </div>
                 </div>
@@ -637,8 +635,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
-                <button type="button" class="btnPill btn-teal" data-js="repairSubmit">送出報修</button>
+                <button type="submit" class="btnPill btn-teal" data-js="repairSubmit">送出報修</button>
             </div>
+            </form>
             </div>
         </div>
     </div>

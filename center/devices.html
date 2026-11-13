@@ -438,11 +438,11 @@
                             <div class="devicesPage-photoRow-fields">
                                 <div>
                                     <label for="dmName" class="formField-label">品項名稱 <span class="formField-required">必填</span></label>
-                                    <input type="text" id="dmName" class="form-control" placeholder="例：擴視機">
+                                    <input type="text" id="dmName" class="form-control" placeholder="例：擴視機" required>
                                 </div>
                                 <div>
                                     <label for="dmCat" class="formField-label">輔具分類 <span class="formField-required">必填</span></label>
-                                    <select id="dmCat" class="form-select">
+                                    <select id="dmCat" class="form-select" required>
                                         <option selected>行動與擺位輔具</option>
                                         <option>視障輔具</option>
                                         <option>聽障輔具</option>
@@ -463,7 +463,7 @@
                         <div class="modal-body-section formGrid">
                             <div data-js="dmUnitOnly">
                                 <label for="dmLife" class="formField-label">預設使用年限 <span class="formField-required">必填</span></label>
-                                <select id="dmLife" class="form-select">
+                                <select id="dmLife" class="form-select" required>
                                     <option value="3">3 年</option>
                                     <option value="4">4 年</option>
                                     <option value="5" selected>5 年</option>

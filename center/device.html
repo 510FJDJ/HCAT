@@ -772,11 +772,11 @@
                             <div class="devicesPage-photoRow-fields">
                                 <div>
                                     <label for="dmName" class="formField-label">品項名稱 <span class="formField-required">必填</span></label>
-                                    <input type="text" id="dmName" class="form-control" value="擴視機" placeholder="例：擴視機">
+                                    <input type="text" id="dmName" class="form-control" value="擴視機" placeholder="例：擴視機" required>
                                 </div>
                                 <div>
                                     <label for="dmCat" class="formField-label">輔具分類 <span class="formField-required">必填</span></label>
-                                    <select id="dmCat" class="form-select">
+                                    <select id="dmCat" class="form-select" required>
                                         <option>行動與擺位輔具</option>
                                         <option selected>視障輔具</option>
                                         <option>聽障輔具</option>
@@ -797,7 +797,7 @@
                         <div class="modal-body-section formGrid">
                             <div data-js="dmUnitOnly">
                                 <label for="dmLife" class="formField-label">預設使用年限 <span class="formField-required">必填</span></label>
-                                <select id="dmLife" class="form-select">
+                                <select id="dmLife" class="form-select" required>
                                     <option value="3">3 年</option>
                                     <option value="4">4 年</option>
                                     <option value="5" selected>5 年</option>
@@ -852,7 +852,7 @@
                         <div class="modal-body-section formGrid">
                             <div>
                                 <label for="umNo" class="formField-label">財產編號 <span class="formField-required">必填</span></label>
-                                <input type="text" id="umNo" class="form-control" placeholder="例：V-CCTV-0016" data-js="umNo">
+                                <input type="text" id="umNo" class="form-control" placeholder="例：V-CCTV-0016" data-js="umNo" required>
                             </div>
                             <div>
                                 <label for="umSpec" class="formField-label">規格</label>
@@ -860,11 +860,11 @@
                             </div>
                             <div>
                                 <label for="umBuy" class="formField-label">購置日期 <span class="formField-required">必填</span></label>
-                                <input type="date" id="umBuy" class="form-control" data-js="umBuy">
+                                <input type="date" id="umBuy" class="form-control" data-js="umBuy" required>
                             </div>
                             <div>
                                 <label for="umLife" class="formField-label">使用年限 <span class="formField-required">必填</span></label>
-                                <select id="umLife" class="form-select" data-js="umLife">
+                                <select id="umLife" class="form-select" data-js="umLife" required>
                                     <option value="3">3 年</option>
                                     <option value="4">4 年</option>
                                     <option value="5" selected>5 年</option>

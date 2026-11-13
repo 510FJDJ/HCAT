@@ -682,7 +682,10 @@
             statusText.hidden = true;
 
             if (!form.checkValidity()) {
+                var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
                 form.reportValidity();
+                document.documentElement.style.scrollBehavior = prevScrollBehavior;
                 return;
             }
 
@@ -720,7 +723,10 @@
             captchaError.hidden = true;
 
             if (!form.checkValidity()) {
+                var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
                 form.reportValidity();
+                document.documentElement.style.scrollBehavior = prevScrollBehavior;
                 return;
             }
 
@@ -837,6 +843,7 @@
         pickerList: q('picker-list'),
         pickerRestock: q('picker-restock'),
         pickerRestockName: q('picker-restock-name'),
+        pickerError: q('pickerError'),
         sectionStudent: q('section-student'),
         selBadge: q('sel-badge'),
         sectionHearing: q('section-hearing'),
@@ -863,6 +870,18 @@
         evCenter: q('ev-center'),
         submitBtn: q('submit-btn')
     };
+
+    // 條件區塊隱藏時，裡面的 required 欄位仍會被瀏覽器當成必填（hidden 不會自動排除原生驗證），
+    // 所以要在每次 render() 依目前是否被祖先隱藏動態開關 required，避免 checkValidity() 卡在看不到的欄位上
+    var requiredFields = Array.prototype.slice.call(form.querySelectorAll('[required]'));
+
+    function isHiddenInForm(node) {
+        while (node && node !== form) {
+            if (node.hidden) { return true; }
+            node = node.parentElement;
+        }
+        return false;
+    }
 
     // ------------------------------------------------------------
     // 主要內容渲染：依目前 state 切換所有條件區塊的顯示與文字
@@ -909,6 +928,7 @@
             if (isRestock && el.pickerRestockName) {
                 el.pickerRestockName.textContent = '「' + cur.name + '」目前沒有可借庫存，送出後會列為增購需求';
             }
+            if (el.pickerError) { el.pickerError.hidden = true; }
         } else {
             if (el.pickerThumbImg) { el.pickerThumbImg.hidden = true; }
             if (el.pickerThumbEmpty) { el.pickerThumbEmpty.hidden = false; }
@@ -959,6 +979,10 @@
         if (el.disDetail) { el.disDetail.hidden = state.dis !== 'yes'; }
         if (el.mvLocal) { el.mvLocal.hidden = state.mv !== 'local'; }
         if (el.mvOther) { el.mvOther.hidden = state.mv !== 'other'; }
+
+        requiredFields.forEach(function (f) {
+            f.required = !isHiddenInForm(f);
+        });
 
         renderPickerList();
     }
@@ -1136,13 +1160,18 @@
     };
 
     function renderMvSchoolOptions(stage) {
+        if (!stage) {
+            el.mvSchool.innerHTML = '<option value="" selected disabled>請先選擇學制</option>';
+            return;
+        }
         var options = MV_STAGE_SCHOOLS[stage] || [];
-        var html = '<option value="">請選擇' + MV_STAGE_LABEL[stage] + '</option>';
+        var html = '<option value="" selected disabled>請選擇' + MV_STAGE_LABEL[stage] + '</option>';
         options.forEach(function (name) { html += '<option>' + name + '</option>'; });
         el.mvSchool.innerHTML = html;
     }
 
     if (el.mvStage && el.mvSchool) {
+        renderMvSchoolOptions(el.mvStage.value);
         el.mvStage.addEventListener('change', function () { renderMvSchoolOptions(el.mvStage.value); });
     }
 
@@ -1275,6 +1304,32 @@
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
+
+        // 輔具品項選擇器是自訂元件、不是原生表單控制項，不會被 checkValidity() 檢查到，
+        // 所以要排在最前面先判斷；它在畫面上也是第一個欄位，這樣第一個沒填的欄位才會跟畫面順序一致
+        if (!state.itemId) {
+            if (el.pickerError) {
+                el.pickerError.textContent = '請選擇輔具品項';
+                el.pickerError.hidden = false;
+            }
+            if (el.pickerTrigger) {
+                var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
+                el.pickerTrigger.scrollIntoView({ block: 'center' });
+                el.pickerTrigger.focus();
+                document.documentElement.style.scrollBehavior = prevScrollBehavior;
+            }
+            return;
+        }
+
+        if (!form.checkValidity()) {
+            var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+            document.documentElement.style.scrollBehavior = 'auto';
+            form.reportValidity();
+            document.documentElement.style.scrollBehavior = prevScrollBehavior;
+            return;
+        }
+
         if (modalInstance) { modalInstance.show(); }
     });
 
@@ -1331,6 +1386,7 @@
         pickerPanel: q('picker-panel'),
         pickerSearch: q('picker-search'),
         pickerList: q('picker-list'),
+        pickerError: q('pickerError'),
         submitBtn: q('submit-btn'),
         doneModal: q('doneModal'),
         doneModalRecords: q('done-modal-records')
@@ -1368,6 +1424,8 @@
 
         el.pickerCatLabel.textContent = item.catLabel;
         el.pickerCatLabel.hidden = false;
+
+        if (el.pickerError) { el.pickerError.hidden = true; }
     }
 
     function renderPickerList() {
@@ -1504,6 +1562,32 @@
 
     el.form.addEventListener('submit', function (e) {
         e.preventDefault();
+
+        // 輔具品項選擇器是自訂元件、不是原生表單控制項，不會被 checkValidity() 檢查到，
+        // 所以要排在最前面先判斷；它在畫面上也是第一個欄位，這樣第一個沒填的欄位才會跟畫面順序一致
+        if (!state.itemId) {
+            if (el.pickerError) {
+                el.pickerError.textContent = '請選擇輔具品項';
+                el.pickerError.hidden = false;
+            }
+            if (el.pickerTrigger) {
+                var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
+                el.pickerTrigger.scrollIntoView({ block: 'center' });
+                el.pickerTrigger.focus();
+                document.documentElement.style.scrollBehavior = prevScrollBehavior;
+            }
+            return;
+        }
+
+        if (!el.form.checkValidity()) {
+            var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+            document.documentElement.style.scrollBehavior = 'auto';
+            el.form.reportValidity();
+            document.documentElement.style.scrollBehavior = prevScrollBehavior;
+            return;
+        }
+
         if (doneModalInstance) { doneModalInstance.show(); }
     });
 
@@ -1644,6 +1728,7 @@
     var repairModal = document.querySelector('[data-js="repairModal"]');
 
     if (repairModal) {
+        var repairForm = repairModal.querySelector('form');
         var repairUpload = wireFileUpload(
             document.querySelector('label[for="rpMedia"]'),
             document.getElementById('rpMedia'),
@@ -1665,8 +1750,7 @@
             photoEl.src = photo;
             photoEl.alt = device;
 
-            document.getElementById('rpDesc').value = '';
-            document.getElementById('rpCalled').checked = false;
+            repairForm.reset();
             if (repairUpload) { repairUpload.reset(); }
 
             repairModalInstance.show();
@@ -1676,10 +1760,17 @@
             btn.addEventListener('click', function () { openRepairModal(btn); });
         });
 
-        var repairSubmit = repairModal.querySelector('[data-js="repairSubmit"]');
-        if (repairSubmit) {
-            repairSubmit.addEventListener('click', function () { repairModalInstance.hide(); });
-        }
+        repairForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (!repairForm.checkValidity()) {
+                var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
+                repairForm.reportValidity();
+                document.documentElement.style.scrollBehavior = prevScrollBehavior;
+                return;
+            }
+            repairModalInstance.hide();
+        });
     }
 
     // ------------------------------------------------------------
@@ -1688,6 +1779,8 @@
     var changeModal = document.querySelector('[data-js="changeModal"]');
 
     if (changeModal) {
+        var changeForm = changeModal.querySelector('form');
+
         var STAGE_LABEL = { k: '幼兒園', e: '國小', j: '國中', h: '高中職' };
         var STAGE_SCHOOLS = {
             k: ['竹北市 竹北國小附設幼兒園', '竹東鎮 竹東國小附設幼兒園', '湖口鄉 湖口國小附設幼兒園', '縣立 竹北幼兒園'],
@@ -1712,14 +1805,31 @@
         var chSchool = document.getElementById('chSchool');
 
         function renderSchoolOptions(stage) {
+            if (!stage) {
+                chSchool.innerHTML = '<option value="" selected disabled>請先選擇學制</option>';
+                return;
+            }
             var options = STAGE_SCHOOLS[stage] || [];
-            var html = '<option value="">請選擇' + STAGE_LABEL[stage] + '</option>';
+            var html = '<option value="" selected disabled>請選擇' + STAGE_LABEL[stage] + '</option>';
             options.forEach(function (name) { html += '<option>' + name + '</option>'; });
             chSchool.innerHTML = html;
         }
 
         if (chStage && chSchool) {
+            renderSchoolOptions(chStage.value);
             chStage.addEventListener('change', function () { renderSchoolOptions(chStage.value); });
+        }
+
+        // 條件區塊隱藏時，裡面的 required 欄位仍會被瀏覽器當成必填（hidden 不會自動排除原生驗證），
+        // 所以要在每次 setKind() 依目前是否被祖先隱藏動態開關 required，避免 checkValidity() 卡在看不到的欄位上
+        var changeRequiredFields = Array.prototype.slice.call(changeForm.querySelectorAll('[required]'));
+
+        function isHiddenInChangeForm(node) {
+            while (node && node !== changeForm) {
+                if (node.hidden) { return true; }
+                node = node.parentElement;
+            }
+            return false;
         }
 
         function setKind(kind) {
@@ -1728,6 +1838,10 @@
             changeModal.querySelector('[data-js="ch-stop"]').hidden = kind !== 'stop';
             changeModal.querySelector('[data-js="chNoteText"]').textContent = KIND_NOTE[kind];
             changeModal.querySelector('[data-js="ch-notePh"]').setAttribute('placeholder', KIND_NOTE_PH[kind]);
+
+            changeRequiredFields.forEach(function (f) {
+                f.required = !isHiddenInChangeForm(f);
+            });
         }
 
         // 卡片式單選群組：切換 .is-selected 外觀並同步顯示對應的子欄位（比照 js/school-apply.js 的 wireCardGroup）
@@ -1749,6 +1863,8 @@
 
             changeModal.querySelector('[data-js="chSubtitle"]').textContent = device + '　' + property + '｜' + user;
 
+            changeForm.reset();
+
             // 每次開啟都重置為預設選項「畢業歸還」
             var gradRadio = changeModal.querySelector('input[name="chKind"][value="grad"]');
             gradRadio.checked = true;
@@ -1757,11 +1873,7 @@
             if (gradLabel) { gradLabel.classList.add('is-selected'); }
             setKind('grad');
 
-            if (chStage) {
-                chStage.value = 'e';
-                renderSchoolOptions('e');
-            }
-            document.getElementById('chNote').value = '';
+            if (chStage) { renderSchoolOptions(chStage.value); }
 
             changeModalInstance.show();
         }
@@ -1770,10 +1882,17 @@
             btn.addEventListener('click', function () { openChangeModal(btn); });
         });
 
-        var changeSubmit = changeModal.querySelector('[data-js="changeSubmit"]');
-        if (changeSubmit) {
-            changeSubmit.addEventListener('click', function () { changeModalInstance.hide(); });
-        }
+        changeForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (!changeForm.checkValidity()) {
+                var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
+                changeForm.reportValidity();
+                document.documentElement.style.scrollBehavior = prevScrollBehavior;
+                return;
+            }
+            changeModalInstance.hide();
+        });
     }
 })();
 
@@ -2912,7 +3031,10 @@
     vuForm.addEventListener('submit', function (e) {
         e.preventDefault();
         if (!vuForm.checkValidity()) {
+            var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+            document.documentElement.style.scrollBehavior = 'auto';
             vuForm.reportValidity();
+            document.documentElement.style.scrollBehavior = prevScrollBehavior;
             return;
         }
         updateModal.hide();
@@ -3107,7 +3229,10 @@
     hhForm.addEventListener('submit', function (e) {
         e.preventDefault();
         if (!hhForm.checkValidity()) {
+            var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+            document.documentElement.style.scrollBehavior = 'auto';
             hhForm.reportValidity();
+            document.documentElement.style.scrollBehavior = prevScrollBehavior;
             return;
         }
         handoverModal.hide();
@@ -3725,7 +3850,10 @@
     raForm.addEventListener('submit', function (e) {
         e.preventDefault();
         if (!raForm.checkValidity()) {
+            var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+            document.documentElement.style.scrollBehavior = 'auto';
             raForm.reportValidity();
+            document.documentElement.style.scrollBehavior = prevScrollBehavior;
             return;
         }
         assignModal.hide();
@@ -3838,7 +3966,10 @@
     rcForm.addEventListener('submit', function (e) {
         e.preventDefault();
         if (!rcForm.checkValidity()) {
+            var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+            document.documentElement.style.scrollBehavior = 'auto';
             rcForm.reportValidity();
+            document.documentElement.style.scrollBehavior = prevScrollBehavior;
             return;
         }
         closeModal.hide();
@@ -4060,6 +4191,13 @@
     document.querySelectorAll('[data-js="deviceModalForm"]').forEach(function (form) {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
+            if (!form.checkValidity()) {
+                var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
+                form.reportValidity();
+                document.documentElement.style.scrollBehavior = prevScrollBehavior;
+                return;
+            }
             var modalEl = form.closest('.modal');
             if (modalEl) {
                 var instance = bootstrap.Modal.getInstance(modalEl);
@@ -4469,6 +4607,13 @@
         if (vendorForm) {
             vendorForm.addEventListener('submit', function (e) {
                 e.preventDefault();
+                if (!vendorForm.checkValidity()) {
+                    var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+                    document.documentElement.style.scrollBehavior = 'auto';
+                    vendorForm.reportValidity();
+                    document.documentElement.style.scrollBehavior = prevScrollBehavior;
+                    return;
+                }
                 var instance = bootstrap.Modal.getInstance(vendorModal);
                 if (instance) { instance.hide(); }
             });
@@ -4494,6 +4639,9 @@
     var arTempFields = accountResetModal.querySelector('[data-js="accountResetTempFields"]');
     var arSubmit = accountResetModal.querySelector('[data-js="accountResetSubmit"]');
     var arHintText = accountResetModal.querySelector('[data-js="accountResetHintText"]');
+    var arPw = accountResetModal.querySelector('[data-js="acResetPw"]');
+    var arPw2 = accountResetModal.querySelector('[data-js="acResetPw2"]');
+    var arPwMatchError = accountResetModal.querySelector('[data-js="accountResetPwMatchError"]');
 
     function syncResetWay() {
         var checked = accountResetModal.querySelector('[data-js="accountResetWayInput"]:checked');
@@ -4504,6 +4652,8 @@
         });
 
         if (arTempFields) { arTempFields.hidden = way !== 'temp'; }
+        if (arPw) { arPw.required = way === 'temp'; }
+        if (arPw2) { arPw2.required = way === 'temp'; }
         if (arSubmit) { arSubmit.textContent = way === 'temp' ? '設定臨時密碼' : '寄送重設連結'; }
         if (arHintText) {
             arHintText.textContent = way === 'temp'
@@ -4525,16 +4675,34 @@
         arWayInputs.forEach(function (radio, i) { radio.checked = i === 0; });
         syncResetWay();
 
-        var pw = document.getElementById('acResetPw');
-        var pw2 = document.getElementById('acResetPw2');
-        if (pw) { pw.value = ''; }
-        if (pw2) { pw2.value = ''; }
+        if (arPw) { arPw.value = ''; }
+        if (arPw2) { arPw2.value = ''; }
+        if (arPwMatchError) { arPwMatchError.hidden = true; }
     });
 
     var accountResetForm = document.getElementById('accountResetForm');
     if (accountResetForm) {
         accountResetForm.addEventListener('submit', function (e) {
             e.preventDefault();
+            if (arPwMatchError) { arPwMatchError.hidden = true; }
+
+            if (!accountResetForm.checkValidity()) {
+                var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
+                accountResetForm.reportValidity();
+                document.documentElement.style.scrollBehavior = prevScrollBehavior;
+                return;
+            }
+
+            if (arPw && arPw2 && arPw.required && arPw.value !== arPw2.value) {
+                if (arPwMatchError) {
+                    arPwMatchError.textContent = '密碼與確認密碼不一致';
+                    arPwMatchError.hidden = false;
+                }
+                arPw2.focus();
+                return;
+            }
+
             var instance = bootstrap.Modal.getInstance(accountResetModal);
             if (instance) { instance.hide(); }
         });
@@ -4678,6 +4846,13 @@
     if (accountForm) {
         accountForm.addEventListener('submit', function (e) {
             e.preventDefault();
+            if (!accountForm.checkValidity()) {
+                var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
+                accountForm.reportValidity();
+                document.documentElement.style.scrollBehavior = prevScrollBehavior;
+                return;
+            }
             var instance = bootstrap.Modal.getInstance(accountFormModal);
             if (instance) { instance.hide(); }
         });
@@ -4982,6 +5157,13 @@
     if (newsForm) {
         newsForm.addEventListener('submit', function (e) {
             e.preventDefault();
+            if (!newsForm.checkValidity()) {
+                var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
+                newsForm.reportValidity();
+                document.documentElement.style.scrollBehavior = prevScrollBehavior;
+                return;
+            }
             var instance = bootstrap.Modal.getInstance(newsFormModal);
             if (instance) { instance.hide(); }
         });

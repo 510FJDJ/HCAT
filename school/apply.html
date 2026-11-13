@@ -104,29 +104,29 @@
                             <div class="formGrid formGrid-cols3">
                                 <div>
                                     <label for="stName" class="formField-label">學生姓名 <span class="formField-required">必填</span></label>
-                                    <input type="text" id="stName" class="form-control" placeholder="例：林小安">
+                                    <input type="text" id="stName" class="form-control" placeholder="例：林小安" required>
                                 </div>
                                 <div>
                                     <label for="stId" class="formField-label">身分證字號 <span class="formField-required">必填</span></label>
-                                    <input type="text" id="stId" class="form-control" maxlength="10" autocomplete="off" placeholder="例：J123456789" style="text-transform:uppercase">
+                                    <input type="text" id="stId" class="form-control" maxlength="10" autocomplete="off" placeholder="例：J123456789" style="text-transform:uppercase" required>
                                 </div>
                                 <div>
                                     <label for="stGrade" class="formField-label">年級 <span class="formField-required">必填</span></label>
-                                    <select id="stGrade" class="form-select">
-                                        <option>請選擇</option>
+                                    <select id="stGrade" class="form-select" required>
+                                        <option value="" selected disabled>請選擇</option>
                                         <optgroup label="幼兒園"><option>小班</option><option>中班</option><option>大班</option></optgroup>
-                                        <optgroup label="國小"><option>一年級</option><option>二年級</option><option selected>三年級</option><option>四年級</option><option>五年級</option><option>六年級</option></optgroup>
+                                        <optgroup label="國小"><option>一年級</option><option>二年級</option><option>三年級</option><option>四年級</option><option>五年級</option><option>六年級</option></optgroup>
                                         <optgroup label="國中"><option>七年級</option><option>八年級</option><option>九年級</option></optgroup>
                                         <optgroup label="高中職"><option>高一</option><option>高二</option><option>高三</option></optgroup>
                                     </select>
                                 </div>
                                 <div>
                                     <label for="stClass" class="formField-label">班級 <span class="formField-required">必填</span></label>
-                                    <input type="text" id="stClass" class="form-control" placeholder="例：甲班、資源班">
+                                    <input type="text" id="stClass" class="form-control" placeholder="例：甲班、資源班" required>
                                 </div>
                                 <div>
                                     <label for="stDue" class="formField-label">預計歸還日期 <span class="formField-required">必填</span></label>
-                                    <input type="date" id="stDue" class="form-control" value="2030-06-30">
+                                    <input type="date" id="stDue" class="form-control" required>
                                 </div>
                             </div>
                             <!-- <p class="formField-hint">年級選單只列出本校的學制；預計歸還日期預設為學生畢業時。</p> -->
@@ -180,6 +180,7 @@
                                         </div>
                                         <ul class="comboPicker-list" aria-label="輔具品項" id="pickerList" data-js="picker-list"></ul>
                                     </div>
+                                    <p class="formField-error" data-js="pickerError" hidden></p>
                                 </div>
                             </div>
 
@@ -202,19 +203,19 @@
                             <div class="formGrid formGrid-cols4">
                                 <div>
                                     <label for="stSex" class="formField-label">性別 <span class="formField-required">必填</span></label>
-                                    <select id="stSex" class="form-select"><option>請選擇</option><option>男</option><option>女</option></select>
+                                    <select id="stSex" class="form-select" required><option value="">請選擇</option><option>男</option><option>女</option></select>
                                 </div>
                                 <div>
                                     <label for="stBday" class="formField-label">生日 <span class="formField-required">必填</span></label>
-                                    <input type="date" id="stBday" class="form-control">
+                                    <input type="date" id="stBday" class="form-control" required>
                                 </div>
                                 <div>
                                     <label for="stPname" class="formField-label">家長姓名 <span class="formField-required">必填</span></label>
-                                    <input type="text" id="stPname" class="form-control" placeholder="例：林大明">
+                                    <input type="text" id="stPname" class="form-control" placeholder="例：林大明" required>
                                 </div>
                                 <div>
                                     <label for="stPtel" class="formField-label">家長電話 <span class="formField-required">必填</span></label>
-                                    <input type="tel" id="stPtel" class="form-control" placeholder="例：0912-345-678">
+                                    <input type="tel" id="stPtel" class="form-control" placeholder="例：0912-345-678" required>
                                 </div>
                             </div>
 
@@ -235,13 +236,13 @@
                                     <div class="formGrid formGrid-cols3">
                                         <div>
                                             <label for="stDcat" class="formField-label">障礙類別 <span class="formField-required">必填</span></label>
-                                            <select id="stDcat" class="form-select">
-                                                <option>請選擇</option><option>智能障礙</option><option>視覺障礙</option><option selected>聽覺障礙</option><option>語言障礙</option><option>肢體障礙</option><option>腦性麻痺</option><option>身體病弱</option><option>情緒行為障礙</option><option>學習障礙</option><option>多重障礙</option><option>自閉症</option>
+                                            <select id="stDcat" class="form-select" required>
+                                                <option value="" selected disabled>請選擇</option><option>智能障礙</option><option>視覺障礙</option><option>聽覺障礙</option><option>語言障礙</option><option>肢體障礙</option><option>腦性麻痺</option><option>身體病弱</option><option>情緒行為障礙</option><option>學習障礙</option><option>多重障礙</option><option>自閉症</option>
                                             </select>
                                         </div>
                                         <div>
                                             <label for="stDlv" class="formField-label">程度 <span class="formField-required">必填</span></label>
-                                            <select id="stDlv" class="form-select"><option>輕度</option><option selected>中度</option><option>重度</option><option>極重度</option></select>
+                                            <select id="stDlv" class="form-select" required><option value="" selected disabled>請選擇</option><option>輕度</option><option>中度</option><option>重度</option><option>極重度</option></select>
                                         </div>
                                         <div>
                                             <label for="stDnew" class="formField-label">新制類別／亞型</label>
@@ -285,23 +286,18 @@
                                     <div class="formGrid mt-2" style="max-width:620px">
                                         <div>
                                             <label for="mvStage" class="formField-label">轉入學校學制 <span class="formField-required">必填</span></label>
-                                            <select id="mvStage" class="form-select" data-js="mv-stage">
+                                            <select id="mvStage" class="form-select" data-js="mv-stage" required>
+                                                <option value="" selected disabled>請選擇</option>
                                                 <option value="k">幼兒園</option>
-                                                <option value="e" selected>國小</option>
+                                                <option value="e">國小</option>
                                                 <option value="j">國中</option>
                                                 <option value="h">高中職</option>
                                             </select>
                                         </div>
                                         <div>
                                             <label for="mvSchool" class="formField-label">轉入學校 <span class="formField-required">必填</span></label>
-                                            <select id="mvSchool" class="form-select" data-js="mv-school">
-                                                <option value="">請選擇國小</option>
-                                                <option>竹北市 博愛國小</option>
-                                                <option>竹北市 東海國小</option>
-                                                <option>竹北市 十興國小</option>
-                                                <option>竹東鎮 竹東國小</option>
-                                                <option>湖口鄉 湖口國小</option>
-                                                <option>新豐鄉 新豐國小</option>
+                                            <select id="mvSchool" class="form-select" data-js="mv-school" required>
+                                                <option value="" selected disabled>請先選擇學制</option>
                                             </select>
                                         </div>
                                     </div>
@@ -310,11 +306,11 @@
                                     <div class="formGrid formGrid-narrowWide mt-2" style="max-width:620px">
                                         <div>
                                             <label for="mvCity" class="formField-label">縣市 <span class="formField-required">必填</span></label>
-                                            <select id="mvCity" class="form-select"><option>新竹市</option><option>桃園市</option><option>苗栗縣</option><option>其他</option></select>
+                                            <select id="mvCity" class="form-select" required><option value="" selected disabled>請選擇</option><option>新竹市</option><option>桃園市</option><option>苗栗縣</option><option>其他</option></select>
                                         </div>
                                         <div>
                                             <label for="mvOschool" class="formField-label">校名 <span class="formField-required">必填</span></label>
-                                            <input type="text" id="mvOschool" class="form-control" placeholder="例：新竹市立光華國中">
+                                            <input type="text" id="mvOschool" class="form-control" placeholder="例：新竹市立光華國中" required>
                                             <p class="formField-hint">請填寫完整正式校名，方便中心後續查詢與聯繫。</p>
                                         </div>
                                     </div>
@@ -344,7 +340,7 @@
                                 </div>
                                 <div class="mt-3">
                                     <label for="apWhy" class="formField-label">申請原因 <span class="formField-required">必填</span></label>
-                                    <textarea id="apWhy" class="form-control" rows="3" placeholder="例：學生閱讀課本時需貼近紙面，放大後可獨立閱讀"></textarea>
+                                    <textarea id="apWhy" class="form-control" rows="3" placeholder="例：學生閱讀課本時需貼近紙面，放大後可獨立閱讀" required></textarea>
                                 </div>
                             </div>
 
@@ -357,7 +353,7 @@
                                             <p class="applyForm-earBox-title">左耳</p>
                                             <div>
                                                 <label for="earLType" class="formField-label">類型</label>
-                                                <select id="earLType" class="form-select"><option>耳掛式助聽器</option><option>耳內式助聽器</option><option>骨導式助聽器</option><option>電子耳</option><option>無</option><option>不需輔具（只申請單邊）</option></select>
+                                                <select id="earLType" class="form-select" required><option value="" selected disabled>請選擇</option><option>耳掛式助聽器</option><option>耳內式助聽器</option><option>骨導式助聽器</option><option>電子耳</option><option>無</option><option>不需輔具（只申請單邊）</option></select>
                                             </div>
                                             <div class="formGrid">
                                                 <div><label for="earLBrand" class="formField-label">廠牌</label><input type="text" id="earLBrand" class="form-control" placeholder="例：Phonak"></div>
@@ -368,7 +364,7 @@
                                             <p class="applyForm-earBox-title">右耳</p>
                                             <div>
                                                 <label for="earRType" class="formField-label">類型</label>
-                                                <select id="earRType" class="form-select"><option>耳掛式助聽器</option><option>耳內式助聽器</option><option>骨導式助聽器</option><option>電子耳</option><option>無</option><option>不需輔具（只申請單邊）</option></select>
+                                                <select id="earRType" class="form-select" required><option value="" selected disabled>請選擇</option><option>耳掛式助聽器</option><option>耳內式助聽器</option><option>骨導式助聽器</option><option>電子耳</option><option>無</option><option>不需輔具（只申請單邊）</option></select>
                                             </div>
                                             <div class="formGrid">
                                                 <div><label for="earRBrand" class="formField-label">廠牌</label><input type="text" id="earRBrand" class="form-control" placeholder="例：Phonak"></div>
@@ -395,26 +391,26 @@
                                     </div>
                                     <div>
                                         <label for="hrNow" class="formField-label">輔具使用現況 <span class="formField-required">必填</span></label>
-                                        <select id="hrNow" class="form-select"><option>尚未有此項輔具，需要評估適用性</option><option>目前的輔具可以使用，需要額外增添</option><option>目前的輔具不適合使用，需要更換</option></select>
+                                        <select id="hrNow" class="form-select" required><option value="" selected disabled>請選擇</option><option>尚未有此項輔具，需要評估適用性</option><option>目前的輔具可以使用，需要額外增添</option><option>目前的輔具不適合使用，需要更換</option></select>
                                     </div>
                                 </div>
                                 <div class="mt-3">
                                     <label for="hrStatus" class="formField-label">目前學生狀況及建議使用原因 <span class="formField-required">必填</span></label>
-                                    <textarea id="hrStatus" class="form-control" rows="3" placeholder="請詳述學生目前狀況，例：上課距離教師較遠時聽不清楚指令"></textarea>
+                                    <textarea id="hrStatus" class="form-control" rows="3" placeholder="請詳述學生目前狀況，例：上課距離教師較遠時聽不清楚指令" required></textarea>
                                 </div>
                                 <div class="mt-3">
                                     <label for="hrGoal" class="formField-label">預期教學目標 <span class="formField-required">必填</span></label>
-                                    <textarea id="hrGoal" class="form-control" rows="2" placeholder="預期對學生的效益，例：能在一般教室中跟上課堂討論"></textarea>
+                                    <textarea id="hrGoal" class="form-control" rows="2" placeholder="預期對學生的效益，例：能在一般教室中跟上課堂討論" required></textarea>
                                 </div>
                                 <div class="formGrid mt-3">
                                     <div>
                                         <label for="hrDate" class="formField-label">聽力檢查日期 <span class="formField-required">必填</span></label>
-                                        <input type="date" id="hrDate" class="form-control" value="2026-08-20">
+                                        <input type="date" id="hrDate" class="form-control" value="2026-08-20" required>
                                         <p class="formField-hint">聽力圖需為一年內的檢查結果</p>
                                     </div>
                                     <div>
                                         <span class="formField-label">聽力圖 <span class="formField-required">必填</span></span>
-                                        <input type="file" id="hrFile" class="fileUpload-input" accept="image/*,.pdf">
+                                        <input type="file" id="hrFile" class="fileUpload-input" accept="image/*,.pdf" required>
                                         <label for="hrFile" class="fileUpload"><i class="bi bi-upload fileUpload-icon" aria-hidden="true"></i>點擊或拖曳上傳聽力圖照片或 PDF</label>
                                         <div class="fileUploadList" data-js="hr-file-list" hidden></div>
                                         <p class="formField-hint">照片請拍清楚檢查日期與適用期限</p>
@@ -431,11 +427,11 @@
                                 <div class="formGrid">
                                     <div data-js="free-field-wrap" hidden>
                                         <label for="frSize" class="formField-label"><span data-js="free-field-label">數量說明</span> <span class="formField-required">必填</span></label>
-                                        <input type="number" min="0" id="frSize" class="form-control" data-js="free-field-input" placeholder="">
+                                        <input type="number" min="0" id="frSize" class="form-control" data-js="free-field-input" placeholder="" required>
                                     </div>
                                     <div>
                                         <label for="frQty" class="formField-label">數量 <span class="formField-required">必填</span></label>
-                                        <input type="number" min="1" value="1" id="frQty" class="form-control" placeholder="1">
+                                        <input type="number" min="1" value="1" id="frQty" class="form-control" placeholder="1" required>
                                     </div>
                                 </div>
                                 <p class="applyForm-freeBox-note" data-js="free-note">免評估品項不需附評估報告書，送出後由中心直接審核。</p>
@@ -467,7 +463,7 @@
 
                             <div data-js="ev-therapist">
                                 <span class="formField-label">評估報告書 <span class="formField-required">必填</span></span>
-                                <input type="file" id="evFile" class="fileUpload-input" multiple>
+                                <input type="file" id="evFile" class="fileUpload-input" multiple required>
                                 <label for="evFile" class="fileUpload fileUpload-lg">
                                     <i class="bi bi-upload fileUpload-icon" aria-hidden="true"></i>
                                     <span class="fileUpload-text"><span>點擊或拖曳上傳檔案</span><span class="fileUpload-text-sub">可上傳多個檔案，支援 PDF、JPG、PNG</span></span>

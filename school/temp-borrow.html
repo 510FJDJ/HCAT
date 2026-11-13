@@ -99,6 +99,7 @@
                                     </div>
                                     <ul class="comboPicker-list" aria-label="中心現有輔具" id="pickerList" data-js="picker-list"></ul>
                                 </div>
+                                <p class="formField-error" data-js="pickerError" hidden></p>
                             </div>
                             <p class="formField-hint">只列出中心目前在庫、開放臨時借用的輔具。需要的輔具不在清單中，請等待下次申請期間。</p>
                         </div>
@@ -111,25 +112,25 @@
                             <div class="formGrid formGrid-cols4">
                                 <div>
                                     <label for="stName" class="formField-label">學生姓名 <span class="formField-required">必填</span></label>
-                                    <input type="text" id="stName" class="form-control" placeholder="例：林小安">
+                                    <input type="text" id="stName" class="form-control" placeholder="例：林小安" required>
                                 </div>
                                 <div>
                                     <label for="stId" class="formField-label">身分證字號 <span class="formField-required">必填</span></label>
-                                    <input type="text" id="stId" class="form-control" maxlength="10" autocomplete="off" placeholder="例：J123456789" style="text-transform:uppercase">
+                                    <input type="text" id="stId" class="form-control" maxlength="10" autocomplete="off" placeholder="例：J123456789" style="text-transform:uppercase" required>
                                 </div>
                                 <div>
                                     <label for="stGrade" class="formField-label">年級 <span class="formField-required">必填</span></label>
-                                    <select id="stGrade" class="form-select">
-                                        <option>請選擇</option>
+                                    <select id="stGrade" class="form-select" required>
+                                        <option value="" selected disabled>請選擇</option>
                                         <optgroup label="幼兒園"><option>小班</option><option>中班</option><option>大班</option></optgroup>
-                                        <optgroup label="國小"><option>一年級</option><option>二年級</option><option selected>三年級</option><option>四年級</option><option>五年級</option><option>六年級</option></optgroup>
+                                        <optgroup label="國小"><option>一年級</option><option>二年級</option><option>三年級</option><option>四年級</option><option>五年級</option><option>六年級</option></optgroup>
                                         <optgroup label="國中"><option>七年級</option><option>八年級</option><option>九年級</option></optgroup>
                                         <optgroup label="高中職"><option>高一</option><option>高二</option><option>高三</option></optgroup>
                                     </select>
                                 </div>
                                 <div>
                                     <label for="stClass" class="formField-label">班級 <span class="formField-required">必填</span></label>
-                                    <input type="text" id="stClass" class="form-control" placeholder="例：甲班、資源班">
+                                    <input type="text" id="stClass" class="form-control" placeholder="例：甲班、資源班" required>
                                 </div>
                             </div>
 
@@ -147,16 +148,16 @@
                             <div class="formGrid formGrid-cols2">
                                 <div>
                                     <label for="tpFrom" class="formField-label">希望借用日期 <span class="formField-required">必填</span></label>
-                                    <input type="date" id="tpFrom" class="form-control" value="2026-11-09">
+                                    <input type="date" id="tpFrom" class="form-control" required>
                                 </div>
                                 <div>
                                     <label for="tpTo" class="formField-label">預計歸還日期 <span class="formField-required">必填</span></label>
-                                    <input type="date" id="tpTo" class="form-control" value="2027-01-20">
+                                    <input type="date" id="tpTo" class="form-control" required>
                                     <p class="formField-hint">臨時借用最長到本學期結束</p>
                                 </div>
                                 <div class="formGrid-span2">
                                     <label for="tpWhy" class="formField-label">需求原因 <span class="formField-required">必填</span></label>
-                                    <textarea id="tpWhy" class="form-control" rows="3" placeholder="例：學生術後暫時無法行走，需要輪椅在校內移動，預計使用到期末"></textarea>
+                                    <textarea id="tpWhy" class="form-control" rows="3" placeholder="例：學生術後暫時無法行走，需要輪椅在校內移動，預計使用到期末" required></textarea>
                                 </div>
                             </div>
 

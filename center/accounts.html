@@ -496,7 +496,7 @@
                             <div>
                                 <label for="acResetPw" class="formField-label">臨時密碼 <span class="formField-required">必填</span></label>
                                 <div class="inputGroup">
-                                    <input type="password" id="acResetPw" class="form-control" autocomplete="new-password" placeholder="6–12 碼英數字或半形符號">
+                                    <input type="password" id="acResetPw" class="form-control" autocomplete="new-password" placeholder="6–12 碼英數字或半形符號" minlength="6" maxlength="12" data-js="acResetPw">
                                     <button type="button" class="inputGroup-btn" data-js="togglePassword" data-target="acResetPw" aria-label="顯示密碼" aria-pressed="false">
                                         <i class="bi bi-eye" aria-hidden="true"></i>
                                     </button>
@@ -506,11 +506,12 @@
                             <div>
                                 <label for="acResetPw2" class="formField-label">再輸入一次 <span class="formField-required">必填</span></label>
                                 <div class="inputGroup">
-                                    <input type="password" id="acResetPw2" class="form-control" autocomplete="new-password" placeholder="請再輸入一次臨時密碼">
+                                    <input type="password" id="acResetPw2" class="form-control" autocomplete="new-password" placeholder="請再輸入一次臨時密碼" minlength="6" maxlength="12" data-js="acResetPw2">
                                     <button type="button" class="inputGroup-btn" data-js="togglePassword" data-target="acResetPw2" aria-label="顯示密碼" aria-pressed="false">
                                         <i class="bi bi-eye" aria-hidden="true"></i>
                                     </button>
                                 </div>
+                                <p class="formField-error" data-js="accountResetPwMatchError" hidden></p>
                             </div>
                         </div>
 
