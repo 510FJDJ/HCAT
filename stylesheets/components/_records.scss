@@ -26,10 +26,42 @@
 }
 
 // ------------------------------------------------------------
-// 申請流程卡標題：全螢幕尺寸皆可收合，預設收合（見 CLAUDE.md §7.2 討論）
+// 申請流程圖：桌面／平板（>1124px，流程圖還是一列或兩列）直接攤開在頁面底色上，
+// 不包白卡；手機（≤1124px，流程圖轉直式堆疊卡）維持白卡＋可收合標題，避免頁面被拉長
 // ------------------------------------------------------------
-.applyForm-sectionHead-toggle {
-    display: flex;
+.recordsFlow {
+    margin-bottom: 24px;
+
+    @media (max-width: 1124px) {
+        padding: 32px;
+        border-radius: $border-radius-lg;
+        background-color: $surface-card;
+        box-shadow: $shadow-panel;
+    }
+
+    @media (max-width: 720px) {
+        padding: 24px;
+    }
+}
+
+.recordsFlow-title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: $brand-teal-deep;
+}
+
+// 桌面／平板：純文字標題；手機：換成可點擊的收合按鈕（兩者互斥顯示，display:none 完全移出 Tab 順序）
+.recordsFlow-title-static {
+    display: block;
+
+    @media (max-width: 1124px) {
+        display: none;
+    }
+}
+
+.recordsFlow-toggle {
+    display: none;
     align-items: center;
     width: 100%;
     gap: 10px;
@@ -38,29 +70,43 @@
     padding: 0;
     margin: 0;
     font: inherit;
+    font-size: 22px;
+    font-weight: 700;
     color: inherit;
     text-align: left;
     cursor: pointer;
     justify-content: space-between;
+
+    @media (max-width: 1124px) {
+        display: flex;
+    }
 }
 
-.applyForm-sectionHead-chevron {
+.recordsFlow-chevron {
     display: inline-flex;
     font-size: 20px;
     color: $ink-3;
     transition: transform 200ms ease-out;
 }
 
-.applyForm-sectionHead-toggle[aria-expanded="true"] .applyForm-sectionHead-chevron {
+.recordsFlow-toggle[aria-expanded="true"] .recordsFlow-chevron {
     transform: rotate(180deg);
 }
 
-.applyForm-sectionBody.is-collapsed {
-    display: none;
+.recordsFlow-body {
+    margin-top: 16px;
+
+    &.is-collapsed {
+        display: none;
+
+        @media (min-width: 1125px) {
+            display: block;
+        }
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .applyForm-sectionHead-chevron {
+    .recordsFlow-chevron {
         transition: none;
     }
 }

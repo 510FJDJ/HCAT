@@ -275,6 +275,7 @@
                                                         data-case="A1150828-010" data-kind="back" data-school="關西國中" data-student="彭○哲（轉出）"
                                                         data-device="調頻輔聽系統" data-property="H-FM-0009" data-missing=""
                                                         data-handover-time="2026/09/05 10:05" data-handover-by="林○○"
+                                                        data-parent-date="2026/09/03" data-parent-note="家長交到學校特教組，收納盒外觀有刮痕"
                                                         data-needs-fix="false" data-repair-note=""
                                                         aria-label="查看點交紀錄 A1150828-010">查看</button>
                                                 </td>
@@ -312,7 +313,7 @@
                 <div class="modal-header">
                     <div class="modal-head-text">
                         <h2 id="hhTitle" class="modal-title">
-                            點交勾選
+                            點交勾選<span data-js="hhTitleSuffix"></span>
                             <span class="tagPill ms-2" data-js="hhKindTag">－</span>
                         </h2>
                         <p class="modal-subtitle textNote" data-js="hhSubtitle">－</p>
@@ -323,6 +324,29 @@
                 </div>
                 <form novalidate>
                     <div class="modal-body">
+                        <div class="modal-body-section" data-js="hhParentField" hidden>
+                            <div class="confirmBox confirmBox-violet">
+                                <span class="confirmBox-legend">家長繳交確認 <span class="formField-required">必填</span></span>
+                                <label class="cardChoice cardChoice-plain">
+                                    <input type="checkbox" class="cardChoice-input" data-js="hhParentCheck">
+                                    <span class="cardChoice-text">
+                                        <span class="cardChoice-title">已確認家長繳交輔具</span>
+                                        <span class="cardChoice-desc">家長把輔具交回學校，廠商到校領取時確認</span>
+                                    </span>
+                                </label>
+                                <div class="confirmBox-fields" data-js="hhParentDetail" hidden>
+                                    <div>
+                                        <label for="hhParentDate" class="formField-label">家長繳交日期 <span class="formField-required">必填</span></label>
+                                        <input type="date" id="hhParentDate" class="form-control" data-js="hhParentDateInput">
+                                    </div>
+                                    <div>
+                                        <label for="hhParentNote" class="formField-label">備註</label>
+                                        <textarea id="hhParentNote" class="form-control" rows="2" data-js="hhParentNoteInput" placeholder="例：家長交到學校特教組，收納盒外觀有刮痕"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <fieldset class="modal-body-section">
                             <legend class="formField-label">配件確認 <span data-js="hhPartsCount">12 / 12</span></legend>
                             <div class="flex-row-end">
@@ -389,13 +413,34 @@
                         <div class="checkGrid" data-js="hrPartsGrid"></div>
                     </div>
 
+                    <div class="modal-body-section" data-js="hrParentSection" hidden>
+                        <h3>家長繳交確認</h3>
+                        <dl class="infoGrid infoGrid-boxed infoGrid-boxed-violet infoGrid-cols3">
+                            <div>
+                                <dt class="infoGrid-label">狀態</dt>
+                                <dd class="infoGrid-value">家長已繳交</dd>
+                            </div>
+                            <div>
+                                <dt class="infoGrid-label">繳交日期</dt>
+                                <dd class="infoGrid-value" data-js="hrParentDate">－</dd>
+                            </div>
+                            <div>
+                                <dt class="infoGrid-label">備註</dt>
+                                <dd class="infoGrid-value" data-js="hrParentNote">－</dd>
+                            </div>
+                        </dl>
+                    </div>
+
                     <div class="modal-body-section">
                         <h3>是否需要維修</h3>
                         <p class="noteBox noteBox-red" data-js="hrFixNote" hidden>
                             <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
                             <span><b>需要維修：</b><span data-js="hrFixNoteText"></span></span>
                         </p>
-                        <p class="textNote" data-js="hrNoFixNote" hidden>不需要維修。</p>
+                        <p class="noteBox noteBox-green" data-js="hrNoFixNote" hidden>
+                            <i class="bi bi-check-circle" aria-hidden="true"></i>
+                            <span>不需要維修</span>
+                        </p>
                     </div>
 
                     <p class="noteBox noteBox-blue">

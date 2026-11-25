@@ -63,6 +63,11 @@
     font-family: "Poppins", sans-serif;
 }
 
+// 相關配備和規格等較長的自由文字欄：加大行高，避免換行時字距過擠（改版異動說明 §10）
+.specList-value-wrap {
+    line-height: 1.6;
+}
+
 // 緊湊變體：取消列與列之間的框線與上下 padding，改用較小的列距（中心端申請審核明細搭配左側照片使用）
 .specList-compact {
     margin-top: 12px;
@@ -92,8 +97,8 @@
 
 .deviceSpecRow-photo {
     flex: 0 0 auto;
-    width: 120px;
-    height: 120px;
+    width: 104px;
+    height: 104px;
     padding: 8px;
     box-sizing: border-box;
     object-fit: contain;

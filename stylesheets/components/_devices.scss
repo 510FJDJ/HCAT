@@ -227,9 +227,14 @@
 }
 
 .devicesPage-photoRow-fields {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 24px;
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
 }
 
 // 編輯品項時管理方式已鎖定：取消可點擊外觀（搭配 aria-disabled 與鎖定說明文字）

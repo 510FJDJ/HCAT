@@ -1,0 +1,89 @@
+// ============================================================
+// 語音輸入按鈕元件 VoiceInputButton（design.md §7.12／改版異動說明 §2.5）
+// 搭配瀏覽器 Web Speech API；不支援的瀏覽器用 aria-disabled 隱藏並說明原因
+// ============================================================
+
+.voiceInputRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.voiceInputBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 18px;
+    border-radius: $border-radius-pill;
+    border: 2px solid $brand-teal;
+    background-color: $surface-card;
+    color: $brand-teal-deep;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 160ms ease-out, border-color 160ms ease-out, color 160ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $surface-teal-pale;
+    }
+
+    // 錄音中：改為實心紅底，明確區分狀態（不可只靠顏色，另搭配文字見 .voiceInputStatus）
+    &[aria-pressed="true"] {
+        border-color: $state-reject-line;
+        background-color: $state-reject-line;
+        color: #FFFFFF;
+
+        &:hover,
+        &:focus-visible {
+            background-color: #A3262A;
+        }
+    }
+}
+
+.voiceInputBtn[aria-disabled="true"] {
+    border-color: $line-strong;
+    color: $ink-3;
+    cursor: not-allowed;
+
+    &:hover,
+    &:focus-visible {
+        background-color: transparent;
+    }
+}
+
+.voiceInputStatus {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    color: $state-reject-ink;
+}
+
+.voiceInputStatus-dot {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: $state-reject-line;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .voiceInputStatus-dot {
+        animation: voiceInputPulse 1.4s ease-in-out infinite;
+    }
+}
+
+@keyframes voiceInputPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .voiceInputBtn {
+        transition: none;
+    }
+}

@@ -1,0 +1,101 @@
+// ============================================================
+// 單項輔具專屬上傳區元件 PerItemUpload（design.md §7.12／改版異動說明 §2.8）
+// 虛線上傳框沿用 .fileUpload-drop（_formField.scss），此處只補標題／提示包裝、
+// 中心端藍色變體與雙欄表格排列
+// ============================================================
+
+.perItemUpload {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+// 多個 .perItemUpload-grid 並列時的外層間距（如評估報告書多項輔具上傳列表）
+.perItemUpload-gridList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.perItemUpload-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.perItemUpload-hint {
+    font-size: 15px;
+    color: $ink-3;
+    margin-top: -4px;
+}
+
+// 中心端到校評估變體：藍色虛線框，區別於學校端的灰色上傳框
+.perItemUpload-title-center {
+    color: #1D4F86;
+}
+
+.perItemUpload-drop-center {
+    border-color: #AFC9E8;
+    background-color: #F3F6FB;
+
+    .fileUpload-icon {
+        color: #1D4F86;
+    }
+}
+
+// 雙欄表格排列（如：到校評估報告多筆列與對應說明並排）：外層淡底卡片，
+// 左欄輔具編號徽章＋名稱，右欄虛線上傳框（.fileUpload-dropRow）
+.perItemUpload-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 16px;
+    align-items: center;
+    padding: 16px 20px;
+    border-radius: $border-radius-md;
+    border: 1px solid $line-default;
+    background-color: #FAFBFB;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.perItemUpload-grid-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.perItemUpload-grid-num {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    height: 32px;
+    padding: 0 14px;
+    border-radius: $border-radius-pill;
+    background-color: $brand-teal;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.perItemUpload-grid-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+// 評估報告書上傳框橫向變體：圖示＋文字並排（取代 .fileUpload-drop 的置中直排）
+.fileUpload-dropRow {
+    justify-content: flex-start;
+    height: auto;
+    gap: 14px;
+    padding: 16px 20px;
+    border-radius: $border-radius-md;
+
+    .fileUpload-icon {
+        font-size: 24px;
+        color: $brand-teal;
+    }
+}

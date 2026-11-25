@@ -94,3 +94,82 @@
         transition: none;
     }
 }
+
+// ============================================================
+// 附檔名與大小／時長的媒體格（維修進度更新、維修紀錄 modal 的「損壞照片與影片」區塊）
+// 比 .photoLightbox-grid 多了檔名說明列與單檔下載，縮圖改用 grid 排版讓格子等寬
+// ============================================================
+
+.photoLightbox-grid-captioned {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.photoLightbox-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.photoLightbox-item .photoLightbox-thumb {
+    width: 100%;
+    height: 120px;
+}
+
+.photoLightbox-caption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.photoLightbox-caption-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+}
+
+.photoLightbox-caption-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: $ink-1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.photoLightbox-caption-meta {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.photoLightbox-caption-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border: 1px solid $line-strong;
+    border-radius: $border-radius-pill;
+    color: $ink-2;
+    font-size: 15px;
+    transition: border-color 160ms ease-out, color 160ms ease-out, background-color 160ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        border-color: $brand-teal;
+        color: $brand-teal-deep;
+        background-color: $surface-teal-pale;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .photoLightbox-caption-download {
+        transition: none;
+    }
+}

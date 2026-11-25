@@ -18,6 +18,7 @@
 .infoGrid-label {
     font-size: 16px;
     color: $ink-3;
+    font-weight: 400;
 }
 
 .infoGrid-value {
@@ -41,6 +42,22 @@
     border-radius: $border-radius-lg;
 }
 
+// 紫色變體：聽障點交點交紀錄 modal 的家長繳交確認區塊，與配件確認區塊用色區隔
+.infoGrid-boxed-violet {
+    background-color: #F1ECF8;
+    border: 1px solid #CFC2E6;
+
+    .infoGrid-label {
+        font-weight: 700;
+        color: #4B2E83;
+    }
+
+    .infoGrid-value {
+        font-weight: 400;
+        color: $ink-2;
+    }
+}
+
 // 三欄變體：用於較寬的主欄內、欄位數不足 4 欄的資訊卡（如申請審核明細的到校評估安排）
 .infoGrid-cols3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -53,4 +70,72 @@
 // 整列變體：內容較長的欄位（如損壞說明）獨占一整列，不與其他欄位並排
 .infoGrid-full {
     grid-column: 1 / -1;
+}
+
+// 分組卡片：學生資料依類別拆成多張小卡（如申請審核明細 §9.1），同層卡片間以 gap 撐開
+.infoGroup-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.infoGroup {
+    padding: 16px 20px;
+    border-radius: 18px;
+    background-color: #F5F8F7;
+}
+
+.infoGroup-title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: #0B5557;
+}
+
+// 分組卡片內改為標籤與值同排顯示，縮短整體高度
+.infoGroup .infoGrid {
+    margin-top: 10px;
+    gap: 10px 24px;
+    margin-bottom:0;
+
+    > div {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 4px 8px;
+    }
+}
+
+.infoGroup .infoGrid-label {
+    flex-shrink: 0;
+}
+
+.infoGroup .infoGrid-value {
+    margin: 0;
+}
+
+// 兩欄變體：欄位數少的分組卡片（如近期學籍異動、家長聯絡）
+.infoGrid-cols2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+// 跨 2 欄：用於 3 欄或 4 欄格線中需要比單欄寬、但不需獨占整列的欄位（如身分與就學的班別）
+.infoGrid-span2 {
+    grid-column: span 2;
+}
+
+// 保留換行：值本身帶有換行符號時（如鑑定安置文號及日期合併顯示為兩行）需要照原樣換行顯示
+.infoGrid-value-preline {
+    white-space: pre-line;
+}
+
+// 並排分組：兩張小卡並排顯示（如近期學籍異動／家長聯絡），窄幅收合為單欄直疊
+.infoGroup-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+    }
 }

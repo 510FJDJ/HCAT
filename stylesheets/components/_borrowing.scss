@@ -100,26 +100,11 @@
     font-weight: 700;
 }
 
-// ------------------------------------------------------------
-// 操作欄：報修／歸還．轉銜兩顆按鈕並排（不比照 .dataTable-cellNext
-// 手機強制 100% 寬度，因為這裡一欄有兩顆按鈕要並排）
-// ------------------------------------------------------------
-.borrowing-cellActions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 8px;
-
-    @media (max-width: 720px) {
-        justify-content: flex-start;
-    }
-}
-
 // 辦理中（busy）列：顯示說明文字＋「前往申請紀錄」連結
 .borrowing-busyNote {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     gap: 2px;
     line-height: 1.4;
 

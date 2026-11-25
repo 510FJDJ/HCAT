@@ -95,19 +95,21 @@
     gap: 2px;
 }
 
-// 「功能」欄只有純動作按鈕、不需要垂直堆疊狀態／備註文字時使用（如 center/schools.html
-// 的「借用歷史」＋「編輯」）：按鈕一律水平並排，手機轉卡片後也跟著左側欄名同一行顯示，
-// 不像 .dataTable-cellActions 需要在手機版強制換行堆疊
+.dataTable-cellNext {
+    text-align: center;
+    white-space: nowrap;
+}
+
+// 「功能」欄有兩顆以上按鈕時，包在 .dataTable-cellNext 的 <td> 裡面的 inner span
+// （不可直接把 display:flex 套在 <td> 上，會讓它跳出表格欄位對齊）；只有一顆按鈕
+// 的欄位不需要這層包裝，直接把按鈕放進 .dataTable-cellNext 即可。桌機置中並排、
+// 可換行；手機轉卡片後交由 .dataTable-cellNext 的 .btnPill 滿版規則各自疊成一排。
 .dataTable-actionsRow {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     gap: 8px 10px;
-}
-
-.dataTable-cellNext {
-    text-align: center;
-    white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -115,7 +117,6 @@
         transition: none;
     }
 }
-
 // ------------------------------------------------------------
 // 固定最後一欄於右側（外型修飾子，可供其他表格重用）：桌機／平板尚未轉卡片時，
 // 「功能」欄固定在最右，左側欄位（包含表格本來就會有的其他欄）維持水平捲動；

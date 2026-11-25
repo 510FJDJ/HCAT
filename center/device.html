@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>輔具品項：擴視機 - 輔具管理資訊系統</title>
     <link rel="icon" type="image/png" href="../img/logo/logo.png">
-    <meta name="description" content="財產類輔具品項頁：以財產編號逐台管理，查看每一台的狀態與異動紀錄">
+    <meta name="description" content="財產類輔具品項頁：以財產編號逐台管理，查看每一台的狀態與使用紀錄">
     <meta name="robots" content="noindex">
 
     <link rel="stylesheet" href="../css/all.css">
@@ -73,7 +73,7 @@
                             </h1>
                             <span class="tagPill tag-tealSoft">財產・單台</span>
                         </div>
-                        <p class="bannerWave-desc">共 14 台，目前在庫 3 台。借用與維修歷程可在下方展開「異動紀錄」查看。</p>
+                        <p class="bannerWave-desc">共 14 台，目前在庫 3 台。借用與維修歷程可在下方展開「使用紀錄」查看。</p>
                     </div>
                 </div>
             </div>
@@ -85,7 +85,7 @@
                     <div class="devicesPage-panelHead">
                         <h2 id="deviceInfoTitle" class="devicesPage-panelTitle">品項資訊</h2>
                         <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceItemModal">
-                            <i class="bi bi-pencil" aria-hidden="true"></i>編輯品項
+                            <i class="bi bi-pencil" aria-hidden="true"></i>編輯輔具
                         </button>
                     </div>
 
@@ -167,14 +167,14 @@
                                             <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>借出中</span></td>
                                             <td data-label="目前使用">竹北國小・林○安</td>
                                             <td data-label="功能" class="dataTable-cellNext">
-                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
-                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0012" data-um-spec="桌上型 24 吋" data-um-buy="2021-08-16" data-um-life="5" data-um-status="out" aria-label="編輯 V-CCTV-0012">編輯</button>
-                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0012" aria-label="異動紀錄 V-CCTV-0012">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                <span class="dataTable-actionsRow">
+                                                    <button type="button" class="btnIconCircle btnIconCircle-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0012" data-um-spec="桌上型 24 吋" data-um-buy="2021-08-16" data-um-life="5" data-um-status="out" aria-label="編輯 V-CCTV-0012"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0012" aria-label="使用紀錄 V-CCTV-0012">使用紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr class="devicesPage-logRow" id="log-0012" hidden>
-                                            <td colspan="7" data-label="異動紀錄">
+                                            <td colspan="7" data-label="使用紀錄">
                                                 <div class="logPanel">
                                                     <ol class="logTimeline">
                                                         <li class="logTimeline-item">
@@ -250,14 +250,15 @@
                                             <td data-label="狀態"><span class="statusPill statusPill-teal"><span class="statusPill-dot" aria-hidden="true"></span>在庫</span></td>
                                             <td data-label="目前使用">中心庫房</td>
                                             <td data-label="功能" class="dataTable-cellNext">
-                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
-                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0015" data-um-spec="桌上型 24 吋" data-um-buy="2023-03-02" data-um-life="5" data-um-status="stock" aria-label="編輯 V-CCTV-0015">編輯</button>
-                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0015" aria-label="異動紀錄 V-CCTV-0015">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                <span class="dataTable-actionsRow">
+                                                    <button type="button" class="btnIconCircle btnIconCircle-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0015" data-um-spec="桌上型 24 吋" data-um-buy="2023-03-02" data-um-life="5" data-um-status="stock" aria-label="編輯 V-CCTV-0015"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btnPill btn-amberSolid btnPill-sm" data-bs-toggle="modal" data-bs-target="#centerDeviceRepairModal" data-rp-no="V-CCTV-0015" data-rp-spec="桌上型 24 吋" aria-label="報修 V-CCTV-0015"><i class="bi bi-tools" aria-hidden="true"></i>報修</button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0015" aria-label="使用紀錄 V-CCTV-0015">使用紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr class="devicesPage-logRow" id="log-0015" hidden>
-                                            <td colspan="7" data-label="異動紀錄">
+                                            <td colspan="7" data-label="使用紀錄">
                                                 <div class="logPanel">
                                                     <ol class="logTimeline">
                                                         <li class="logTimeline-item">
@@ -293,14 +294,15 @@
                                             <td data-label="狀態"><span class="statusPill statusPill-teal"><span class="statusPill-dot" aria-hidden="true"></span>在庫</span></td>
                                             <td data-label="目前使用">中心庫房</td>
                                             <td data-label="功能" class="dataTable-cellNext">
-                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
-                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0009" data-um-spec="桌上型 22 吋" data-um-buy="2022-05-20" data-um-life="5" data-um-status="stock" aria-label="編輯 V-CCTV-0009">編輯</button>
-                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0009" aria-label="異動紀錄 V-CCTV-0009">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                <span class="dataTable-actionsRow">
+                                                    <button type="button" class="btnIconCircle btnIconCircle-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0009" data-um-spec="桌上型 22 吋" data-um-buy="2022-05-20" data-um-life="5" data-um-status="stock" aria-label="編輯 V-CCTV-0009"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btnPill btn-amberSolid btnPill-sm" data-bs-toggle="modal" data-bs-target="#centerDeviceRepairModal" data-rp-no="V-CCTV-0009" data-rp-spec="桌上型 22 吋" aria-label="報修 V-CCTV-0009"><i class="bi bi-tools" aria-hidden="true"></i>報修</button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0009" aria-label="使用紀錄 V-CCTV-0009">使用紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr class="devicesPage-logRow" id="log-0009" hidden>
-                                            <td colspan="7" data-label="異動紀錄">
+                                            <td colspan="7" data-label="使用紀錄">
                                                 <div class="logPanel">
                                                     <ol class="logTimeline">
                                                         <li class="logTimeline-item">
@@ -352,14 +354,15 @@
                                             <td data-label="狀態"><span class="statusPill statusPill-teal"><span class="statusPill-dot" aria-hidden="true"></span>在庫</span></td>
                                             <td data-label="目前使用">中心庫房</td>
                                             <td data-label="功能" class="dataTable-cellNext">
-                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
-                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0014" data-um-spec="桌上型 24 吋" data-um-buy="2023-03-02" data-um-life="5" data-um-status="stock" aria-label="編輯 V-CCTV-0014">編輯</button>
-                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0014" aria-label="異動紀錄 V-CCTV-0014">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                <span class="dataTable-actionsRow">
+                                                    <button type="button" class="btnIconCircle btnIconCircle-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0014" data-um-spec="桌上型 24 吋" data-um-buy="2023-03-02" data-um-life="5" data-um-status="stock" aria-label="編輯 V-CCTV-0014"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btnPill btn-amberSolid btnPill-sm" data-bs-toggle="modal" data-bs-target="#centerDeviceRepairModal" data-rp-no="V-CCTV-0014" data-rp-spec="桌上型 24 吋" aria-label="報修 V-CCTV-0014"><i class="bi bi-tools" aria-hidden="true"></i>報修</button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0014" aria-label="使用紀錄 V-CCTV-0014">使用紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr class="devicesPage-logRow" id="log-0014" hidden>
-                                            <td colspan="7" data-label="異動紀錄">
+                                            <td colspan="7" data-label="使用紀錄">
                                                 <div class="logPanel">
                                                     <ol class="logTimeline">
                                                         <li class="logTimeline-item">
@@ -395,14 +398,14 @@
                                             <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>借出中</span></td>
                                             <td data-label="目前使用">關西國中・資源班</td>
                                             <td data-label="功能" class="dataTable-cellNext">
-                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
-                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0011" data-um-spec="桌上型 24 吋" data-um-buy="2021-08-16" data-um-life="5" data-um-status="out" aria-label="編輯 V-CCTV-0011">編輯</button>
-                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0011" aria-label="異動紀錄 V-CCTV-0011">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                <span class="dataTable-actionsRow">
+                                                    <button type="button" class="btnIconCircle btnIconCircle-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0011" data-um-spec="桌上型 24 吋" data-um-buy="2021-08-16" data-um-life="5" data-um-status="out" aria-label="編輯 V-CCTV-0011"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0011" aria-label="使用紀錄 V-CCTV-0011">使用紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr class="devicesPage-logRow" id="log-0011" hidden>
-                                            <td colspan="7" data-label="異動紀錄">
+                                            <td colspan="7" data-label="使用紀錄">
                                                 <div class="logPanel">
                                                     <ol class="logTimeline">
                                                         <li class="logTimeline-item">
@@ -446,14 +449,14 @@
                                             <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>借出中</span></td>
                                             <td data-label="目前使用">新埔國小・徐○琪</td>
                                             <td data-label="功能" class="dataTable-cellNext">
-                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
-                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0010" data-um-spec="桌上型 22 吋" data-um-buy="2022-05-20" data-um-life="5" data-um-status="out" aria-label="編輯 V-CCTV-0010">編輯</button>
-                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0010" aria-label="異動紀錄 V-CCTV-0010">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                <span class="dataTable-actionsRow">
+                                                    <button type="button" class="btnIconCircle btnIconCircle-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0010" data-um-spec="桌上型 22 吋" data-um-buy="2022-05-20" data-um-life="5" data-um-status="out" aria-label="編輯 V-CCTV-0010"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0010" aria-label="使用紀錄 V-CCTV-0010">使用紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr class="devicesPage-logRow" id="log-0010" hidden>
-                                            <td colspan="7" data-label="異動紀錄">
+                                            <td colspan="7" data-label="使用紀錄">
                                                 <div class="logPanel">
                                                     <ol class="logTimeline">
                                                         <li class="logTimeline-item">
@@ -497,14 +500,14 @@
                                             <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>維修中</span></td>
                                             <td data-label="目前使用">廠商維修中</td>
                                             <td data-label="功能" class="dataTable-cellNext">
-                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
-                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0008" data-um-spec="桌上型 22 吋" data-um-buy="2022-05-20" data-um-life="5" data-um-status="fix" aria-label="編輯 V-CCTV-0008">編輯</button>
-                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0008" aria-label="異動紀錄 V-CCTV-0008">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                <span class="dataTable-actionsRow">
+                                                    <button type="button" class="btnIconCircle btnIconCircle-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0008" data-um-spec="桌上型 22 吋" data-um-buy="2022-05-20" data-um-life="5" data-um-status="fix" aria-label="編輯 V-CCTV-0008"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0008" aria-label="使用紀錄 V-CCTV-0008">使用紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr class="devicesPage-logRow" id="log-0008" hidden>
-                                            <td colspan="7" data-label="異動紀錄">
+                                            <td colspan="7" data-label="使用紀錄">
                                                 <div class="logPanel">
                                                     <ol class="logTimeline">
                                                         <li class="logTimeline-item">
@@ -548,14 +551,14 @@
                                             <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>借出中</span></td>
                                             <td data-label="目前使用">竹東國中・彭○婷</td>
                                             <td data-label="功能" class="dataTable-cellNext">
-                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
-                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0007" data-um-spec="桌上型 22 吋" data-um-buy="2020-09-01" data-um-life="5" data-um-status="out" aria-label="編輯 V-CCTV-0007">編輯</button>
-                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0007" aria-label="異動紀錄 V-CCTV-0007">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                <span class="dataTable-actionsRow">
+                                                    <button type="button" class="btnIconCircle btnIconCircle-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0007" data-um-spec="桌上型 22 吋" data-um-buy="2020-09-01" data-um-life="5" data-um-status="out" aria-label="編輯 V-CCTV-0007"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0007" aria-label="使用紀錄 V-CCTV-0007">使用紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr class="devicesPage-logRow" id="log-0007" hidden>
-                                            <td colspan="7" data-label="異動紀錄">
+                                            <td colspan="7" data-label="使用紀錄">
                                                 <div class="logPanel">
                                                     <ol class="logTimeline">
                                                         <li class="logTimeline-item">
@@ -599,14 +602,14 @@
                                             <td data-label="狀態"><span class="statusPill statusPill-blue"><span class="statusPill-dot" aria-hidden="true"></span>借出中</span></td>
                                             <td data-label="目前使用">湖口高中・羅○宏</td>
                                             <td data-label="功能" class="dataTable-cellNext">
-                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
-                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0006" data-um-spec="桌上型 22 吋" data-um-buy="2020-09-01" data-um-life="5" data-um-status="out" aria-label="編輯 V-CCTV-0006">編輯</button>
-                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0006" aria-label="異動紀錄 V-CCTV-0006">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                <span class="dataTable-actionsRow">
+                                                    <button type="button" class="btnIconCircle btnIconCircle-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0006" data-um-spec="桌上型 22 吋" data-um-buy="2020-09-01" data-um-life="5" data-um-status="out" aria-label="編輯 V-CCTV-0006"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0006" aria-label="使用紀錄 V-CCTV-0006">使用紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr class="devicesPage-logRow" id="log-0006" hidden>
-                                            <td colspan="7" data-label="異動紀錄">
+                                            <td colspan="7" data-label="使用紀錄">
                                                 <div class="logPanel">
                                                     <ol class="logTimeline">
                                                         <li class="logTimeline-item">
@@ -650,14 +653,14 @@
                                             <td data-label="狀態"><span class="statusPill"><span class="statusPill-dot" aria-hidden="true"></span>已報廢</span></td>
                                             <td data-label="目前使用">—</td>
                                             <td data-label="功能" class="dataTable-cellNext">
-                                                <span class="flex-row-center flex-wrap gap-2 justify-content-center">
-                                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0004" data-um-spec="桌上型 22 吋" data-um-buy="2019-09-10" data-um-life="5" data-um-status="scrap" aria-label="編輯 V-CCTV-0004">編輯</button>
-                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0004" aria-label="異動紀錄 V-CCTV-0004">異動紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
+                                                <span class="dataTable-actionsRow">
+                                                    <button type="button" class="btnIconCircle btnIconCircle-sm" data-bs-toggle="modal" data-bs-target="#deviceUnitModal" data-um-mode="edit" data-um-no="V-CCTV-0004" data-um-spec="桌上型 22 吋" data-um-buy="2019-09-10" data-um-life="5" data-um-status="scrap" aria-label="編輯 V-CCTV-0004"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btnPill btn-secondary btnPill-sm devicesPage-logToggle" data-js="logToggle" aria-expanded="false" aria-controls="log-0004" aria-label="使用紀錄 V-CCTV-0004">使用紀錄<i class="bi bi-chevron-down" aria-hidden="true"></i></button>
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr class="devicesPage-logRow" id="log-0004" hidden>
-                                            <td colspan="7" data-label="異動紀錄">
+                                            <td colspan="7" data-label="使用紀錄">
                                                 <div class="logPanel">
                                                     <ol class="logTimeline">
                                                         <li class="logTimeline-item">
@@ -714,14 +717,14 @@
 
     <div data-layout="../layout/footer.html"></div>
 
-    <!-- 編輯品項 modal（管理方式已鎖定為財產・單台） -->
+    <!-- 編輯輔具 modal（管理方式已鎖定為財產・單台，三步驟可自由點選切換） -->
     <div class="modal fade" id="deviceItemModal" data-js="deviceItemModal" data-dm-locked="unit" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="dmTitle">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-dialog-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="modal-head-text">
-                        <h2 id="dmTitle" class="modal-title">編輯品項</h2>
-                        <p class="modal-subtitle textNote">擴視機・財產・單台</p>
+                        <h2 id="dmTitle" class="modal-title">編輯輔具</h2>
+                        <p class="modal-subtitle textNote">擴視機・可直接點步驟切換，修改後按「儲存」；內容會對應到前台「輔具詳情」頁</p>
                     </div>
                     <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
                         <i class="bi bi-x-lg" aria-hidden="true"></i>
@@ -729,105 +732,267 @@
                 </div>
                 <form novalidate data-js="deviceModalForm">
                     <div class="modal-body">
-                        <fieldset class="modal-body-section">
-                            <legend class="formField-label">管理方式</legend>
-                            <div class="cardChoice-group cardChoice-group-row">
-                                <label class="cardChoice is-selected is-locked">
-                                    <input type="radio" name="dmType" value="unit" class="cardChoice-input" checked aria-disabled="true" aria-describedby="dmTypeLockNote" data-js="dmTypeRadio">
-                                    <span class="cardChoice-text">
-                                        <span class="cardChoice-title">財產・單台</span>
-                                        <span class="cardChoice-desc">以財產編號逐台管理，借出後需歸還</span>
-                                    </span>
-                                </label>
-                                <label class="cardChoice is-locked">
-                                    <input type="radio" name="dmType" value="qty" class="cardChoice-input" aria-disabled="true" aria-describedby="dmTypeLockNote" data-js="dmTypeRadio">
-                                    <span class="cardChoice-text">
-                                        <span class="cardChoice-title">配發・數量</span>
-                                        <span class="cardChoice-desc">客製或消耗品只管數量，配發後不用歸還</span>
-                                    </span>
-                                </label>
-                            </div>
-                            <p class="formField-hint" id="dmTypeLockNote">品項建立後不可變更管理方式。</p>
-                        </fieldset>
-
-                        <div class="modal-body-section devicesPage-photoRow">
-                            <div>
-                                <span class="formField-label">照片</span>
-                                <div data-js="uploadTile">
-                                    <input type="file" id="dmPhoto" class="fileUpload-input" accept="image/*" aria-describedby="dmPhotoHint" data-js="uploadTileInput">
-                                    <label for="dmPhoto" class="uploadTile-box">
-                                        <span class="uploadTile-empty" hidden data-js="uploadTileEmpty">
-                                            <i class="bi bi-upload uploadTile-icon" aria-hidden="true"></i>
-                                            <span class="uploadTile-text">上傳照片</span>
-                                            <span class="uploadTile-sub" id="dmPhotoHint">JPG、PNG</span>
+                        <nav aria-label="填寫進度" class="deviceStepper">
+                            <ol class="deviceStepper-list">
+                                <li class="deviceStepper-item is-lineDone">
+                                    <button type="button" class="deviceStepper-step is-current" data-js="dmStepBtn" data-step="1" aria-current="step" aria-label="第 1 步：基本資料">
+                                        <span class="deviceStepper-circle" data-js="dmStepCircle">1</span>
+                                        <span class="deviceStepper-text">
+                                            <span class="deviceStepper-title">基本資料</span>
+                                            <span class="deviceStepper-sub deviceStepper-sub-required">必填</span>
                                         </span>
-                                        <img class="uploadTile-preview" src="../img/devices/cctv.jpg" alt="目前的品項照片" data-js="uploadTilePreview">
+                                    </button>
+                                </li>
+                                <li class="deviceStepper-item is-lineDone">
+                                    <button type="button" class="deviceStepper-step is-done" data-js="dmStepBtn" data-step="2" aria-label="第 2 步：前台說明">
+                                        <span class="deviceStepper-circle" data-js="dmStepCircle">2</span>
+                                        <span class="deviceStepper-text">
+                                            <span class="deviceStepper-title">前台說明</span>
+                                            <span class="deviceStepper-sub">選填，可略過</span>
+                                        </span>
+                                    </button>
+                                </li>
+                                <li class="deviceStepper-item is-lineDone">
+                                    <button type="button" class="deviceStepper-step is-done" data-js="dmStepBtn" data-step="3" aria-label="第 3 步：相關文件">
+                                        <span class="deviceStepper-circle" data-js="dmStepCircle">3</span>
+                                        <span class="deviceStepper-text">
+                                            <span class="deviceStepper-title">相關文件</span>
+                                            <span class="deviceStepper-sub">選填，可略過</span>
+                                        </span>
+                                    </button>
+                                </li>
+                            </ol>
+                        </nav>
+
+                        <div data-js="dmStepPanel" data-step="1">
+                            <fieldset class="modal-body-section">
+                                <legend class="formField-label">管理方式</legend>
+                                <div class="cardChoice-group cardChoice-group-row">
+                                    <label class="cardChoice is-selected is-locked">
+                                        <input type="radio" name="dmType" value="unit" class="cardChoice-input" checked aria-disabled="true" aria-describedby="dmTypeLockNote" data-js="dmTypeRadio">
+                                        <span class="cardChoice-text">
+                                            <span class="cardChoice-title">財產・單台</span>
+                                            <span class="cardChoice-desc">以財產編號逐台管理，借出後需歸還</span>
+                                        </span>
                                     </label>
-                                    <div class="uploadTile-actions" data-js="uploadTileActions">
-                                        <button type="button" class="btnPill btn-outline btnPill-sm" data-js="uploadTileReplace">重新上傳</button>
-                                        <button type="button" class="btnPill btn-secondary btnPill-sm" data-js="uploadTileRemove">移除照片</button>
+                                    <label class="cardChoice is-locked">
+                                        <input type="radio" name="dmType" value="qty" class="cardChoice-input" aria-disabled="true" aria-describedby="dmTypeLockNote" data-js="dmTypeRadio">
+                                        <span class="cardChoice-text">
+                                            <span class="cardChoice-title">配發・數量</span>
+                                            <span class="cardChoice-desc">客製或消耗品只管數量，配發後不用歸還</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <p class="formField-hint" id="dmTypeLockNote">輔具建立後不可變更管理方式。</p>
+                            </fieldset>
+
+                            <div class="modal-body-section devicesPage-photoRow">
+                                <div>
+                                    <span class="formField-label">照片</span>
+                                    <div data-js="uploadTile">
+                                        <input type="file" id="dmPhoto" class="fileUpload-input" accept="image/*" aria-describedby="dmPhotoHint" data-js="uploadTileInput">
+                                        <label for="dmPhoto" class="uploadTile-box">
+                                            <span class="uploadTile-empty" hidden data-js="uploadTileEmpty">
+                                                <i class="bi bi-upload uploadTile-icon" aria-hidden="true"></i>
+                                                <span class="uploadTile-text">上傳照片</span>
+                                                <span class="uploadTile-sub" id="dmPhotoHint">前台：主照片</span>
+                                            </span>
+                                            <img class="uploadTile-preview" src="../img/devices/cctv.jpg" alt="目前的輔具照片" data-js="uploadTilePreview">
+                                        </label>
+                                        <div class="uploadTile-actions" data-js="uploadTileActions">
+                                            <button type="button" class="btnPill btn-outline btnPill-sm" data-js="uploadTileReplace">重新上傳</button>
+                                            <button type="button" class="btnPill btn-secondary btnPill-sm" data-js="uploadTileRemove">移除照片</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="devicesPage-photoRow-fields">
+                                    <div>
+                                        <label for="dmName" class="formField-label">輔具名稱 <span class="formField-required">必填</span></label>
+                                        <input type="text" id="dmName" class="form-control" value="擴視機" placeholder="例：擴視機" required>
+                                    </div>
+                                    <div>
+                                        <label for="dmCat" class="formField-label">輔具分類 <span class="formField-required">必填</span></label>
+                                        <select id="dmCat" class="form-select" required>
+                                            <option>行動與擺位輔具</option>
+                                            <option selected>視障輔具</option>
+                                            <option>聽障輔具</option>
+                                            <option>溝通輔具</option>
+                                            <option>資訊輔具</option>
+                                            <option>書寫與閱讀輔具</option>
+                                            <option>其他輔具</option>
+                                        </select>
+                                    </div>
+                                    <div class="formGrid-span2">
+                                        <label for="dmSpecs" class="formField-label">相關配備和規格</label>
+                                        <textarea id="dmSpecs" class="form-control" rows="2" placeholder="例：桌上型 24 吋螢幕、附 HDMI 線與遙控器">22 吋可旋轉螢幕、USB 傳輸線、腳踏開關一組。</textarea>
+                                    </div>
+                                    <div class="formGrid-span2">
+                                        <label for="dmAudience" class="formField-label">適用對象</label>
+                                        <input type="text" id="dmAudience" class="form-control" value="低視力學生（國小至高中職適用）" placeholder="例：低視力學生（國小至高中職）">
                                     </div>
                                 </div>
                             </div>
-                            <div class="devicesPage-photoRow-fields">
-                                <div>
-                                    <label for="dmName" class="formField-label">品項名稱 <span class="formField-required">必填</span></label>
-                                    <input type="text" id="dmName" class="form-control" value="擴視機" placeholder="例：擴視機" required>
-                                </div>
-                                <div>
-                                    <label for="dmCat" class="formField-label">輔具分類 <span class="formField-required">必填</span></label>
-                                    <select id="dmCat" class="form-select" required>
-                                        <option>行動與擺位輔具</option>
-                                        <option selected>視障輔具</option>
-                                        <option>聽障輔具</option>
-                                        <option>溝通輔具</option>
-                                        <option>資訊輔具</option>
-                                        <option>書寫與閱讀輔具</option>
-                                        <option>其他輔具</option>
+
+                            <div class="modal-body-section formGrid">
+                                <div data-js="dmUnitOnly">
+                                    <label for="dmLife" class="formField-label">預設使用年限 <span class="formField-required">必填</span></label>
+                                    <select id="dmLife" class="form-select" required>
+                                        <option value="3">3 年</option>
+                                        <option value="4">4 年</option>
+                                        <option value="5" selected>5 年</option>
+                                        <option value="6">6 年</option>
+                                        <option value="8">8 年</option>
+                                        <option value="none">無期限</option>
                                     </select>
                                 </div>
+                                <fieldset>
+                                    <legend class="formField-label">申請設定</legend>
+                                    <div class="flex-column gap-2">
+                                        <div class="formField-checkRow">
+                                            <input type="checkbox" id="dmFree" class="form-check-input" checked>
+                                            <label for="dmFree" class="formField-checkRow-label">免評估（學校申請不需評估報告）</label>
+                                        </div>
+                                        <div class="formField-checkRow" data-js="dmUnitOnly">
+                                            <input type="checkbox" id="dmTemp" class="form-check-input" checked>
+                                            <label for="dmTemp" class="formField-checkRow-label">可臨時借用</label>
+                                        </div>
+                                        <div class="formField-checkRow">
+                                            <input type="checkbox" id="dmShow" class="form-check-input" checked>
+                                            <label for="dmShow" class="formField-checkRow-label">顯示在前台輔具目錄</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div>
+
+                            <p class="noteBox modal-body-section" data-js="dmUnitOnly">
+                                <i class="bi bi-info-circle" aria-hidden="true"></i>「目前可借數量」由在庫的財產自動計算；購置日期和財產編號在每一台財產裡維護，不會出現在前台。
+                            </p>
                         </div>
 
-                        <div class="modal-body-section">
-                            <label for="dmDesc" class="formField-label">使用說明</label>
-                            <textarea id="dmDesc" class="form-control" rows="3" placeholder="簡短介紹用途與適用對象，會顯示在前台輔具目錄。例：可放大課本、作業單等書面資料，適合低視力學生閱讀與書寫。">可放大課本、作業單等書面資料，並調整對比與色彩模式，適合低視力學生閱讀與書寫。</textarea>
-                        </div>
-
-                        <div class="modal-body-section formGrid">
-                            <div data-js="dmUnitOnly">
-                                <label for="dmLife" class="formField-label">預設使用年限 <span class="formField-required">必填</span></label>
-                                <select id="dmLife" class="form-select" required>
-                                    <option value="3">3 年</option>
-                                    <option value="4">4 年</option>
-                                    <option value="5" selected>5 年</option>
-                                    <option value="6">6 年</option>
-                                    <option value="8">8 年</option>
-                                    <option value="none">無期限</option>
-                                </select>
+                        <div data-js="dmStepPanel" data-step="2" hidden>
+                            <div class="modal-body-section">
+                                <label for="dmIntro" class="formField-label">功能介紹</label>
+                                <textarea id="dmIntro" class="form-control" rows="3" placeholder="例：以鏡頭擷取書本、作業單，放大顯示於螢幕上，方便低視力學生閱讀。">可放大課本、作業單等書面資料，並調整對比與色彩模式，適合低視力學生閱讀與書寫。</textarea>
                             </div>
-                            <fieldset>
-                                <legend class="formField-label">申請設定</legend>
-                                <div class="flex-column gap-2">
-                                    <div class="formField-checkRow">
-                                        <input type="checkbox" id="dmFree" class="form-check-input" checked>
-                                        <label for="dmFree" class="formField-checkRow-label">免評估（學校申請不需評估報告）</label>
-                                    </div>
-                                    <div class="formField-checkRow" data-js="dmUnitOnly">
-                                        <input type="checkbox" id="dmTemp" class="form-check-input" checked>
-                                        <label for="dmTemp" class="formField-checkRow-label">可臨時借用</label>
-                                    </div>
-                                    <div class="formField-checkRow">
-                                        <input type="checkbox" id="dmShow" class="form-check-input" checked>
-                                        <label for="dmShow" class="formField-checkRow-label">顯示在前台輔具目錄</label>
-                                    </div>
+
+                            <div class="modal-body-section formGrid">
+                                <div class="flex-column gap-3">
+                                    <span class="formField-label">操作步驟</span>
+                                    <ol class="deviceListInput" data-js="dmStepsList">
+                                        <li class="deviceListInput-row">
+                                            <span class="deviceListInput-num">1</span>
+                                            <input type="text" class="form-control" value="開啟機身右側電源開關，確認指示燈亮起。">
+                                            <button type="button" class="deviceListInput-remove" aria-label="移除這一步"><i class="bi bi-trash" aria-hidden="true"></i></button>
+                                        </li>
+                                        <li class="deviceListInput-row">
+                                            <span class="deviceListInput-num">2</span>
+                                            <input type="text" class="form-control" value="將書本或文件放置於下方平台，依需求調整放大倍率。">
+                                            <button type="button" class="deviceListInput-remove" aria-label="移除這一步"><i class="bi bi-trash" aria-hidden="true"></i></button>
+                                        </li>
+                                        <li class="deviceListInput-row">
+                                            <span class="deviceListInput-num">3</span>
+                                            <input type="text" class="form-control" value="可依閱讀需求切換顯示模式（黑白／彩色／高對比）。">
+                                            <button type="button" class="deviceListInput-remove" aria-label="移除這一步"><i class="bi bi-trash" aria-hidden="true"></i></button>
+                                        </li>
+                                        <li class="deviceListInput-row">
+                                            <span class="deviceListInput-num">4</span>
+                                            <input type="text" class="form-control" value="使用完畢請關閉電源，並將鏡頭蓋回防塵蓋後收納歸位。">
+                                            <button type="button" class="deviceListInput-remove" aria-label="移除這一步"><i class="bi bi-trash" aria-hidden="true"></i></button>
+                                        </li>
+                                    </ol>
+                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-js="dmStepsAdd">
+                                        <i class="bi bi-plus-lg" aria-hidden="true"></i>新增步驟
+                                    </button>
                                 </div>
-                            </fieldset>
+                                <div class="flex-column gap-3">
+                                    <span class="formField-label">注意事項</span>
+                                    <ul class="deviceListInput" data-js="dmCautionsList">
+                                        <li class="deviceListInput-row">
+                                            <span class="deviceListInput-dotMark" aria-hidden="true"></span>
+                                            <input type="text" class="form-control" value="避免放置於陽光直射處或潮濕環境，以免影響鏡頭品質。">
+                                            <button type="button" class="deviceListInput-remove" aria-label="移除這則注意事項"><i class="bi bi-trash" aria-hidden="true"></i></button>
+                                        </li>
+                                        <li class="deviceListInput-row">
+                                            <span class="deviceListInput-dotMark" aria-hidden="true"></span>
+                                            <input type="text" class="form-control" value="搬動時請握持機身底座，勿直接拉扯螢幕或電源線。">
+                                            <button type="button" class="deviceListInput-remove" aria-label="移除這則注意事項"><i class="bi bi-trash" aria-hidden="true"></i></button>
+                                        </li>
+                                    </ul>
+                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-js="dmCautionsAdd">
+                                        <i class="bi bi-plus-lg" aria-hidden="true"></i>新增注意事項
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="modal-body-section formGrid">
+                                <div>
+                                    <label for="dmCare" class="formField-label">清潔保養</label>
+                                    <textarea id="dmCare" class="form-control" rows="3" placeholder="例：鏡頭請用拭鏡布擦拭，避免使用酒精或濕紙巾。">鏡頭請用拭鏡布輕拭，避免使用酒精或濕紙巾擦拭螢幕。</textarea>
+                                </div>
+                                <div>
+                                    <span class="formField-label">配件清單</span>
+                                    <div class="tagInput" data-js="dmAccessoriesWrap">
+                                        <ul class="tagInput-list" data-js="dmAccessoriesList">
+                                            <li class="tagInput-tag">
+                                                <span>原廠電源線</span>
+                                                <button type="button" class="tagInput-tagRemove" aria-label="移除「原廠電源線」"><i class="bi bi-x" aria-hidden="true"></i></button>
+                                            </li>
+                                            <li class="tagInput-tag">
+                                                <span>可攜式提袋</span>
+                                                <button type="button" class="tagInput-tagRemove" aria-label="移除「可攜式提袋」"><i class="bi bi-x" aria-hidden="true"></i></button>
+                                            </li>
+                                            <li class="tagInput-tag">
+                                                <span>操作說明書</span>
+                                                <button type="button" class="tagInput-tagRemove" aria-label="移除「操作說明書」"><i class="bi bi-x" aria-hidden="true"></i></button>
+                                            </li>
+                                            <li class="tagInput-tag">
+                                                <span>鏡頭防塵蓋</span>
+                                                <button type="button" class="tagInput-tagRemove" aria-label="移除「鏡頭防塵蓋」"><i class="bi bi-x" aria-hidden="true"></i></button>
+                                            </li>
+                                        </ul>
+                                        <input type="text" id="dmAccessoryInput" class="tagInput-field" data-js="dmAccessoryInput" placeholder="例：充電線">
+                                    </div>
+                                    <p class="formField-hint">輸入一項後按 Enter 加入。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div data-js="dmStepPanel" data-step="3" hidden>
+                            <div class="modal-body-section">
+                                <p class="formField-hint">顯示在前台「使用說明」最下方，供學校和家長下載，例如使用手冊、操作影片、保固書。</p>
+
+                                <ul class="deviceDocList" data-js="dmDocsList">
+                                    <li class="fileRow fileRow-upload">
+                                        <span class="fileRow-icon fileRow-icon-lg fileRow-icon-pdf" aria-hidden="true"><i class="bi bi-file-earmark-pdf"></i></span>
+                                        <span class="fileRow-body">
+                                            <input type="text" class="deviceDocList-name" value="擴視機操作手冊.pdf" aria-label="檔案名稱">
+                                            <span class="fileRow-meta">1.2 MB</span>
+                                        </span>
+                                        <button type="button" class="fileRow-delete" aria-label="刪除「擴視機操作手冊.pdf」"><i class="bi bi-trash" aria-hidden="true"></i></button>
+                                    </li>
+                                </ul>
+                                <p class="formField-hint" hidden data-js="dmDocsEmpty">尚未上傳文件，前台不會顯示文件區。</p>
+
+                                <div class="deviceDocList-uploadGroup" data-js="dmDocsUpload">
+                                    <input type="file" id="dmDocsInput" class="fileUpload-input" multiple accept=".pdf,.doc,.docx,.mp4" data-js="dmDocsInput">
+                                    <label for="dmDocsInput" class="fileUpload fileUpload-drop">
+                                        <i class="bi bi-upload fileUpload-icon" aria-hidden="true"></i>
+                                        <span class="fileUpload-drop-text">上傳文件</span>
+                                        <span class="fileUpload-drop-sub">可多選，PDF、Word、MP4，單檔 20 MB 以內</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
-                        <button type="submit" class="btnPill btn-teal">儲存</button>
+                    <div class="modal-footer deviceStepper-footer">
+                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal" data-js="dmBtnCancel">取消</button>
+                        <button type="button" class="btnPill btn-outline" data-js="dmBtnPrev" hidden>
+                            <i class="bi bi-arrow-left" aria-hidden="true"></i>上一步
+                        </button>
+                        <div class="deviceStepper-footer-right">
+                            <button type="button" class="btnPill btn-outline" data-js="dmBtnNext">下一步：前台說明（選填）<i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+                            <button type="submit" class="btnPill btn-teal" data-js="dmBtnSubmit">儲存</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -892,6 +1057,65 @@
                     <div class="modal-footer">
                         <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
                         <button type="submit" class="btnPill btn-teal">儲存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增報修 modal（報修來源：中心；js/all.js 依觸發按鈕的 data-rp-no／data-rp-spec 帶入財產資訊） -->
+    <div class="modal fade" id="centerDeviceRepairModal" data-js="centerDeviceRepairModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="rpcTitle">
+        <div class="modal-dialog modal-dialog-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-head-text">
+                        <h2 id="rpcTitle" class="modal-title">新增報修</h2>
+                        <p class="modal-subtitle textNote">報修來源：中心</p>
+                    </div>
+                    <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <form novalidate data-js="centerDeviceRepairForm">
+                    <div class="modal-body">
+                        <div class="deviceInfo">
+                            <img class="deviceInfo-photo" src="../img/devices/cctv.jpg" alt="擴視機照片">
+                            <span class="deviceInfo-text">
+                                <span class="deviceInfo-title">擴視機</span>
+                                <span class="deviceInfo-sub" data-js="rpcSub">－</span>
+                            </span>
+                        </div>
+
+                        <div class="modal-body-section mt-5">
+                            <label for="rpcDesc" class="formField-label">損壞說明 <span class="formField-required">必填</span></label>
+                            <textarea id="rpcDesc" class="form-control" rows="3" placeholder="請描述狀況，例如：畫面無法對焦、開機後螢幕一直閃爍" required></textarea>
+                        </div>
+
+                        <div class="modal-body-section">
+                            <span id="rpcMediaLabel" class="formField-label">照片或影片</span>
+                            <input type="file" id="rpcMedia" class="fileUpload-input" multiple accept="image/*,video/*" aria-labelledby="rpcMediaLabel">
+                            <label for="rpcMedia" class="fileUpload fileUpload-lg">
+                                <i class="bi bi-camera fileUpload-icon" aria-hidden="true"></i>
+                                <span class="fileUpload-text">拍照或選擇檔案<span class="fileUpload-text-sub">JPG、PNG、MP4，最多 5 個</span></span>
+                            </label>
+                            <div class="fileUploadList" data-js="rpcFileList" hidden></div>
+                        </div>
+
+                        <div class="modal-body-section">
+                            <label for="rpcVendor" class="formField-label">指派廠商</label>
+                            <select id="rpcVendor" class="form-select">
+                                <option value="" selected>稍後指派</option>
+                                <option value="v1">○○醫療器材行</option>
+                                <option value="v2">○○輔具科技有限公司</option>
+                                <option value="v3">○○復健器材社</option>
+                            </select>
+                        </div>
+
+                        <p class="modal-foot-note">送出後會建立報修案件，可在「報修管理」查看進度。</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" class="btnPill btn-teal" data-js="centerDeviceRepairSubmit">送出報修</button>
                     </div>
                 </form>
             </div>

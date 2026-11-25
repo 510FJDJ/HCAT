@@ -1,0 +1,31 @@
+// ============================================================
+// 常見目標快速選取元件 GoalPicker（design.md §7.12／改版異動說明 §2.6）
+// 下拉選單選項直接帶入下方文字區塊，使用者可再編輯
+// ============================================================
+
+.goalPicker {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.goalPicker-select {
+    height: 48px;
+    border-radius: $border-radius-sm;
+    border: 2px solid $line-strong;
+    background-color: #F7FBFA;
+    padding: 0 14px;
+    font-size: 16px;
+    color: $ink-1;
+
+    &:focus {
+        border-color: $brand-teal;
+        box-shadow: 0 0 0 3px rgba(15, 127, 129, .18);
+    }
+}
+
+.goalPicker-hint {
+    font-size: 15px;
+    color: $ink-3;
+}

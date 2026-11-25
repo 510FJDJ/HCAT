@@ -1,0 +1,62 @@
+// ============================================================
+// 前台輔具詳情頁新增元件（改版異動說明 §10）：
+// 注意事項的琥珀圓點條列、相關文件卡片 grid
+// ============================================================
+
+// 注意事項：10px 琥珀圓點條列（design.md §7.5）
+.dotList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        position: relative;
+        padding-left: 24px;
+        margin-bottom: 10px;
+        font-size: 17px;
+        line-height: 1.7;
+        color: $ink-2;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: $accent-amber;
+        }
+    }
+
+    li:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// 使用說明桌面版分左右兩欄：左「功能介紹／操作步驟」、右「注意事項／清潔保養／配件清單」
+.articleBody-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 48px;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+        gap:32px;
+    }
+}
+
+.articleBody-col {
+    min-width: 0;
+}
+
+// 相關文件：多張 FileRow 併排成卡片 grid，取代單一附件下載列
+.docFileGrid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+    .fileRow {
+        margin-top: 0;
+    }
+}

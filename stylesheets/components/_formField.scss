@@ -39,16 +39,35 @@
     margin-bottom: 6px;
 }
 
+// 必填標籤（design.md §7.7，2026/11 改版：取代原星號樣式）
 .formField-required {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
     margin-left: 6px;
-    padding: 0px 4px;
+    padding: 0 8px;
+    gap: 4px;
     border-radius: 6px;
-    background-color: $state-required;
-    color: #FFFFFF;
-    font-size: 15px;
-    font-weight: 400;
+    background-color: $state-required-badge-bg;
+    color: $state-required-badge-ink;
+    font-size: 16px;
+    font-weight: 700;
     vertical-align: middle;
+}
+
+// 表單開頭的必填說明句：「標示〔必填〕的欄位一定要填寫。」，句中的「必填」直接套用 .formField-required（不重複定義樣式）
+.formIntro-required {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: $ink-2;
+
+    .formField-required {
+        margin-left: 0;
+    }
 }
 
 .formField-hint {

@@ -41,6 +41,16 @@
     }
 }
 
+// h3 為次級子標題：不疊加琥珀圓點（圓點只保留給 h2 區塊主標題），字級略小於 h2、改用品牌綠強調
+h3.articleBody-heading {
+    font-size: 18px;
+    color: $brand-teal-deep;
+
+    &::before {
+        content: none;
+    }
+}
+
 .articleBody-list {
     margin: 0 0 16px;
     padding-left: 0;

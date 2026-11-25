@@ -40,10 +40,10 @@
     }
 
     &-sm {
-        padding: 10px 24px;
+        padding: 10px 14px;
 
         @media (max-width: 720px) {
-            padding: 10px 16px;
+            padding: 10px 14px;
         }
     }
 
@@ -72,6 +72,34 @@
     &:focus-visible {
         background-color: $brand-teal-deep;
         border-color: $brand-teal-deep;
+        color: #FFFFFF;
+    }
+}
+
+// 申請紀錄上傳借用單（design.md §7.12／改版異動說明 §5）：與上傳簽核申請表、上傳歸還單明度不同，不只靠色相區分
+.btn-blue {
+    background-color: #1D5FA8;
+    color: #FFFFFF;
+    border-color: #1D5FA8;
+
+    &:hover,
+    &:focus-visible {
+        background-color: #174C87;
+        border-color: #174C87;
+        color: #FFFFFF;
+    }
+}
+
+// 申請紀錄上傳歸還單（改版異動說明 §5）
+.btn-purple {
+    background-color: #6A3FB0;
+    color: #FFFFFF;
+    border-color: #6A3FB0;
+
+    &:hover,
+    &:focus-visible {
+        background-color: #55318F;
+        border-color: #55318F;
         color: #FFFFFF;
     }
 }

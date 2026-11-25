@@ -5,9 +5,9 @@
 
 // 全頁淡綠底：main 用 .bg-green / .bg-green-bleed（見 stylesheets/components/_authShell.scss）
 
-// 表單頁內容最大寬度（design.md §4：表單頁內容最寬 1040px）
+// 表單頁內容最大寬度（design.md §4：2026/11 改版例外調整為 1320px，容納多項輔具卡片並排）
 .applyForm-container {
-    max-width: 1200px;
+    max-width: 1320px;
     margin: 40px auto 0;
     padding: 0 24px;
 
@@ -51,12 +51,6 @@
     flex-wrap: wrap;
 }
 
-.applyForm-sectionHead-itemName {
-    font-size: 16px;
-    font-weight: 500;
-    color: $ink-2;
-}
-
 .applyForm-sectionBody {
     display: flex;
     flex-direction: column;
@@ -64,36 +58,83 @@
     margin-top: 16px;
 }
 
+.applyForm-sectionDesc {
+    margin: 0;
+    font-size: 16px;
+    color: $ink-2;
+}
+
 // ------------------------------------------------------------
-// ② 選擇輔具：分類下拉＋輔具品項自訂下拉選單 並排
+// 區塊 2 學生基本資料：四組小標（身分與就學／障礙與鑑定／學籍異動＋家長聯絡）
 // ------------------------------------------------------------
-.applyForm-pickerRow {
+.applyForm-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 20px;
+    border-top: 1px solid $line-default;
+
+    &:first-child {
+        padding-top: 0;
+        border-top: none;
+    }
+}
+
+.applyForm-groupTitle {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+// 身分與就學：5 欄（學生姓名／身分證字號／年級／出生年月日／預計歸還日期）
+.applyForm-idGrid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px 18px;
+
+    @media (max-width: 1100px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+// 近期學籍異動（3fr）＋家長聯絡（2fr）同一列
+.applyForm-moveContactRow {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 20px 28px;
+    align-items: start;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// ------------------------------------------------------------
+// 區塊 3 學生狀況與教學目標：2 欄並排（gap 20/28）
+// ------------------------------------------------------------
+.applyForm-statusGoalGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 28px;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.applyForm-fieldHead {
     display: flex;
     align-items: flex-start;
-    gap: 16px;
-
-    @media (max-width: 720px) {
-        flex-direction: column;
-    }
-}
-
-.applyForm-pickerRow-cat {
-    flex: 0 0 220px;
-
-    // 對齊右側 .comboPicker-trigger 的 min-height:64px，讓兩個下拉同高
-    .form-select {
-        height: 64px;
-    }
-
-    @media (max-width: 720px) {
-        flex: 1 1 auto;
-        width: 100%;
-    }
-}
-
-.applyForm-pickerRow-item {
-    flex: 1 1 auto;
-    min-width: 0;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
 }
 
 // ------------------------------------------------------------
@@ -121,7 +162,7 @@
 .applyForm-earBox {
     padding: 16px 18px;
     border-radius: $border-radius-lg;
-    background-color: #F4F1FA;
+    background-color: white;
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -132,36 +173,6 @@
     font-size: 18px;
     font-weight: 700;
     color: #4B2E83;
-}
-
-// ------------------------------------------------------------
-// ④ 申請內容（免評估品項）：琥珀色方框
-// ------------------------------------------------------------
-.applyForm-freeBox {
-    padding: 20px 22px;
-    border-radius: $border-radius-lg;
-    background-color: $accent-amber-pale;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.applyForm-freeBox-head {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.applyForm-freeBox-name {
-    font-size: 18px;
-    font-weight: 700;
-    color: $ink-1;
-}
-
-.applyForm-freeBox-note {
-    font-size: 16px;
-    color: $accent-amber-ink-2;
 }
 
 // ------------------------------------------------------------

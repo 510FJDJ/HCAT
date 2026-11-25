@@ -40,7 +40,26 @@ $ink-separator: #8A979D; // 快速鍵之間的「+」連接符號（網站導覽
 $line-default: #E3E8E7;
 $line-strong:  #D5DCDA;
 $surface-card: #FFFFFF;
-$state-required: #C0292B; // 必填星號
+$state-required: #C0292B; // 僅供其他危險色用途（刪除、錯誤文字），必填標示改用下方專用變數（design.md §2.4）
+
+// ---- 必填標籤／逐項審核結果（design.md §2.4、§2.7，2026/11 改版新增，皆為獨立色票，不共用 $state-required）----
+$state-required-badge-bg:  #FBEAEA; // 必填標籤底
+$state-required-badge-ink: #A3262A; // 必填標籤字
+
+$state-approve-bg:   #E5F3EA;
+$state-approve-ink:  #1E6B3E;
+$state-approve-line: #2E8B57;
+
+$state-returnFix-bg:   #FDF3E4;
+$state-returnFix-ink:  #7A4705;
+$state-returnFix-line: #C77A12;
+
+$state-reject-bg:   #FBEAEA;
+$state-reject-ink:  #8E2224;
+$state-reject-line: #C0292B;
+
+$state-unselected-bg:  #EEF1F0;
+$state-unselected-ink: #56656B;
 
 // ---- 頁尾（深色底）文字（design.md §2.5）----
 $footer-text-primary:   #FFFFFF;

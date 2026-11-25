@@ -72,7 +72,7 @@
 
                     <div class="recordsFilters">
                         <div class="tabsCount" role="tablist" aria-label="依狀態檢視">
-                            <button type="button" class="tabsCount-item" role="tab" id="tab-rp-assign" data-category="assign" aria-selected="true" aria-controls="panel-rpList" tabindex="0">待指派<span class="tabsCount-badge" aria-hidden="true">3</span></button>
+                            <button type="button" class="tabsCount-item" role="tab" id="tab-rp-assign" data-category="assign" aria-selected="true" aria-controls="panel-rpList" tabindex="0">待指派<span class="tabsCount-badge" aria-hidden="true">4</span></button>
                             <button type="button" class="tabsCount-item" role="tab" id="tab-rp-fixing" data-category="fixing" aria-selected="false" aria-controls="panel-rpList" tabindex="-1">維修中<span class="tabsCount-badge" aria-hidden="true">2</span></button>
                             <button type="button" class="tabsCount-item" role="tab" id="tab-rp-report" data-category="report" aria-selected="false" aria-controls="panel-rpList" tabindex="-1">待結案（廠商已回報）<span class="tabsCount-badge" aria-hidden="true">2</span></button>
                             <button type="button" class="tabsCount-item" role="tab" id="tab-rp-closed" data-category="closed" aria-selected="false" aria-controls="panel-rpList" tabindex="-1">已結案<span class="tabsCount-badge" aria-hidden="true">1</span></button>
@@ -85,6 +85,14 @@
                                     <option value="115" selected>115 學年度</option>
                                     <option value="114">114 學年度</option>
                                     <option value="113">113 學年度</option>
+                                </select>
+                            </div>
+                            <div class="recordsFilters-field">
+                                <label for="rpSource">報修來源</label>
+                                <select id="rpSource" class="form-select">
+                                    <option value="all" selected>全部來源</option>
+                                    <option value="school">學校</option>
+                                    <option value="center">中心</option>
                                 </select>
                             </div>
                             <div class="recordsFilters-field">
@@ -118,7 +126,7 @@
                         </form>
                     </div>
 
-                    <p class="textNote">總筆數：8</p>
+                    <p class="textNote">總筆數：9</p>
 
                     <div role="tabpanel" id="panel-rpList" aria-labelledby="tab-rp-assign">
                         <p class="textNote py-6" data-js="emptyNote" hidden>這個分類目前沒有報修案件。</p>
@@ -130,7 +138,7 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">報修編號／日期</th>
-                                            <th scope="col">學校</th>
+                                            <th scope="col">報修來源</th>
                                             <th scope="col">輔具</th>
                                             <th scope="col">損壞說明</th>
                                             <th scope="col">維修廠商</th>
@@ -146,7 +154,12 @@
                                                     <span class="dataTable-cellTitle-sub">2026/10/12</span>
                                                 </span>
                                             </td>
-                                            <td data-label="學校">竹北國小</td>
+                                            <td data-label="報修來源">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="tagPill tag-greyPale">學校</span>
+                                                    <span>竹北國小</span>
+                                                </span>
+                                            </td>
                                             <td data-label="輔具">
                                                 <span class="dataTable-cellTitle">
                                                     <span class="dataTable-cellTitle-main">擴視機</span>
@@ -166,7 +179,7 @@
                                                     data-case="R1151012-007" data-date="2026/10/12" data-school="竹北國小" data-contact="王○○・03-5551234 #215"
                                                     data-device="擴視機" data-property="V-CCTV-0012" data-desc="畫面閃爍，放大 10 倍以上會黑畫面"
                                                     data-contacted="true" data-contact-vendor="○○輔具科技有限公司" data-contact-phone="02-2555-2222"
-                                                    data-media='[{"type":"image","src":"../img/devices/cctv.jpg","name":"擴視機 照片 1"},{"type":"image","src":"../img/devices/cctv.jpg","name":"擴視機 照片 2"}]'
+                                                    data-media='[{"type":"image","src":"../img/devices/repair-cctv-flicker-1.png","name":"擴視機 照片 1"},{"type":"image","src":"../img/devices/repair-cctv-flicker-2.png","name":"擴視機 照片 2"}]'
                                                     aria-label="指派廠商 R1151012-007">指派廠商</button>
                                             </td>
                                         </tr>
@@ -177,7 +190,12 @@
                                                     <span class="dataTable-cellTitle-sub">2026/10/20</span>
                                                 </span>
                                             </td>
-                                            <td data-label="學校">湖口國小</td>
+                                            <td data-label="報修來源">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="tagPill tag-greyPale">學校</span>
+                                                    <span>湖口國小</span>
+                                                </span>
+                                            </td>
                                             <td data-label="輔具">
                                                 <span class="dataTable-cellTitle">
                                                     <span class="dataTable-cellTitle-main">兒童輪椅</span>
@@ -192,7 +210,7 @@
                                                     data-case="R1151020-011" data-date="2026/10/20" data-school="湖口國小" data-contact="吳○○・03-5991234"
                                                     data-device="兒童輪椅" data-property="M-WC-0033" data-desc="右側煞車失靈，推動時偏向一邊"
                                                     data-contacted="false"
-                                                    data-media='[{"type":"image","src":"../img/devices/wheelchair.jpg","name":"兒童輪椅 照片"}]'
+                                                    data-media='[{"type":"image","src":"../img/devices/repair-wheelchair-brake.png","name":"兒童輪椅 照片"}]'
                                                     aria-label="指派廠商 R1151020-011">指派廠商</button>
                                             </td>
                                         </tr>
@@ -203,7 +221,12 @@
                                                     <span class="dataTable-cellTitle-sub">2026/10/22</span>
                                                 </span>
                                             </td>
-                                            <td data-label="學校">新豐國中</td>
+                                            <td data-label="報修來源">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="tagPill tag-greyPale">學校</span>
+                                                    <span>新豐國中</span>
+                                                </span>
+                                            </td>
                                             <td data-label="輔具">
                                                 <span class="dataTable-cellTitle">
                                                     <span class="dataTable-cellTitle-main">調頻輔聽系統</span>
@@ -218,8 +241,39 @@
                                                     data-case="R1151022-002" data-date="2026/10/22" data-school="新豐國中" data-contact="陳○○・03-5591234"
                                                     data-device="調頻輔聽系統" data-property="H-FM-0021" data-desc="接收器充電後仍無法開機"
                                                     data-contacted="false"
-                                                    data-media='[{"type":"image","src":"../img/devices/fm-system.jpg","name":"調頻輔聽系統 照片"}]'
+                                                    data-media='[{"type":"image","src":"../img/devices/repair-fm-system-no-power.png","name":"調頻輔聽系統 照片"}]'
                                                     aria-label="指派廠商 R1151022-002">指派廠商</button>
+                                            </td>
+                                        </tr>
+                                        <tr data-category="assign">
+                                            <td data-label="報修編號／日期">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">R1151124-013</span>
+                                                    <span class="dataTable-cellTitle-sub">2026/11/24</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="報修來源">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="tagPill tag-tealSolid">中心</span>
+                                                    <span>中心庫房</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="輔具">
+                                                <span class="dataTable-cellTitle">
+                                                    <span class="dataTable-cellTitle-main">擴視機</span>
+                                                    <span class="dataTable-cellTitle-sub">V-CCTV-0009</span>
+                                                </span>
+                                            </td>
+                                            <td data-label="損壞說明">開機後畫面偏黃，色彩不正常</td>
+                                            <td data-label="維修廠商"><span class="textAmberBold">尚未指派</span></td>
+                                            <td data-label="狀態"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待指派</span></td>
+                                            <td data-label="功能" class="dataTable-cellNext">
+                                                <button type="button" class="btnPill btn-teal btnPill-sm" data-js="repairAssign"
+                                                    data-case="R1151124-013" data-date="2026/11/24" data-school="中心庫房" data-contact="中心 王○○"
+                                                    data-device="擴視機" data-property="V-CCTV-0009" data-desc="開機後畫面偏黃，色彩不正常"
+                                                    data-contacted="false"
+                                                    data-media='[{"type":"image","src":"../img/devices/repair-cctv-yellow-tint.png","name":"擴視機 照片"}]'
+                                                    aria-label="指派廠商 R1151124-013">指派廠商</button>
                                             </td>
                                         </tr>
                                         <tr data-category="fixing" hidden>
@@ -229,7 +283,12 @@
                                                     <span class="dataTable-cellTitle-sub">2026/10/08</span>
                                                 </span>
                                             </td>
-                                            <td data-label="學校">橫山國小</td>
+                                            <td data-label="報修來源">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="tagPill tag-greyPale">學校</span>
+                                                    <span>橫山國小</span>
+                                                </span>
+                                            </td>
                                             <td data-label="輔具">
                                                 <span class="dataTable-cellTitle">
                                                     <span class="dataTable-cellTitle-main">語音溝通器</span>
@@ -244,7 +303,7 @@
                                                     data-case="R1151008-004" data-date="2026/10/08" data-school="橫山國小" data-contact="吳○○・03-5872111"
                                                     data-device="語音溝通器" data-property="C-AAC-0007" data-desc="第 3 排按鍵錄音後無聲"
                                                     data-vendor="○○醫療器材行" data-contacted="false" data-status="fixing"
-                                                    data-media='[{"type":"image","src":"../img/devices/aac-device.jpg","name":"語音溝通器 照片"}]'
+                                                    data-media='[{"type":"image","src":"../img/devices/repair-aac-row3-silent.png","name":"語音溝通器 照片"}]'
                                                     data-log='[{"date":"2026/10/10","text":"廠商開始維修"},{"date":"2026/10/08","text":"中心指派給○○醫療器材行"}]'
                                                     aria-label="查看 R1151008-004">查看</button>
                                             </td>
@@ -256,7 +315,12 @@
                                                     <span class="dataTable-cellTitle-sub">2026/10/01</span>
                                                 </span>
                                             </td>
-                                            <td data-label="學校">竹東國中</td>
+                                            <td data-label="報修來源">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="tagPill tag-greyPale">學校</span>
+                                                    <span>竹東國中</span>
+                                                </span>
+                                            </td>
                                             <td data-label="輔具">
                                                 <span class="dataTable-cellTitle">
                                                     <span class="dataTable-cellTitle-main">擴視機</span>
@@ -276,7 +340,7 @@
                                                     data-case="R1151001-015" data-date="2026/10/01" data-school="竹東國中" data-contact="林○○・03-5941234"
                                                     data-device="擴視機" data-property="V-CCTV-0007" data-desc="鏡頭無法對焦"
                                                     data-vendor="○○輔具科技有限公司" data-contacted="true" data-contact-vendor="○○輔具科技有限公司" data-contact-phone="03-5941200" data-status="fixing"
-                                                    data-media='[{"type":"image","src":"../img/devices/portable-cctv.jpg","name":"擴視機 照片"}]'
+                                                    data-media='[{"type":"image","src":"../img/devices/repair-cctv-focus-fail.png","name":"擴視機 照片"}]'
                                                     data-log='[{"date":"2026/10/03","text":"廠商開始維修"},{"date":"2026/10/01","text":"中心指派給○○輔具科技有限公司"}]'
                                                     aria-label="查看 R1151001-015">查看</button>
                                             </td>
@@ -288,7 +352,12 @@
                                                     <span class="dataTable-cellTitle-sub">2026/09/25</span>
                                                 </span>
                                             </td>
-                                            <td data-label="學校">北埔國小</td>
+                                            <td data-label="報修來源">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="tagPill tag-greyPale">學校</span>
+                                                    <span>北埔國小</span>
+                                                </span>
+                                            </td>
                                             <td data-label="輔具">
                                                 <span class="dataTable-cellTitle">
                                                     <span class="dataTable-cellTitle-main">助行器</span>
@@ -304,7 +373,7 @@
                                                     data-device="助行器" data-property="M-WK-0011" data-desc="前輪鬆脫"
                                                     data-vendor="○○復健器材社" data-contacted="false" data-status="report-ok"
                                                     data-report-date="2026/10/16" data-report-note="更換前輪軸承與固定螺絲，已交還學校並試用正常。"
-                                                    data-media='[{"type":"image","src":"../img/devices/walker.jpg","name":"助行器 照片"}]'
+                                                    data-media='[{"type":"image","src":"../img/devices/repair-walker-wheel-loose.png","name":"助行器 照片"}]'
                                                     aria-label="結案 R1150925-009">結案</button>
                                             </td>
                                         </tr>
@@ -315,7 +384,12 @@
                                                     <span class="dataTable-cellTitle-sub">2026/09/18</span>
                                                 </span>
                                             </td>
-                                            <td data-label="學校">關西國中</td>
+                                            <td data-label="報修來源">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="tagPill tag-greyPale">學校</span>
+                                                    <span>關西國中</span>
+                                                </span>
+                                            </td>
                                             <td data-label="輔具">
                                                 <span class="dataTable-cellTitle">
                                                     <span class="dataTable-cellTitle-main">擴視機</span>
@@ -331,7 +405,7 @@
                                                     data-device="擴視機" data-property="V-CCTV-0011" data-desc="電源板燒毀"
                                                     data-vendor="○○輔具科技有限公司" data-contacted="false" data-status="report-fail"
                                                     data-report-date="2026/10/24" data-report-note="電源板燒毀，原廠已停產零件，無法修復；建議報廢。"
-                                                    data-media='[{"type":"image","src":"../img/devices/magnifier.jpg","name":"擴視機 照片"}]'
+                                                    data-media='[{"type":"image","src":"../img/devices/repair-cctv-burnt-board.png","name":"擴視機 照片"}]'
                                                     aria-label="結案 R1150918-003">結案</button>
                                             </td>
                                         </tr>
@@ -342,7 +416,12 @@
                                                     <span class="dataTable-cellTitle-sub">2026/09/05</span>
                                                 </span>
                                             </td>
-                                            <td data-label="學校">峨眉國小</td>
+                                            <td data-label="報修來源">
+                                                <span class="dataTable-cellActions">
+                                                    <span class="tagPill tag-greyPale">學校</span>
+                                                    <span>峨眉國小</span>
+                                                </span>
+                                            </td>
                                             <td data-label="輔具">
                                                 <span class="dataTable-cellTitle">
                                                     <span class="dataTable-cellTitle-main">站立架</span>
@@ -358,7 +437,7 @@
                                                     data-device="站立架" data-property="M-ST-0004" data-desc="固定帶斷裂"
                                                     data-vendor="○○醫療器材行" data-contacted="false" data-status="closed"
                                                     data-report-date="2026/09/12" data-report-note="更換底座軸承並重新上油，測試穩固無鬆動。"
-                                                    data-media='[{"type":"image","src":"../img/devices/stander.jpg","name":"站立架 照片"}]'
+                                                    data-media='[{"type":"image","src":"../img/devices/repair-stander-strap-broken.png","name":"站立架 照片"}]'
                                                     data-log='[{"date":"2026/09/12","text":"廠商完成維修，財產已恢復借用中"},{"date":"2026/09/08","text":"廠商開始維修"},{"date":"2026/09/05","text":"中心指派給○○醫療器材行"}]'
                                                     aria-label="查看 R1150905-001">查看</button>
                                             </td>
@@ -370,7 +449,7 @@
 
                         <!-- 分頁為靜態示意（尚無真實分頁邏輯，現有樣本資料剛好一頁） -->
                         <nav class="pageNav mt-6" aria-label="分頁">
-                            <p class="pageNav-summary">顯示第 1 至 8 筆，共 8 筆資料</p>
+                            <p class="pageNav-summary">顯示第 1 至 9 筆，共 9 筆資料</p>
                             <ul class="pageNav-list">
                                 <li><span class="pageNav-item" aria-disabled="true" aria-label="第一頁"><i class="bi bi-chevron-bar-left" aria-hidden="true"></i></span></li>
                                 <li><span class="pageNav-item pageNav-item-label" aria-disabled="true" aria-describedby="rpPagePrevNote"><i class="bi bi-chevron-left" aria-hidden="true"></i>上一頁</span></li>

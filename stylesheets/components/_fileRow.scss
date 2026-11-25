@@ -38,6 +38,22 @@
     font-size: 20px;
 }
 
+// 副檔名徽章色（檢視／下載的 FileRow 依副檔名區分，改版異動說明 §2.7）
+.fileRow-icon-pdf {
+    background-color: #FBEAEA;
+    color: #8E2224;
+}
+
+.fileRow-icon-mp4 {
+    background-color: #E8F1FB;
+    color: #1D4F86;
+}
+
+.fileRow-icon-doc {
+    background-color: #E9F4F3;
+    color: #0B5557;
+}
+
 .fileRow-body {
     flex: 1;
     min-width: 0;
@@ -49,12 +65,14 @@
 .fileRow-name {
     font-size: 17px;
     font-weight: 700;
+    line-height: 1.3;
     color: $ink-1;
     overflow-wrap: anywhere;
 }
 
 .fileRow-meta {
     font-size: 15px;
+    line-height: 1.3;
     color: $ink-3;
 }
 
@@ -78,11 +96,12 @@
 // ---- 上傳檔案清單變體：右側為刪除鈕，不是連結箭頭 ----
 .fileRow-upload {
     cursor: default;
+    background-color: $state-unselected-bg;
 
     &:hover,
     &:focus-visible {
         border-color: $line-default;
-        background-color: transparent;
+        background-color: $state-unselected-bg;
     }
 }
 

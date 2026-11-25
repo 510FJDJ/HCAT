@@ -15,9 +15,10 @@
     max-width: 760px;
 }
 
-// 內容欄位較多的表單 modal（如最新消息新增／編輯）專用加寬變體，不影響其他頁面共用的 .modal-lg
+// 內容欄位較多的表單 modal（如最新消息新增／編輯、輔具品項 Stepper modal）專用加寬變體，不影響其他頁面共用的 .modal-lg
+// 2026/11 改版：900px → 980px，容納新版 Stepper 與輔具卡並排內容
 .modal-dialog.modal-dialog-xl {
-    max-width: 900px;
+    max-width: 980px;
 }
 
 .modal-content {

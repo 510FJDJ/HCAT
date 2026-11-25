@@ -1,0 +1,53 @@
+// ============================================================
+// 申請原因（勾選）元件 ReasonField（design.md §7.12／改版異動說明 §2.4）
+// 用於：輔具申請表、臨時借用申請；主選項沿用 .cardChoice，選「現有配置輔具」後展開子欄位
+// ============================================================
+
+.reasonField-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+// 主選項較精簡（單行文字、無說明），貼近 min-height 48、圓角 14
+.reasonField-option {
+    min-height: 48px;
+    padding: 12px 14px;
+    border-radius: 14px;
+}
+
+// 選「現有配置輔具」後展開的子欄位區塊
+.reasonField-expand {
+    margin-top: 4px;
+    padding: 16px 18px;
+    border-radius: 16px;
+    background-color: #F7FBFA;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.reasonField-subGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.reasonField-subOption {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+}
+
+.reasonField-subOption-input {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    accent-color: $brand-teal;
+}
+
+.reasonField-subOption-label {
+    font-size: 16px;
+    color: $ink-1;
+}

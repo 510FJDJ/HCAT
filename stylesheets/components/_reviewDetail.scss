@@ -209,6 +209,89 @@
     }
 }
 
+// 單項輔具審核卡（§9.2）：取代原單一 deviceSpecRow，每項輔具各自一張，內含規格列＋逐項決定
+.reviewDetail-itemCard {
+    padding: 20px 22px;
+    border-radius: $border-radius-lg;
+    border: 2px solid $line-default;
+
+    & + & {
+        margin-top: 16px;
+    }
+
+    @media (max-width: 720px) {
+        padding: 16px 18px;
+    }
+}
+
+.reviewDetail-itemCard-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+// 卡片外框顏色跟著該項目前的審核決定（design.md §2.7），尚未選擇維持預設 $line-default 框線
+.reviewDetail-itemCard-approve {
+    border-color: $state-approve-line;
+}
+
+.reviewDetail-itemCard-returnFix {
+    border-color: $state-returnFix-line;
+}
+
+.reviewDetail-itemCard-reject {
+    border-color: $state-reject-line;
+}
+
+// 逐項決定區：與規格列用框線隔開，內含精簡版三選一卡片（.cardChoice-compact）
+.reviewDetail-itemDecision {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid $line-default;
+}
+
+.reviewDetail-itemDecision-legend {
+    display: block;
+    margin: 0 0 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+// 選擇核准／退回補件／不通過後才展開的對應欄位（財產編號與到期日／原因說明）
+.reviewDetail-itemFields {
+    margin-top: 12px;
+    padding: 16px 18px;
+    border-radius: $border-radius-md;
+    background-color: $surface-tint;
+}
+
+// 側邊欄逐項審核摘要（§9.3）：每項輔具一列，名稱＋目前決定標籤
+.reviewDetail-summaryList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reviewDetail-summaryRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: $border-radius-md;
+    background-color: $surface-tint;
+}
+
+.reviewDetail-summaryRow-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: $ink-1;
+    overflow-wrap: anywhere;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .reviewDetail-footerLink {
         transition: none;

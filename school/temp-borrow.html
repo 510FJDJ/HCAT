@@ -72,65 +72,203 @@
             <div class="applyForm-container">
                 <form class="applyForm" id="tempBorrowForm" novalidate>
 
-                    <!-- ① 選擇中心現有輔具 -->
-                    <section class="applyForm-section cardPanel" aria-labelledby="tp-sel">
-                        <div class="flex-row-between flex-wrap">
-                            <h2 id="tp-sel" class="applyForm-sectionHead"><span class="cardNumbered-num-sm" aria-hidden="true">1</span>選擇中心現有輔具</h2>
-                            <span class="applyForm-stockTime">庫存更新：<span>2026/10/29 08:00</span></span>
-                        </div>
-                        <div class="applyForm-sectionBody">
-                            <div class="comboPicker">
-                                <label for="pickerTrigger" class="formField-label">輔具品項 <span class="formField-required">必填</span></label>
-                                <button type="button" id="pickerTrigger" class="comboPicker-trigger" aria-expanded="false" aria-controls="pickerPanel" data-js="picker-trigger">
-                                    <img class="comboPicker-thumb" data-js="picker-thumb-img" src="../img/devices/wheelchair.jpg" alt="" hidden>
-                                    <span class="comboPicker-thumb-empty" data-js="picker-thumb-empty" aria-hidden="true"></span>
-                                    <span class="comboPicker-selected">
-                                        <span class="comboPicker-selected-placeholder" data-js="picker-name">請選擇</span>
-                                        <span class="tagPill tag-greenLight" data-js="picker-tag" hidden></span>
-                                        <span class="comboPicker-selected-cat" data-js="picker-cat-label" hidden></span>
-                                    </span>
-                                    <span class="comboPicker-chevron" aria-hidden="true"><i class="bi bi-chevron-down"></i></span>
-                                </button>
-
-                                <div id="pickerPanel" class="comboPicker-panel" data-js="picker-panel" hidden>
-                                    <div class="comboPicker-search">
-                                        <span class="comboPicker-search-icon" aria-hidden="true"><i class="bi bi-search"></i></span>
-                                        <input type="search" id="pickerSearch" class="comboPicker-search-input" placeholder="輸入輔具名稱搜尋" autocomplete="off" data-js="picker-search">
-                                    </div>
-                                    <ul class="comboPicker-list" aria-label="中心現有輔具" id="pickerList" data-js="picker-list"></ul>
-                                </div>
-                                <p class="formField-error" data-js="pickerError" hidden></p>
-                            </div>
-                            <p class="formField-hint">只列出中心目前在庫、開放臨時借用的輔具。需要的輔具不在清單中，請等待下次申請期間。</p>
-                        </div>
-                    </section>
-
-                    <!-- ② 學生資料 -->
+                    <!-- ① 學生基本資料 -->
                     <section class="applyForm-section cardPanel" aria-labelledby="tp-student">
-                        <h2 id="tp-student" class="applyForm-sectionHead"><span class="cardNumbered-num-sm" aria-hidden="true">2</span>學生資料</h2>
+                        <h2 id="tp-student" class="applyForm-sectionHead"><span class="cardNumbered-num-sm" aria-hidden="true">1</span>學生基本資料</h2>
+                        <p class="applyForm-sectionDesc">依「新竹縣身心障礙學生學習輔具需求評估及借用申請表」欄位填寫。</p>
                         <div class="applyForm-sectionBody">
-                            <div class="formGrid formGrid-cols4">
-                                <div>
-                                    <label for="stName" class="formField-label">學生姓名 <span class="formField-required">必填</span></label>
-                                    <input type="text" id="stName" class="form-control" placeholder="例：林小安" required>
+
+                            <!-- ① 身分與就學 -->
+                            <div class="applyForm-group">
+                                <h3 class="applyForm-groupTitle">① 身分與就學</h3>
+                                <div class="formGrid formGrid-cols4">
+                                    <div>
+                                        <label for="stName" class="formField-label">學生姓名 <span class="formField-required">必填</span></label>
+                                        <input type="text" id="stName" class="form-control" placeholder="例：林小安" required>
+                                    </div>
+                                    <div>
+                                        <label for="stId" class="formField-label">身分證字號 <span class="formField-required">必填</span></label>
+                                        <input type="text" id="stId" class="form-control" maxlength="10" autocomplete="off" placeholder="例：J123456789" style="text-transform:uppercase" required>
+                                    </div>
+                                    <div>
+                                        <label for="stGrade" class="formField-label">年級 <span class="formField-required">必填</span></label>
+                                        <select id="stGrade" class="form-select" required>
+                                            <option value="" selected disabled>請選擇</option>
+                                            <optgroup label="幼兒園"><option>幼幼班</option><option>小班</option><option>中班</option><option>大班</option></optgroup>
+                                            <optgroup label="國小"><option>一年級</option><option>二年級</option><option>三年級</option><option>四年級</option><option>五年級</option><option>六年級</option></optgroup>
+                                            <optgroup label="國中"><option>七年級</option><option>八年級</option><option>九年級</option></optgroup>
+                                            <optgroup label="高中職"><option>高一</option><option>高二</option><option>高三</option></optgroup>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="stBday" class="formField-label">出生年月日</label>
+                                        <input type="date" id="stBday" class="form-control">
+                                    </div>
                                 </div>
+
                                 <div>
-                                    <label for="stId" class="formField-label">身分證字號 <span class="formField-required">必填</span></label>
-                                    <input type="text" id="stId" class="form-control" maxlength="10" autocomplete="off" placeholder="例：J123456789" style="text-transform:uppercase" required>
+                                    <span class="formField-label">班別 <span class="formField-required">必填</span></span>
+                                    <div class="d-flex align-items-start gap-3 flex-wrap mt-2">
+                                        <fieldset class="cardChoice-group cardChoice-group-row flex-grow-1">
+                                            <legend class="sr-only">班別</legend>
+                                            <label class="cardChoice cardChoice-plain" data-js="class-card">
+                                                <input type="radio" name="stClassType" value="regular" class="cardChoice-input" data-js="class-radio" required>
+                                                <span class="cardChoice-text"><span class="cardChoice-title">普通班（含資源班、巡迴班）</span></span>
+                                            </label>
+                                            <label class="cardChoice cardChoice-plain" data-js="class-card">
+                                                <input type="radio" name="stClassType" value="special" class="cardChoice-input" data-js="class-radio">
+                                                <span class="cardChoice-text"><span class="cardChoice-title">特教班</span></span>
+                                            </label>
+                                            <label class="cardChoice cardChoice-plain" data-js="class-card">
+                                                <input type="radio" name="stClassType" value="home" class="cardChoice-input" data-js="class-radio">
+                                                <span class="cardChoice-text"><span class="cardChoice-title">在家教育</span></span>
+                                            </label>
+                                            <label class="cardChoice cardChoice-plain" data-js="class-card">
+                                                <input type="radio" name="stClassType" value="other" class="cardChoice-input" data-js="class-radio">
+                                                <span class="cardChoice-text"><span class="cardChoice-title">其他</span></span>
+                                            </label>
+                                        </fieldset>
+                                        <div data-js="class-other-wrap" hidden style="width:220px">
+                                            <label for="stClassOther" class="sr-only">其他班別</label>
+                                            <input type="text" id="stClassOther" class="form-control" placeholder="例：巡迴輔導班">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label for="stGrade" class="formField-label">年級 <span class="formField-required">必填</span></label>
-                                    <select id="stGrade" class="form-select" required>
-                                        <option value="" selected disabled>請選擇</option>
-                                        <optgroup label="幼兒園"><option>小班</option><option>中班</option><option>大班</option></optgroup>
-                                        <optgroup label="國小"><option>一年級</option><option>二年級</option><option>三年級</option><option>四年級</option><option>五年級</option><option>六年級</option></optgroup>
-                                        <optgroup label="國中"><option>七年級</option><option>八年級</option><option>九年級</option></optgroup>
-                                        <optgroup label="高中職"><option>高一</option><option>高二</option><option>高三</option></optgroup>
-                                    </select>
+                            </div>
+
+                            <!-- ② 障礙與鑑定 -->
+                            <div class="applyForm-group">
+                                <h3 class="applyForm-groupTitle">② 障礙與鑑定</h3>
+                                <div class="formGrid">
+                                    <div>
+                                        <label for="stDcat" class="formField-label">障礙類別</label>
+                                        <select id="stDcat" class="form-select">
+                                            <option value="" selected disabled>請選擇</option>
+                                            <option>智能障礙</option>
+                                            <option>視覺障礙</option>
+                                            <option>聽覺障礙</option>
+                                            <option>語言障礙</option>
+                                            <option>肢體障礙</option>
+                                            <option>腦性麻痺</option>
+                                            <option>身體病弱</option>
+                                            <option>情緒行為障礙</option>
+                                            <option>學習障礙</option>
+                                            <option>多重障礙</option>
+                                            <option>自閉症</option>
+                                            <option>發展遲緩</option>
+                                            <option>其他障礙</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="stDoc" class="formField-label">鑑定安置文號及日期</label>
+                                        <input type="text" id="stDoc" class="form-control" placeholder="例：府教特字第 1150001234 號（115/03/15）">
+                                        <p class="formField-hint">無鑑定史的學生，請填此次鑑定個案包編號。</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label for="stClass" class="formField-label">班級 <span class="formField-required">必填</span></label>
-                                    <input type="text" id="stClass" class="form-control" placeholder="例：甲班、資源班" required>
+
+                                <div class="formGrid">
+                                    <div>
+                                        <span class="formField-label">障礙程度</span>
+                                        <fieldset class="cardChoice-group cardChoice-group-row mt-2">
+                                            <legend class="sr-only">障礙程度</legend>
+                                            <label class="cardChoice cardChoice-plain" data-js="dlv-card">
+                                                <input type="radio" name="stDlv" value="mild" class="cardChoice-input" data-js="dlv-radio">
+                                                <span class="cardChoice-text"><span class="cardChoice-title">輕度</span></span>
+                                            </label>
+                                            <label class="cardChoice cardChoice-plain" data-js="dlv-card">
+                                                <input type="radio" name="stDlv" value="moderate" class="cardChoice-input" data-js="dlv-radio">
+                                                <span class="cardChoice-text"><span class="cardChoice-title">中度</span></span>
+                                            </label>
+                                            <label class="cardChoice cardChoice-plain" data-js="dlv-card">
+                                                <input type="radio" name="stDlv" value="severe" class="cardChoice-input" data-js="dlv-radio">
+                                                <span class="cardChoice-text"><span class="cardChoice-title">重度</span></span>
+                                            </label>
+                                            <label class="cardChoice cardChoice-plain" data-js="dlv-card">
+                                                <input type="radio" name="stDlv" value="extreme" class="cardChoice-input" data-js="dlv-radio">
+                                                <span class="cardChoice-text"><span class="cardChoice-title">極重度</span></span>
+                                            </label>
+                                        </fieldset>
+                                    </div>
+                                    <div>
+                                        <span class="formField-label">身障證明影本 <span class="fw-normal">（選填，正反面）</span></span>
+                                        <input type="file" id="disFile" class="fileUpload-input" multiple accept="image/*,.pdf">
+                                        <label for="disFile" class="fileUpload mt-2" style="max-width:420px">
+                                            <i class="bi bi-upload fileUpload-icon" aria-hidden="true"></i>上傳身障證明（JPG、PNG、PDF）
+                                        </label>
+                                        <p class="formField-hint" data-js="dis-file-empty">未選擇任何檔案</p>
+                                        <div class="fileUploadList" data-js="dis-file-list" hidden></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ③ 近期學籍異動＋④ 家長聯絡 -->
+                            <div class="applyForm-group">
+                                <div class="applyForm-moveContactRow">
+                                    <fieldset>
+                                        <legend class="applyForm-groupTitle">③ 近期學籍異動（半年內） <span class="formField-required">必填</span></legend>
+                                        <div class="cardChoice-group cardChoice-group-row mt-2">
+                                            <label class="cardChoice cardChoice-plain" data-js="mv-card">
+                                                <input type="radio" name="mv" value="none" class="cardChoice-input" data-js="mv-radio" required>
+                                                <span class="cardChoice-text"><span class="cardChoice-title">無</span></span>
+                                            </label>
+                                            <label class="cardChoice cardChoice-plain" data-js="mv-card">
+                                                <input type="radio" name="mv" value="local" class="cardChoice-input" data-js="mv-radio">
+                                                <span class="cardChoice-text"><span class="cardChoice-title">預計轉學或升學至本縣學校</span></span>
+                                            </label>
+                                            <label class="cardChoice cardChoice-plain" data-js="mv-card">
+                                                <input type="radio" name="mv" value="other" class="cardChoice-input" data-js="mv-radio">
+                                                <span class="cardChoice-text"><span class="cardChoice-title">預計轉學或升學至外縣市學校</span></span>
+                                            </label>
+                                        </div>
+
+                                        <div class="applyForm-moveFields cardChoice-sub" data-js="mv-local" hidden>
+                                            <div style="max-width:420px">
+                                                <label for="mvSchoolLocal" class="formField-label">校名 <span class="formField-required">必填</span></label>
+                                                <input type="text" id="mvSchoolLocal" class="form-control" list="hsinchuSchools" autocomplete="off" placeholder="例：新竹市立光華國中" required>
+                                            </div>
+                                        </div>
+                                        <div class="applyForm-moveFields cardChoice-sub" data-js="mv-other" hidden>
+                                            <div class="formGrid formGrid-narrowWide" style="max-width:620px">
+                                                <div>
+                                                    <label for="mvCity" class="formField-label">縣市 <span class="formField-required">必填</span></label>
+                                                    <select id="mvCity" class="form-select" required>
+                                                        <option value="" selected disabled>請選擇</option>
+                                                        <option>新竹市</option>
+                                                        <option>桃園市</option>
+                                                        <option>苗栗縣</option>
+                                                        <option>其他</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label for="mvOschool" class="formField-label">校名 <span class="formField-required">必填</span></label>
+                                                    <input type="text" id="mvOschool" class="form-control" placeholder="例：新竹市立光華國中" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="formField-hint">讓中心評估借用期間。實際轉學時，再由「借用中輔具」提報轉銜續借或歸還。</p>
+                                        <datalist id="hsinchuSchools">
+                                            <option value="竹北市 博愛國小"></option>
+                                            <option value="竹北市 東海國小"></option>
+                                            <option value="竹北市 十興國小"></option>
+                                            <option value="竹東鎮 竹東國小"></option>
+                                            <option value="湖口鄉 湖口國小"></option>
+                                            <option value="新豐鄉 新豐國小"></option>
+                                        </datalist>
+                                    </fieldset>
+
+                                    <div>
+                                        <span class="applyForm-groupTitle">④ 家長聯絡</span>
+                                        <div class="formGrid mt-2">
+                                            <div>
+                                                <label for="stPname" class="formField-label">家長姓名</label>
+                                                <input type="text" id="stPname" class="form-control" placeholder="例：林大明">
+                                            </div>
+                                            <div>
+                                                <label for="stPtel" class="formField-label">家長電話</label>
+                                                <input type="tel" id="stPtel" class="form-control" placeholder="例：0912-345-678">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -141,9 +279,189 @@
                         </div>
                     </section>
 
-                    <!-- ③ 借用需求 -->
+                    <!-- ② 學生狀況與教學目標 -->
+                    <section class="applyForm-section cardPanel" aria-labelledby="tp-status">
+                        <h2 id="tp-status" class="applyForm-sectionHead"><span class="cardNumbered-num-sm" aria-hidden="true">2</span>學生狀況與教學目標</h2>
+                        <div class="applyForm-sectionBody">
+                            <div class="applyForm-statusGoalGrid">
+                                <div>
+                                    <div class="applyForm-fieldHead">
+                                        <label for="stStatus" class="formField-label mb-0">目前學生狀況及建議使用原因 <span class="formField-required">必填</span></label>
+                                        <button type="button" class="voiceInputBtn" aria-pressed="false" data-js="voice-btn" data-voice-target="stStatus">
+                                            <i class="bi bi-mic" aria-hidden="true"></i>語音輸入
+                                        </button>
+                                    </div>
+                                    <textarea id="stStatus" class="form-control" rows="4" placeholder="例：學生目前使用助行器，建議使用拐杖訓練" required></textarea>
+                                    <p class="voiceInputStatus" role="status" data-js="voice-status" data-voice-status-for="stStatus" hidden>
+                                        <span class="voiceInputStatus-dot" aria-hidden="true"></span>
+                                        錄音中，說完後再按一次「停止」，文字會加到輸入框最後面。
+                                    </p>
+                                </div>
+                                <div>
+                                    <div class="applyForm-fieldHead">
+                                        <label for="stGoal" class="formField-label mb-0">預期教學目標 <span class="formField-required">必填</span></label>
+                                        <button type="button" class="voiceInputBtn" aria-pressed="false" data-js="voice-btn" data-voice-target="stGoal">
+                                            <i class="bi bi-mic" aria-hidden="true"></i>語音輸入
+                                        </button>
+                                    </div>
+                                    <div class="goalPicker">
+                                        <label for="stGoalSelect" class="sr-only">選擇常用目標帶入</label>
+                                        <select id="stGoalSelect" class="form-select goalPicker-select" data-js="goal-select" data-goal-target="stGoal">
+                                            <option value="" selected>選擇常用目標帶入（可多選幾次）</option>
+                                            <option>能維持正確坐姿，專心參與課堂活動 20 分鐘以上</option>
+                                            <option>能使用輔具在校園內獨立完成短距離移動</option>
+                                            <option>漸進改用較少支持的輔具（例：由助行器改用拐杖）</option>
+                                            <option>能獨立閱讀課本、學習單等一般字體教材</option>
+                                            <option>能在一般教室中聽清楚教師指令並參與討論</option>
+                                            <option>能使用溝通輔具表達基本需求與想法</option>
+                                            <option>能使用電腦輔具獨立完成作業與資訊課活動</option>
+                                            <option>能在協助下完成站立訓練，每日累計 30 分鐘</option>
+                                        </select>
+                                        <p class="goalPicker-hint">選單帶入的文字可以再修改。</p>
+                                    </div>
+                                    <textarea id="stGoal" class="form-control" rows="2" placeholder="例：漸進改用拐杖" required></textarea>
+                                    <p class="voiceInputStatus" role="status" data-js="voice-status" data-voice-status-for="stGoal" hidden>
+                                        <span class="voiceInputStatus-dot" aria-hidden="true"></span>
+                                        錄音中，說完後再按一次「停止」，文字會加到輸入框最後面。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <fieldset>
+                                <legend class="formField-label">輔具使用頻率 <span class="formField-required">必填</span></legend>
+                                <div class="cardChoice-group cardChoice-group-row mt-2">
+                                    <label class="cardChoice cardChoice-plain" data-js="freq-card">
+                                        <input type="radio" name="useFreq" value="often" class="cardChoice-input" data-js="freq-radio" required>
+                                        <span class="cardChoice-text"><span class="cardChoice-title">經常</span></span>
+                                    </label>
+                                    <label class="cardChoice cardChoice-plain" data-js="freq-card">
+                                        <input type="radio" name="useFreq" value="sometimes" class="cardChoice-input" data-js="freq-radio">
+                                        <span class="cardChoice-text"><span class="cardChoice-title">偶爾</span></span>
+                                    </label>
+                                    <label class="cardChoice cardChoice-plain" data-js="freq-card">
+                                        <input type="radio" name="useFreq" value="rare" class="cardChoice-input" data-js="freq-radio">
+                                        <span class="cardChoice-text"><span class="cardChoice-title">很少</span></span>
+                                    </label>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </section>
+
+                    <!-- ③ 選擇中心現有輔具（多項） -->
+                    <section class="applyForm-section cardPanel" aria-labelledby="tp-sel" data-js="section-devices">
+                        <div class="deviceSection-head">
+                            <div class="deviceSection-head-main">
+                                <h2 id="tp-sel" class="applyForm-sectionHead"><span class="cardNumbered-num-sm" aria-hidden="true">3</span>選擇中心現有輔具</h2>
+                                <span class="deviceSection-count" data-js="device-count">共 1 項</span>
+                            </div>
+                            <div class="deviceSection-actions">
+                                <button type="button" class="btnPill btn-secondary" data-js="collapse-all-btn" aria-label="全部收合" hidden>全部收合</button>
+                                <button type="button" class="btnPill btn-amberSolid deviceSection-addBtn" data-js="add-device-btn">
+                                    <span class="deviceSection-addBtn-icon" aria-hidden="true"><i class="bi bi-plus-lg"></i></span>
+                                    新增輔具
+                                </button>
+                            </div>
+                        </div>
+                        <p class="applyForm-sectionDesc">只列出中心目前在庫、開放臨時借用的輔具（庫存更新：2026/10/29 08:00）。需要的輔具不在清單中，請等待下次申請期間。</p>
+
+                        <ul class="deviceCard-list" data-js="device-list">
+                            <li class="deviceCard" data-js="device-card" id="dc1">
+                                <div class="deviceCard-head">
+                                    <h3>
+                                        <button type="button" class="deviceCard-toggle" aria-expanded="true" aria-controls="dc1Body" data-js="device-toggle">
+                                            <span class="deviceCard-collapseBtn" aria-hidden="true"><i class="bi bi-chevron-down"></i></span>
+                                            <span class="deviceCard-num" data-js="device-num">輔具 1</span>
+                                            <span class="deviceCard-name deviceCard-name-placeholder" data-js="device-name">尚未選擇輔具</span>
+                                            <span class="deviceCard-status deviceCard-status-progress" data-js="device-status">填寫中</span>
+                                        </button>
+                                    </h3>
+                                    <button type="button" class="deviceCard-removeBtn" data-js="device-remove" aria-label="移除輔具 1" hidden>
+                                        <i class="bi bi-trash3" aria-hidden="true"></i>移除
+                                    </button>
+                                </div>
+                                <p class="deviceCard-summary" data-js="device-summary" hidden></p>
+
+                                <div class="deviceCard-body" id="dc1Body" data-js="device-body">
+                                    <div class="deviceCard-pickRow">
+                                        <div class="deviceCard-pickRow-cat">
+                                            <label for="dc1Cat" class="formField-label">輔具分類</label>
+                                            <select id="dc1Cat" class="form-select" data-js="dc-cat">
+                                                <option value="all">全部分類</option>
+                                                <option value="vision">視障輔具</option>
+                                                <option value="mobility">行動與擺位輔具</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="deviceCard-pickRow-item comboPicker" data-js="dc-pickerWrap">
+                                            <label for="dc1PickerTrigger" class="formField-label">輔具品項 <span class="formField-required">必填</span></label>
+                                            <button type="button" id="dc1PickerTrigger" class="comboPicker-trigger" aria-expanded="false" aria-controls="dc1PickerPanel" data-js="dc-pickerTrigger">
+                                                <img class="comboPicker-thumb" data-js="dc-pickerThumbImg" src="../img/devices/wheelchair.jpg" alt="" hidden>
+                                                <span class="comboPicker-thumb-empty" data-js="dc-pickerThumbEmpty" aria-hidden="true"></span>
+                                                <span class="comboPicker-selected">
+                                                    <span class="comboPicker-selected-placeholder" data-js="dc-pickerName">請選擇</span>
+                                                    <span class="tagPill tag-greenLight" data-js="dc-pickerTag" hidden></span>
+                                                    <span class="comboPicker-selected-cat" data-js="dc-pickerCatLabel" hidden></span>
+                                                </span>
+                                                <span class="comboPicker-chevron" aria-hidden="true"><i class="bi bi-chevron-down"></i></span>
+                                            </button>
+
+                                            <div id="dc1PickerPanel" class="comboPicker-panel" data-js="dc-pickerPanel" hidden>
+                                                <div class="comboPicker-search">
+                                                    <span class="comboPicker-search-icon" aria-hidden="true"><i class="bi bi-search"></i></span>
+                                                    <input type="search" id="dc1PickerSearch" class="comboPicker-search-input" placeholder="輸入輔具名稱搜尋" autocomplete="off" data-js="dc-pickerSearch">
+                                                </div>
+                                                <ul class="comboPicker-list" aria-label="中心現有輔具" id="dc1PickerList" data-js="dc-pickerList"></ul>
+                                            </div>
+                                            <p class="formField-error" data-js="dc-pickerError" hidden></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="formGrid">
+                                        <div>
+                                            <label for="dc1Spec" class="formField-label">相關配備或規格</label>
+                                            <textarea id="dc1Spec" class="form-control" rows="4" placeholder="例：仰躺式"></textarea>
+                                            <p class="formField-hint">請治療師協助填寫；無治療師的學校，可具體說明輔具特徵</p>
+                                        </div>
+                                        <div data-js="dc-reason-student">
+                                            <span class="formField-label">申請原因 <span class="formField-required">必填</span></span>
+                                            <fieldset class="reasonField-options">
+                                                <legend class="sr-only">申請原因</legend>
+                                                <label class="cardChoice reasonField-option" data-js="dc-reason-card">
+                                                    <input type="radio" name="dc1Reason" value="existing" class="cardChoice-input" data-js="dc-reason-radio" required>
+                                                    <span class="cardChoice-text"><span class="cardChoice-title">現有配置輔具</span></span>
+                                                </label>
+                                                <label class="cardChoice reasonField-option" data-js="dc-reason-card">
+                                                    <input type="radio" name="dc1Reason" value="new" class="cardChoice-input" data-js="dc-reason-radio">
+                                                    <span class="cardChoice-text"><span class="cardChoice-title">尚未有此項輔具，需要評估適用性</span></span>
+                                                </label>
+                                            </fieldset>
+
+                                            <div class="reasonField-expand" data-js="dc-reason-expand" hidden>
+                                                <div>
+                                                    <label for="dc1ReasonName" class="formField-label">現有配置輔具名稱 <span class="formField-required">必填</span></label>
+                                                    <input type="text" id="dc1ReasonName" class="form-control" placeholder="例：助行器" required>
+                                                </div>
+                                                <fieldset class="reasonField-subGroup" role="radiogroup" aria-label="現有輔具狀況" data-js="dc-reason-sub">
+                                                    <label class="reasonField-subOption">
+                                                        <input type="radio" name="dc1ReasonSub" value="add" class="reasonField-subOption-input" data-js="dc-reason-sub-radio" required>
+                                                        <span class="reasonField-subOption-label">目前的輔具可以使用，需要額外增添輔具</span>
+                                                    </label>
+                                                    <label class="reasonField-subOption">
+                                                        <input type="radio" name="dc1ReasonSub" value="replace" class="reasonField-subOption-input" data-js="dc-reason-sub-radio">
+                                                        <span class="reasonField-subOption-label">目前的輔具不適合使用，需要更換</span>
+                                                    </label>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <!-- ④ 借用需求 -->
                     <section class="applyForm-section cardPanel" aria-labelledby="tp-need">
-                        <h2 id="tp-need" class="applyForm-sectionHead"><span class="cardNumbered-num-sm" aria-hidden="true">3</span>借用需求</h2>
+                        <h2 id="tp-need" class="applyForm-sectionHead"><span class="cardNumbered-num-sm" aria-hidden="true">4</span>借用需求</h2>
                         <div class="applyForm-sectionBody">
                             <div class="formGrid formGrid-cols2">
                                 <div>
@@ -156,7 +474,7 @@
                                     <p class="formField-hint">臨時借用最長到本學期結束</p>
                                 </div>
                                 <div class="formGrid-span2">
-                                    <label for="tpWhy" class="formField-label">需求原因 <span class="formField-required">必填</span></label>
+                                    <label for="tpWhy" class="formField-label">臨時借用原因 <span class="formField-required">必填</span></label>
                                     <textarea id="tpWhy" class="form-control" rows="3" placeholder="例：學生術後暫時無法行走，需要輪椅在校內移動，預計使用到期末" required></textarea>
                                 </div>
                             </div>

@@ -805,75 +805,32 @@
         return null;
     }
 
-    // 輔具品項尚未選擇時，trigger 顯示「請選擇」；選了具體分類後顯示「請選擇ＯＯ輔具（N）」
-    function pickerPlaceholderText() {
-        if (state.cat === 'all') { return '請選擇'; }
+    function pickerPlaceholderText(cat) {
+        if (cat === 'all') { return '請選擇'; }
         var count = 0;
         for (var i = 0; i < IT.length; i++) {
-            if (IT[i].cat === state.cat) { count++; }
+            if (IT[i].cat === cat) { count++; }
         }
-        return '請選擇' + CATS[state.cat] + '（' + count + '）';
+        return '請選擇' + CATS[cat] + '（' + count + '）';
     }
 
-    var state = {
-        use: 'student',
-        itemId: null,
-        ev: 'ther',
-        dis: 'yes',
-        mv: 'none',
-        cat: 'all',
-        q: '',
-        pickOpen: false
-    };
-
-    function q(name) { return form.querySelector('[data-js="' + name + '"]'); }
-    function qa(name) { return form.querySelectorAll('[data-js="' + name + '"]'); }
-
-    var el = {
-        schoolUseNotice: q('schooluse-notice'),
-        pickerCat: q('picker-cat'),
-        pickerTrigger: q('picker-trigger'),
-        pickerThumbImg: q('picker-thumb-img'),
-        pickerThumbEmpty: q('picker-thumb-empty'),
-        pickerName: q('picker-name'),
-        pickerTag: q('picker-tag'),
-        pickerCatLabel: q('picker-cat-label'),
-        pickerPanel: q('picker-panel'),
-        pickerSearch: q('picker-search'),
-        pickerList: q('picker-list'),
-        pickerRestock: q('picker-restock'),
-        pickerRestockName: q('picker-restock-name'),
-        pickerError: q('pickerError'),
-        sectionStudent: q('section-student'),
-        selBadge: q('sel-badge'),
-        sectionHearing: q('section-hearing'),
-        hearingBadge: q('hearing-badge'),
-        disDetail: q('dis-detail'),
-        mvLocal: q('mv-local'),
-        mvOther: q('mv-other'),
-        mvStage: q('mv-stage'),
-        mvSchool: q('mv-school'),
-        detBadge: q('det-badge'),
-        detItemNameWrap: q('det-item-name-wrap'),
-        detItemName: q('det-item-name'),
-        detEmptyHint: q('det-empty-hint'),
-        detGeneral: q('det-general'),
-        detHearing: q('det-hearing'),
-        detFree: q('det-free'),
-        freeName: q('free-name'),
-        freeFieldWrap: q('free-field-wrap'),
-        freeFieldLabel: q('free-field-label'),
-        freeFieldInput: q('free-field-input'),
-        sectionEval: q('section-eval'),
-        evalBadge: q('eval-badge'),
-        evTherapist: q('ev-therapist'),
-        evCenter: q('ev-center'),
-        submitBtn: q('submit-btn')
-    };
+    function q(root, name) { return root.querySelector('[data-js="' + name + '"]'); }
+    function qa(root, name) { return Array.prototype.slice.call(root.querySelectorAll('[data-js="' + name + '"]')); }
 
     // 條件區塊隱藏時，裡面的 required 欄位仍會被瀏覽器當成必填（hidden 不會自動排除原生驗證），
-    // 所以要在每次 render() 依目前是否被祖先隱藏動態開關 required，避免 checkValidity() 卡在看不到的欄位上
+    // 所以要動態開關 required；輔具卡可以新增/移除，用陣列持續追蹤而不是一次性 querySelectorAll 的快照
     var requiredFields = Array.prototype.slice.call(form.querySelectorAll('[required]'));
+
+    function registerRequired(root) {
+        Array.prototype.slice.call(root.querySelectorAll('[required]')).forEach(function (f) {
+            if (requiredFields.indexOf(f) === -1) { requiredFields.push(f); }
+        });
+    }
+
+    function unregisterRequired(root) {
+        var within = Array.prototype.slice.call(root.querySelectorAll('[required]'));
+        requiredFields = requiredFields.filter(function (f) { return within.indexOf(f) === -1; });
+    }
 
     function isHiddenInForm(node) {
         while (node && node !== form) {
@@ -883,304 +840,58 @@
         return false;
     }
 
-    // ------------------------------------------------------------
-    // 主要內容渲染：依目前 state 切換所有條件區塊的顯示與文字
-    // ------------------------------------------------------------
-    function render() {
-        var cur = state.itemId ? findItem(state.itemId) : null;
-
-        // 校內使用只能選免評估品項，切到校內使用時若目前品項不是免評估，改選第一個免評估品項
-        if (state.use === 'school' && cur && cur.kind !== 'free') {
-            state.itemId = 'tcctv';
-            cur = findItem(state.itemId);
-        }
-
-        if (el.schoolUseNotice) { el.schoolUseNotice.hidden = state.use !== 'school'; }
-
-        if (cur) {
-            if (cur.photo) {
-                if (el.pickerThumbImg) {
-                    el.pickerThumbImg.src = '../' + cur.photo;
-                    el.pickerThumbImg.hidden = false;
-                }
-                if (el.pickerThumbEmpty) { el.pickerThumbEmpty.hidden = true; }
-            } else {
-                if (el.pickerThumbImg) { el.pickerThumbImg.hidden = true; }
-                if (el.pickerThumbEmpty) { el.pickerThumbEmpty.hidden = false; }
-            }
-            if (el.pickerName) {
-                el.pickerName.textContent = cur.name;
-                el.pickerName.className = 'comboPicker-selected-name';
-            }
-            if (el.pickerTag) {
-                var tag = TAGS[cur.kind];
-                el.pickerTag.textContent = tag.text;
-                el.pickerTag.className = tag.cls;
-                el.pickerTag.hidden = false;
-            }
-            if (el.pickerCatLabel) {
-                el.pickerCatLabel.textContent = CATS[cur.cat];
-                el.pickerCatLabel.hidden = false;
-            }
-
-            var isRestock = cur.stock === 0 && state.use === 'student';
-            if (el.pickerRestock) { el.pickerRestock.hidden = !isRestock; }
-            if (isRestock && el.pickerRestockName) {
-                el.pickerRestockName.textContent = '「' + cur.name + '」目前沒有可借庫存，送出後會列為增購需求';
-            }
-            if (el.pickerError) { el.pickerError.hidden = true; }
-        } else {
-            if (el.pickerThumbImg) { el.pickerThumbImg.hidden = true; }
-            if (el.pickerThumbEmpty) { el.pickerThumbEmpty.hidden = false; }
-            if (el.pickerName) {
-                el.pickerName.textContent = pickerPlaceholderText();
-                el.pickerName.className = 'comboPicker-selected-placeholder';
-            }
-            if (el.pickerTag) { el.pickerTag.hidden = true; }
-            if (el.pickerCatLabel) { el.pickerCatLabel.hidden = true; }
-            if (el.pickerRestock) { el.pickerRestock.hidden = true; }
-        }
-
-        var isHearing = !!cur && cur.kind === 'hearing';
-        var nSel = state.use === 'student' ? 3 : 2;
-        var nHearing = nSel + 1;
-        var nDet = isHearing ? nHearing + 1 : nHearing;
-        var nEv = nDet + 1;
-        if (el.selBadge) { el.selBadge.textContent = String(nSel); }
-        if (el.hearingBadge) { el.hearingBadge.textContent = String(nHearing); }
-        if (el.detBadge) { el.detBadge.textContent = String(nDet); }
-        if (el.evalBadge) { el.evalBadge.textContent = String(nEv); }
-
-        if (el.detItemNameWrap) { el.detItemNameWrap.hidden = !cur; }
-        if (cur && el.detItemName) { el.detItemName.textContent = cur.name; }
-        if (el.detEmptyHint) { el.detEmptyHint.hidden = !!cur; }
-
-        if (el.sectionStudent) { el.sectionStudent.hidden = state.use !== 'student'; }
-        if (el.sectionHearing) { el.sectionHearing.hidden = !isHearing; }
-
-        if (el.detGeneral) { el.detGeneral.hidden = !cur || cur.kind !== 'general'; }
-        if (el.detHearing) { el.detHearing.hidden = !cur || cur.kind !== 'hearing'; }
-        if (el.detFree) { el.detFree.hidden = !cur || cur.kind !== 'free'; }
-
-        if (cur && cur.kind === 'free') {
-            if (el.freeName) { el.freeName.textContent = cur.name; }
-            var hasField = !!cur.field;
-            if (el.freeFieldWrap) { el.freeFieldWrap.hidden = !hasField; }
-            if (hasField) {
-                if (el.freeFieldLabel) { el.freeFieldLabel.textContent = cur.field; }
-                if (el.freeFieldInput) { el.freeFieldInput.placeholder = cur.ph || ''; }
-            }
-        }
-
-        if (el.sectionEval) { el.sectionEval.hidden = !cur || cur.kind !== 'general'; }
-        if (el.evTherapist) { el.evTherapist.hidden = state.ev !== 'ther'; }
-        if (el.evCenter) { el.evCenter.hidden = state.ev !== 'center'; }
-
-        if (el.disDetail) { el.disDetail.hidden = state.dis !== 'yes'; }
-        if (el.mvLocal) { el.mvLocal.hidden = state.mv !== 'local'; }
-        if (el.mvOther) { el.mvOther.hidden = state.mv !== 'other'; }
-
+    function syncRequiredVisibility() {
         requiredFields.forEach(function (f) {
             f.required = !isHiddenInForm(f);
         });
-
-        renderPickerList();
     }
 
     // ------------------------------------------------------------
-    // 輔具品項下拉清單：依分類與關鍵字過濾、依分類分組渲染
+    // 卡片式單選群組：切換 .is-selected 外觀並同步呼叫方自訂的 onChange
     // ------------------------------------------------------------
-    function renderPickerList() {
-        if (!el.pickerList) { return; }
-
-        var kw = state.q.trim();
-        var filtered = IT.filter(function (item) {
-            if (state.cat !== 'all' && item.cat !== state.cat) { return false; }
-            if (kw && item.name.indexOf(kw) === -1) { return false; }
-            return true;
-        });
-
-        el.pickerList.innerHTML = '';
-
-        if (filtered.length === 0) {
-            var empty = document.createElement('li');
-            empty.className = 'comboPicker-empty';
-            empty.textContent = '找不到符合的輔具品項';
-            el.pickerList.appendChild(empty);
-            return;
-        }
-
-        var order = [];
-        var groups = {};
-        filtered.forEach(function (item) {
-            if (!groups[item.cat]) {
-                groups[item.cat] = [];
-                order.push(item.cat);
-            }
-            groups[item.cat].push(item);
-        });
-
-        order.forEach(function (catKey) {
-            var groupLi = document.createElement('li');
-            groupLi.className = 'comboPicker-groupList';
-
-            var label = document.createElement('p');
-            label.className = 'comboPicker-groupLabel';
-            label.textContent = CATS[catKey];
-            groupLi.appendChild(label);
-
-            var ul = document.createElement('ul');
-
-            groups[catKey].forEach(function (item) {
-                var disabled = state.use === 'school' && item.kind !== 'free';
-
-                var li = document.createElement('li');
-                var btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = 'comboPicker-item';
-                btn.setAttribute('aria-pressed', item.id === state.itemId ? 'true' : 'false');
-                if (disabled) { btn.setAttribute('aria-disabled', 'true'); }
-
-                if (item.photo) {
-                    var img = document.createElement('img');
-                    img.className = 'comboPicker-item-thumb';
-                    img.src = '../' + item.photo;
-                    img.alt = '';
-                    btn.appendChild(img);
-                } else {
-                    var emptyThumb = document.createElement('span');
-                    emptyThumb.className = 'comboPicker-item-thumb-empty';
-                    emptyThumb.setAttribute('aria-hidden', 'true');
-                    btn.appendChild(emptyThumb);
-                }
-
-                var nameSpan = document.createElement('span');
-                nameSpan.className = 'comboPicker-item-name';
-                nameSpan.textContent = item.name;
-                btn.appendChild(nameSpan);
-
-                var itemTag = TAGS[item.kind];
-                var tagSpan = document.createElement('span');
-                tagSpan.className = itemTag.cls;
-                tagSpan.textContent = itemTag.text;
-                btn.appendChild(tagSpan);
-
-                btn.addEventListener('click', function () {
-                    if (disabled) { return; }
-                    state.itemId = item.id;
-                    closePicker();
-                    el.pickerTrigger.focus();
-                    render();
-                });
-
-                li.appendChild(btn);
-                ul.appendChild(li);
-            });
-
-            groupLi.appendChild(ul);
-            el.pickerList.appendChild(groupLi);
-        });
-    }
-
-    // ------------------------------------------------------------
-    // 輔具品項下拉開關（比照 js/main.js 的 initNavDropdown 模式）
-    // ------------------------------------------------------------
-    function openPicker() {
-        state.pickOpen = true;
-        if (el.pickerTrigger) { el.pickerTrigger.setAttribute('aria-expanded', 'true'); }
-        if (el.pickerPanel) { el.pickerPanel.hidden = false; }
-    }
-
-    function closePicker() {
-        state.pickOpen = false;
-        if (el.pickerTrigger) { el.pickerTrigger.setAttribute('aria-expanded', 'false'); }
-        if (el.pickerPanel) { el.pickerPanel.hidden = true; }
-    }
-
-    if (el.pickerTrigger) {
-        el.pickerTrigger.addEventListener('click', function () {
-            if (state.pickOpen) { closePicker(); } else { openPicker(); }
-        });
-    }
-
-    document.addEventListener('click', function (e) {
-        if (!state.pickOpen) { return; }
-        if (e.target.closest('[data-js="picker-trigger"]') || e.target.closest('[data-js="picker-panel"]')) { return; }
-        closePicker();
-    });
-
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && state.pickOpen) {
-            closePicker();
-            if (el.pickerTrigger) { el.pickerTrigger.focus(); }
-        }
-    });
-
-    if (el.pickerCat) {
-        el.pickerCat.addEventListener('change', function () {
-            state.cat = el.pickerCat.value;
-            state.itemId = null;
-            render();
-        });
-    }
-
-    if (el.pickerSearch) {
-        el.pickerSearch.addEventListener('input', function () {
-            state.q = el.pickerSearch.value;
-            renderPickerList();
-        });
-    }
-
-    // ------------------------------------------------------------
-    // 卡片式單選群組：切換 .is-selected 外觀並同步 state
-    // ------------------------------------------------------------
-    function wireCardGroup(radioName, cardName, onChange) {
-        qa(radioName).forEach(function (radio) {
+    function wireCardGroup(root, radioName, cardName, onChange) {
+        qa(root, radioName).forEach(function (radio) {
             radio.addEventListener('change', function () {
-                qa(cardName).forEach(function (card) { card.classList.remove('is-selected'); });
+                qa(root, cardName).forEach(function (card) { card.classList.remove('is-selected'); });
                 var label = radio.closest('label');
                 if (label) { label.classList.add('is-selected'); }
-                onChange(radio.value);
-                render();
+                if (onChange) { onChange(radio.value); }
             });
         });
     }
 
-    wireCardGroup('use-radio', 'use-card', function (v) { state.use = v; });
-    wireCardGroup('ev-radio', 'ev-card', function (v) { state.ev = v; });
-    wireCardGroup('mv-radio', 'mv-card', function (v) { state.mv = v; });
+    var pageState = { use: 'student' };
 
-    // 轉入本縣學校：依學制篩選學校清單（比照「借用中輔具」轉銜續借 modal 的作法）
-    var MV_STAGE_LABEL = { k: '幼兒園', e: '國小', j: '國中', h: '高中職' };
-    var MV_STAGE_SCHOOLS = {
-        k: ['竹北市 竹北國小附設幼兒園', '竹東鎮 竹東國小附設幼兒園', '湖口鄉 湖口國小附設幼兒園', '縣立 竹北幼兒園'],
-        e: ['竹北市 博愛國小', '竹北市 東海國小', '竹北市 十興國小', '竹東鎮 竹東國小', '湖口鄉 湖口國小', '新豐鄉 新豐國小'],
-        j: ['竹北市 竹北國中', '竹北市 博愛國中', '竹東鎮 竹東國中', '新豐鄉 新豐國中'],
-        h: ['縣立 湖口高中', '縣立 竹北高中', '縣立 六家高中']
-    };
-
-    function renderMvSchoolOptions(stage) {
-        if (!stage) {
-            el.mvSchool.innerHTML = '<option value="" selected disabled>請先選擇學制</option>';
-            return;
-        }
-        var options = MV_STAGE_SCHOOLS[stage] || [];
-        var html = '<option value="" selected disabled>請選擇' + MV_STAGE_LABEL[stage] + '</option>';
-        options.forEach(function (name) { html += '<option>' + name + '</option>'; });
-        el.mvSchool.innerHTML = html;
-    }
-
-    if (el.mvStage && el.mvSchool) {
-        renderMvSchoolOptions(el.mvStage.value);
-        el.mvStage.addEventListener('change', function () { renderMvSchoolOptions(el.mvStage.value); });
-    }
-
-    qa('dis-radio').forEach(function (radio) {
-        radio.addEventListener('change', function () {
-            state.dis = radio.value;
-            render();
-        });
+    wireCardGroup(form, 'use-radio', 'use-card', function (v) {
+        pageState.use = v;
+        renderPage();
     });
+
+    wireCardGroup(form, 'ev-radio', 'ev-card', function (v) {
+        var evTherapist = q(form, 'ev-therapist');
+        var evCenter = q(form, 'ev-center');
+        if (evTherapist) { evTherapist.hidden = v !== 'ther'; }
+        if (evCenter) { evCenter.hidden = v !== 'center'; }
+        syncRequiredVisibility();
+    });
+
+    wireCardGroup(form, 'class-radio', 'class-card', function (v) {
+        var wrap = q(form, 'class-other-wrap');
+        if (wrap) { wrap.hidden = v !== 'other'; }
+        syncRequiredVisibility();
+    });
+
+    wireCardGroup(form, 'mv-radio', 'mv-card', function (v) {
+        var mvLocal = q(form, 'mv-local');
+        var mvOther = q(form, 'mv-other');
+        if (mvLocal) { mvLocal.hidden = v !== 'local'; }
+        if (mvOther) { mvOther.hidden = v !== 'other'; }
+        syncRequiredVisibility();
+    });
+
+    // 障礙程度、輔具使用頻率：純卡片式單選，沒有連動邏輯，只需要 .is-selected 外觀
+    wireCardGroup(form, 'dlv-radio', 'dlv-card', null);
+    wireCardGroup(form, 'freq-radio', 'freq-card', null);
 
     // ------------------------------------------------------------
     // 檔案上傳：點擊或拖曳皆可選檔，上傳後顯示可刪除的檔案列表（fileRow 外型）
@@ -1242,7 +953,8 @@
     }
 
     // multiple 為 false 時，新選取或拖曳的檔案會取代現有檔案（input 本身沒有 multiple 屬性）
-    function wireFileUpload(label, input, listEl, multiple) {
+    // emptyHintEl 為選填：有檔案時隱藏、沒有檔案時顯示（例：身障證明影本的「未選擇任何檔案」提示）
+    function wireFileUpload(label, input, listEl, multiple, emptyHintEl) {
         if (!label || !input || !listEl) { return; }
         var files = [];
 
@@ -1255,6 +967,7 @@
         function renderList() {
             listEl.innerHTML = '';
             listEl.hidden = files.length === 0;
+            if (emptyHintEl) { emptyHintEl.hidden = files.length > 0; }
             files.forEach(function (file, i) {
                 listEl.appendChild(createFileRow(file, function () {
                     files.splice(i, 1);
@@ -1292,9 +1005,699 @@
         });
     }
 
-    wireFileUpload(document.querySelector('label[for="evFile"]'), document.getElementById('evFile'), q('ev-file-list'), true);
-    wireFileUpload(document.querySelector('label[for="disFile"]'), document.getElementById('disFile'), q('dis-file-list'), true);
-    wireFileUpload(document.querySelector('label[for="hrFile"]'), document.getElementById('hrFile'), q('hr-file-list'), false);
+    wireFileUpload(
+        document.querySelector('label[for="disFile"]'),
+        document.getElementById('disFile'),
+        q(form, 'dis-file-list'),
+        true,
+        q(form, 'dis-file-empty')
+    );
+
+    // ------------------------------------------------------------
+    // 語音輸入：不支援 Web Speech API 的瀏覽器改用 aria-disabled + aria-describedby 說明原因
+    // ------------------------------------------------------------
+    (function initVoiceInput() {
+        var Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        var buttons = qa(form, 'voice-btn');
+
+        if (!Recognition) {
+            buttons.forEach(function (btn) {
+                btn.setAttribute('aria-disabled', 'true');
+                var hint = document.createElement('span');
+                hint.id = btn.getAttribute('data-voice-target') + 'VoiceUnsupported';
+                hint.className = 'sr-only';
+                hint.textContent = '此瀏覽器不支援語音輸入';
+                btn.insertAdjacentElement('afterend', hint);
+                btn.setAttribute('aria-describedby', hint.id);
+            });
+            return;
+        }
+
+        buttons.forEach(function (btn) {
+            var targetId = btn.getAttribute('data-voice-target');
+            var target = document.getElementById(targetId);
+            var statusEl = form.querySelector('[data-voice-status-for="' + targetId + '"]');
+            if (!target) { return; }
+
+            var recognizer = new Recognition();
+            recognizer.lang = 'zh-TW';
+            recognizer.interimResults = false;
+            recognizer.continuous = true;
+            var listening = false;
+
+            recognizer.addEventListener('result', function (e) {
+                var transcript = '';
+                for (var i = e.resultIndex; i < e.results.length; i++) {
+                    transcript += e.results[i][0].transcript;
+                }
+                if (transcript) {
+                    target.value = target.value ? target.value + transcript : transcript;
+                    target.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+            });
+
+            recognizer.addEventListener('end', function () {
+                listening = false;
+                btn.setAttribute('aria-pressed', 'false');
+                if (statusEl) { statusEl.hidden = true; }
+            });
+
+            btn.addEventListener('click', function () {
+                if (listening) {
+                    recognizer.stop();
+                    return;
+                }
+                listening = true;
+                btn.setAttribute('aria-pressed', 'true');
+                if (statusEl) { statusEl.hidden = false; }
+                recognizer.start();
+            });
+        });
+    })();
+
+    // ------------------------------------------------------------
+    // 常見目標快速選取：選單選項帶入文字區塊，可重複選取多次累加
+    // ------------------------------------------------------------
+    (function initGoalPicker() {
+        qa(form, 'goal-select').forEach(function (sel) {
+            sel.addEventListener('change', function () {
+                var val = sel.value;
+                if (!val) { return; }
+                var target = document.getElementById(sel.getAttribute('data-goal-target'));
+                if (target) {
+                    target.value = target.value.trim() ? target.value.replace(/\s*$/, '') + '；' + val : val;
+                    target.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+                sel.selectedIndex = 0;
+            });
+        });
+    })();
+
+    // ============================================================
+    // 申請輔具（多項）：每張輔具卡各自維護品項選擇、分類、申請原因等狀態
+    // ============================================================
+    var deviceList = q(form, 'device-list');
+    var templateLi = deviceList.querySelector('[data-js="device-card"]');
+    var cards = [];
+    var nextUid = 1;
+    var openPickerCard = null;
+    var evalRows = {};
+    var evalListRoot = q(form, 'eval-upload-list');
+    if (evalListRoot) { evalListRoot.innerHTML = ''; }
+
+    function buildCardEntry(li, uid) {
+        var el = {
+            toggleBtn: q(li, 'device-toggle'),
+            numSpan: q(li, 'device-num'),
+            nameSpan: q(li, 'device-name'),
+            statusSpan: q(li, 'device-status'),
+            removeBtn: q(li, 'device-remove'),
+            summaryP: q(li, 'device-summary'),
+            bodyDiv: q(li, 'device-body'),
+            catSelect: q(li, 'dc-cat'),
+            pickerWrap: q(li, 'dc-pickerWrap'),
+            pickerTrigger: q(li, 'dc-pickerTrigger'),
+            pickerThumbImg: q(li, 'dc-pickerThumbImg'),
+            pickerThumbEmpty: q(li, 'dc-pickerThumbEmpty'),
+            pickerName: q(li, 'dc-pickerName'),
+            pickerTag: q(li, 'dc-pickerTag'),
+            pickerCatLabel: q(li, 'dc-pickerCatLabel'),
+            pickerPanel: q(li, 'dc-pickerPanel'),
+            pickerSearch: q(li, 'dc-pickerSearch'),
+            pickerList: q(li, 'dc-pickerList'),
+            pickerError: q(li, 'dc-pickerError'),
+            hintGeneral: q(li, 'dc-hint-general'),
+            hintFree: q(li, 'dc-hint-free'),
+            restock: q(li, 'dc-restock'),
+            restockName: q(li, 'dc-restock-name'),
+            reasonStudentWrap: q(li, 'dc-reason-student'),
+            reasonSchoolWrap: q(li, 'dc-reason-school'),
+            reasonExpand: q(li, 'dc-reason-expand'),
+            freeFields: q(li, 'dc-free-fields'),
+            freeSizeWrap: q(li, 'dc-free-size-wrap'),
+            freeSizeLabel: q(li, 'dc-free-size-label'),
+            freeSizeInput: q(li, 'dc-free-size-input'),
+            hearingFields: q(li, 'dc-hearing-fields'),
+            hrFileInput: li.querySelector('#dc' + uid + 'HrFile'),
+            hrFileList: q(li, 'dc-hr-file-list')
+        };
+        el.hrFileLabel = el.hrFileInput ? li.querySelector('label[for="' + el.hrFileInput.id + '"]') : null;
+
+        return {
+            li: li,
+            uid: uid,
+            el: el,
+            state: { uid: uid, itemId: null, cat: 'all', q: '', pickOpen: false, reason: null }
+        };
+    }
+
+    function openCardPicker(c) {
+        if (openPickerCard && openPickerCard !== c) { closeCardPicker(openPickerCard); }
+        c.state.pickOpen = true;
+        if (c.el.pickerTrigger) { c.el.pickerTrigger.setAttribute('aria-expanded', 'true'); }
+        if (c.el.pickerPanel) { c.el.pickerPanel.hidden = false; }
+        if (c.el.pickerWrap) { c.el.pickerWrap.classList.add('is-open'); }
+        openPickerCard = c;
+        renderPickerList(c);
+    }
+
+    function closeCardPicker(c) {
+        c.state.pickOpen = false;
+        if (c.el.pickerTrigger) { c.el.pickerTrigger.setAttribute('aria-expanded', 'false'); }
+        if (c.el.pickerPanel) { c.el.pickerPanel.hidden = true; }
+        if (c.el.pickerWrap) { c.el.pickerWrap.classList.remove('is-open'); }
+        if (openPickerCard === c) { openPickerCard = null; }
+    }
+
+    document.addEventListener('click', function (e) {
+        if (!openPickerCard) { return; }
+        var c = openPickerCard;
+        if (c.el.pickerTrigger && e.target.closest('[data-js="dc-pickerTrigger"]') === c.el.pickerTrigger) { return; }
+        if (c.el.pickerPanel && c.el.pickerPanel.contains(e.target)) { return; }
+        closeCardPicker(c);
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && openPickerCard) {
+            var c = openPickerCard;
+            closeCardPicker(c);
+            if (c.el.pickerTrigger) { c.el.pickerTrigger.focus(); }
+        }
+    });
+
+    // ------------------------------------------------------------
+    // 單張輔具卡渲染：依卡片自身 state 與 pageState.use 切換所有條件區塊
+    // ------------------------------------------------------------
+    function renderCard(c) {
+        var cur = c.state.itemId ? findItem(c.state.itemId) : null;
+
+        // 校內使用只能選免評估輔具，切到校內使用時若目前品項不是免評估，清空讓使用者重新選
+        if (pageState.use === 'school' && cur && cur.kind !== 'free') {
+            c.state.itemId = null;
+            cur = null;
+        }
+
+        if (cur) {
+            if (cur.photo) {
+                if (c.el.pickerThumbImg) { c.el.pickerThumbImg.src = '../' + cur.photo; c.el.pickerThumbImg.hidden = false; }
+                if (c.el.pickerThumbEmpty) { c.el.pickerThumbEmpty.hidden = true; }
+            } else {
+                if (c.el.pickerThumbImg) { c.el.pickerThumbImg.hidden = true; }
+                if (c.el.pickerThumbEmpty) { c.el.pickerThumbEmpty.hidden = false; }
+            }
+            if (c.el.pickerName) {
+                c.el.pickerName.textContent = cur.name;
+                c.el.pickerName.className = 'comboPicker-selected-name';
+            }
+            if (c.el.pickerTag) {
+                var tag = TAGS[cur.kind];
+                c.el.pickerTag.textContent = tag.text;
+                c.el.pickerTag.className = tag.cls;
+                c.el.pickerTag.hidden = false;
+            }
+            if (c.el.pickerCatLabel) {
+                c.el.pickerCatLabel.textContent = CATS[cur.cat];
+                c.el.pickerCatLabel.hidden = false;
+            }
+
+            var isRestock = cur.stock === 0 && pageState.use === 'student';
+            if (c.el.restock) { c.el.restock.hidden = !isRestock; }
+            if (isRestock && c.el.restockName) {
+                c.el.restockName.textContent = '「' + cur.name + '」目前沒有可借庫存，送出後會列為增購需求';
+            }
+            if (c.el.pickerError) { c.el.pickerError.hidden = true; }
+        } else {
+            if (c.el.pickerThumbImg) { c.el.pickerThumbImg.hidden = true; }
+            if (c.el.pickerThumbEmpty) { c.el.pickerThumbEmpty.hidden = false; }
+            if (c.el.pickerName) {
+                c.el.pickerName.textContent = pickerPlaceholderText(c.state.cat);
+                c.el.pickerName.className = 'comboPicker-selected-placeholder';
+            }
+            if (c.el.pickerTag) { c.el.pickerTag.hidden = true; }
+            if (c.el.pickerCatLabel) { c.el.pickerCatLabel.hidden = true; }
+            if (c.el.restock) { c.el.restock.hidden = true; }
+        }
+
+        var isHearing = !!cur && cur.kind === 'hearing';
+        var isFree = !!cur && cur.kind === 'free';
+        var isGeneral = !!cur && cur.kind === 'general';
+
+        if (c.el.hintGeneral) { c.el.hintGeneral.hidden = !isGeneral; }
+        if (c.el.hintFree) { c.el.hintFree.hidden = !isFree; }
+        if (c.el.hearingFields) { c.el.hearingFields.hidden = !isHearing; }
+
+        if (c.el.freeFields) { c.el.freeFields.hidden = !isFree; }
+        if (isFree) {
+            var hasField = !!cur.field;
+            if (c.el.freeSizeWrap) { c.el.freeSizeWrap.hidden = !hasField; }
+            if (hasField) {
+                if (c.el.freeSizeLabel) { c.el.freeSizeLabel.textContent = cur.field; }
+                if (c.el.freeSizeInput) { c.el.freeSizeInput.placeholder = cur.ph || ''; }
+            }
+        }
+
+        var isSchool = pageState.use === 'school';
+        if (c.el.reasonSchoolWrap) { c.el.reasonSchoolWrap.hidden = !isSchool; }
+        if (c.el.reasonStudentWrap) { c.el.reasonStudentWrap.hidden = isSchool; }
+        if (!isSchool && c.el.reasonExpand) { c.el.reasonExpand.hidden = c.state.reason !== 'existing'; }
+
+        if (c.el.nameSpan) {
+            c.el.nameSpan.textContent = cur ? cur.name : '尚未選擇輔具';
+            c.el.nameSpan.classList.toggle('deviceCard-name-placeholder', !cur);
+        }
+
+        syncRequiredVisibility();
+        updateCardStatus(c);
+    }
+
+    function isCardComplete(c) {
+        if (!c.state.itemId) { return false; }
+        var fields = Array.prototype.slice.call(c.li.querySelectorAll('[required]'));
+        for (var i = 0; i < fields.length; i++) {
+            var f = fields[i];
+            if (isHiddenInForm(f)) { continue; }
+            if (f.type === 'radio') {
+                var group = c.li.querySelectorAll('input[name="' + f.name + '"]');
+                if (!Array.prototype.some.call(group, function (r) { return r.checked; })) { return false; }
+            } else if (f.type === 'checkbox') {
+                if (!f.checked) { return false; }
+            } else if (f.type === 'file') {
+                if (!f.files || f.files.length === 0) { return false; }
+            } else if (!f.value || !f.value.trim()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function updateCardStatus(c) {
+        var complete = isCardComplete(c);
+        if (c.el.statusSpan) {
+            c.el.statusSpan.textContent = complete ? '已完成' : '填寫中';
+            c.el.statusSpan.className = complete ? 'deviceCard-status deviceCard-status-done' : 'deviceCard-status deviceCard-status-progress';
+        }
+        if (c.el.summaryP) {
+            var collapsed = c.el.bodyDiv && c.el.bodyDiv.hidden;
+            var cur = c.state.itemId ? findItem(c.state.itemId) : null;
+            if (collapsed && cur) {
+                c.el.summaryP.hidden = false;
+                c.el.summaryP.textContent = CATS[cur.cat] + '．' + cur.name;
+            } else {
+                c.el.summaryP.hidden = true;
+            }
+        }
+    }
+
+    function setCardExpanded(c, expanded) {
+        if (c.el.toggleBtn) { c.el.toggleBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false'); }
+        if (c.el.bodyDiv) { c.el.bodyDiv.hidden = !expanded; }
+        updateCardStatus(c);
+    }
+
+    // ------------------------------------------------------------
+    // 輔具品項下拉清單：依分類與關鍵字過濾、依分類分組渲染（每張卡片各自一份）
+    // ------------------------------------------------------------
+    function renderPickerList(c) {
+        if (!c.el.pickerList) { return; }
+
+        var kw = c.state.q.trim();
+        var filtered = IT.filter(function (item) {
+            if (c.state.cat !== 'all' && item.cat !== c.state.cat) { return false; }
+            if (kw && item.name.indexOf(kw) === -1) { return false; }
+            return true;
+        });
+
+        c.el.pickerList.innerHTML = '';
+
+        if (filtered.length === 0) {
+            var empty = document.createElement('li');
+            empty.className = 'comboPicker-empty';
+            empty.textContent = '找不到符合的輔具品項';
+            c.el.pickerList.appendChild(empty);
+            return;
+        }
+
+        var order = [];
+        var groups = {};
+        filtered.forEach(function (item) {
+            if (!groups[item.cat]) { groups[item.cat] = []; order.push(item.cat); }
+            groups[item.cat].push(item);
+        });
+
+        order.forEach(function (catKey) {
+            var groupLi = document.createElement('li');
+            groupLi.className = 'comboPicker-groupList';
+
+            var label = document.createElement('p');
+            label.className = 'comboPicker-groupLabel';
+            label.textContent = CATS[catKey];
+            groupLi.appendChild(label);
+
+            var ul = document.createElement('ul');
+
+            groups[catKey].forEach(function (item) {
+                var disabled = pageState.use === 'school' && item.kind !== 'free';
+
+                var li = document.createElement('li');
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'comboPicker-item';
+                btn.setAttribute('aria-pressed', item.id === c.state.itemId ? 'true' : 'false');
+                if (disabled) { btn.setAttribute('aria-disabled', 'true'); }
+
+                if (item.photo) {
+                    var img = document.createElement('img');
+                    img.className = 'comboPicker-item-thumb';
+                    img.src = '../' + item.photo;
+                    img.alt = '';
+                    btn.appendChild(img);
+                } else {
+                    var emptyThumb = document.createElement('span');
+                    emptyThumb.className = 'comboPicker-item-thumb-empty';
+                    emptyThumb.setAttribute('aria-hidden', 'true');
+                    btn.appendChild(emptyThumb);
+                }
+
+                var nameSpan = document.createElement('span');
+                nameSpan.className = 'comboPicker-item-name';
+                nameSpan.textContent = item.name;
+                btn.appendChild(nameSpan);
+
+                var itemTag = TAGS[item.kind];
+                var tagSpan = document.createElement('span');
+                tagSpan.className = itemTag.cls;
+                tagSpan.textContent = itemTag.text;
+                btn.appendChild(tagSpan);
+
+                btn.addEventListener('click', function () {
+                    if (disabled) { return; }
+                    c.state.itemId = item.id;
+                    closeCardPicker(c);
+                    if (c.el.pickerTrigger) { c.el.pickerTrigger.focus(); }
+                    renderCard(c);
+                    renderDerived();
+                });
+
+                li.appendChild(btn);
+                ul.appendChild(li);
+            });
+
+            groupLi.appendChild(ul);
+            c.el.pickerList.appendChild(groupLi);
+        });
+    }
+
+    // ------------------------------------------------------------
+    // 單張輔具卡的互動事件（分類、下拉開關、申請原因、收合、移除、聽力圖上傳）
+    // ------------------------------------------------------------
+    function wireDeviceCard(c) {
+        if (c.el.catSelect) {
+            c.el.catSelect.addEventListener('change', function () {
+                c.state.cat = c.el.catSelect.value;
+                c.state.itemId = null;
+                renderCard(c);
+                renderPickerList(c);
+                renderDerived();
+            });
+        }
+
+        if (c.el.pickerTrigger) {
+            c.el.pickerTrigger.addEventListener('click', function () {
+                if (c.state.pickOpen) { closeCardPicker(c); } else { openCardPicker(c); }
+            });
+        }
+
+        if (c.el.pickerSearch) {
+            c.el.pickerSearch.addEventListener('input', function () {
+                c.state.q = c.el.pickerSearch.value;
+                renderPickerList(c);
+            });
+        }
+
+        wireCardGroup(c.li, 'dc-reason-radio', 'dc-reason-card', function (v) {
+            c.state.reason = v;
+            renderCard(c);
+        });
+
+        if (c.el.toggleBtn) {
+            c.el.toggleBtn.addEventListener('click', function () {
+                var expanded = c.el.toggleBtn.getAttribute('aria-expanded') === 'true';
+                setCardExpanded(c, !expanded);
+            });
+        }
+
+        if (c.el.removeBtn) {
+            c.el.removeBtn.addEventListener('click', function () { removeDeviceCard(c); });
+        }
+
+        c.li.addEventListener('input', function () { updateCardStatus(c); });
+        c.li.addEventListener('change', function () { updateCardStatus(c); });
+
+        wireFileUpload(c.el.hrFileLabel, c.el.hrFileInput, c.el.hrFileList, false);
+    }
+
+    // ------------------------------------------------------------
+    // 新增輔具：複製第一張卡片的完整標記，把 dc1 前綴換成新的卡片 uid，
+    // 再清空所有欄位值與勾選狀態，避免原生 radio／checkbox 的 checked 被一起複製
+    // ------------------------------------------------------------
+    function cloneDeviceCard(uid) {
+        var wrapper = document.createElement('div');
+        wrapper.appendChild(templateLi.cloneNode(true));
+        wrapper.innerHTML = wrapper.innerHTML.split('dc1').join('dc' + uid);
+        return wrapper.firstElementChild;
+    }
+
+    function resetClonedCard(li) {
+        Array.prototype.slice.call(li.querySelectorAll('input, select, textarea')).forEach(function (f) {
+            if (f.type === 'radio' || f.type === 'checkbox') {
+                f.checked = false;
+            } else if (f.tagName === 'SELECT') {
+                f.selectedIndex = 0;
+            } else {
+                f.value = '';
+            }
+        });
+        Array.prototype.slice.call(li.querySelectorAll('.is-selected')).forEach(function (n) {
+            n.classList.remove('is-selected');
+        });
+
+        var pickerPanel = li.querySelector('[data-js="dc-pickerPanel"]');
+        if (pickerPanel) { pickerPanel.hidden = true; }
+        var pickerTrigger = li.querySelector('[data-js="dc-pickerTrigger"]');
+        if (pickerTrigger) { pickerTrigger.setAttribute('aria-expanded', 'false'); }
+        var pickerWrap = li.querySelector('[data-js="dc-pickerWrap"]');
+        if (pickerWrap) { pickerWrap.classList.remove('is-open'); }
+        var hrList = li.querySelector('[data-js="dc-hr-file-list"]');
+        if (hrList) { hrList.innerHTML = ''; hrList.hidden = true; }
+    }
+
+    function initCard(li) {
+        var uid = nextUid++;
+        var c = buildCardEntry(li, uid);
+        wireDeviceCard(c);
+        cards.push(c);
+        registerRequired(li);
+        return c;
+    }
+
+    function addDeviceCard() {
+        var uid = nextUid++;
+        var li = cloneDeviceCard(uid);
+        resetClonedCard(li);
+        deviceList.appendChild(li);
+
+        var c = buildCardEntry(li, uid);
+        wireDeviceCard(c);
+        cards.push(c);
+        registerRequired(li);
+
+        setCardExpanded(c, true);
+        renderCard(c);
+        renderPickerList(c);
+        renderDerived();
+
+        if (c.el.catSelect) { c.el.catSelect.focus(); }
+    }
+
+    function removeDeviceCard(c) {
+        if (cards.length < 2) { return; }
+        if (openPickerCard === c) { closeCardPicker(c); }
+        unregisterRequired(c.li);
+        cards.splice(cards.indexOf(c), 1);
+        c.li.remove();
+        renderDerived();
+
+        var addBtn = q(form, 'add-device-btn');
+        if (addBtn) { addBtn.focus(); }
+    }
+
+    function renumberCards() {
+        cards.forEach(function (c, idx) {
+            var pos = idx + 1;
+            if (c.el.numSpan) { c.el.numSpan.textContent = '輔具 ' + pos; }
+            if (c.el.removeBtn) { c.el.removeBtn.setAttribute('aria-label', '移除輔具 ' + pos); }
+        });
+    }
+
+    // ------------------------------------------------------------
+    // 評估方式｜評估報告書上傳列：列出需評估的輔具卡（kind=general 與 kind=hearing），
+    // 免評估輔具不需要；聽障輔具另有專屬的聽力圖上傳（在卡片內，非此處）；
+    // 用 uid 比對避免動到未變動卡片的已選檔案
+    // ------------------------------------------------------------
+    function createEvalRow(uid) {
+        var wrap = document.createElement('div');
+        wrap.className = 'perItemUpload-grid';
+
+        var label = document.createElement('div');
+        label.className = 'perItemUpload-grid-label';
+
+        var numSpan = document.createElement('span');
+        numSpan.className = 'perItemUpload-grid-num';
+
+        var nameSpan = document.createElement('span');
+        nameSpan.className = 'perItemUpload-grid-name';
+
+        label.appendChild(numSpan);
+        label.appendChild(nameSpan);
+        wrap.appendChild(label);
+
+        var upload = document.createElement('div');
+        upload.className = 'perItemUpload';
+
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.id = 'evFile' + uid;
+        input.className = 'fileUpload-input';
+        input.multiple = true;
+        input.accept = 'image/*,.pdf';
+        input.required = true;
+
+        var dropLabel = document.createElement('label');
+        dropLabel.setAttribute('for', input.id);
+        dropLabel.className = 'fileUpload fileUpload-dropRow';
+        dropLabel.innerHTML =
+            '<i class="bi bi-upload fileUpload-icon" aria-hidden="true"></i>' +
+            '<span class="fileUpload-text">' +
+            '<span class="fileUpload-drop-text"></span>' +
+            '<span class="fileUpload-drop-sub">可多個檔案，PDF、JPG、PNG</span>' +
+            '</span>';
+        var titleSpan = dropLabel.querySelector('.fileUpload-drop-text');
+
+        var listEl = document.createElement('div');
+        listEl.className = 'fileUploadList';
+        listEl.hidden = true;
+
+        upload.appendChild(input);
+        upload.appendChild(dropLabel);
+        upload.appendChild(listEl);
+        wrap.appendChild(upload);
+
+        wireFileUpload(dropLabel, input, listEl, true);
+
+        return { wrap: wrap, labelEl: label, numSpan: numSpan, nameSpan: nameSpan, titleSpan: titleSpan, fileInput: input };
+    }
+
+    function renderEvalUploadList() {
+        var listRoot = q(form, 'eval-upload-list');
+        if (!listRoot) { return; }
+
+        // 需評估輔具＝一般（kind=general）與聽障（kind=hearing），免評估（free）不列入；
+        // 聽障輔具的聽力圖另在卡片內上傳，但評估報告書仍與一般輔具一樣要在這裡各自上傳
+        var evalCards = cards.filter(function (c) {
+            var cur = c.state.itemId ? findItem(c.state.itemId) : null;
+            return !!cur && cur.kind !== 'free';
+        });
+        var wantedUids = evalCards.map(function (c) { return c.state.uid; });
+
+        Object.keys(evalRows).forEach(function (uidKey) {
+            if (wantedUids.indexOf(Number(uidKey)) === -1) {
+                unregisterRequired(evalRows[uidKey].wrap);
+                evalRows[uidKey].wrap.remove();
+                delete evalRows[uidKey];
+            }
+        });
+
+        evalCards.forEach(function (c) {
+            var uidKey = String(c.state.uid);
+            var row = evalRows[uidKey];
+            if (!row) {
+                row = createEvalRow(c.state.uid);
+                evalRows[uidKey] = row;
+                registerRequired(row.wrap);
+            }
+            listRoot.appendChild(row.wrap);
+
+            var cur = findItem(c.state.itemId);
+            var pos = cards.indexOf(c) + 1;
+            row.numSpan.textContent = '輔具' + pos;
+            row.nameSpan.textContent = cur.name;
+            row.titleSpan.textContent = '上傳「' + cur.name + '」評估報告書';
+        });
+    }
+
+    // ------------------------------------------------------------
+    // 跨卡片的衍生狀態：共 N 項、全部收合按鈕、評估方式區塊顯示與項數
+    // ------------------------------------------------------------
+    function renderDerived() {
+        var countEl = q(form, 'device-count');
+        if (countEl) { countEl.textContent = '共 ' + cards.length + ' 項'; }
+
+        var collapseAllBtn = q(form, 'collapse-all-btn');
+        if (collapseAllBtn) { collapseAllBtn.hidden = cards.length < 2; }
+
+        cards.forEach(function (c) {
+            if (c.el.removeBtn) { c.el.removeBtn.hidden = cards.length < 2; }
+        });
+
+        renumberCards();
+
+        var needEval = cards.filter(function (c) {
+            var cur = c.state.itemId ? findItem(c.state.itemId) : null;
+            return !!cur && cur.kind !== 'free';
+        });
+
+        var sectionEval = q(form, 'section-eval');
+        if (sectionEval) { sectionEval.hidden = pageState.use !== 'student' || needEval.length === 0; }
+
+        var evalCountEl = q(form, 'eval-count');
+        if (evalCountEl) { evalCountEl.textContent = String(needEval.length); }
+        var evalCenterCountEl = q(form, 'eval-center-count');
+        if (evalCenterCountEl) { evalCenterCountEl.textContent = String(needEval.length); }
+
+        renderEvalUploadList();
+        syncRequiredVisibility();
+    }
+
+    function renderPage() {
+        var isSchool = pageState.use === 'school';
+        var sectionStudent = q(form, 'section-student');
+        var sectionStatus = q(form, 'section-status');
+        var schoolNotice = q(form, 'schooluse-notice');
+
+        if (sectionStudent) { sectionStudent.hidden = isSchool; }
+        if (sectionStatus) { sectionStatus.hidden = isSchool; }
+        if (schoolNotice) { schoolNotice.hidden = !isSchool; }
+
+        cards.forEach(function (c) { renderCard(c); });
+        renderDerived();
+    }
+
+    initCard(templateLi);
+
+    var addDeviceBtn = q(form, 'add-device-btn');
+    if (addDeviceBtn) {
+        addDeviceBtn.addEventListener('click', function () { addDeviceCard(); });
+    }
+
+    var collapseAllBtnEl = q(form, 'collapse-all-btn');
+    if (collapseAllBtnEl) {
+        collapseAllBtnEl.addEventListener('click', function () {
+            var anyExpanded = cards.some(function (c) { return c.el.bodyDiv && !c.el.bodyDiv.hidden; });
+            cards.forEach(function (c) { setCardExpanded(c, !anyExpanded); });
+            collapseAllBtnEl.textContent = anyExpanded ? '全部展開' : '全部收合';
+            collapseAllBtnEl.setAttribute('aria-label', anyExpanded ? '全部展開' : '全部收合');
+        });
+    }
 
     // ------------------------------------------------------------
     // 送出申請成功 Modal
@@ -1306,27 +1709,33 @@
         e.preventDefault();
 
         // 輔具品項選擇器是自訂元件、不是原生表單控制項，不會被 checkValidity() 檢查到，
-        // 所以要排在最前面先判斷；它在畫面上也是第一個欄位，這樣第一個沒填的欄位才會跟畫面順序一致
-        if (!state.itemId) {
-            if (el.pickerError) {
-                el.pickerError.textContent = '請選擇輔具品項';
-                el.pickerError.hidden = false;
+        // 所以要排在最前面先逐張卡片檢查；沒選的卡片先展開，再捲動並聚焦到它的下拉
+        var missing = null;
+        cards.forEach(function (c) {
+            if (missing || !c.el.pickerTrigger || isHiddenInForm(c.el.pickerTrigger)) { return; }
+            if (!c.state.itemId) { missing = c; }
+        });
+
+        if (missing) {
+            if (missing.el.pickerError) {
+                missing.el.pickerError.textContent = '請選擇輔具品項';
+                missing.el.pickerError.hidden = false;
             }
-            if (el.pickerTrigger) {
-                var prevScrollBehavior = document.documentElement.style.scrollBehavior;
-                document.documentElement.style.scrollBehavior = 'auto';
-                el.pickerTrigger.scrollIntoView({ block: 'center' });
-                el.pickerTrigger.focus();
-                document.documentElement.style.scrollBehavior = prevScrollBehavior;
-            }
+            if (missing.el.bodyDiv && missing.el.bodyDiv.hidden) { setCardExpanded(missing, true); }
+
+            var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+            document.documentElement.style.scrollBehavior = 'auto';
+            missing.el.pickerTrigger.scrollIntoView({ block: 'center' });
+            missing.el.pickerTrigger.focus();
+            document.documentElement.style.scrollBehavior = prevScrollBehavior;
             return;
         }
 
         if (!form.checkValidity()) {
-            var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+            var prevScrollBehavior2 = document.documentElement.style.scrollBehavior;
             document.documentElement.style.scrollBehavior = 'auto';
             form.reportValidity();
-            document.documentElement.style.scrollBehavior = prevScrollBehavior;
+            document.documentElement.style.scrollBehavior = prevScrollBehavior2;
             return;
         }
 
@@ -1341,7 +1750,7 @@
         });
     }
 
-    render();
+    renderPage();
 })();
 
 // ------------------------------------------------------------
@@ -1370,23 +1779,11 @@
             : { text: '在庫 ' + item.stock + ' 台', cls: 'tagPill tag-greenLight' };
     }
 
-    var state = { itemId: null, q: '', pickOpen: false };
-
     function q(name) { return document.querySelector('[data-js="' + name + '"]'); }
-    function qa(name) { return document.querySelectorAll('[data-js="' + name + '"]'); }
+    function qa(name) { return Array.prototype.slice.call(document.querySelectorAll('[data-js="' + name + '"]')); }
 
     var el = {
         form: document.getElementById('tempBorrowForm'),
-        pickerTrigger: q('picker-trigger'),
-        pickerThumbImg: q('picker-thumb-img'),
-        pickerThumbEmpty: q('picker-thumb-empty'),
-        pickerName: q('picker-name'),
-        pickerTag: q('picker-tag'),
-        pickerCatLabel: q('picker-cat-label'),
-        pickerPanel: q('picker-panel'),
-        pickerSearch: q('picker-search'),
-        pickerList: q('picker-list'),
-        pickerError: q('pickerError'),
         submitBtn: q('submit-btn'),
         doneModal: q('doneModal'),
         doneModalRecords: q('done-modal-records')
@@ -1394,145 +1791,34 @@
 
     if (!el.form) { return; }
 
-    function render() {
-        var item = state.itemId ? findItem(state.itemId) : null;
-
-        if (!item) {
-            el.pickerName.textContent = '請選擇';
-            el.pickerThumbImg.hidden = true;
-            el.pickerThumbEmpty.hidden = false;
-            el.pickerTag.hidden = true;
-            el.pickerCatLabel.hidden = true;
-            return;
+    // ------------------------------------------------------------
+    // 條件區塊隱藏時動態開關 required（hidden 不會自動排除原生驗證）
+    // ------------------------------------------------------------
+    function isHiddenInForm(node) {
+        while (node && node !== el.form) {
+            if (node.hidden) { return true; }
+            node = node.parentElement;
         }
-
-        el.pickerName.textContent = item.name;
-
-        if (item.photo) {
-            el.pickerThumbImg.src = '../img/devices/' + item.photo;
-            el.pickerThumbImg.hidden = false;
-            el.pickerThumbEmpty.hidden = true;
-        } else {
-            el.pickerThumbImg.hidden = true;
-            el.pickerThumbEmpty.hidden = false;
-        }
-
-        var tag = stockTag(item);
-        el.pickerTag.textContent = tag.text;
-        el.pickerTag.className = tag.cls;
-        el.pickerTag.hidden = false;
-
-        el.pickerCatLabel.textContent = item.catLabel;
-        el.pickerCatLabel.hidden = false;
-
-        if (el.pickerError) { el.pickerError.hidden = true; }
+        return false;
     }
 
-    function renderPickerList() {
-        var groups = [];
-        var byCat = {};
-        var keyword = state.q.trim();
+    // 輔具卡可以新增/移除，用陣列持續追蹤而不是一次性 querySelectorAll 的快照
+    var requiredFields = Array.prototype.slice.call(el.form.querySelectorAll('[required]'));
 
-        IT.forEach(function (item) {
-            if (keyword && item.name.indexOf(keyword) === -1) return;
-            if (!byCat[item.cat]) {
-                byCat[item.cat] = { label: item.catLabel, items: [] };
-                groups.push(byCat[item.cat]);
-            }
-            byCat[item.cat].items.push(item);
-        });
-
-        el.pickerList.innerHTML = '';
-
-        if (!groups.length) {
-            var empty = document.createElement('li');
-            empty.className = 'comboPicker-empty';
-            empty.textContent = '沒有符合的輔具';
-            el.pickerList.appendChild(empty);
-            return;
-        }
-
-        groups.forEach(function (group) {
-            var head = document.createElement('li');
-            head.className = 'comboPicker-groupLabel';
-            head.setAttribute('role', 'presentation');
-            head.textContent = group.label;
-            el.pickerList.appendChild(head);
-
-            group.items.forEach(function (item) {
-                var li = document.createElement('li');
-                var disabled = item.stock === 0;
-                var tag = stockTag(item);
-
-                var btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = 'comboPicker-item';
-                btn.setAttribute('aria-pressed', state.itemId === item.id ? 'true' : 'false');
-                if (disabled) btn.setAttribute('aria-disabled', 'true');
-
-                var thumbHtml = item.photo
-                    ? '<img class="comboPicker-thumb" src="../img/devices/' + item.photo + '" alt="">'
-                    : '<span class="comboPicker-thumb-empty" aria-hidden="true"></span>';
-
-                btn.innerHTML =
-                    thumbHtml +
-                    '<span class="comboPicker-item-name">' + item.name + '</span>' +
-                    '<span class="' + tag.cls + '">' + tag.text + '</span>';
-
-                btn.addEventListener('click', function () {
-                    if (disabled) return;
-                    state.itemId = item.id;
-                    render();
-                    closePicker();
-                });
-
-                li.appendChild(btn);
-                el.pickerList.appendChild(li);
-            });
+    function registerRequired(root) {
+        Array.prototype.slice.call(root.querySelectorAll('[required]')).forEach(function (f) {
+            if (requiredFields.indexOf(f) === -1) { requiredFields.push(f); }
         });
     }
 
-    function openPicker() {
-        state.pickOpen = true;
-        el.pickerPanel.hidden = false;
-        el.pickerTrigger.setAttribute('aria-expanded', 'true');
-        renderPickerList();
-        el.pickerSearch.value = '';
-        state.q = '';
-        el.pickerSearch.focus();
-        document.addEventListener('click', onOutsideClick, true);
-        document.addEventListener('keydown', onPickerKeydown, true);
+    function unregisterRequired(root) {
+        var within = Array.prototype.slice.call(root.querySelectorAll('[required]'));
+        requiredFields = requiredFields.filter(function (f) { return within.indexOf(f) === -1; });
     }
 
-    function closePicker() {
-        state.pickOpen = false;
-        el.pickerPanel.hidden = true;
-        el.pickerTrigger.setAttribute('aria-expanded', 'false');
-        document.removeEventListener('click', onOutsideClick, true);
-        document.removeEventListener('keydown', onPickerKeydown, true);
+    function syncRequiredVisibility() {
+        requiredFields.forEach(function (f) { f.required = !isHiddenInForm(f); });
     }
-
-    function onOutsideClick(e) {
-        if (el.pickerPanel.contains(e.target) || el.pickerTrigger.contains(e.target)) return;
-        closePicker();
-    }
-
-    function onPickerKeydown(e) {
-        if (e.key === 'Escape') {
-            closePicker();
-            el.pickerTrigger.focus();
-        }
-    }
-
-    el.pickerTrigger.addEventListener('click', function () {
-        if (state.pickOpen) closePicker();
-        else openPicker();
-    });
-
-    el.pickerSearch.addEventListener('input', function () {
-        state.q = el.pickerSearch.value;
-        renderPickerList();
-    });
 
     function wireCardGroup(cardName, radioName) {
         var cards = qa(cardName);
@@ -1551,6 +1837,623 @@
         sync();
     }
 
+    wireCardGroup('class-card', 'class-radio');
+    wireCardGroup('dlv-card', 'dlv-radio');
+    wireCardGroup('mv-card', 'mv-radio');
+    wireCardGroup('freq-card', 'freq-radio');
+
+    qa('class-radio').forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            var wrap = q('class-other-wrap');
+            if (wrap) { wrap.hidden = radio.value !== 'other'; }
+            syncRequiredVisibility();
+        });
+    });
+
+    qa('mv-radio').forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            var mvLocal = q('mv-local');
+            var mvOther = q('mv-other');
+            if (mvLocal) { mvLocal.hidden = radio.value !== 'local'; }
+            if (mvOther) { mvOther.hidden = radio.value !== 'other'; }
+            syncRequiredVisibility();
+        });
+    });
+
+    // ------------------------------------------------------------
+    // 檔案上傳：身障證明影本（多檔）
+    // ------------------------------------------------------------
+    function formatFileSize(bytes) {
+        if (bytes < 1024) { return bytes + ' B'; }
+        if (bytes < 1024 * 1024) { return Math.round(bytes / 1024) + ' KB'; }
+        return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+    }
+
+    function fileExt(file) {
+        var m = file.name.match(/\.([a-zA-Z0-9]+)$/);
+        return m ? m[1].toUpperCase() : '檔案';
+    }
+
+    function fileIconClass(file) {
+        var ext = fileExt(file).toLowerCase();
+        if (ext === 'pdf') { return 'bi-file-earmark-pdf'; }
+        if (['jpg', 'jpeg', 'png', 'gif', 'webp'].indexOf(ext) !== -1) { return 'bi-file-earmark-image'; }
+        return 'bi-file-earmark-text';
+    }
+
+    function createFileRow(file, onDelete) {
+        var row = document.createElement('div');
+        row.className = 'fileRow fileRow-upload';
+
+        var icon = document.createElement('span');
+        icon.className = 'fileRow-icon';
+        icon.setAttribute('aria-hidden', 'true');
+        var iconI = document.createElement('i');
+        iconI.className = 'bi ' + fileIconClass(file);
+        icon.appendChild(iconI);
+
+        var body = document.createElement('span');
+        body.className = 'fileRow-body';
+        var nameEl = document.createElement('span');
+        nameEl.className = 'fileRow-name';
+        nameEl.textContent = file.name;
+        var metaEl = document.createElement('span');
+        metaEl.className = 'fileRow-meta';
+        metaEl.textContent = fileExt(file) + '．' + formatFileSize(file.size);
+        body.appendChild(nameEl);
+        body.appendChild(metaEl);
+
+        var delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = 'fileRow-delete';
+        delBtn.setAttribute('aria-label', '刪除檔案 ' + file.name);
+        var delI = document.createElement('i');
+        delI.className = 'bi bi-trash3';
+        delI.setAttribute('aria-hidden', 'true');
+        delBtn.appendChild(delI);
+        delBtn.addEventListener('click', onDelete);
+
+        row.appendChild(icon);
+        row.appendChild(body);
+        row.appendChild(delBtn);
+        return row;
+    }
+
+    function wireFileUpload(label, input, listEl, multiple, emptyHintEl) {
+        if (!label || !input || !listEl) { return; }
+        var files = [];
+
+        function sync() {
+            var dt = new DataTransfer();
+            files.forEach(function (f) { dt.items.add(f); });
+            input.files = dt.files;
+        }
+
+        function renderList() {
+            listEl.innerHTML = '';
+            listEl.hidden = files.length === 0;
+            if (emptyHintEl) { emptyHintEl.hidden = files.length > 0; }
+            files.forEach(function (file, i) {
+                listEl.appendChild(createFileRow(file, function () {
+                    files.splice(i, 1);
+                    sync();
+                    renderList();
+                }));
+            });
+        }
+
+        function addFiles(list) {
+            var incoming = Array.prototype.slice.call(list);
+            if (!incoming.length) { return; }
+            files = multiple ? files.concat(incoming) : incoming.slice(0, 1);
+            sync();
+            renderList();
+        }
+
+        input.addEventListener('change', function () { addFiles(input.files); });
+
+        ['dragenter', 'dragover'].forEach(function (evt) {
+            label.addEventListener(evt, function (e) {
+                e.preventDefault();
+                label.classList.add('is-dragover');
+            });
+        });
+
+        ['dragleave', 'dragend'].forEach(function (evt) {
+            label.addEventListener(evt, function () { label.classList.remove('is-dragover'); });
+        });
+
+        label.addEventListener('drop', function (e) {
+            e.preventDefault();
+            label.classList.remove('is-dragover');
+            if (e.dataTransfer) { addFiles(e.dataTransfer.files); }
+        });
+    }
+
+    wireFileUpload(
+        document.querySelector('label[for="disFile"]'),
+        document.getElementById('disFile'),
+        q('dis-file-list'),
+        true,
+        q('dis-file-empty')
+    );
+
+    // ------------------------------------------------------------
+    // 語音輸入：不支援 Web Speech API 的瀏覽器改用 aria-disabled + aria-describedby 說明原因
+    // ------------------------------------------------------------
+    (function initVoiceInput() {
+        var Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        var buttons = qa('voice-btn');
+
+        if (!Recognition) {
+            buttons.forEach(function (btn) {
+                btn.setAttribute('aria-disabled', 'true');
+                var hint = document.createElement('span');
+                hint.id = btn.getAttribute('data-voice-target') + 'VoiceUnsupported';
+                hint.className = 'sr-only';
+                hint.textContent = '此瀏覽器不支援語音輸入';
+                btn.insertAdjacentElement('afterend', hint);
+                btn.setAttribute('aria-describedby', hint.id);
+            });
+            return;
+        }
+
+        buttons.forEach(function (btn) {
+            var targetId = btn.getAttribute('data-voice-target');
+            var target = document.getElementById(targetId);
+            var statusEl = el.form.querySelector('[data-voice-status-for="' + targetId + '"]');
+            if (!target) { return; }
+
+            var recognizer = new Recognition();
+            recognizer.lang = 'zh-TW';
+            recognizer.interimResults = false;
+            recognizer.continuous = true;
+            var listening = false;
+
+            recognizer.addEventListener('result', function (e) {
+                var transcript = '';
+                for (var i = e.resultIndex; i < e.results.length; i++) {
+                    transcript += e.results[i][0].transcript;
+                }
+                if (transcript) {
+                    target.value = target.value ? target.value + transcript : transcript;
+                    target.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+            });
+
+            recognizer.addEventListener('end', function () {
+                listening = false;
+                btn.setAttribute('aria-pressed', 'false');
+                if (statusEl) { statusEl.hidden = true; }
+            });
+
+            btn.addEventListener('click', function () {
+                if (listening) {
+                    recognizer.stop();
+                    return;
+                }
+                listening = true;
+                btn.setAttribute('aria-pressed', 'true');
+                if (statusEl) { statusEl.hidden = false; }
+                recognizer.start();
+            });
+        });
+    })();
+
+    // ------------------------------------------------------------
+    // 常見目標快速選取：選單選項帶入文字區塊，可重複選取多次累加
+    // ------------------------------------------------------------
+    (function initGoalPicker() {
+        qa('goal-select').forEach(function (sel) {
+            sel.addEventListener('change', function () {
+                var val = sel.value;
+                if (!val) { return; }
+                var target = document.getElementById(sel.getAttribute('data-goal-target'));
+                if (target) {
+                    target.value = target.value.trim() ? target.value.replace(/\s*$/, '') + '；' + val : val;
+                    target.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+                sel.selectedIndex = 0;
+            });
+        });
+    })();
+
+    // ============================================================
+    // 選擇中心現有輔具（多項）：每張輔具卡各自維護品項選擇、分類、申請原因狀態
+    // ============================================================
+    function qc(root, name) { return root.querySelector('[data-js="' + name + '"]'); }
+    function qca(root, name) { return Array.prototype.slice.call(root.querySelectorAll('[data-js="' + name + '"]')); }
+
+    var deviceList = q('device-list');
+    var templateLi = deviceList.querySelector('[data-js="device-card"]');
+    var cards = [];
+    var nextUid = 1;
+    var openPickerCard = null;
+
+    function buildCardEntry(li, uid) {
+        return {
+            li: li,
+            uid: uid,
+            el: {
+                toggleBtn: qc(li, 'device-toggle'),
+                numSpan: qc(li, 'device-num'),
+                nameSpan: qc(li, 'device-name'),
+                statusSpan: qc(li, 'device-status'),
+                removeBtn: qc(li, 'device-remove'),
+                summaryP: qc(li, 'device-summary'),
+                bodyDiv: qc(li, 'device-body'),
+                catSelect: qc(li, 'dc-cat'),
+                pickerWrap: qc(li, 'dc-pickerWrap'),
+                pickerTrigger: qc(li, 'dc-pickerTrigger'),
+                pickerThumbImg: qc(li, 'dc-pickerThumbImg'),
+                pickerThumbEmpty: qc(li, 'dc-pickerThumbEmpty'),
+                pickerName: qc(li, 'dc-pickerName'),
+                pickerTag: qc(li, 'dc-pickerTag'),
+                pickerCatLabel: qc(li, 'dc-pickerCatLabel'),
+                pickerPanel: qc(li, 'dc-pickerPanel'),
+                pickerSearch: qc(li, 'dc-pickerSearch'),
+                pickerList: qc(li, 'dc-pickerList'),
+                pickerError: qc(li, 'dc-pickerError'),
+                reasonExpand: qc(li, 'dc-reason-expand')
+            },
+            state: { uid: uid, itemId: null, cat: 'all', q: '', pickOpen: false, reason: null }
+        };
+    }
+
+    function openCardPicker(c) {
+        if (openPickerCard && openPickerCard !== c) { closeCardPicker(openPickerCard); }
+        c.state.pickOpen = true;
+        if (c.el.pickerTrigger) { c.el.pickerTrigger.setAttribute('aria-expanded', 'true'); }
+        if (c.el.pickerPanel) { c.el.pickerPanel.hidden = false; }
+        if (c.el.pickerWrap) { c.el.pickerWrap.classList.add('is-open'); }
+        openPickerCard = c;
+        renderPickerList(c);
+    }
+
+    function closeCardPicker(c) {
+        c.state.pickOpen = false;
+        if (c.el.pickerTrigger) { c.el.pickerTrigger.setAttribute('aria-expanded', 'false'); }
+        if (c.el.pickerPanel) { c.el.pickerPanel.hidden = true; }
+        if (c.el.pickerWrap) { c.el.pickerWrap.classList.remove('is-open'); }
+        if (openPickerCard === c) { openPickerCard = null; }
+    }
+
+    document.addEventListener('click', function (e) {
+        if (!openPickerCard) { return; }
+        var c = openPickerCard;
+        if (c.el.pickerTrigger && e.target.closest('[data-js="dc-pickerTrigger"]') === c.el.pickerTrigger) { return; }
+        if (c.el.pickerPanel && c.el.pickerPanel.contains(e.target)) { return; }
+        closeCardPicker(c);
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && openPickerCard) {
+            var c = openPickerCard;
+            closeCardPicker(c);
+            if (c.el.pickerTrigger) { c.el.pickerTrigger.focus(); }
+        }
+    });
+
+    function renderCard(c) {
+        var cur = c.state.itemId ? findItem(c.state.itemId) : null;
+
+        if (cur) {
+            if (cur.photo) {
+                if (c.el.pickerThumbImg) { c.el.pickerThumbImg.src = '../img/devices/' + cur.photo; c.el.pickerThumbImg.hidden = false; }
+                if (c.el.pickerThumbEmpty) { c.el.pickerThumbEmpty.hidden = true; }
+            } else {
+                if (c.el.pickerThumbImg) { c.el.pickerThumbImg.hidden = true; }
+                if (c.el.pickerThumbEmpty) { c.el.pickerThumbEmpty.hidden = false; }
+            }
+            if (c.el.pickerName) {
+                c.el.pickerName.textContent = cur.name;
+                c.el.pickerName.className = 'comboPicker-selected-name';
+            }
+            if (c.el.pickerTag) {
+                var tag = stockTag(cur);
+                c.el.pickerTag.textContent = tag.text;
+                c.el.pickerTag.className = tag.cls;
+                c.el.pickerTag.hidden = false;
+            }
+            if (c.el.pickerCatLabel) {
+                c.el.pickerCatLabel.textContent = cur.catLabel;
+                c.el.pickerCatLabel.hidden = false;
+            }
+            if (c.el.pickerError) { c.el.pickerError.hidden = true; }
+        } else {
+            if (c.el.pickerThumbImg) { c.el.pickerThumbImg.hidden = true; }
+            if (c.el.pickerThumbEmpty) { c.el.pickerThumbEmpty.hidden = false; }
+            if (c.el.pickerName) {
+                c.el.pickerName.textContent = '請選擇';
+                c.el.pickerName.className = 'comboPicker-selected-placeholder';
+            }
+            if (c.el.pickerTag) { c.el.pickerTag.hidden = true; }
+            if (c.el.pickerCatLabel) { c.el.pickerCatLabel.hidden = true; }
+        }
+
+        if (c.el.reasonExpand) { c.el.reasonExpand.hidden = c.state.reason !== 'existing'; }
+
+        if (c.el.nameSpan) {
+            c.el.nameSpan.textContent = cur ? cur.name : '尚未選擇輔具';
+            c.el.nameSpan.classList.toggle('deviceCard-name-placeholder', !cur);
+        }
+
+        syncRequiredVisibility();
+        updateCardStatus(c);
+    }
+
+    function isCardComplete(c) {
+        if (!c.state.itemId) { return false; }
+        var fields = Array.prototype.slice.call(c.li.querySelectorAll('[required]'));
+        for (var i = 0; i < fields.length; i++) {
+            var f = fields[i];
+            if (isHiddenInForm(f)) { continue; }
+            if (f.type === 'radio') {
+                var group = c.li.querySelectorAll('input[name="' + f.name + '"]');
+                if (!Array.prototype.some.call(group, function (r) { return r.checked; })) { return false; }
+            } else if (!f.value || !f.value.trim()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function updateCardStatus(c) {
+        var complete = isCardComplete(c);
+        if (c.el.statusSpan) {
+            c.el.statusSpan.textContent = complete ? '已完成' : '填寫中';
+            c.el.statusSpan.className = complete ? 'deviceCard-status deviceCard-status-done' : 'deviceCard-status deviceCard-status-progress';
+        }
+        if (c.el.summaryP) {
+            var collapsed = c.el.bodyDiv && c.el.bodyDiv.hidden;
+            var cur = c.state.itemId ? findItem(c.state.itemId) : null;
+            if (collapsed && cur) {
+                c.el.summaryP.hidden = false;
+                c.el.summaryP.textContent = cur.catLabel + '．' + cur.name;
+            } else {
+                c.el.summaryP.hidden = true;
+            }
+        }
+    }
+
+    function setCardExpanded(c, expanded) {
+        if (c.el.toggleBtn) { c.el.toggleBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false'); }
+        if (c.el.bodyDiv) { c.el.bodyDiv.hidden = !expanded; }
+        updateCardStatus(c);
+    }
+
+    function renderPickerList(c) {
+        if (!c.el.pickerList) { return; }
+
+        var kw = c.state.q.trim();
+        var filtered = IT.filter(function (item) {
+            if (c.state.cat !== 'all' && item.cat !== c.state.cat) { return false; }
+            if (kw && item.name.indexOf(kw) === -1) { return false; }
+            return true;
+        });
+
+        c.el.pickerList.innerHTML = '';
+
+        if (filtered.length === 0) {
+            var empty = document.createElement('li');
+            empty.className = 'comboPicker-empty';
+            empty.textContent = '沒有符合的輔具';
+            c.el.pickerList.appendChild(empty);
+            return;
+        }
+
+        var order = [];
+        var groups = {};
+        filtered.forEach(function (item) {
+            if (!groups[item.cat]) { groups[item.cat] = []; order.push(item.cat); }
+            groups[item.cat].push(item);
+        });
+
+        order.forEach(function (catKey) {
+            var groupLi = document.createElement('li');
+            groupLi.className = 'comboPicker-groupLabel';
+            groupLi.setAttribute('role', 'presentation');
+            groupLi.textContent = groups[catKey][0].catLabel;
+            c.el.pickerList.appendChild(groupLi);
+
+            groups[catKey].forEach(function (item) {
+                var disabled = item.stock === 0;
+                var tag = stockTag(item);
+
+                var li = document.createElement('li');
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'comboPicker-item';
+                btn.setAttribute('aria-pressed', item.id === c.state.itemId ? 'true' : 'false');
+                if (disabled) { btn.setAttribute('aria-disabled', 'true'); }
+
+                var thumbHtml = item.photo
+                    ? '<img class="comboPicker-thumb" src="../img/devices/' + item.photo + '" alt="">'
+                    : '<span class="comboPicker-thumb-empty" aria-hidden="true"></span>';
+
+                btn.innerHTML =
+                    thumbHtml +
+                    '<span class="comboPicker-item-name">' + item.name + '</span>' +
+                    '<span class="' + tag.cls + '">' + tag.text + '</span>';
+
+                btn.addEventListener('click', function () {
+                    if (disabled) { return; }
+                    c.state.itemId = item.id;
+                    closeCardPicker(c);
+                    if (c.el.pickerTrigger) { c.el.pickerTrigger.focus(); }
+                    renderCard(c);
+                    renderDerived();
+                });
+
+                li.appendChild(btn);
+                c.el.pickerList.appendChild(li);
+            });
+        });
+    }
+
+    function wireDeviceCard(c) {
+        if (c.el.catSelect) {
+            c.el.catSelect.addEventListener('change', function () {
+                c.state.cat = c.el.catSelect.value;
+                c.state.itemId = null;
+                renderCard(c);
+                renderPickerList(c);
+                renderDerived();
+            });
+        }
+
+        if (c.el.pickerTrigger) {
+            c.el.pickerTrigger.addEventListener('click', function () {
+                if (c.state.pickOpen) { closeCardPicker(c); } else { openCardPicker(c); }
+            });
+        }
+
+        if (c.el.pickerSearch) {
+            c.el.pickerSearch.addEventListener('input', function () {
+                c.state.q = c.el.pickerSearch.value;
+                renderPickerList(c);
+            });
+        }
+
+        qca(c.li, 'dc-reason-radio').forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                qca(c.li, 'dc-reason-card').forEach(function (card) { card.classList.remove('is-selected'); });
+                var label = radio.closest('label');
+                if (label) { label.classList.add('is-selected'); }
+                c.state.reason = radio.value;
+                renderCard(c);
+            });
+        });
+
+        if (c.el.toggleBtn) {
+            c.el.toggleBtn.addEventListener('click', function () {
+                var expanded = c.el.toggleBtn.getAttribute('aria-expanded') === 'true';
+                setCardExpanded(c, !expanded);
+            });
+        }
+
+        if (c.el.removeBtn) {
+            c.el.removeBtn.addEventListener('click', function () { removeDeviceCard(c); });
+        }
+
+        c.li.addEventListener('input', function () { updateCardStatus(c); });
+        c.li.addEventListener('change', function () { updateCardStatus(c); });
+    }
+
+    // 新增輔具：複製第一張卡片的完整標記，把 dc1 前綴換成新的卡片 uid，
+    // 再清空所有欄位值與勾選狀態，避免原生 radio／checkbox 的 checked 被一起複製
+    function cloneDeviceCard(uid) {
+        var wrapper = document.createElement('div');
+        wrapper.appendChild(templateLi.cloneNode(true));
+        wrapper.innerHTML = wrapper.innerHTML.split('dc1').join('dc' + uid);
+        return wrapper.firstElementChild;
+    }
+
+    function resetClonedCard(li) {
+        Array.prototype.slice.call(li.querySelectorAll('input, select, textarea')).forEach(function (f) {
+            if (f.type === 'radio' || f.type === 'checkbox') {
+                f.checked = false;
+            } else if (f.tagName === 'SELECT') {
+                f.selectedIndex = 0;
+            } else {
+                f.value = '';
+            }
+        });
+        Array.prototype.slice.call(li.querySelectorAll('.is-selected')).forEach(function (n) {
+            n.classList.remove('is-selected');
+        });
+
+        var pickerPanel = li.querySelector('[data-js="dc-pickerPanel"]');
+        if (pickerPanel) { pickerPanel.hidden = true; }
+        var pickerTrigger = li.querySelector('[data-js="dc-pickerTrigger"]');
+        if (pickerTrigger) { pickerTrigger.setAttribute('aria-expanded', 'false'); }
+        var pickerWrap = li.querySelector('[data-js="dc-pickerWrap"]');
+        if (pickerWrap) { pickerWrap.classList.remove('is-open'); }
+    }
+
+    function initCard(li) {
+        var uid = nextUid++;
+        var c = buildCardEntry(li, uid);
+        wireDeviceCard(c);
+        cards.push(c);
+        registerRequired(li);
+        return c;
+    }
+
+    function addDeviceCard() {
+        var uid = nextUid++;
+        var li = cloneDeviceCard(uid);
+        resetClonedCard(li);
+        deviceList.appendChild(li);
+
+        var c = buildCardEntry(li, uid);
+        wireDeviceCard(c);
+        cards.push(c);
+        registerRequired(li);
+
+        setCardExpanded(c, true);
+        renderCard(c);
+        renderPickerList(c);
+        renderDerived();
+
+        if (c.el.catSelect) { c.el.catSelect.focus(); }
+    }
+
+    function removeDeviceCard(c) {
+        if (cards.length < 2) { return; }
+        if (openPickerCard === c) { closeCardPicker(c); }
+        unregisterRequired(c.li);
+        cards.splice(cards.indexOf(c), 1);
+        c.li.remove();
+        renderDerived();
+
+        var addBtn = q('add-device-btn');
+        if (addBtn) { addBtn.focus(); }
+    }
+
+    function renumberCards() {
+        cards.forEach(function (c, idx) {
+            var pos = idx + 1;
+            if (c.el.numSpan) { c.el.numSpan.textContent = '輔具 ' + pos; }
+            if (c.el.removeBtn) { c.el.removeBtn.setAttribute('aria-label', '移除輔具 ' + pos); }
+        });
+    }
+
+    function renderDerived() {
+        var countEl = q('device-count');
+        if (countEl) { countEl.textContent = '共 ' + cards.length + ' 項'; }
+
+        var collapseAllBtn = q('collapse-all-btn');
+        if (collapseAllBtn) { collapseAllBtn.hidden = cards.length < 2; }
+
+        cards.forEach(function (c) {
+            if (c.el.removeBtn) { c.el.removeBtn.hidden = cards.length < 2; }
+        });
+
+        renumberCards();
+        syncRequiredVisibility();
+    }
+
+    initCard(templateLi);
+    renderCard(cards[0]);
+    renderPickerList(cards[0]);
+    renderDerived();
+
+    var addDeviceBtn = q('add-device-btn');
+    if (addDeviceBtn) {
+        addDeviceBtn.addEventListener('click', function () { addDeviceCard(); });
+    }
+
+    var collapseAllBtnEl = q('collapse-all-btn');
+    if (collapseAllBtnEl) {
+        collapseAllBtnEl.addEventListener('click', function () {
+            var anyExpanded = cards.some(function (c) { return c.el.bodyDiv && !c.el.bodyDiv.hidden; });
+            cards.forEach(function (c) { setCardExpanded(c, !anyExpanded); });
+            collapseAllBtnEl.textContent = anyExpanded ? '全部展開' : '全部收合';
+            collapseAllBtnEl.setAttribute('aria-label', anyExpanded ? '全部展開' : '全部收合');
+        });
+    }
+
     wireCardGroup('tev-card', 'tev-radio');
 
     var doneModalInstance = el.doneModal ? bootstrap.Modal.getOrCreateInstance(el.doneModal) : null;
@@ -1564,34 +2467,40 @@
         e.preventDefault();
 
         // 輔具品項選擇器是自訂元件、不是原生表單控制項，不會被 checkValidity() 檢查到，
-        // 所以要排在最前面先判斷；它在畫面上也是第一個欄位，這樣第一個沒填的欄位才會跟畫面順序一致
-        if (!state.itemId) {
-            if (el.pickerError) {
-                el.pickerError.textContent = '請選擇輔具品項';
-                el.pickerError.hidden = false;
+        // 所以要排在最前面先逐張卡片檢查；沒選的卡片先展開，再捲動並聚焦到它的下拉
+        var missing = null;
+        cards.forEach(function (c) {
+            if (missing || !c.el.pickerTrigger || isHiddenInForm(c.el.pickerTrigger)) { return; }
+            if (!c.state.itemId) { missing = c; }
+        });
+
+        if (missing) {
+            if (missing.el.pickerError) {
+                missing.el.pickerError.textContent = '請選擇輔具品項';
+                missing.el.pickerError.hidden = false;
             }
-            if (el.pickerTrigger) {
-                var prevScrollBehavior = document.documentElement.style.scrollBehavior;
-                document.documentElement.style.scrollBehavior = 'auto';
-                el.pickerTrigger.scrollIntoView({ block: 'center' });
-                el.pickerTrigger.focus();
-                document.documentElement.style.scrollBehavior = prevScrollBehavior;
-            }
+            if (missing.el.bodyDiv && missing.el.bodyDiv.hidden) { setCardExpanded(missing, true); }
+
+            var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+            document.documentElement.style.scrollBehavior = 'auto';
+            missing.el.pickerTrigger.scrollIntoView({ block: 'center' });
+            missing.el.pickerTrigger.focus();
+            document.documentElement.style.scrollBehavior = prevScrollBehavior;
             return;
         }
 
         if (!el.form.checkValidity()) {
-            var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+            var prevScrollBehavior2 = document.documentElement.style.scrollBehavior;
             document.documentElement.style.scrollBehavior = 'auto';
             el.form.reportValidity();
-            document.documentElement.style.scrollBehavior = prevScrollBehavior;
+            document.documentElement.style.scrollBehavior = prevScrollBehavior2;
             return;
         }
 
         if (doneModalInstance) { doneModalInstance.show(); }
     });
 
-    render();
+    syncRequiredVisibility();
 })();
 
 // ------------------------------------------------------------
@@ -1966,7 +2875,8 @@
     }
 
     // ------------------------------------------------------------
-    // 申請流程卡：全螢幕尺寸皆可收合，預設收合
+    // 申請流程圖：手機版（≤1124px）白卡標題可收合，預設收合；
+    // 桌面／平板按鈕以 CSS display:none 隱藏，不會被點到
     // ------------------------------------------------------------
     var flowToggle = document.querySelector('[data-js="flowToggle"]');
     var flowBody = document.querySelector('[data-js="flowBody"]');
@@ -2694,7 +3604,8 @@
 // ------------------------------------------------------------
 // ============================================================
 // vendor/index.html 專屬邏輯：更新進度／維修紀錄 modal 的資料填入、
-// 照片縮圖與全螢幕放大檢視、更新進度表單的動態欄位與上傳檔案列表
+// 照片與影片縮圖（含全部下載）、全螢幕放大檢視、維修單據、
+// 更新進度表單的動態欄位與上傳檔案列表
 // Modal 開關比照 js/school-repairs.js 既有慣例
 // ============================================================
 (function () {
@@ -2711,41 +3622,95 @@
         failed: { cls: 'statusPill-red', text: '無法修復' }
     };
 
-    // ------------------------------------------------------------
-    // 照片縮圖（更新進度／維修紀錄 modal 共用），點擊縮圖開啟全螢幕放大檢視
-    // ------------------------------------------------------------
-    function renderPhotoGrid(grid, src, name, openFn) {
-        grid.innerHTML = '';
-        if (!src) {
-            var note = document.createElement('p');
-            note.className = 'textNote';
-            note.textContent = '尚無照片';
-            grid.appendChild(note);
-            return;
-        }
-        var thumb = document.createElement('button');
-        thumb.type = 'button';
-        thumb.className = 'photoLightbox-thumb';
-        thumb.setAttribute('aria-label', '放大檢視照片：' + name);
-        var img = document.createElement('img');
-        img.src = src;
-        img.alt = '';
-        var overlay = document.createElement('span');
-        overlay.className = 'photoLightbox-thumb-overlay';
-        overlay.setAttribute('aria-hidden', 'true');
-        overlay.innerHTML = '<i class="bi bi-zoom-in"></i>';
-        thumb.appendChild(img);
-        thumb.appendChild(overlay);
-        thumb.addEventListener('click', function () { openFn(src, name, thumb); });
-        grid.appendChild(thumb);
+    function parseMedia(trigger) {
+        try { return JSON.parse(trigger.getAttribute('data-media') || '[]'); } catch (e) { return []; }
     }
 
     // ------------------------------------------------------------
-    // 全螢幕照片放大檢視：疊在對話框之上，開啟時暫時搬進目前開啟的
+    // 損壞照片與影片縮圖格（更新進度／維修紀錄 modal 共用）
+    // 點擊縮圖開啟全螢幕放大檢視，每格附檔名、大小／時長與單檔下載
+    // ------------------------------------------------------------
+    function renderMediaGrid(grid, items, openFn) {
+        grid.innerHTML = '';
+        if (!items.length) {
+            var note = document.createElement('p');
+            note.className = 'textNote';
+            note.textContent = '尚無照片或影片';
+            grid.appendChild(note);
+            return;
+        }
+        items.forEach(function (item, i) {
+            var isVideo = item.type === 'video';
+            var cell = document.createElement('div');
+            cell.className = 'photoLightbox-item';
+
+            var thumb = document.createElement('button');
+            thumb.type = 'button';
+            thumb.className = 'photoLightbox-thumb';
+            thumb.setAttribute('aria-label', (isVideo ? '放大檢視影片：' : '放大檢視照片：') + item.name);
+            var img = document.createElement('img');
+            img.src = isVideo ? (item.poster || item.src) : item.src;
+            img.alt = '';
+            var overlay = document.createElement('span');
+            overlay.className = 'photoLightbox-thumb-overlay' + (isVideo ? ' photoLightbox-thumb-overlay-play' : '');
+            overlay.setAttribute('aria-hidden', 'true');
+            overlay.innerHTML = '<i class="bi ' + (isVideo ? 'bi-play-fill' : 'bi-zoom-in') + '"></i>';
+            thumb.appendChild(img);
+            thumb.appendChild(overlay);
+            if (isVideo && item.duration) {
+                var duration = document.createElement('span');
+                duration.className = 'photoLightbox-thumb-duration';
+                duration.textContent = item.duration;
+                thumb.appendChild(duration);
+            }
+            thumb.addEventListener('click', function () { openFn(items, i, thumb); });
+
+            var caption = document.createElement('div');
+            caption.className = 'photoLightbox-caption';
+            var text = document.createElement('span');
+            text.className = 'photoLightbox-caption-text';
+            var nameEl = document.createElement('span');
+            nameEl.className = 'photoLightbox-caption-name';
+            nameEl.textContent = item.name;
+            var metaEl = document.createElement('span');
+            metaEl.className = 'photoLightbox-caption-meta';
+            metaEl.textContent = isVideo ? (item.duration || '') : (item.size || '');
+            text.appendChild(nameEl);
+            text.appendChild(metaEl);
+            var download = document.createElement('a');
+            download.className = 'photoLightbox-caption-download';
+            download.href = item.src;
+            download.setAttribute('download', item.name);
+            download.setAttribute('aria-label', '下載' + item.name);
+            download.innerHTML = '<i class="bi bi-download" aria-hidden="true"></i>';
+            caption.appendChild(text);
+            caption.appendChild(download);
+
+            cell.appendChild(thumb);
+            cell.appendChild(caption);
+            grid.appendChild(cell);
+        });
+    }
+
+    // 「全部下載」：逐一觸發每個檔案各自的下載，不打包成壓縮檔
+    function downloadAllMedia(items) {
+        items.forEach(function (item) {
+            var a = document.createElement('a');
+            a.href = item.src;
+            a.setAttribute('download', item.name);
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        });
+    }
+
+    // ------------------------------------------------------------
+    // 全螢幕照片／影片放大檢視：疊在對話框之上，開啟時暫時搬進目前開啟的
     // Bootstrap modal 內（維持在其焦點鎖定範圍內），關閉時搬回原位置
     // ------------------------------------------------------------
     var photoViewer = document.querySelector('[data-js="vrPhotoViewer"]');
     var pvImg = photoViewer ? photoViewer.querySelector('[data-js="vrPhotoViewerImg"]') : null;
+    var pvVideo = photoViewer ? photoViewer.querySelector('[data-js="vrPhotoViewerVideo"]') : null;
     var pvCounter = photoViewer ? photoViewer.querySelector('[data-js="vrPhotoViewerCounter"]') : null;
     var pvDownload = photoViewer ? photoViewer.querySelector('[data-js="vrPhotoViewerDownload"]') : null;
     var pvClose = photoViewer ? photoViewer.querySelector('[data-js="vrPhotoViewerClose"]') : null;
@@ -2754,9 +3719,34 @@
     var pvReturnParent = null;
     var pvReturnNext = null;
     var pvReturnFocus = null;
+    var pvItems = [];
+    var pvIndex = 0;
+
+    function renderPhotoViewerItem() {
+        var item = pvItems[pvIndex];
+        var isVideo = item.type === 'video';
+        pvImg.hidden = isVideo;
+        pvVideo.hidden = !isVideo;
+        if (isVideo) {
+            pvVideo.pause();
+            pvVideo.src = item.src;
+        } else {
+            pvVideo.pause();
+            pvVideo.removeAttribute('src');
+            pvImg.src = item.src;
+            pvImg.alt = item.name;
+        }
+        pvCounter.textContent = (pvIndex + 1) + ' / ' + pvItems.length;
+        pvDownload.href = item.src;
+        pvDownload.setAttribute('download', item.name);
+        var hasMultiple = pvItems.length > 1;
+        if (pvPrev) { pvPrev.hidden = !hasMultiple; }
+        if (pvNext) { pvNext.hidden = !hasMultiple; }
+    }
 
     function closePhotoViewer() {
         if (!photoViewer || photoViewer.hidden) { return; }
+        pvVideo.pause();
         photoViewer.hidden = true;
         if (pvReturnParent) {
             pvReturnParent.insertBefore(photoViewer, pvReturnNext);
@@ -2769,16 +3759,11 @@
         }
     }
 
-    function openPhotoViewer(src, name, trigger) {
-        if (!photoViewer) { return; }
-        pvImg.src = src;
-        pvImg.alt = name;
-        pvCounter.textContent = '照片 1 / 1';
-        pvDownload.href = src;
-        pvDownload.setAttribute('download', name);
-        // 目前每個案件只有一張照片，上一張／下一張沒有作用對象時先隱藏
-        if (pvPrev) { pvPrev.hidden = true; }
-        if (pvNext) { pvNext.hidden = true; }
+    function openPhotoViewer(items, startIndex, trigger) {
+        if (!photoViewer || !items.length) { return; }
+        pvItems = items;
+        pvIndex = startIndex || 0;
+        renderPhotoViewerItem();
 
         // 搬進目前開啟的 modal 內，避免 Bootstrap 的焦點鎖定把焦點拉回底下的 modal
         var openModalEl = document.querySelector('.modal.show');
@@ -2796,6 +3781,18 @@
 
     if (photoViewer) {
         if (pvClose) { pvClose.addEventListener('click', closePhotoViewer); }
+        if (pvPrev) {
+            pvPrev.addEventListener('click', function () {
+                pvIndex = (pvIndex - 1 + pvItems.length) % pvItems.length;
+                renderPhotoViewerItem();
+            });
+        }
+        if (pvNext) {
+            pvNext.addEventListener('click', function () {
+                pvIndex = (pvIndex + 1) % pvItems.length;
+                renderPhotoViewerItem();
+            });
+        }
         photoViewer.addEventListener('click', function (e) {
             if (e.target === photoViewer) { closePhotoViewer(); }
         });
@@ -2963,16 +3960,47 @@
     var vuDateInput = updateModalEl.querySelector('[data-js="vuDateInput"]');
     var vuFailField = updateModalEl.querySelector('[data-js="vuFailField"]');
     var vuFailReasonInput = updateModalEl.querySelector('[data-js="vuFailReasonInput"]');
-    var resetVuUpload = wireFileUpload(
-        updateModalEl.querySelector('label[for="vuUpload"]'),
-        updateModalEl.querySelector('[data-js="vuUploadInput"]'),
-        updateModalEl.querySelector('[data-js="vuUploadList"]')
+    var vuHandoverField = updateModalEl.querySelector('[data-js="vuHandoverField"]');
+    var vuHandoverCheck = updateModalEl.querySelector('[data-js="vuHandoverCheck"]');
+    var vuHandoverDetail = updateModalEl.querySelector('[data-js="vuHandoverDetail"]');
+    var vuHandoverDateInput = updateModalEl.querySelector('[data-js="vuHandoverDateInput"]');
+    var vuHandoverNoteInput = updateModalEl.querySelector('[data-js="vuHandoverNoteInput"]');
+    var vuStartInput = updateModalEl.querySelector('[data-js="vuStartInput"]');
+    var vuNoteInput = updateModalEl.querySelector('[data-js="vuNoteInput"]');
+    var vuDownloadAllBtn = updateModalEl.querySelector('[data-js="vuDownloadAll"]');
+    var vuCurrentItems = [];
+    var resetVuReceiptUpload = wireFileUpload(
+        updateModalEl.querySelector('label[for="vuReceiptUpload"]'),
+        updateModalEl.querySelector('[data-js="vuReceiptInput"]'),
+        updateModalEl.querySelector('[data-js="vuReceiptList"]')
     );
 
-    // 目前進度三選一：維修中不需額外欄位，完成維修需填完成日期，無法修復需填原因
+    // 勾選「已確認家長繳交輔具」才出現繳交日期／備註
+    function syncHandoverDetail() {
+        var checked = vuHandoverCheck.checked;
+        vuHandoverDetail.hidden = !checked;
+        vuHandoverDateInput.required = checked;
+        if (!checked) {
+            vuHandoverDateInput.value = '';
+            vuHandoverNoteInput.value = '';
+        }
+    }
+
+    function clearHandoverSelection() {
+        vuHandoverCheck.checked = false;
+        syncHandoverDetail();
+    }
+
+    vuHandoverCheck.addEventListener('change', syncHandoverDetail);
+
+    // 目前進度三選一：維修中可額外填家長繳交確認，完成維修需填完成日期，無法修復需填原因
     function syncProgressFields(value) {
+        var isRepairing = value === 'repairing';
         var isDone = value === 'done';
         var isFailed = value === 'failed';
+
+        vuHandoverField.hidden = !isRepairing;
+        if (!isRepairing) { clearHandoverSelection(); }
 
         vuDateField.hidden = !isDone;
         vuDateInput.required = isDone;
@@ -3005,27 +4033,45 @@
 
     function openUpdateModal(trigger) {
         var caseNo = trigger.getAttribute('data-case') || '';
+        var dispatch = trigger.getAttribute('data-dispatch') || '';
+        var start = trigger.getAttribute('data-start') || '';
         var school = trigger.getAttribute('data-school') || '－';
         var contact = trigger.getAttribute('data-contact') || '－';
         var device = trigger.getAttribute('data-device') || '－';
         var property = trigger.getAttribute('data-property') || '－';
         var desc = trigger.getAttribute('data-desc') || '－';
-        var photo = trigger.getAttribute('data-photo') || '';
+        var centerNote = trigger.getAttribute('data-center-note') || '';
+        var items = parseMedia(trigger);
 
-        updateModalEl.querySelector('[data-js="vuSubtitle"]').textContent = '報修編號 ' + caseNo;
+        updateModalEl.querySelector('[data-js="vuSubtitle"]').textContent = caseNo + (dispatch ? '｜中心指派 ' + dispatch : '');
         updateModalEl.querySelector('[data-js="vuSchool"]').textContent = school;
         updateModalEl.querySelector('[data-js="vuContact"]').textContent = contact;
         updateModalEl.querySelector('[data-js="vuDevice"]').textContent = device;
         updateModalEl.querySelector('[data-js="vuProperty"]').textContent = property;
         updateModalEl.querySelector('[data-js="vuDesc"]').textContent = desc;
 
-        renderPhotoGrid(vuPhotoGrid, photo, device, openPhotoViewer);
+        var centerNoteEl = updateModalEl.querySelector('[data-js="vuCenterNote"]');
+        centerNoteEl.hidden = !centerNote;
+        if (centerNote) {
+            updateModalEl.querySelector('[data-js="vuCenterNoteText"]').textContent = centerNote;
+        }
+
+        vuCurrentItems = items;
+        renderMediaGrid(vuPhotoGrid, items, openPhotoViewer);
+        updateModalEl.querySelector('[data-js="vuDownloadAllCount"]').textContent = items.length;
+        if (vuDownloadAllBtn) { vuDownloadAllBtn.hidden = !items.length; }
 
         vuForm.reset();
         clearProgressSelection();
-        resetVuUpload();
+        resetVuReceiptUpload();
+        vuStartInput.value = start;
+        vuNoteInput.value = '';
 
         updateModal.show();
+    }
+
+    if (vuDownloadAllBtn) {
+        vuDownloadAllBtn.addEventListener('click', function () { downloadAllMedia(vuCurrentItems); });
     }
 
     vuForm.addEventListener('submit', function (e) {
@@ -3045,17 +4091,23 @@
     // ------------------------------------------------------------
     var recordModal = bootstrap.Modal.getOrCreateInstance(recordModalEl);
     var vrPhotoGrid = recordModalEl.querySelector('[data-js="vrPhotoGrid"]');
+    var vrDownloadAllBtn = recordModalEl.querySelector('[data-js="vrDownloadAll"]');
+    var vrCurrentItems = [];
 
     function openRecordModal(trigger) {
         var caseNo = trigger.getAttribute('data-case') || '';
+        var dispatch = trigger.getAttribute('data-dispatch') || '';
         var school = trigger.getAttribute('data-school') || '－';
         var contact = trigger.getAttribute('data-contact') || '－';
         var device = trigger.getAttribute('data-device') || '－';
         var property = trigger.getAttribute('data-property') || '－';
         var desc = trigger.getAttribute('data-desc') || '－';
-        var photo = trigger.getAttribute('data-photo') || '';
         var status = trigger.getAttribute('data-status') || 'pending';
         var centerNote = trigger.getAttribute('data-center-note') || '';
+        var receiptName = trigger.getAttribute('data-receipt-name') || '';
+        var receiptMeta = trigger.getAttribute('data-receipt-meta') || '';
+        var receiptHref = trigger.getAttribute('data-receipt-href') || '';
+        var items = parseMedia(trigger);
         var log = [];
         try { log = JSON.parse(trigger.getAttribute('data-log') || '[]'); } catch (e) { log = []; }
 
@@ -3063,7 +4115,7 @@
         recordModalEl.querySelector('[data-js="vrStatusPill"]').className = 'statusPill ms-2 ' + statusInfo.cls;
         recordModalEl.querySelector('[data-js="vrStatusText"]').textContent = statusInfo.text;
 
-        recordModalEl.querySelector('[data-js="vrSubtitle"]').textContent = '報修編號 ' + caseNo;
+        recordModalEl.querySelector('[data-js="vrSubtitle"]').textContent = caseNo + (dispatch ? '｜中心指派 ' + dispatch : '');
         recordModalEl.querySelector('[data-js="vrSchool"]').textContent = school;
         recordModalEl.querySelector('[data-js="vrContact"]').textContent = contact;
         recordModalEl.querySelector('[data-js="vrDevice"]').textContent = device;
@@ -3078,10 +4130,25 @@
 
         recordModalEl.querySelector('[data-js="vrFailNote"]').hidden = status !== 'failed';
 
-        renderPhotoGrid(vrPhotoGrid, photo, device, openPhotoViewer);
+        var receiptSectionEl = recordModalEl.querySelector('[data-js="vrReceiptSection"]');
+        receiptSectionEl.hidden = !receiptName;
+        if (receiptName) {
+            recordModalEl.querySelector('[data-js="vrReceiptName"]').textContent = receiptName;
+            recordModalEl.querySelector('[data-js="vrReceiptMeta"]').textContent = receiptMeta;
+            recordModalEl.querySelector('[data-js="vrReceiptLink"]').href = receiptHref;
+        }
+
+        vrCurrentItems = items;
+        renderMediaGrid(vrPhotoGrid, items, openPhotoViewer);
+        recordModalEl.querySelector('[data-js="vrDownloadAllCount"]').textContent = items.length;
+        if (vrDownloadAllBtn) { vrDownloadAllBtn.hidden = !items.length; }
         renderTimeline(recordModalEl.querySelector('[data-js="vrTimeline"]'), log);
 
         recordModal.show();
+    }
+
+    if (vrDownloadAllBtn) {
+        vrDownloadAllBtn.addEventListener('click', function () { downloadAllMedia(vrCurrentItems); });
     }
 
     document.querySelectorAll('[data-js="vendorUpdate"]').forEach(function (btn) {
@@ -3143,6 +4210,29 @@
     var hhCheckAllBtn = handoverModalEl.querySelector('[data-js="hhCheckAll"]');
     var hhReasonField = handoverModalEl.querySelector('[data-js="hhReasonField"]');
     var hhReasonInput = handoverModalEl.querySelector('[data-js="hhReasonInput"]');
+    var hhParentField = handoverModalEl.querySelector('[data-js="hhParentField"]');
+    var hhParentCheck = handoverModalEl.querySelector('[data-js="hhParentCheck"]');
+    var hhParentDetail = handoverModalEl.querySelector('[data-js="hhParentDetail"]');
+    var hhParentDateInput = handoverModalEl.querySelector('[data-js="hhParentDateInput"]');
+    var hhParentNoteInput = handoverModalEl.querySelector('[data-js="hhParentNoteInput"]');
+
+    // 家長繳交確認（僅歸還點交才出現）：勾選後才出現繳交日期／備註
+    function syncParentDetail() {
+        var checked = hhParentCheck.checked;
+        hhParentDetail.hidden = !checked;
+        hhParentDateInput.required = checked;
+        if (!checked) {
+            hhParentDateInput.value = '';
+            hhParentNoteInput.value = '';
+        }
+    }
+
+    function clearParentSelection() {
+        hhParentCheck.checked = false;
+        syncParentDetail();
+    }
+
+    hhParentCheck.addEventListener('change', syncParentDetail);
 
     function updatePartsCount() {
         var inputs = hhPartsGrid.querySelectorAll('.checkGrid-input');
@@ -3214,14 +4304,20 @@
     function openHandoverModal(trigger) {
         var caseNo = trigger.getAttribute('data-case') || '';
         var kind = trigger.getAttribute('data-kind') || 'out';
+        var isReturn = kind === 'back';
         var missing = parseMissing(trigger.getAttribute('data-missing'));
 
         setKindTag(handoverModalEl.querySelector('[data-js="hhKindTag"]'), kind);
+        handoverModalEl.querySelector('[data-js="hhTitleSuffix"]').textContent = isReturn ? '（領取歸還輔具）' : '';
         handoverModalEl.querySelector('[data-js="hhSubtitle"]').textContent = subtitleText(trigger);
 
         hhForm.reset();
         renderPartsGridInteractive(missing);
         clearFixSelection();
+
+        hhParentField.hidden = !isReturn;
+        hhParentCheck.required = isReturn;
+        clearParentSelection();
 
         handoverModal.show();
     }
@@ -3273,10 +4369,19 @@
         var handoverBy = trigger.getAttribute('data-handover-by') || '－';
         var needsFix = trigger.getAttribute('data-needs-fix') === 'true';
         var repairNote = trigger.getAttribute('data-repair-note') || '';
+        var parentDate = trigger.getAttribute('data-parent-date') || '';
+        var parentNote = trigger.getAttribute('data-parent-note') || '';
 
         setKindTag(recordModalEl.querySelector('[data-js="hrKindTag"]'), kind);
         recordModalEl.querySelector('[data-js="hrSubtitle"]').textContent = subtitleText(trigger);
         recordModalEl.querySelector('[data-js="hrTimeLine"]').textContent = '點交時間 ' + handoverTime + '・' + handoverBy;
+
+        var hrParentSection = recordModalEl.querySelector('[data-js="hrParentSection"]');
+        hrParentSection.hidden = kind !== 'back';
+        if (kind === 'back') {
+            recordModalEl.querySelector('[data-js="hrParentDate"]').textContent = parentDate || '－';
+            recordModalEl.querySelector('[data-js="hrParentNote"]').textContent = parentNote || '－';
+        }
 
         renderPartsGridStatic(missing);
 
@@ -3352,40 +4457,194 @@
     setState(readState());
 
     // ------------------------------------------------------------
-    // 審核決定：核准／退回補件（待審核、評估完成可審核才會顯示）
+    // 逐項審核決定：每張輔具卡（[data-js="rdItemCard"]）各自一組 radio，
+    // 卡片外框顏色、核准／退回欄位、側邊欄摘要與送出按鈕文字都依全部卡片目前的決定重新計算
     // ------------------------------------------------------------
-    var decisionCards = document.querySelectorAll('[data-js="rdDecisionCard"]');
-    var decisionInputs = document.querySelectorAll('[data-js="rdDecisionInput"]');
-    var approveFields = document.querySelector('[data-js="rdApproveFields"]');
-    var noteInput = document.querySelector('[data-js="rdNoteInput"]');
-    var noteRequired = document.querySelector('[data-js="rdNoteRequired"]');
+    var itemCards = document.querySelectorAll('[data-js="rdItemCard"]');
+    var summaryLists = document.querySelectorAll('[data-js="rdSummaryList"]');
     var submitBtn = document.querySelector('[data-js="rdSubmitBtn"]');
 
-    function syncDecision() {
-        decisionInputs.forEach(function (radio, i) {
-            decisionCards[i].classList.toggle('is-selected', radio.checked);
-            if (!radio.checked) { return; }
-            var isApprove = radio.value === 'approve';
-            approveFields.hidden = !isApprove;
-            if (noteInput) {
-                noteInput.placeholder = isApprove ? '選填，例如點交注意事項' : '請說明需要補充或修正的內容，將一併通知學校承辦人';
-            }
-            if (noteRequired) { noteRequired.hidden = isApprove; }
-            submitBtn.textContent = isApprove ? '核准並通知學校' : '送出退回';
+    var ITEM_CARD_CLASSES = ['reviewDetail-itemCard-approve', 'reviewDetail-itemCard-returnFix', 'reviewDetail-itemCard-reject'];
+    var SUBMIT_CLASSES = ['btn-teal', 'btn-amberSolid', 'btn-danger'];
+    var DECISION_TAG = {
+        approve: { cls: 'tag-approve', text: '核准' },
+        returnFix: { cls: 'tag-returnFix', text: '退回補件' },
+        reject: { cls: 'tag-reject', text: '不核准' }
+    };
+    // 退回補件／不通過結果頁的側邊欄摘要固定內容（這兩個狀態沒有可互動的 radio 可讀，改用固定資料對照已寫好的靜態文案）
+    var PRESET_SUMMARY = {
+        returned: [
+            { name: '桌上型擴視機', decision: 'approve' },
+            { name: '手持式擴視機', decision: 'returnFix' }
+        ],
+        done: [
+            { name: '桌上型擴視機', decision: 'approve' },
+            { name: '手持式擴視機', decision: 'reject' }
+        ]
+    };
+
+    function itemDecision(card) {
+        var checked = card.querySelector('[data-js="rdDecisionInput"]:checked');
+        return checked ? checked.value : null;
+    }
+
+    function toggleRequiredIn(container, isActive) {
+        if (!container) { return; }
+        container.querySelectorAll('select, input, textarea').forEach(function (field) {
+            field.required = isActive;
         });
     }
 
-    decisionInputs.forEach(function (radio) {
-        radio.addEventListener('change', syncDecision);
+    function firstInvalidField(card) {
+        var decision = itemDecision(card);
+        var container = decision === 'approve'
+            ? card.querySelector('[data-js="rdApproveFields"]')
+            : (decision === 'returnFix' || decision === 'reject')
+                ? card.querySelector('[data-js="rdReasonFields"]')
+                : null;
+        if (!container) { return null; }
+        var fields = container.querySelectorAll('[required]');
+        for (var i = 0; i < fields.length; i++) {
+            if (!fields[i].checkValidity()) { return fields[i]; }
+        }
+        return null;
+    }
+
+    function liveItems() {
+        return Array.prototype.map.call(itemCards, function (card) {
+            var nameEl = card.querySelector('.deviceSpecRow-name');
+            return { name: nameEl ? nameEl.textContent : '', decision: itemDecision(card) };
+        });
+    }
+
+    function syncItemCard(card) {
+        var decision = itemDecision(card);
+
+        card.querySelectorAll('[data-js="rdDecisionCard"]').forEach(function (cardLabel) {
+            var radio = cardLabel.querySelector('[data-js="rdDecisionInput"]');
+            cardLabel.classList.toggle('is-selected', radio.checked);
+        });
+
+        ITEM_CARD_CLASSES.forEach(function (cls) { card.classList.remove(cls); });
+        if (decision) { card.classList.add('reviewDetail-itemCard-' + decision); }
+
+        var approveFields = card.querySelector('[data-js="rdApproveFields"]');
+        var reasonFields = card.querySelector('[data-js="rdReasonFields"]');
+        if (approveFields) { approveFields.hidden = decision !== 'approve'; }
+        if (reasonFields) { reasonFields.hidden = decision !== 'returnFix' && decision !== 'reject'; }
+
+        // 欄位隨決定顯示／隱藏，required 要同步切換，否則隱藏欄位仍會卡住 checkValidity()
+        toggleRequiredIn(approveFields, decision === 'approve');
+        toggleRequiredIn(reasonFields, decision === 'returnFix' || decision === 'reject');
+    }
+
+    function renderSummaryRow(item) {
+        var row = document.createElement('div');
+        row.className = 'reviewDetail-summaryRow';
+
+        var nameEl = document.createElement('span');
+        nameEl.className = 'reviewDetail-summaryRow-name';
+        nameEl.textContent = item.name;
+
+        var tag = document.createElement('span');
+        var meta = item.decision ? DECISION_TAG[item.decision] : null;
+        tag.className = 'tagPill ' + (meta ? meta.cls : 'tag-unselected');
+        tag.textContent = meta ? meta.text : '尚未選擇';
+
+        row.appendChild(nameEl);
+        row.appendChild(tag);
+        return row;
+    }
+
+    function syncSummaries() {
+        summaryLists.forEach(function (list) {
+            var scopeEl = list.closest('[data-state-for]');
+            var tokens = scopeEl ? scopeEl.getAttribute('data-state-for').split(/\s+/) : [];
+            var items;
+            if (tokens.indexOf('returned') !== -1) {
+                items = PRESET_SUMMARY.returned;
+            } else if (tokens.indexOf('done') !== -1) {
+                items = PRESET_SUMMARY.done;
+            } else {
+                items = liveItems();
+            }
+            list.innerHTML = '';
+            items.forEach(function (item) { list.appendChild(renderSummaryRow(item)); });
+        });
+    }
+
+    function syncSubmit() {
+        if (!submitBtn) { return; }
+        var decisions = liveItems().map(function (item) { return item.decision; });
+        var total = decisions.length;
+        var approveCount = decisions.filter(function (d) { return d === 'approve'; }).length;
+        var returnFixCount = decisions.filter(function (d) { return d === 'returnFix'; }).length;
+        var rejectCount = decisions.filter(function (d) { return d === 'reject'; }).length;
+
+        SUBMIT_CLASSES.forEach(function (cls) { submitBtn.classList.remove(cls); });
+
+        if (decisions.indexOf(null) !== -1) {
+            submitBtn.classList.add('btn-teal');
+            submitBtn.textContent = '請先完成逐項審核';
+            submitBtn.setAttribute('aria-disabled', 'true');
+            return;
+        }
+
+        submitBtn.setAttribute('aria-disabled', 'false');
+
+        if (returnFixCount > 0) {
+            submitBtn.classList.add('btn-amberSolid');
+            submitBtn.textContent = '退回學校補件（' + returnFixCount + ' 項）';
+        } else if (rejectCount === total) {
+            submitBtn.classList.add('btn-danger');
+            submitBtn.textContent = '送出不核准（' + rejectCount + ' 項）';
+        } else if (approveCount === total) {
+            submitBtn.classList.add('btn-teal');
+            submitBtn.textContent = '核准並通知學校（' + approveCount + ' 項）';
+        } else {
+            submitBtn.classList.add('btn-teal');
+            submitBtn.textContent = '送出審核結果（核准 ' + approveCount + ' 項、不核准 ' + rejectCount + ' 項）';
+        }
+    }
+
+    function syncAll() {
+        itemCards.forEach(function (card) { syncItemCard(card); });
+        syncSummaries();
+        syncSubmit();
+    }
+
+    itemCards.forEach(function (card) {
+        card.querySelectorAll('[data-js="rdDecisionInput"]').forEach(function (radio) {
+            radio.addEventListener('change', syncAll);
+        });
     });
 
-    syncDecision();
-
-    // 送出審核決定（示意）：核准 → 待點交確認；退回補件 → 退回補件狀態
+    // 送出審核決定（示意）：任一項退回補件 → 退回補件狀態；全部不核准 → 不核准結果；
+    // 其餘（全部核准，或核准／不核准混合）→ 待點交確認
     if (submitBtn) {
         submitBtn.addEventListener('click', function () {
-            var checked = document.querySelector('[data-js="rdDecisionInput"]:checked');
-            setState(checked && checked.value === 'return' ? 'returned' : 'handover');
+            if (submitBtn.getAttribute('aria-disabled') === 'true') { return; }
+
+            var invalidField = null;
+            itemCards.forEach(function (card) {
+                if (!invalidField) { invalidField = firstInvalidField(card); }
+            });
+            if (invalidField) {
+                var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
+                invalidField.reportValidity();
+                document.documentElement.style.scrollBehavior = prevScrollBehavior;
+                return;
+            }
+
+            var decisions = liveItems().map(function (item) { return item.decision; });
+            if (decisions.indexOf('returnFix') !== -1) {
+                setState('returned');
+            } else if (decisions.every(function (d) { return d === 'reject'; })) {
+                setState('done');
+            } else {
+                setState('handover');
+            }
         });
     }
 
@@ -3457,16 +4716,127 @@
     }
 
     // ------------------------------------------------------------
-    // 評估報告上傳（示意）：到校評估完成後，上傳紀錄即轉為「評估完成，可審核」狀態
+    // 每項輔具到校評估報告上傳：各自獨立的檔案清單，全部項目都至少上傳一個檔案後，
+    // 才轉為「評估完成，可審核」狀態（對應側邊欄「每項輔具完成到校評估並上傳報告後，才能逐項審核」提示）
     // ------------------------------------------------------------
-    var evalUploadInput = document.querySelector('[data-js="rdEvalUploadInput"]');
-    if (evalUploadInput) {
-        evalUploadInput.addEventListener('change', function () {
-            if (evalUploadInput.files && evalUploadInput.files.length) {
+    var evalUploadInputs = document.querySelectorAll('[data-js="rdEvalUploadInput"]');
+    var evalUploadHasFiles = [];
+
+    function evalFileSize(bytes) {
+        if (bytes < 1024) { return bytes + ' B'; }
+        if (bytes < 1024 * 1024) { return Math.round(bytes / 1024) + ' KB'; }
+        return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+    }
+
+    function evalFileExt(file) {
+        var m = file.name.match(/\.([a-zA-Z0-9]+)$/);
+        return m ? m[1].toUpperCase() : '檔案';
+    }
+
+    function evalFileIconClass(file) {
+        var ext = evalFileExt(file).toLowerCase();
+        if (ext === 'pdf') { return 'bi-file-earmark-pdf'; }
+        if (['jpg', 'jpeg', 'png', 'gif', 'webp'].indexOf(ext) !== -1) { return 'bi-file-earmark-image'; }
+        return 'bi-file-earmark-text';
+    }
+
+    function createEvalFileRow(file, onDelete) {
+        var row = document.createElement('div');
+        row.className = 'fileRow fileRow-upload';
+
+        var icon = document.createElement('span');
+        icon.className = 'fileRow-icon';
+        icon.setAttribute('aria-hidden', 'true');
+        var iconI = document.createElement('i');
+        iconI.className = 'bi ' + evalFileIconClass(file);
+        icon.appendChild(iconI);
+
+        var body = document.createElement('span');
+        body.className = 'fileRow-body';
+        var nameEl = document.createElement('span');
+        nameEl.className = 'fileRow-name';
+        nameEl.textContent = file.name;
+        var metaEl = document.createElement('span');
+        metaEl.className = 'fileRow-meta';
+        metaEl.textContent = evalFileExt(file) + '．' + evalFileSize(file.size);
+        body.appendChild(nameEl);
+        body.appendChild(metaEl);
+
+        var delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = 'fileRow-delete';
+        delBtn.setAttribute('aria-label', '刪除檔案 ' + file.name);
+        var delI = document.createElement('i');
+        delI.className = 'bi bi-trash3';
+        delI.setAttribute('aria-hidden', 'true');
+        delBtn.appendChild(delI);
+        delBtn.addEventListener('click', onDelete);
+
+        row.appendChild(icon);
+        row.appendChild(body);
+        row.appendChild(delBtn);
+        return row;
+    }
+
+    evalUploadInputs.forEach(function (input, index) {
+        var wrap = input.closest('.perItemUpload');
+        var listEl = wrap ? wrap.querySelector('.d-flex') : null;
+        var label = wrap ? wrap.querySelector('label[for="' + input.id + '"]') : null;
+        var files = [];
+        evalUploadHasFiles[index] = false;
+
+        function sync() {
+            var dt = new DataTransfer();
+            files.forEach(function (f) { dt.items.add(f); });
+            input.files = dt.files;
+            evalUploadHasFiles[index] = files.length > 0;
+            if (evalUploadHasFiles.length === evalUploadInputs.length && evalUploadHasFiles.every(function (v) { return v; })) {
                 setState('evalDone');
             }
-        });
-    }
+        }
+
+        function renderList() {
+            if (!listEl) { return; }
+            listEl.innerHTML = '';
+            listEl.hidden = files.length === 0;
+            files.forEach(function (file, i) {
+                listEl.appendChild(createEvalFileRow(file, function () {
+                    files.splice(i, 1);
+                    sync();
+                    renderList();
+                }));
+            });
+        }
+
+        function addFiles(list) {
+            var incoming = Array.prototype.slice.call(list);
+            if (!incoming.length) { return; }
+            files = files.concat(incoming);
+            sync();
+            renderList();
+        }
+
+        input.addEventListener('change', function () { addFiles(input.files); });
+
+        if (label) {
+            ['dragenter', 'dragover'].forEach(function (evt) {
+                label.addEventListener(evt, function (e) {
+                    e.preventDefault();
+                    label.classList.add('is-dragover');
+                });
+            });
+            ['dragleave', 'dragend'].forEach(function (evt) {
+                label.addEventListener(evt, function () { label.classList.remove('is-dragover'); });
+            });
+            label.addEventListener('drop', function (e) {
+                e.preventDefault();
+                label.classList.remove('is-dragover');
+                if (e.dataTransfer) { addFiles(e.dataTransfer.files); }
+            });
+        }
+    });
+
+    syncAll();
 })();
 
 // ------------------------------------------------------------
@@ -4083,6 +5453,345 @@
             var checkedRadio = itemModal.querySelector('[data-js="dmTypeRadio"]:checked');
             applyType(checkedRadio ? checkedRadio.value : 'unit');
         }
+
+        // ---- 新增輔具 modal 的三步驟 Stepper（design.md §7.12 Stepper、改版異動說明 §7）----
+        var resetCallbacks = [];
+        var deviceForm = itemModal.querySelector('[data-js="deviceModalForm"]');
+        var stepPanels = itemModal.querySelectorAll('[data-js="dmStepPanel"]');
+        var stepButtons = itemModal.querySelectorAll('[data-js="dmStepBtn"]');
+        var stepItems = itemModal.querySelectorAll('.deviceStepper-item');
+        var btnPrev = itemModal.querySelector('[data-js="dmBtnPrev"]');
+        var btnSkip = itemModal.querySelector('[data-js="dmBtnSkip"]');
+        var btnNext = itemModal.querySelector('[data-js="dmBtnNext"]');
+        var btnSubmit = itemModal.querySelector('[data-js="dmBtnSubmit"]');
+
+        var STEP_INFO = {
+            1: { showPrev: false, showSkip: false, nextText: '下一步：前台說明（選填）', showSubmit: false },
+            2: { showPrev: true, showSkip: true, nextText: '下一步：相關文件（選填）', showSubmit: false },
+            3: { showPrev: true, showSkip: false, nextText: '', showSubmit: true }
+        };
+
+        var isEdit = !!lockedType;
+        var currentStep = 1;
+        var reachedStep = isEdit ? 3 : 1;
+
+        var goToStep = function (step, moveFocus) {
+            currentStep = step;
+            if (step > reachedStep) { reachedStep = step; }
+
+            stepPanels.forEach(function (panel) {
+                panel.hidden = parseInt(panel.getAttribute('data-step'), 10) !== step;
+            });
+
+            stepButtons.forEach(function (btn) {
+                var btnStep = parseInt(btn.getAttribute('data-step'), 10);
+                btn.classList.toggle('is-current', btnStep === step);
+                btn.classList.toggle('is-done', isEdit ? btnStep !== step : (btnStep < reachedStep && btnStep !== step));
+                if (btnStep === step) {
+                    btn.setAttribute('aria-current', 'step');
+                } else {
+                    btn.removeAttribute('aria-current');
+                }
+                if (btnStep <= reachedStep) {
+                    btn.removeAttribute('aria-disabled');
+                } else {
+                    btn.setAttribute('aria-disabled', 'true');
+                }
+            });
+
+            stepItems.forEach(function (item, idx) {
+                item.classList.toggle('is-lineDone', isEdit ? true : (idx + 1 < step));
+            });
+
+            var info = STEP_INFO[step];
+            var nextVisible = step < 3;
+            var submitVisible = isEdit ? true : info.showSubmit;
+            if (btnPrev) { btnPrev.hidden = !info.showPrev; }
+            if (btnSkip) { btnSkip.hidden = isEdit || !info.showSkip; }
+            if (btnNext) {
+                btnNext.hidden = !nextVisible;
+                if (nextVisible) {
+                    btnNext.innerHTML = info.nextText + '<i class="bi bi-arrow-right" aria-hidden="true"></i>';
+                }
+            }
+            if (btnSubmit) { btnSubmit.hidden = !submitVisible; }
+
+            if (moveFocus) {
+                var currentStepBtn = itemModal.querySelector('[data-js="dmStepBtn"][data-step="' + step + '"]');
+                if (currentStepBtn) { currentStepBtn.focus(); }
+            }
+        };
+
+        stepButtons.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var target = parseInt(btn.getAttribute('data-step'), 10);
+                if (target > reachedStep) { return; }
+                goToStep(target, true);
+            });
+        });
+
+        if (btnNext) {
+            btnNext.addEventListener('click', function () {
+                if (currentStep === 1 && deviceForm && !deviceForm.checkValidity()) {
+                    var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+                    document.documentElement.style.scrollBehavior = 'auto';
+                    deviceForm.reportValidity();
+                    document.documentElement.style.scrollBehavior = prevScrollBehavior;
+                    return;
+                }
+                goToStep(currentStep + 1, true);
+            });
+        }
+
+        if (btnPrev) {
+            btnPrev.addEventListener('click', function () { goToStep(currentStep - 1, true); });
+        }
+
+        if (btnSkip) {
+            btnSkip.addEventListener('click', function () { goToStep(currentStep + 1, true); });
+        }
+
+        resetCallbacks.push(function () { goToStep(1, false); });
+
+        // ---- 操作步驟／注意事項：可新增、移除的條列輸入（共用外型，差異在編號圓／點）----
+        var buildStepList = function (listEl, addBtn, opts) {
+            if (!listEl || !addBtn) { return; }
+            var rows = [];
+
+            var renumber = function () {
+                if (!opts.numbered) { return; }
+                rows.forEach(function (row, idx) {
+                    row.numEl.textContent = String(idx + 1);
+                });
+            };
+
+            var wireRow = function (li) {
+                var markEl = li.querySelector(opts.numbered ? '.deviceListInput-num' : '.deviceListInput-dotMark');
+                var removeBtn = li.querySelector('.deviceListInput-remove');
+                var row = { li: li, numEl: opts.numbered ? markEl : null };
+                rows.push(row);
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', function () {
+                        var idx = rows.indexOf(row);
+                        if (idx === -1) { return; }
+                        rows.splice(idx, 1);
+                        li.remove();
+                        renumber();
+                    });
+                }
+            };
+
+            var addRow = function (focusNew) {
+                var li = document.createElement('li');
+                li.className = 'deviceListInput-row';
+
+                var markEl = document.createElement('span');
+                if (opts.numbered) {
+                    markEl.className = 'deviceListInput-num';
+                } else {
+                    markEl.className = 'deviceListInput-dotMark';
+                    markEl.setAttribute('aria-hidden', 'true');
+                }
+                li.appendChild(markEl);
+
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'form-control';
+                input.placeholder = opts.placeholder;
+                li.appendChild(input);
+
+                var removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'deviceListInput-remove';
+                removeBtn.setAttribute('aria-label', opts.removeLabel);
+                removeBtn.innerHTML = '<i class="bi bi-trash" aria-hidden="true"></i>';
+                li.appendChild(removeBtn);
+
+                listEl.appendChild(li);
+                wireRow(li);
+                renumber();
+
+                if (focusNew) { input.focus(); }
+            };
+
+            Array.prototype.slice.call(listEl.children).forEach(function (li) { wireRow(li); });
+            renumber();
+
+            addBtn.addEventListener('click', function () { addRow(true); });
+
+            resetCallbacks.push(function () {
+                if (isEdit) { return; }
+                rows.slice().forEach(function (row) { row.li.remove(); });
+                rows.length = 0;
+            });
+        };
+
+        buildStepList(itemModal.querySelector('[data-js="dmStepsList"]'), itemModal.querySelector('[data-js="dmStepsAdd"]'), { numbered: true, placeholder: '例：開啟電源開關', removeLabel: '移除這一步' });
+        buildStepList(itemModal.querySelector('[data-js="dmCautionsList"]'), itemModal.querySelector('[data-js="dmCautionsAdd"]'), { numbered: false, placeholder: '例：避免放置於陽光直射處', removeLabel: '移除這則注意事項' });
+
+        // ---- 配件清單：輸入後按 Enter 加入標籤 ----
+        var accessoryList = itemModal.querySelector('[data-js="dmAccessoriesList"]');
+        var accessoryInput = itemModal.querySelector('[data-js="dmAccessoryInput"]');
+        if (accessoryList && accessoryInput) {
+            var addAccessoryTag = function () {
+                var value = accessoryInput.value.trim();
+                if (!value) { return; }
+                var li = document.createElement('li');
+                li.className = 'tagInput-tag';
+
+                var textEl = document.createElement('span');
+                textEl.textContent = value;
+                li.appendChild(textEl);
+
+                var removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'tagInput-tagRemove';
+                removeBtn.setAttribute('aria-label', '移除「' + value + '」');
+                removeBtn.innerHTML = '<i class="bi bi-x" aria-hidden="true"></i>';
+                removeBtn.addEventListener('click', function () { li.remove(); });
+                li.appendChild(removeBtn);
+
+                accessoryList.appendChild(li);
+                accessoryInput.value = '';
+            };
+
+            Array.prototype.slice.call(accessoryList.children).forEach(function (li) {
+                var removeBtn = li.querySelector('.tagInput-tagRemove');
+                if (removeBtn) { removeBtn.addEventListener('click', function () { li.remove(); }); }
+            });
+
+            accessoryInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addAccessoryTag();
+                }
+            });
+
+            resetCallbacks.push(function () {
+                if (isEdit) { return; }
+                accessoryList.innerHTML = '';
+                accessoryInput.value = '';
+            });
+        }
+
+        // ---- 相關文件：多檔上傳，可編輯檔名、刪除 ----
+        var docsList = itemModal.querySelector('[data-js="dmDocsList"]');
+        var docsEmpty = itemModal.querySelector('[data-js="dmDocsEmpty"]');
+        var docsInput = itemModal.querySelector('[data-js="dmDocsInput"]');
+
+        if (docsList && docsInput) {
+            var docRows = [];
+
+            var formatSize = function (bytes) {
+                if (bytes >= 1024 * 1024) { return (bytes / (1024 * 1024)).toFixed(1) + ' MB'; }
+                return Math.max(1, Math.round(bytes / 1024)) + ' KB';
+            };
+
+            var docIconClass = function (file) {
+                var name = file.name.toLowerCase();
+                if (name.endsWith('.pdf')) { return 'fileRow-icon-pdf'; }
+                if (name.endsWith('.mp4')) { return 'fileRow-icon-mp4'; }
+                return 'fileRow-icon-doc';
+            };
+
+            var docIcon = function (file) {
+                var name = file.name.toLowerCase();
+                if (name.endsWith('.pdf')) { return 'bi-file-earmark-pdf'; }
+                if (name.endsWith('.mp4')) { return 'bi-file-earmark-play'; }
+                return 'bi-file-earmark-word';
+            };
+
+            var updateDocsEmpty = function () {
+                if (docsEmpty) { docsEmpty.hidden = docRows.length > 0; }
+            };
+
+            var addDocRow = function (file) {
+                var li = document.createElement('li');
+                li.className = 'fileRow fileRow-upload';
+
+                var iconEl = document.createElement('span');
+                iconEl.className = 'fileRow-icon fileRow-icon-lg ' + docIconClass(file);
+                iconEl.setAttribute('aria-hidden', 'true');
+                iconEl.innerHTML = '<i class="bi ' + docIcon(file) + '"></i>';
+                li.appendChild(iconEl);
+
+                var bodyEl = document.createElement('span');
+                bodyEl.className = 'fileRow-body';
+
+                var nameInput = document.createElement('input');
+                nameInput.type = 'text';
+                nameInput.className = 'deviceDocList-name';
+                nameInput.value = file.name;
+                nameInput.setAttribute('aria-label', '檔案名稱');
+                bodyEl.appendChild(nameInput);
+
+                var metaEl = document.createElement('span');
+                metaEl.className = 'fileRow-meta';
+                metaEl.textContent = formatSize(file.size);
+                bodyEl.appendChild(metaEl);
+
+                li.appendChild(bodyEl);
+
+                var deleteBtn = document.createElement('button');
+                deleteBtn.type = 'button';
+                deleteBtn.className = 'fileRow-delete';
+                deleteBtn.setAttribute('aria-label', '刪除「' + file.name + '」');
+                deleteBtn.innerHTML = '<i class="bi bi-trash" aria-hidden="true"></i>';
+                li.appendChild(deleteBtn);
+
+                docsList.appendChild(li);
+                docRows.push(li);
+                updateDocsEmpty();
+
+                deleteBtn.addEventListener('click', function () {
+                    var idx = docRows.indexOf(li);
+                    if (idx !== -1) { docRows.splice(idx, 1); }
+                    li.remove();
+                    updateDocsEmpty();
+                });
+            };
+
+            docsInput.addEventListener('change', function () {
+                Array.prototype.forEach.call(docsInput.files, function (file) { addDocRow(file); });
+                docsInput.value = '';
+            });
+
+            Array.prototype.slice.call(docsList.children).forEach(function (li) {
+                var deleteBtn = li.querySelector('.fileRow-delete');
+                docRows.push(li);
+                if (deleteBtn) {
+                    deleteBtn.addEventListener('click', function () {
+                        var idx = docRows.indexOf(li);
+                        if (idx !== -1) { docRows.splice(idx, 1); }
+                        li.remove();
+                        updateDocsEmpty();
+                    });
+                }
+            });
+
+            updateDocsEmpty();
+
+            resetCallbacks.push(function () {
+                if (isEdit) { return; }
+                docRows.slice().forEach(function (li) { li.remove(); });
+                docRows.length = 0;
+                updateDocsEmpty();
+            });
+        }
+
+        // ---- Enter 鍵安全網：多步驟表單內的一般文字欄位按 Enter 不應提前送出表單（配件清單輸入框除外，由上方邏輯自行處理）----
+        if (deviceForm) {
+            deviceForm.addEventListener('keydown', function (e) {
+                if (e.key !== 'Enter') { return; }
+                if (e.target.tagName === 'INPUT' && e.target.type === 'text' && e.target !== accessoryInput) {
+                    e.preventDefault();
+                }
+            });
+        }
+
+        itemModal.addEventListener('hidden.bs.modal', function () {
+            resetCallbacks.forEach(function (fn) { fn(); });
+        });
     }
 
     // ---- 照片上傳預覽：選檔後直接顯示在框內，可重新上傳或移除 ----
@@ -4204,6 +5913,163 @@
                 if (instance) { instance.hide(); }
             }
         });
+    });
+})();
+
+// ------------------------------------------------------------
+// center/device.html：單台財產列表「報修」按鈕 → 新增報修 modal（報修來源：中心）
+// ------------------------------------------------------------
+(function () {
+    var repairModal = document.getElementById('centerDeviceRepairModal');
+    if (!repairModal) { return; }
+
+    function formatFileSize(bytes) {
+        if (bytes < 1024) { return bytes + ' B'; }
+        if (bytes < 1024 * 1024) { return Math.round(bytes / 1024) + ' KB'; }
+        return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+    }
+
+    function fileExt(file) {
+        var m = file.name.match(/\.([a-zA-Z0-9]+)$/);
+        return m ? m[1].toUpperCase() : '檔案';
+    }
+
+    function fileIconClass(file) {
+        var ext = fileExt(file).toLowerCase();
+        if (['jpg', 'jpeg', 'png', 'gif', 'webp'].indexOf(ext) !== -1) { return 'bi-file-earmark-image'; }
+        if (['mp4', 'mov', 'webm'].indexOf(ext) !== -1) { return 'bi-file-earmark-play'; }
+        return 'bi-file-earmark-text';
+    }
+
+    function createFileRow(file, onDelete) {
+        var row = document.createElement('div');
+        row.className = 'fileRow fileRow-upload';
+
+        var icon = document.createElement('span');
+        icon.className = 'fileRow-icon';
+        icon.setAttribute('aria-hidden', 'true');
+        var iconI = document.createElement('i');
+        iconI.className = 'bi ' + fileIconClass(file);
+        icon.appendChild(iconI);
+
+        var body = document.createElement('span');
+        body.className = 'fileRow-body';
+        var nameEl = document.createElement('span');
+        nameEl.className = 'fileRow-name';
+        nameEl.textContent = file.name;
+        var metaEl = document.createElement('span');
+        metaEl.className = 'fileRow-meta';
+        metaEl.textContent = fileExt(file) + '．' + formatFileSize(file.size);
+        body.appendChild(nameEl);
+        body.appendChild(metaEl);
+
+        var delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = 'fileRow-delete';
+        delBtn.setAttribute('aria-label', '刪除檔案 ' + file.name);
+        var delI = document.createElement('i');
+        delI.className = 'bi bi-trash3';
+        delI.setAttribute('aria-hidden', 'true');
+        delBtn.appendChild(delI);
+        delBtn.addEventListener('click', onDelete);
+
+        row.appendChild(icon);
+        row.appendChild(body);
+        row.appendChild(delBtn);
+        return row;
+    }
+
+    // 最多 5 個檔案：超過上限時只取前 5 個
+    function wireFileUpload(label, input, listEl, maxFiles) {
+        if (!label || !input || !listEl) { return null; }
+        var files = [];
+
+        function sync() {
+            var dt = new DataTransfer();
+            files.forEach(function (f) { dt.items.add(f); });
+            input.files = dt.files;
+        }
+
+        function renderList() {
+            listEl.innerHTML = '';
+            listEl.hidden = files.length === 0;
+            files.forEach(function (file, i) {
+                listEl.appendChild(createFileRow(file, function () {
+                    files.splice(i, 1);
+                    sync();
+                    renderList();
+                }));
+            });
+        }
+
+        function addFiles(list) {
+            var incoming = Array.prototype.slice.call(list);
+            if (!incoming.length) { return; }
+            files = files.concat(incoming).slice(0, maxFiles);
+            sync();
+            renderList();
+        }
+
+        function reset() {
+            files = [];
+            sync();
+            renderList();
+        }
+
+        input.addEventListener('change', function () { addFiles(input.files); });
+
+        ['dragenter', 'dragover'].forEach(function (evt) {
+            label.addEventListener(evt, function (e) {
+                e.preventDefault();
+                label.classList.add('is-dragover');
+            });
+        });
+
+        ['dragleave', 'dragend'].forEach(function (evt) {
+            label.addEventListener(evt, function () { label.classList.remove('is-dragover'); });
+        });
+
+        label.addEventListener('drop', function (e) {
+            e.preventDefault();
+            label.classList.remove('is-dragover');
+            if (e.dataTransfer) { addFiles(e.dataTransfer.files); }
+        });
+
+        return { reset: reset };
+    }
+
+    var repairForm = repairModal.querySelector('[data-js="centerDeviceRepairForm"]');
+    var repairUpload = wireFileUpload(
+        document.querySelector('label[for="rpcMedia"]'),
+        document.getElementById('rpcMedia'),
+        repairModal.querySelector('[data-js="rpcFileList"]'),
+        5
+    );
+
+    var repairModalInstance = bootstrap.Modal.getOrCreateInstance(repairModal);
+
+    document.querySelectorAll('[data-bs-target="#centerDeviceRepairModal"]').forEach(function (trigger) {
+        trigger.addEventListener('click', function () {
+            var no = trigger.getAttribute('data-rp-no') || '';
+            var spec = trigger.getAttribute('data-rp-spec') || '';
+
+            repairModal.querySelector('[data-js="rpcSub"]').textContent = [no, spec, '中心庫房'].filter(Boolean).join('・');
+
+            repairForm.reset();
+            if (repairUpload) { repairUpload.reset(); }
+        });
+    });
+
+    repairForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!repairForm.checkValidity()) {
+            var prevScrollBehavior = document.documentElement.style.scrollBehavior;
+            document.documentElement.style.scrollBehavior = 'auto';
+            repairForm.reportValidity();
+            document.documentElement.style.scrollBehavior = prevScrollBehavior;
+            return;
+        }
+        repairModalInstance.hide();
     });
 })();
 

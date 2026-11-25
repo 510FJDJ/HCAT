@@ -1,8 +1,71 @@
 // ============================================================
-// 報修案件共用元件（廠商端報修案件、中心端報修管理共用）：
+// 報修案件共用元件（廠商端報修案件、聽障點交共用）：
 // - .dotTimeline：維修紀錄 modal 的「處理進度」垂直時間軸（圓點＋連接線）
 // - .photoViewerFull：報修照片／影片全螢幕放大檢視（疊在對話框之上，純顯示用途）
+// - .confirmBox：「家長繳交確認」提示框（聽障點交、廠商報修共用），標題 .confirmBox-legend
+//   以絕對定位疊在容器左上邊線上，底色跟隨各變體自身底色（非白色），
+//   只局部遮住文字正下方的邊框線，不會切出一塊與周圍底色不同的色塊
 // ============================================================
+
+.confirmBox {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 22px;
+    border-radius: $border-radius-lg;
+    border: 2px solid;
+}
+
+.confirmBox-legend {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    transform: translateY(-50%);
+    padding: 0 8px;
+    font-size: 18px;
+    font-weight: 500;
+    color: $ink-1;
+}
+
+.confirmBox-legend::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 60%;
+    z-index: -1;
+}
+
+.confirmBox-violet {
+    background-color: #F7F4FC;
+    border-color: #CFC2E6;
+
+    .confirmBox-legend::before {
+        background-color: #F7F4FC;
+    }
+}
+
+// 一般報修案件（非聽障）的家長繳交確認／領取輔具提示框
+.confirmBox-teal {
+    background-color: $surface-teal-pale;
+    border-color: $brand-teal;
+
+    .confirmBox-legend::before {
+        background-color: $surface-teal-pale;
+    }
+}
+
+.confirmBox-fields {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 16px 18px;
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+    }
+}
 
 .dotTimeline {
     margin: 12px 0 0;

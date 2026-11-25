@@ -71,15 +71,16 @@
         <div class="recordsPage-content">
             <div class="recordsPage-container">
 
-                <!-- 申請流程 -->
-                <section class="applyForm-section cardPanel" aria-labelledby="rc-flow">
-                    <h2 id="rc-flow" class="applyForm-sectionHead">
-                        <button type="button" class="applyForm-sectionHead-toggle" data-js="flowToggle" aria-expanded="false" aria-controls="rc-flow-body">
+                <!-- 申請流程：桌面／平板直接顯示，手機維持白卡＋收合（避免直式堆疊過長） -->
+                <section class="recordsFlow" aria-labelledby="rc-flow">
+                    <h2 id="rc-flow" class="recordsFlow-title">
+                        <span class="recordsFlow-title-static">申請流程</span>
+                        <button type="button" class="recordsFlow-toggle" data-js="flowToggle" aria-expanded="false" aria-controls="rc-flow-body">
                             申請流程
-                            <i class="bi bi-chevron-down applyForm-sectionHead-chevron" aria-hidden="true"></i>
+                            <i class="bi bi-chevron-down recordsFlow-chevron" aria-hidden="true"></i>
                         </button>
                     </h2>
-                    <div class="applyForm-sectionBody is-collapsed" id="rc-flow-body" data-js="flowBody">
+                    <div class="recordsFlow-body is-collapsed" id="rc-flow-body" data-js="flowBody">
                         <ol class="flowSteps">
                             <li class="flowSteps-item flowSteps-item-school">
                                 <span class="flowSteps-circle" aria-hidden="true">1</span>
@@ -124,7 +125,7 @@
                 </section>
 
                 <!-- 申請列表 -->
-                <section class="applyForm-section cardPanel mt-6" aria-label="申請列表">
+                <section class="applyForm-section cardPanel" aria-label="申請列表">
                     <div class="applyForm-sectionBody mt-0">
 
                         <div class="recordsFilters">
@@ -199,14 +200,14 @@
                                                 <td data-label="類型"><span class="tagPill tag-tealSoft">首次借用</span></td>
                                                 <td data-label="學生／輔具">
                                                     <span class="dataTable-cellTitle">
-                                                        <span class="dataTable-cellTitle-main">兒童輪椅</span>
+                                                        <span class="dataTable-cellTitle-main">兒童輪椅、擺位椅（2 項）</span>
                                                         <span class="dataTable-cellTitle-sub">吳○翰</span>
                                                     </span>
                                                 </td>
                                                 <td data-label="進度"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待上傳簽核申請表</span></td>
                                                 <td data-label="文件"><a href="#" class="linkMarker" download><i class="bi bi-download me-1" aria-hidden="true"></i>下載申請表</a></td>
                                                 <td data-label="下一步" class="dataTable-cellNext">
-                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="recordsUpload" data-step="1" data-app="A1151029-006" data-device="兒童輪椅" data-student="吳○翰">上傳簽核申請表</button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="recordsUpload" data-step="1" data-app="A1151029-006" data-device="兒童輪椅、擺位椅（2 項）" data-student="吳○翰"><i class="bi bi-upload" aria-hidden="true"></i>上傳簽核申請表</button>
                                                 </td>
                                             </tr>
                                             <tr data-category="todo">
@@ -226,7 +227,7 @@
                                                 <td data-label="進度"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待上傳簽章借用單</span></td>
                                                 <td data-label="文件"><a href="#" class="linkMarker" download><i class="bi bi-download me-1" aria-hidden="true"></i>下載借用單</a></td>
                                                 <td data-label="下一步" class="dataTable-cellNext">
-                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="recordsUpload" data-step="3" data-app="A1150926-011" data-device="桌上型擴視機" data-student="林○安" data-property="HC-2026-0188" data-return="2027/10/25">上傳簽章借用單</button>
+                                                    <button type="button" class="btnPill btn-blue btnPill-sm" data-js="recordsUpload" data-step="3" data-app="A1150926-011" data-device="桌上型擴視機" data-student="林○安" data-property="HC-2026-0188" data-return="2027/10/25"><i class="bi bi-upload" aria-hidden="true"></i>上傳簽章借用單</button>
                                                 </td>
                                             </tr>
                                             <tr data-category="todo">
@@ -246,7 +247,7 @@
                                                 <td data-label="進度"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待上傳簽核申請表</span></td>
                                                 <td data-label="文件"><a href="#" class="linkMarker" download><i class="bi bi-download me-1" aria-hidden="true"></i>下載申請表</a></td>
                                                 <td data-label="下一步" class="dataTable-cellNext">
-                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="recordsUpload" data-step="1" data-app="A1150926-012" data-device="安全頭套" data-student="－">上傳簽核申請表</button>
+                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="recordsUpload" data-step="1" data-app="A1150926-012" data-device="安全頭套" data-student="－"><i class="bi bi-upload" aria-hidden="true"></i>上傳簽核申請表</button>
                                                 </td>
                                             </tr>
                                             <tr data-category="todo">
@@ -266,7 +267,7 @@
                                                 <td data-label="進度"><span class="statusPill statusPill-gold"><span class="statusPill-dot" aria-hidden="true"></span>待上傳簽章歸還單</span></td>
                                                 <td data-label="文件"><a href="#" class="linkMarker" download><i class="bi bi-download me-1" aria-hidden="true"></i>下載歸還單</a></td>
                                                 <td data-label="下一步" class="dataTable-cellNext">
-                                                    <button type="button" class="btnPill btn-teal btnPill-sm" data-js="recordsUpload" data-step="3" data-kind="return" data-app="A1150912-006" data-device="一般輪椅" data-student="許○廷" data-property="M-WC-0031" data-return="2026/09/30">上傳簽章歸還單</button>
+                                                    <button type="button" class="btnPill btn-purple btnPill-sm" data-js="recordsUpload" data-step="3" data-kind="return" data-app="A1150912-006" data-device="一般輪椅" data-student="許○廷" data-property="M-WC-0031" data-return="2026/09/30"><i class="bi bi-upload" aria-hidden="true"></i>上傳簽章歸還單</button>
                                                 </td>
                                             </tr>
                                             <tr data-category="ret">

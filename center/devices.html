@@ -75,7 +75,7 @@
                     <div class="devicesPage-panelHead">
                         <h2 class="devicesPage-panelTitle">輔具品項</h2>
                         <button type="button" class="btnPill btn-teal" data-bs-toggle="modal" data-bs-target="#deviceItemModal">
-                            <i class="bi bi-plus-lg" aria-hidden="true"></i>新增品項
+                            <i class="bi bi-plus-lg" aria-hidden="true"></i>新增輔具
                         </button>
                     </div>
 
@@ -381,14 +381,14 @@
 
     <div data-layout="../layout/footer.html"></div>
 
-    <!-- 新增品項 modal -->
+    <!-- 新增輔具 modal -->
     <div class="modal fade" id="deviceItemModal" data-js="deviceItemModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="dmTitle">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-dialog-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="modal-head-text">
-                        <h2 id="dmTitle" class="modal-title">新增品項</h2>
-                        <p class="modal-subtitle textNote">先選擇管理方式：之後是逐台管理財產，還是只管數量</p>
+                        <h2 id="dmTitle" class="modal-title">新增輔具</h2>
+                        <p class="modal-subtitle textNote">依序填完三個步驟就會建立；內容會對應到前台「輔具詳情」頁</p>
                     </div>
                     <button type="button" class="btnIcon" aria-label="關閉" data-bs-dismiss="modal">
                         <i class="bi bi-x-lg" aria-hidden="true"></i>
@@ -396,122 +396,224 @@
                 </div>
                 <form novalidate data-js="deviceModalForm">
                     <div class="modal-body">
-                        <fieldset class="modal-body-section">
-                            <legend class="formField-label">管理方式 <span class="formField-required">必填</span></legend>
-                            <div class="cardChoice-group cardChoice-group-row">
-                                <label class="cardChoice is-selected">
-                                    <input type="radio" name="dmType" value="unit" class="cardChoice-input" checked data-js="dmTypeRadio">
-                                    <span class="cardChoice-text">
-                                        <span class="cardChoice-title">財產・單台</span>
-                                        <span class="cardChoice-desc">以財產編號逐台管理，借出後需歸還</span>
-                                    </span>
-                                </label>
-                                <label class="cardChoice">
-                                    <input type="radio" name="dmType" value="qty" class="cardChoice-input" data-js="dmTypeRadio">
-                                    <span class="cardChoice-text">
-                                        <span class="cardChoice-title">配發・數量</span>
-                                        <span class="cardChoice-desc">客製或消耗品只管數量，配發後不用歸還</span>
-                                    </span>
-                                </label>
-                            </div>
-                        </fieldset>
-
-                        <div class="modal-body-section devicesPage-photoRow">
-                            <div>
-                                <span class="formField-label">照片</span>
-                                <div data-js="uploadTile">
-                                    <input type="file" id="dmPhoto" class="fileUpload-input" accept="image/*" aria-describedby="dmPhotoHint" data-js="uploadTileInput">
-                                    <label for="dmPhoto" class="uploadTile-box">
-                                        <span class="uploadTile-empty" data-js="uploadTileEmpty">
-                                            <i class="bi bi-upload uploadTile-icon" aria-hidden="true"></i>
-                                            <span class="uploadTile-text">上傳照片</span>
-                                            <span class="uploadTile-sub" id="dmPhotoHint">JPG、PNG</span>
+                        <nav aria-label="填寫進度" class="deviceStepper">
+                            <ol class="deviceStepper-list">
+                                <li class="deviceStepper-item">
+                                    <button type="button" class="deviceStepper-step is-current" data-js="dmStepBtn" data-step="1" aria-current="step" aria-label="第 1 步：基本資料（必填）">
+                                        <span class="deviceStepper-circle" data-js="dmStepCircle">1</span>
+                                        <span class="deviceStepper-text">
+                                            <span class="deviceStepper-title">基本資料</span>
+                                            <span class="deviceStepper-sub deviceStepper-sub-required">必填</span>
                                         </span>
-                                        <img class="uploadTile-preview" alt="已選擇的照片預覽" hidden data-js="uploadTilePreview">
+                                    </button>
+                                </li>
+                                <li class="deviceStepper-item">
+                                    <button type="button" class="deviceStepper-step" data-js="dmStepBtn" data-step="2" aria-disabled="true" aria-label="第 2 步：前台說明（選填）">
+                                        <span class="deviceStepper-circle" data-js="dmStepCircle">2</span>
+                                        <span class="deviceStepper-text">
+                                            <span class="deviceStepper-title">前台說明</span>
+                                            <span class="deviceStepper-sub">選填，可略過</span>
+                                        </span>
+                                    </button>
+                                </li>
+                                <li class="deviceStepper-item">
+                                    <button type="button" class="deviceStepper-step" data-js="dmStepBtn" data-step="3" aria-disabled="true" aria-label="第 3 步：相關文件（選填）">
+                                        <span class="deviceStepper-circle" data-js="dmStepCircle">3</span>
+                                        <span class="deviceStepper-text">
+                                            <span class="deviceStepper-title">相關文件</span>
+                                            <span class="deviceStepper-sub">選填，可略過</span>
+                                        </span>
+                                    </button>
+                                </li>
+                            </ol>
+                        </nav>
+
+                        <div data-js="dmStepPanel" data-step="1">
+                            <fieldset class="modal-body-section">
+                                <legend class="formField-label">管理方式 <span class="formField-required">必填</span></legend>
+                                <div class="cardChoice-group cardChoice-group-row">
+                                    <label class="cardChoice is-selected">
+                                        <input type="radio" name="dmType" value="unit" class="cardChoice-input" checked data-js="dmTypeRadio">
+                                        <span class="cardChoice-text">
+                                            <span class="cardChoice-title">財產・單台</span>
+                                            <span class="cardChoice-desc">以財產編號逐台管理，借出後需歸還</span>
+                                        </span>
                                     </label>
-                                    <div class="uploadTile-actions" hidden data-js="uploadTileActions">
-                                        <button type="button" class="btnPill btn-outline btnPill-sm" data-js="uploadTileReplace">重新上傳</button>
-                                        <button type="button" class="btnPill btn-secondary btnPill-sm" data-js="uploadTileRemove">移除照片</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="devicesPage-photoRow-fields">
-                                <div>
-                                    <label for="dmName" class="formField-label">品項名稱 <span class="formField-required">必填</span></label>
-                                    <input type="text" id="dmName" class="form-control" placeholder="例：擴視機" required>
-                                </div>
-                                <div>
-                                    <label for="dmCat" class="formField-label">輔具分類 <span class="formField-required">必填</span></label>
-                                    <select id="dmCat" class="form-select" required>
-                                        <option selected>行動與擺位輔具</option>
-                                        <option>視障輔具</option>
-                                        <option>聽障輔具</option>
-                                        <option>溝通輔具</option>
-                                        <option>資訊輔具</option>
-                                        <option>書寫與閱讀輔具</option>
-                                        <option>其他輔具</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal-body-section">
-                            <label for="dmDesc" class="formField-label">使用說明</label>
-                            <textarea id="dmDesc" class="form-control" rows="3" placeholder="簡短介紹用途與適用對象，會顯示在前台輔具目錄。例：可放大課本、作業單等書面資料，適合低視力學生閱讀與書寫。"></textarea>
-                        </div>
-
-                        <div class="modal-body-section formGrid">
-                            <div data-js="dmUnitOnly">
-                                <label for="dmLife" class="formField-label">預設使用年限 <span class="formField-required">必填</span></label>
-                                <select id="dmLife" class="form-select" required>
-                                    <option value="3">3 年</option>
-                                    <option value="4">4 年</option>
-                                    <option value="5" selected>5 年</option>
-                                    <option value="6">6 年</option>
-                                    <option value="8">8 年</option>
-                                    <option value="none">無期限</option>
-                                </select>
-                            </div>
-                            <div data-js="dmQtyOnly" hidden>
-                                <label for="dmNeed" class="formField-label">申請時需填寫</label>
-                                <select id="dmNeed" class="form-select">
-                                    <option selected>不需填寫</option>
-                                    <option>公分數</option>
-                                    <option>頭圍</option>
-                                    <option>身高</option>
-                                </select>
-                            </div>
-                            <div data-js="dmQtyOnly" hidden>
-                                <label for="dmSafe" class="formField-label">安全庫存</label>
-                                <input type="number" id="dmSafe" class="form-control" min="0" value="5" aria-describedby="dmSafeHint">
-                                <p class="formField-hint" id="dmSafeHint">庫存低於此數量時提醒入庫</p>
-                            </div>
-                            <fieldset>
-                                <legend class="formField-label">申請設定</legend>
-                                <div class="flex-column gap-2">
-                                    <div class="formField-checkRow">
-                                        <input type="checkbox" id="dmFree" class="form-check-input">
-                                        <label for="dmFree" class="formField-checkRow-label">免評估（學校申請不需評估報告）</label>
-                                    </div>
-                                    <div class="formField-checkRow" data-js="dmUnitOnly">
-                                        <input type="checkbox" id="dmTemp" class="form-check-input">
-                                        <label for="dmTemp" class="formField-checkRow-label">可臨時借用</label>
-                                    </div>
-                                    <div class="formField-checkRow">
-                                        <input type="checkbox" id="dmShow" class="form-check-input" checked>
-                                        <label for="dmShow" class="formField-checkRow-label">顯示在前台輔具目錄</label>
-                                    </div>
+                                    <label class="cardChoice">
+                                        <input type="radio" name="dmType" value="qty" class="cardChoice-input" data-js="dmTypeRadio">
+                                        <span class="cardChoice-text">
+                                            <span class="cardChoice-title">配發・數量</span>
+                                            <span class="cardChoice-desc">客製或消耗品只管數量，配發後不用歸還</span>
+                                        </span>
+                                    </label>
                                 </div>
                             </fieldset>
+
+                            <div class="modal-body-section devicesPage-photoRow">
+                                <div>
+                                    <span class="formField-label">照片</span>
+                                    <div data-js="uploadTile">
+                                        <input type="file" id="dmPhoto" class="fileUpload-input" accept="image/*" aria-describedby="dmPhotoHint" data-js="uploadTileInput">
+                                        <label for="dmPhoto" class="uploadTile-box">
+                                            <span class="uploadTile-empty" data-js="uploadTileEmpty">
+                                                <i class="bi bi-upload uploadTile-icon" aria-hidden="true"></i>
+                                                <span class="uploadTile-text">上傳照片</span>
+                                                <span class="uploadTile-sub" id="dmPhotoHint">前台：主照片</span>
+                                            </span>
+                                            <img class="uploadTile-preview" alt="已選擇的照片預覽" hidden data-js="uploadTilePreview">
+                                        </label>
+                                        <div class="uploadTile-actions" hidden data-js="uploadTileActions">
+                                            <button type="button" class="btnPill btn-outline btnPill-sm" data-js="uploadTileReplace">重新上傳</button>
+                                            <button type="button" class="btnPill btn-secondary btnPill-sm" data-js="uploadTileRemove">移除照片</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="devicesPage-photoRow-fields">
+                                    <div>
+                                        <label for="dmName" class="formField-label">輔具名稱 <span class="formField-required">必填</span></label>
+                                        <input type="text" id="dmName" class="form-control" placeholder="例：擴視機" required>
+                                    </div>
+                                    <div>
+                                        <label for="dmCat" class="formField-label">輔具分類 <span class="formField-required">必填</span></label>
+                                        <select id="dmCat" class="form-select" required>
+                                            <option value="" selected disabled>請選擇輔具分類</option>
+                                            <option>行動與擺位輔具</option>
+                                            <option>視障輔具</option>
+                                            <option>聽障輔具</option>
+                                            <option>溝通輔具</option>
+                                            <option>資訊輔具</option>
+                                            <option>書寫與閱讀輔具</option>
+                                            <option>其他輔具</option>
+                                        </select>
+                                    </div>
+                                    <div class="formGrid-span2">
+                                        <label for="dmSpecs" class="formField-label">相關配備和規格</label>
+                                        <textarea id="dmSpecs" class="form-control" rows="2" placeholder="例：桌上型 24 吋螢幕、附 HDMI 線與遙控器"></textarea>
+                                    </div>
+                                    <div class="formGrid-span2">
+                                        <label for="dmAudience" class="formField-label">適用對象</label>
+                                        <input type="text" id="dmAudience" class="form-control" placeholder="例：低視力學生（國小至高中職）">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-body-section formGrid">
+                                <div data-js="dmUnitOnly">
+                                    <label for="dmLife" class="formField-label">預設使用年限 <span class="formField-required">必填</span></label>
+                                    <select id="dmLife" class="form-select" required>
+                                        <option value="3">3 年</option>
+                                        <option value="4">4 年</option>
+                                        <option value="5" selected>5 年</option>
+                                        <option value="6">6 年</option>
+                                        <option value="8">8 年</option>
+                                        <option value="none">無期限</option>
+                                    </select>
+                                </div>
+                                <div data-js="dmQtyOnly" hidden>
+                                    <label for="dmNeed" class="formField-label">申請時需填寫</label>
+                                    <select id="dmNeed" class="form-select">
+                                        <option selected>不需填寫</option>
+                                        <option>公分數</option>
+                                        <option>頭圍</option>
+                                        <option>身高</option>
+                                    </select>
+                                </div>
+                                <div data-js="dmQtyOnly" hidden>
+                                    <label for="dmSafe" class="formField-label">安全庫存</label>
+                                    <input type="number" id="dmSafe" class="form-control" min="0" value="5" aria-describedby="dmSafeHint">
+                                    <p class="formField-hint" id="dmSafeHint">低於這個數量會提醒入庫。</p>
+                                </div>
+                                <fieldset>
+                                    <legend class="formField-label">申請設定</legend>
+                                    <div class="flex-column gap-2">
+                                        <div class="formField-checkRow">
+                                            <input type="checkbox" id="dmFree" class="form-check-input">
+                                            <label for="dmFree" class="formField-checkRow-label">免評估（學校申請不需評估報告）</label>
+                                        </div>
+                                        <div class="formField-checkRow" data-js="dmUnitOnly">
+                                            <input type="checkbox" id="dmTemp" class="form-check-input">
+                                            <label for="dmTemp" class="formField-checkRow-label">可臨時借用</label>
+                                        </div>
+                                        <div class="formField-checkRow">
+                                            <input type="checkbox" id="dmShow" class="form-check-input" checked>
+                                            <label for="dmShow" class="formField-checkRow-label">顯示在前台輔具目錄</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <p class="noteBox modal-body-section" data-js="dmUnitOnly">
+                                <i class="bi bi-info-circle" aria-hidden="true"></i>「目前可借數量」由在庫的財產自動計算；購置日期和財產編號在每一台財產裡維護，不會出現在前台。
+                            </p>
                         </div>
 
-                        <p class="noteBox modal-body-section" data-js="dmUnitOnly">
-                            <i class="bi bi-info-circle" aria-hidden="true"></i>建立後會進入品項頁，再逐台新增財產編號。
-                        </p>
+                        <div data-js="dmStepPanel" data-step="2" hidden>
+                            <div class="modal-body-section">
+                                <label for="dmIntro" class="formField-label">功能介紹</label>
+                                <textarea id="dmIntro" class="form-control" rows="3" placeholder="例：以鏡頭擷取書本、作業單，放大顯示於螢幕上，方便低視力學生閱讀。"></textarea>
+                            </div>
+
+                            <div class="modal-body-section formGrid">
+                                <div class="flex-column gap-3">
+                                    <span class="formField-label">操作步驟</span>
+                                    <ol class="deviceListInput" data-js="dmStepsList"></ol>
+                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-js="dmStepsAdd">
+                                        <i class="bi bi-plus-lg" aria-hidden="true"></i>新增步驟
+                                    </button>
+                                </div>
+                                <div class="flex-column gap-3">
+                                    <span class="formField-label">注意事項</span>
+                                    <ul class="deviceListInput" data-js="dmCautionsList"></ul>
+                                    <button type="button" class="btnPill btn-outline btnPill-sm" data-js="dmCautionsAdd">
+                                        <i class="bi bi-plus-lg" aria-hidden="true"></i>新增注意事項
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="modal-body-section formGrid">
+                                <div>
+                                    <label for="dmCare" class="formField-label">清潔保養</label>
+                                    <textarea id="dmCare" class="form-control" rows="3" placeholder="例：鏡頭請用拭鏡布擦拭，避免使用酒精或濕紙巾。"></textarea>
+                                </div>
+                                <div>
+                                    <span class="formField-label">配件清單</span>
+                                    <div class="tagInput" data-js="dmAccessoriesWrap">
+                                        <ul class="tagInput-list" data-js="dmAccessoriesList"></ul>
+                                        <input type="text" id="dmAccessoryInput" class="tagInput-field" data-js="dmAccessoryInput" placeholder="例：充電線">
+                                    </div>
+                                    <p class="formField-hint">輸入一項後按 Enter 加入。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div data-js="dmStepPanel" data-step="3" hidden>
+                            <div class="modal-body-section">
+                                <p class="formField-hint">顯示在前台「使用說明」最下方，供學校和家長下載，例如使用手冊、操作影片、保固書。</p>
+
+                                <ul class="deviceDocList my-5" data-js="dmDocsList"></ul>
+                                <p class="formField-hint" data-js="dmDocsEmpty">尚未上傳文件，前台不會顯示文件區。</p>
+
+                                <div class="deviceDocList-uploadGroup" data-js="dmDocsUpload">
+                                    <input type="file" id="dmDocsInput" class="fileUpload-input" multiple accept=".pdf,.doc,.docx,.mp4" data-js="dmDocsInput">
+                                    <label for="dmDocsInput" class="fileUpload fileUpload-drop">
+                                        <i class="bi bi-upload fileUpload-icon" aria-hidden="true"></i>
+                                        <span class="fileUpload-drop-text">上傳文件</span>
+                                        <span class="fileUpload-drop-sub">可多選，PDF、Word、MP4，單檔 20 MB 以內</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal">取消</button>
-                        <button type="submit" class="btnPill btn-teal">建立品項</button>
+                    <div class="modal-footer deviceStepper-footer">
+                        <button type="button" class="btnPill btn-secondary" data-bs-dismiss="modal" data-js="dmBtnCancel">取消</button>
+                        <button type="button" class="btnPill btn-outline" data-js="dmBtnPrev" hidden>
+                            <i class="bi bi-arrow-left" aria-hidden="true"></i>上一步
+                        </button>
+                        <div class="deviceStepper-footer-right">
+                            <button type="button" class="btnPill btn-text" data-js="dmBtnSkip" hidden>略過這一步</button>
+                            <button type="button" class="btnPill btn-teal" data-js="dmBtnNext">下一步：前台說明（選填）<i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+                            <button type="submit" class="btnPill btn-teal" data-js="dmBtnSubmit" hidden>建立輔具</button>
+                        </div>
                     </div>
                 </form>
             </div>

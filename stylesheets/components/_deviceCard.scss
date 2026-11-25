@@ -1,0 +1,333 @@
+// ============================================================
+// 輔具卡片（可收合）元件 DeviceCard（design.md §7.12）
+// 用於：輔具申請表、臨時借用申請，多項輔具各自一張可收合卡片
+// ============================================================
+
+// ---- 區塊標題列（「申請輔具」標題＋共 N 項標籤＋全部收合／展開＋新增輔具）----
+.deviceSection-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+    margin-bottom: 4px;
+}
+
+.deviceSection-head-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.deviceSection-count {
+    display: inline-flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 12px;
+    border-radius: $border-radius-pill;
+    background-color: $surface-teal-pale;
+    color: #0B5557;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.deviceSection-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+    flex-wrap: wrap;
+
+    @media (max-width: 720px) {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+// 新增輔具（琥珀實心 pill，左側白色圓底＋琥珀深色「＋」icon）
+.deviceSection-addBtn {
+    padding:9px 12px;
+    letter-spacing: 0.08em;
+    box-shadow: 0 6px 14px rgba(224, 138, 18, .28);
+}
+
+.deviceSection-addBtn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    color: $accent-amber-ink;
+    flex-shrink: 0;
+
+    .bi {
+        font-size: 18px;
+    }
+}
+
+// ---- 卡片清單與外框 ----
+.deviceCard-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.deviceCard {
+    border-radius: $border-radius-md;
+    border: 2px solid $line-default;
+    background-color: $surface-card;
+     padding: 12px 14px;
+}
+
+.deviceCard-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    // h3 本身要撐滿整排（扣除移除按鈕寬度），按鈕才能滿版可點選，不是只有文字寬度
+    h3 {
+        margin: 0;
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+}
+
+.deviceCard-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    flex-wrap: wrap;
+}
+
+.deviceCard-collapseBtn {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: #F0F4F3;
+    color: $brand-teal-deep;
+    transition: transform 180ms ease-out;
+
+    & i{
+        font-size: 18px;
+    }
+}
+
+.deviceCard-toggle[aria-expanded="false"] .deviceCard-collapseBtn {
+    transform: rotate(-90deg);
+}
+
+.deviceCard-num {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    height: 30px;
+    padding: 0 10px;
+    border-radius: 8px;
+    background-color: $brand-teal;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.deviceCard-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.deviceCard-name-placeholder {
+    font-weight: 500;
+    color: $ink-3;
+}
+
+.deviceCard-status {
+    display: inline-flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 12px;
+    border-radius: $border-radius-pill;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.deviceCard-status-progress {
+    background-color: $state-returnFix-bg;
+    color: $state-returnFix-ink;
+}
+
+.deviceCard-status-done {
+    background-color: $state-approve-bg;
+    color: $state-approve-ink;
+}
+
+.deviceCard-status-incomplete {
+    background-color: $state-required-badge-bg;
+    color: $state-required-badge-ink;
+    border: 1px solid #E8B4B6;
+}
+
+.deviceCard-removeBtn {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 18px;
+    border-radius: $border-radius-pill;
+    border: 2px solid #E8C4C5;
+    background-color: $surface-card;
+    color: $state-required-badge-ink;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 160ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $state-required-badge-bg;
+    }
+}
+
+.deviceCard-summary {
+    margin: 2px 0 0;
+    padding-left: 46px;
+    font-size: 16px;
+    color: $ink-2;
+}
+
+.deviceCard-body {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid $line-default;
+}
+
+// 第一列：輔具分類（固定寬）＋ DevicePicker（彈性寬）
+.deviceCard-pickRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+
+    @media (max-width: 720px) {
+        flex-direction: column;
+    }
+}
+
+.deviceCard-pickRow-cat {
+    flex: 0 0 220px;
+
+    .form-select {
+        height: 64px;
+    }
+
+    @media (max-width: 720px) {
+        flex: 1 1 auto;
+        width: 100%;
+    }
+}
+
+.deviceCard-pickRow-item {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+// 下拉展開時外框與 z-index 提高，避免被下一張卡片蓋住
+.deviceCard-pickRow-item.is-open {
+    position: relative;
+    z-index: 10;
+}
+
+// 卡片內提示框（需評估／免評估說明）
+.deviceCard-hintBox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-size: 16px;
+
+    .bi {
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+}
+
+.deviceCard-hintBox-general {
+    background-color: $surface-tint;
+    color: $ink-2;
+}
+
+.deviceCard-hintBox-free {
+    background-color: #FDF6EA;
+    color: $accent-amber-ink-2;
+}
+
+// 增購提示框（庫存 0）
+.deviceCard-restockBox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1.5px solid #F2C27A;
+    background-color: $accent-amber-pale;
+    color: #5C3800;
+    font-size: 16px;
+
+    .bi {
+        flex-shrink: 0;
+        margin-top: 1px;
+        color: $accent-amber-ink;
+    }
+}
+
+// 聽障專用區塊（淡紫底）
+.deviceCard-hearingBox {
+    padding: 20px 22px;
+    border-radius: $border-radius-lg;
+    background-color: #F7F4FC;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.deviceCard-hearingBox-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #4B2E83;
+}
+
+.deviceCard-hearingBox-sub {
+    font-size: 15px;
+    font-weight: 500;
+    color: $ink-3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .deviceCard-collapseBtn {
+        transition: none;
+    }
+}

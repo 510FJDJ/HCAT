@@ -1,6 +1,6 @@
 // ============================================================
 // 可選卡片元件：申請類別／評估方式／近期學籍異動等單選卡片群組
-// JS 依 radio 的 change 事件切換 .is-selected（見 js/school-apply.js）
+// JS 依 radio 的 change 事件切換 .is-selected（見 js/all.js）
 // ============================================================
 
 .cardChoice-group {
@@ -83,9 +83,15 @@
     color: $ink-3;
 }
 
-// 無說明文字的精簡版（如近期學籍異動選項）
+// 無說明文字的精簡版（如近期學籍異動選項）：寬度不撐滿，依內容寬度排列，
+// 一行能塞幾個就塞幾個，不像一般 .cardChoice 強制最小寬 220px 撐滿整行
 .cardChoice-plain .cardChoice-title {
     line-height: 1.45;
+}
+
+.cardChoice-group-row .cardChoice-plain {
+    flex: 0 0 auto;
+    width: fit-content;
 }
 
 // 破壞性選項變體（如審核結果「退回補件」）：選中時改用紅色系，與其他選項的青綠選中色區隔
@@ -112,6 +118,64 @@
     padding-top: 10px;
     border-top: 1px solid $line-default;
     width: 100%;
+}
+
+// 單項輔具審核結果精簡版（核准／退回補件／不通過）：無說明文字，高度收窄為 50px，
+// 三色各自對應 design.md §2.7 逐項審核結果配色，選中時才顯色，預設（§10 不選中原則）維持未選框線
+.cardChoice-compact {
+    align-items: center;
+    min-height: 50px;
+    padding: 0 14px;
+    gap: 8px;
+
+    .cardChoice-title {
+        font-size: 16px;
+    }
+
+    .cardChoice-input {
+        width: 18px;
+        height: 18px;
+        margin-top: 0;
+    }
+}
+
+.cardChoice-compact-approve.is-selected {
+    border-color: $state-approve-line;
+    background-color: $state-approve-bg;
+
+    .cardChoice-input {
+        accent-color: $state-approve-line;
+    }
+
+    .cardChoice-title {
+        color: $state-approve-ink;
+    }
+}
+
+.cardChoice-compact-returnFix.is-selected {
+    border-color: $state-returnFix-line;
+    background-color: $state-returnFix-bg;
+
+    .cardChoice-input {
+        accent-color: $state-returnFix-line;
+    }
+
+    .cardChoice-title {
+        color: $state-returnFix-ink;
+    }
+}
+
+.cardChoice-compact-reject.is-selected {
+    border-color: $state-reject-line;
+    background-color: $state-reject-bg;
+
+    .cardChoice-input {
+        accent-color: $state-reject-line;
+    }
+
+    .cardChoice-title {
+        color: $state-reject-ink;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {

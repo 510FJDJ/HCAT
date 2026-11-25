@@ -88,12 +88,18 @@
 @import "./components/modal";
 @import "./components/filterList";
 @import "./components/specList";
+@import "./components/deviceDetail";
 @import "./components/navBarLogged";
 @import "./components/homeGreeting";
 @import "./components/homeCards";
 @import "./components/centerHome";
 @import "./components/cardChoice";
 @import "./components/comboPicker";
+@import "./components/deviceCard";
+@import "./components/reasonField";
+@import "./components/voiceInput";
+@import "./components/goalPicker";
+@import "./components/perItemUpload";
 @import "./components/stepTracker";
 @import "./components/applyForm";
 @import "./components/dataTable";
@@ -112,6 +118,7 @@
 @import "./components/borrow";
 @import "./components/centerRepair";
 @import "./components/devices";
+@import "./components/deviceFormModal";
 @import "./components/schoolsPage";
 @import "./components/vendorsPage";
 @import "./components/uploadTile";

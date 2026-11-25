@@ -1,0 +1,328 @@
+// ============================================================
+// 中心端新增／編輯輔具 modal 專用元件（改版異動說明 §7）：
+// 步驟條（Stepper）、步驟標頭、操作步驟／注意事項可編輯列表、
+// 配件清單標籤輸入框、相關文件列表、步驟底部按鈕列
+// ============================================================
+
+// ---- 步驟條（取代分頁籤，design.md §7.2）----
+.deviceStepper {
+    margin-bottom: 24px;
+}
+
+.deviceStepper-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 18px 12px 14px;
+    border-radius: 20px;
+    background-color: #F5F8F7;
+
+    @media (max-width: 720px) {
+        padding: 14px 8px 10px;
+    }
+}
+
+.deviceStepper-item {
+    position: relative;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    &:not(:first-child)::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        right: 50%;
+        width: 100%;
+        height: 3px;
+        background-color: $line-strong;
+    }
+
+    &.is-lineDone::before {
+        background-color: $brand-teal;
+    }
+}
+
+.deviceStepper-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 0 4px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: center;
+
+    &[aria-disabled="true"] {
+        cursor: not-allowed;
+    }
+}
+
+.deviceStepper-circle {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #BFCAC7;
+    background-color: $surface-card;
+    color: $ink-3;
+    font-family: "Poppins", sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    transition: background-color 180ms ease-out, border-color 180ms ease-out, box-shadow 180ms ease-out, color 180ms ease-out;
+}
+
+.deviceStepper-step.is-current .deviceStepper-circle {
+    border-color: $brand-teal;
+    background-color: $brand-teal;
+    color: #FFFFFF;
+    box-shadow: 0 0 0 5px $surface-teal-soft;
+}
+
+.deviceStepper-step.is-done .deviceStepper-circle {
+    border-color: $brand-teal;
+    background-color: $brand-teal;
+    color: #FFFFFF;
+}
+
+.deviceStepper-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.deviceStepper-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: $ink-1;
+}
+
+.deviceStepper-sub {
+    font-size: 16px;
+    color: $ink-3;
+}
+
+.deviceStepper-sub-required {
+    color: $state-required-badge-ink;
+}
+
+// ---- 操作步驟／注意事項可編輯列表（design.md §7.5，共用外型，差異只在編號圓／琥珀圓點）----
+.deviceListInput {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.deviceListInput-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .form-control {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+.deviceListInput-num {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: $surface-teal-soft;
+    color: $brand-teal-deep;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.deviceListInput-dotMark {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    margin: 0 10px;
+    border-radius: 50%;
+    background-color: $accent-amber;
+}
+
+.deviceListInput-remove {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 10px;
+    background: none;
+    color: $ink-3;
+    cursor: pointer;
+    transition: background-color 160ms ease-out, color 160ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: $accent-amber-pale;
+        color: $state-required;
+    }
+}
+
+// ---- 配件清單標籤輸入框（design.md §7.5）----
+.tagInput {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 6px 12px;
+    border: 2px solid $line-strong;
+    border-radius: $input-border-radius;
+    background-color: $surface-card;
+    transition: border-color 180ms ease-out, box-shadow 180ms ease-out;
+
+    &:focus-within {
+        border-color: $brand-teal;
+        box-shadow: $input-focus-box-shadow;
+    }
+}
+
+.tagInput-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.tagInput-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 6px 0 12px;
+    border-radius: $border-radius-pill;
+    background-color: #E9F4F3;
+    color: #0B5557;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.tagInput-tagRemove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color 160ms ease-out;
+
+    &:hover,
+    &:focus-visible {
+        background-color: rgba(11, 85, 87, .15);
+    }
+}
+
+.tagInput-field {
+    flex: 1;
+    min-width: 120px;
+    border: none;
+    outline: none;
+    background: none;
+    font-family: inherit;
+    font-size: 17px;
+    color: $ink-1;
+
+    &::placeholder {
+        color: $input-placeholder-color;
+    }
+}
+
+// ---- 相關文件列表（design.md §7.6，重用 .fileRow／.fileRow-icon-pdf/mp4/doc／.fileRow-delete）----
+.deviceDocList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+// 52×52 徽章（基礎 .fileRow-icon 為 44px，此檔案載入順序在 _fileRow.scss 之後可直接覆寫）
+.fileRow-icon-lg {
+    width: 52px;
+    height: 52px;
+    font-size: 24px;
+}
+
+// 已上傳文件列表／空白提示與下方上傳框之間的間距
+.deviceDocList-uploadGroup {
+    margin-top: 20px;
+}
+
+.deviceDocList-name {
+    width: 100%;
+    height: 40px;
+    padding: 6px 10px;
+    border: 1.5px solid $line-strong;
+    border-radius: $border-radius-sm;
+    background-color: $surface-card;
+    color: $ink-1;
+    font-size: 16px;
+    font-weight: 700;
+
+    &:focus-visible {
+        outline: none;
+        border-color: $brand-teal;
+        box-shadow: $input-focus-box-shadow;
+    }
+}
+
+// ---- 步驟底部按鈕列（design.md §7.3）：取代 .modal-footer 預設兩顆按鈕 1:2 撐滿邏輯 ----
+.deviceStepper-footer {
+    justify-content: space-between;
+
+    .btnPill {
+        flex: 0 0 auto;
+        min-width: 0;
+    }
+
+    @media (max-width: 720px) {
+        flex-wrap: wrap;
+    }
+}
+
+.deviceStepper-footer-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    @media (max-width: 720px) {
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .deviceStepper-circle,
+    .deviceListInput-remove,
+    .tagInput-tagRemove,
+    .tagInput {
+        transition: none;
+    }
+}

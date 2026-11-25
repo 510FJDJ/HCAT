@@ -45,6 +45,14 @@
 } // 置頂（同 design.md §7.9 數字徽章配色）
 .tag-blueLight  { background-color: #E8F1FB; color: #1D4F86; } // 借出（聽障點交），同 noteBox-blue
 .tag-violetLight{ background-color: #F1ECF8; color: #4B2E83; } // 歸還（聽障點交），同 noteBox-purple
+.tag-tealSolid  { background-color: $brand-teal; color: #FFFFFF; } // 報修來源：中心
+.tag-greyPale   { background-color: #EEF1F0; color: #3F4D53; } // 報修來源：學校
+
+// 逐項審核結果／卡片狀態標籤（design.md §2.7）：申請審核明細逐項核准／退回補件／不通過，與尚未選擇的預設狀態
+.tag-approve    { background-color: $state-approve-bg; color: $state-approve-ink; border: 1.5px solid $state-approve-line; }
+.tag-returnFix  { background-color: $state-returnFix-bg; color: $state-returnFix-ink; border: 1.5px solid $state-returnFix-line; }
+.tag-reject     { background-color: $state-reject-bg; color: $state-reject-ink; border: 1.5px solid $state-reject-line; }
+.tag-unselected { background-color: $state-unselected-bg; color: $state-unselected-ink; }
 
 // 標籤文字為編號（如財產編號）時改用 Poppins，讓數字在中文版面中自然浮出來（design.md §3）
 .tagPill-mono {
