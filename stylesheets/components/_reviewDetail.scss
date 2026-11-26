@@ -86,6 +86,13 @@
     padding: 16px 28px 28px;
     border-top: 1px solid $line-default;
 
+    // 送出按鈕文字依逐項審核結果動態變長（如「送出審核結果（核准 1 項、不核准 1 項）」），
+    // 這裡沒有箭頭圖示、不需要 .btnPill 預設的 white-space:nowrap，手機版改允許換行避免撐爆版面
+    .btnPill {
+        white-space: normal;
+        text-align: center;
+    }
+
     @media (max-width: 720px) {
         padding: 16px 24px 24px;
     }

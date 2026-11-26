@@ -251,6 +251,10 @@
 .deviceCard-pickRow-item {
     flex: 1 1 auto;
     min-width: 0;
+
+    @media (max-width: 720px) {
+        width: 100%;
+    }
 }
 
 // 下拉展開時外框與 z-index 提高，避免被下一張卡片蓋住

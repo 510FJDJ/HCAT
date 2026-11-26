@@ -26,9 +26,12 @@
 }
 
 .infoBox-value {
+    flex: 1 1 auto;
+    min-width: 0;
     font-size: 16px;
     font-weight: 700;
     color: $ink-1;
+    overflow-wrap: anywhere; // 帳號等英數文字過長時需能換行，否則會撐出容器（design.md §3）
 }
 
 // 內容為編號／日期時改用 Poppins（design.md §3）

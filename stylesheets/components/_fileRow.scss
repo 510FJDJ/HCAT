@@ -96,7 +96,7 @@
 // ---- 上傳檔案清單變體：右側為刪除鈕，不是連結箭頭 ----
 .fileRow-upload {
     cursor: default;
-    background-color: $state-unselected-bg;
+    background-color:$surface-teal-pale;
 
     &:hover,
     &:focus-visible {
