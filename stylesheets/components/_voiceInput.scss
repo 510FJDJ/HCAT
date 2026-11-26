@@ -11,6 +11,13 @@
     flex-wrap: wrap;
 }
 
+.voiceInputBtnGroup {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
 .voiceInputBtn {
     display: inline-flex;
     align-items: center;
@@ -30,20 +37,9 @@
     &:focus-visible {
         background-color: $surface-teal-pale;
     }
-
-    // 錄音中：改為實心紅底，明確區分狀態（不可只靠顏色，另搭配文字見 .voiceInputStatus）
-    &[aria-pressed="true"] {
-        border-color: $state-reject-line;
-        background-color: $state-reject-line;
-        color: #FFFFFF;
-
-        &:hover,
-        &:focus-visible {
-            background-color: #A3262A;
-        }
-    }
 }
 
+// 錄音中正在使用的麥克風按鈕：灰階不可按（說明文字見相鄰的 .voiceInputStatus）
 .voiceInputBtn[aria-disabled="true"] {
     border-color: $line-strong;
     color: $ink-3;
@@ -52,6 +48,18 @@
     &:hover,
     &:focus-visible {
         background-color: transparent;
+    }
+}
+
+// 停止按鈕：錄音中才顯示，實心紅底明確區分為獨立動作（不可只靠顏色，另搭配文字）
+.voiceInputBtn-stop {
+    border-color: $state-reject-line;
+    background-color: $state-reject-line;
+    color: #FFFFFF;
+
+    &:hover,
+    &:focus-visible {
+        background-color: #A3262A;
     }
 }
 

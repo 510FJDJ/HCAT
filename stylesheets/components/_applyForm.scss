@@ -103,18 +103,6 @@
     }
 }
 
-// 近期學籍異動（3fr）＋家長聯絡（2fr）同一列
-.applyForm-moveContactRow {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    gap: 20px 28px;
-    align-items: start;
-
-    @media (max-width: 900px) {
-        grid-template-columns: 1fr;
-    }
-}
-
 // ------------------------------------------------------------
 // 區塊 3 學生狀況與教學目標：2 欄並排（gap 20/28）
 // ------------------------------------------------------------

@@ -51,6 +51,13 @@
     box-shadow: 0 6px 14px rgba(224, 138, 18, .28);
 }
 
+// 卡片清單最下方的「新增輔具」按鈕（多張卡片後，不用滑回頂部）
+.deviceSection-addBottom {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
 .deviceSection-addBtn-icon {
     display: inline-flex;
     align-items: center;

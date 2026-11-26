@@ -25477,6 +25477,12 @@ h3.articleBody-heading::before, .articleBody-heading.h3::before {
   box-shadow: 0 6px 14px rgba(224, 138, 18, 0.28);
 }
 
+.deviceSection-addBottom {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .deviceSection-addBtn-icon {
   display: inline-flex;
   align-items: center;
@@ -25804,6 +25810,13 @@ h3.articleBody-heading::before, .articleBody-heading.h3::before {
   flex-wrap: wrap;
 }
 
+.voiceInputBtnGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .voiceInputBtn {
   display: inline-flex;
   align-items: center;
@@ -25822,14 +25835,6 @@ h3.articleBody-heading::before, .articleBody-heading.h3::before {
 .voiceInputBtn:hover, .voiceInputBtn:focus-visible {
   background-color: #E9F4F3;
 }
-.voiceInputBtn[aria-pressed=true] {
-  border-color: #C0292B;
-  background-color: #C0292B;
-  color: #FFFFFF;
-}
-.voiceInputBtn[aria-pressed=true]:hover, .voiceInputBtn[aria-pressed=true]:focus-visible {
-  background-color: #A3262A;
-}
 
 .voiceInputBtn[aria-disabled=true] {
   border-color: #D5DCDA;
@@ -25838,6 +25843,15 @@ h3.articleBody-heading::before, .articleBody-heading.h3::before {
 }
 .voiceInputBtn[aria-disabled=true]:hover, .voiceInputBtn[aria-disabled=true]:focus-visible {
   background-color: transparent;
+}
+
+.voiceInputBtn-stop {
+  border-color: #C0292B;
+  background-color: #C0292B;
+  color: #FFFFFF;
+}
+.voiceInputBtn-stop:hover, .voiceInputBtn-stop:focus-visible {
+  background-color: #A3262A;
 }
 
 .voiceInputStatus {
@@ -26174,18 +26188,6 @@ h3.articleBody-heading::before, .articleBody-heading.h3::before {
   .applyForm-idGrid {
     grid-template-columns: 1fr;
     gap: 16px;
-  }
-}
-
-.applyForm-moveContactRow {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 20px 28px;
-  align-items: start;
-}
-@media (max-width: 900px) {
-  .applyForm-moveContactRow {
-    grid-template-columns: 1fr;
   }
 }
 

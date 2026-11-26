@@ -109,7 +109,7 @@
                                 <div>
                                     <span class="formField-label">班別 <span class="formField-required">必填</span></span>
                                     <div class="d-flex align-items-start gap-3 flex-wrap mt-2">
-                                        <fieldset class="cardChoice-group cardChoice-group-row flex-grow-1">
+                                        <fieldset class="cardChoice-group cardChoice-group-row">
                                             <legend class="sr-only">班別</legend>
                                             <label class="cardChoice cardChoice-plain" data-js="class-card">
                                                 <input type="radio" name="stClassType" value="regular" class="cardChoice-input" data-js="class-radio" required>
@@ -168,6 +168,17 @@
 
                                 <div class="formGrid">
                                     <div>
+                                        <label for="stDlvSubtype" class="formField-label">程度／亞型</label>
+                                        <input type="text" id="stDlvSubtype" class="form-control" placeholder="例：中度－自閉症類">
+                                    </div>
+                                    <div>
+                                        <label for="stDcatNew" class="formField-label">新制類別</label>
+                                        <input type="text" id="stDcatNew" class="form-control" placeholder="例：注意力缺陷過動症">
+                                    </div>
+                                </div>
+
+                                <div class="formGrid">
+                                    <div>
                                         <span class="formField-label">障礙程度</span>
                                         <fieldset class="cardChoice-group cardChoice-group-row mt-2">
                                             <legend class="sr-only">障礙程度</legend>
@@ -201,61 +212,64 @@
                                 </div>
                             </div>
 
-                            <!-- ③ 近期學籍異動＋④ 家長聯絡 -->
+                            <!-- ③ 近期學籍異動 -->
                             <div class="applyForm-group">
-                                <div class="applyForm-moveContactRow">
-                                    <fieldset>
-                                        <legend class="applyForm-groupTitle">③ 近期學籍異動（半年內） <span class="formField-required">必填</span></legend>
-                                        <div class="cardChoice-group cardChoice-group-row mt-2">
-                                            <label class="cardChoice cardChoice-plain" data-js="mv-card">
-                                                <input type="radio" name="mv" value="none" class="cardChoice-input" data-js="mv-radio" required>
-                                                <span class="cardChoice-text"><span class="cardChoice-title">無</span></span>
-                                            </label>
-                                            <label class="cardChoice cardChoice-plain" data-js="mv-card">
-                                                <input type="radio" name="mv" value="local" class="cardChoice-input" data-js="mv-radio">
-                                                <span class="cardChoice-text"><span class="cardChoice-title">預計轉學或升學至本縣學校</span></span>
-                                            </label>
-                                            <label class="cardChoice cardChoice-plain" data-js="mv-card">
-                                                <input type="radio" name="mv" value="other" class="cardChoice-input" data-js="mv-radio">
-                                                <span class="cardChoice-text"><span class="cardChoice-title">預計轉學或升學至外縣市學校</span></span>
-                                            </label>
-                                        </div>
+                                <fieldset>
+                                    <legend class="applyForm-groupTitle">③ 近期學籍異動（半年內） <span class="formField-required">必填</span></legend>
+                                    <div class="cardChoice-group cardChoice-group-row mt-2">
+                                        <label class="cardChoice cardChoice-plain" data-js="mv-card">
+                                            <input type="radio" name="mv" value="none" class="cardChoice-input" data-js="mv-radio" required>
+                                            <span class="cardChoice-text"><span class="cardChoice-title">無</span></span>
+                                        </label>
+                                        <label class="cardChoice cardChoice-plain" data-js="mv-card">
+                                            <input type="radio" name="mv" value="local" class="cardChoice-input" data-js="mv-radio">
+                                            <span class="cardChoice-text"><span class="cardChoice-title">預計轉學或升學至本縣學校</span></span>
+                                        </label>
+                                        <label class="cardChoice cardChoice-plain" data-js="mv-card">
+                                            <input type="radio" name="mv" value="other" class="cardChoice-input" data-js="mv-radio">
+                                            <span class="cardChoice-text"><span class="cardChoice-title">預計轉學或升學至外縣市學校</span></span>
+                                        </label>
+                                    </div>
 
-                                        <div class="applyForm-moveFields cardChoice-sub" data-js="mv-local" hidden>
-                                            <div style="max-width:420px">
-                                                <label for="mvSchoolLocal" class="formField-label">校名 <span class="formField-required">必填</span></label>
-                                                <input type="text" id="mvSchoolLocal" class="form-control" list="hsinchuSchools" autocomplete="off" placeholder="例：新竹市立光華國中" required>
+                                    <div class="applyForm-moveFields cardChoice-sub" data-js="mv-local" hidden>
+                                        <div style="max-width:420px">
+                                            <label for="mvSchoolLocal" class="formField-label">校名 <span class="formField-required">必填</span></label>
+                                            <input type="text" id="mvSchoolLocal" class="form-control" list="hsinchuSchools" autocomplete="off" placeholder="例：新竹市立光華國中" required>
+                                        </div>
+                                    </div>
+                                    <div class="applyForm-moveFields cardChoice-sub" data-js="mv-other" hidden>
+                                        <div class="formGrid formGrid-narrowWide" style="max-width:620px">
+                                            <div>
+                                                <label for="mvCity" class="formField-label">縣市 <span class="formField-required">必填</span></label>
+                                                <select id="mvCity" class="form-select" required>
+                                                    <option value="" selected disabled>請選擇</option>
+                                                    <option>新竹市</option>
+                                                    <option>桃園市</option>
+                                                    <option>苗栗縣</option>
+                                                    <option>其他</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label for="mvOschool" class="formField-label">校名 <span class="formField-required">必填</span></label>
+                                                <input type="text" id="mvOschool" class="form-control" placeholder="例：新竹市立光華國中" required>
                                             </div>
                                         </div>
-                                        <div class="applyForm-moveFields cardChoice-sub" data-js="mv-other" hidden>
-                                            <div class="formGrid formGrid-narrowWide" style="max-width:620px">
-                                                <div>
-                                                    <label for="mvCity" class="formField-label">縣市 <span class="formField-required">必填</span></label>
-                                                    <select id="mvCity" class="form-select" required>
-                                                        <option value="" selected disabled>請選擇</option>
-                                                        <option>新竹市</option>
-                                                        <option>桃園市</option>
-                                                        <option>苗栗縣</option>
-                                                        <option>其他</option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <label for="mvOschool" class="formField-label">校名 <span class="formField-required">必填</span></label>
-                                                    <input type="text" id="mvOschool" class="form-control" placeholder="例：新竹市立光華國中" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="formField-hint">讓中心評估借用期間。實際轉學時，再由「借用中輔具」提報轉銜續借或歸還。</p>
-                                        <datalist id="hsinchuSchools">
-                                            <option value="竹北市 博愛國小"></option>
-                                            <option value="竹北市 東海國小"></option>
-                                            <option value="竹北市 十興國小"></option>
-                                            <option value="竹東鎮 竹東國小"></option>
-                                            <option value="湖口鄉 湖口國小"></option>
-                                            <option value="新豐鄉 新豐國小"></option>
-                                        </datalist>
-                                    </fieldset>
+                                    </div>
+                                    <p class="formField-hint">讓中心評估借用期間。實際轉學時，再由「借用中輔具」提報轉銜續借或歸還。</p>
+                                    <datalist id="hsinchuSchools">
+                                        <option value="竹北市 博愛國小"></option>
+                                        <option value="竹北市 東海國小"></option>
+                                        <option value="竹北市 十興國小"></option>
+                                        <option value="竹東鎮 竹東國小"></option>
+                                        <option value="湖口鄉 湖口國小"></option>
+                                        <option value="新豐鄉 新豐國小"></option>
+                                    </datalist>
+                                </fieldset>
+                            </div>
 
+                            <!-- ④ 家長聯絡＋⑤ 申請教師 -->
+                            <div class="applyForm-group">
+                                <div class="formGrid">
                                     <div>
                                         <span class="applyForm-groupTitle">④ 家長聯絡</span>
                                         <div class="formGrid mt-2">
@@ -266,6 +280,20 @@
                                             <div>
                                                 <label for="stPtel" class="formField-label">家長電話</label>
                                                 <input type="tel" id="stPtel" class="form-control" placeholder="例：0912-345-678">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="applyForm-groupTitle">⑤ 申請教師</span>
+                                        <div class="formGrid mt-2">
+                                            <div>
+                                                <label for="stTeacherName" class="formField-label">教師姓名 <span class="formField-required">必填</span></label>
+                                                <input type="text" id="stTeacherName" class="form-control" placeholder="例：陳美玉" required>
+                                            </div>
+                                            <div>
+                                                <label for="stTeacherTel" class="formField-label">教師電話 <span class="formField-required">必填</span></label>
+                                                <input type="tel" id="stTeacherTel" class="form-control" placeholder="例：03-5518101#1234 或 0912-345-678" required>
+                                                <p class="formField-hint">辦公室電話加分機或手機皆可。</p>
                                             </div>
                                         </div>
                                     </div>
@@ -287,12 +315,17 @@
                                 <div>
                                     <div class="applyForm-fieldHead">
                                         <label for="stStatus" class="formField-label mb-0">目前學生狀況及建議使用原因 <span class="formField-required">必填</span></label>
-                                        <button type="button" class="voiceInputBtn" aria-pressed="false" data-js="voice-btn" data-voice-target="stStatus">
-                                            <i class="bi bi-mic" aria-hidden="true"></i>語音輸入
-                                        </button>
+                                        <div class="voiceInputBtnGroup">
+                                            <button type="button" class="voiceInputBtn" data-js="voice-btn" data-voice-target="stStatus">
+                                                <i class="bi bi-mic" aria-hidden="true"></i><span data-js="voice-btn-label">語音輸入</span>
+                                            </button>
+                                            <button type="button" class="voiceInputBtn voiceInputBtn-stop" data-js="voice-stop-btn" data-voice-target="stStatus" hidden>
+                                                <i class="bi bi-stop-fill" aria-hidden="true"></i>停止
+                                            </button>
+                                        </div>
                                     </div>
                                     <textarea id="stStatus" class="form-control" rows="4" placeholder="例：學生目前使用助行器，建議使用拐杖訓練" required></textarea>
-                                    <p class="voiceInputStatus" role="status" data-js="voice-status" data-voice-status-for="stStatus" hidden>
+                                    <p class="voiceInputStatus" id="stStatusVoiceStatus" role="status" data-js="voice-status" data-voice-status-for="stStatus" hidden>
                                         <span class="voiceInputStatus-dot" aria-hidden="true"></span>
                                         錄音中，說完後再按一次「停止」，文字會加到輸入框最後面。
                                     </p>
@@ -300,9 +333,14 @@
                                 <div>
                                     <div class="applyForm-fieldHead">
                                         <label for="stGoal" class="formField-label mb-0">預期教學目標 <span class="formField-required">必填</span></label>
-                                        <button type="button" class="voiceInputBtn" aria-pressed="false" data-js="voice-btn" data-voice-target="stGoal">
-                                            <i class="bi bi-mic" aria-hidden="true"></i>語音輸入
-                                        </button>
+                                        <div class="voiceInputBtnGroup">
+                                            <button type="button" class="voiceInputBtn" data-js="voice-btn" data-voice-target="stGoal">
+                                                <i class="bi bi-mic" aria-hidden="true"></i><span data-js="voice-btn-label">語音輸入</span>
+                                            </button>
+                                            <button type="button" class="voiceInputBtn voiceInputBtn-stop" data-js="voice-stop-btn" data-voice-target="stGoal" hidden>
+                                                <i class="bi bi-stop-fill" aria-hidden="true"></i>停止
+                                            </button>
+                                        </div>
                                     </div>
                                     <div class="goalPicker">
                                         <label for="stGoalSelect" class="sr-only">選擇常用目標帶入</label>
@@ -320,7 +358,7 @@
                                         <p class="goalPicker-hint">選單帶入的文字可以再修改。</p>
                                     </div>
                                     <textarea id="stGoal" class="form-control" rows="2" placeholder="例：漸進改用拐杖" required></textarea>
-                                    <p class="voiceInputStatus" role="status" data-js="voice-status" data-voice-status-for="stGoal" hidden>
+                                    <p class="voiceInputStatus" id="stGoalVoiceStatus" role="status" data-js="voice-status" data-voice-status-for="stGoal" hidden>
                                         <span class="voiceInputStatus-dot" aria-hidden="true"></span>
                                         錄音中，說完後再按一次「停止」，文字會加到輸入框最後面。
                                     </p>
@@ -457,6 +495,13 @@
                                 </div>
                             </li>
                         </ul>
+
+                        <div class="deviceSection-addBottom">
+                            <button type="button" class="btnPill btn-amberSolid deviceSection-addBtn" data-js="add-device-btn-bottom">
+                                <span class="deviceSection-addBtn-icon" aria-hidden="true"><i class="bi bi-plus-lg"></i></span>
+                                新增輔具
+                            </button>
+                        </div>
                     </section>
 
                     <!-- ④ 借用需求 -->

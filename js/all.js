@@ -1037,6 +1037,8 @@
             var targetId = btn.getAttribute('data-voice-target');
             var target = document.getElementById(targetId);
             var statusEl = form.querySelector('[data-voice-status-for="' + targetId + '"]');
+            var labelEl = btn.querySelector('[data-js="voice-btn-label"]');
+            var stopBtn = form.querySelector('[data-js="voice-stop-btn"][data-voice-target="' + targetId + '"]');
             if (!target) { return; }
 
             var recognizer = new Recognition();
@@ -1058,20 +1060,31 @@
 
             recognizer.addEventListener('end', function () {
                 listening = false;
-                btn.setAttribute('aria-pressed', 'false');
+                btn.removeAttribute('aria-disabled');
+                btn.removeAttribute('aria-describedby');
+                if (labelEl) { labelEl.textContent = '語音輸入'; }
                 if (statusEl) { statusEl.hidden = true; }
+                if (stopBtn) { stopBtn.hidden = true; }
             });
 
             btn.addEventListener('click', function () {
-                if (listening) {
-                    recognizer.stop();
-                    return;
-                }
+                if (listening) { return; }
                 listening = true;
-                btn.setAttribute('aria-pressed', 'true');
-                if (statusEl) { statusEl.hidden = false; }
+                btn.setAttribute('aria-disabled', 'true');
+                if (labelEl) { labelEl.textContent = '語音輸入中…'; }
+                if (statusEl) {
+                    statusEl.hidden = false;
+                    if (statusEl.id) { btn.setAttribute('aria-describedby', statusEl.id); }
+                }
+                if (stopBtn) { stopBtn.hidden = false; }
                 recognizer.start();
             });
+
+            if (stopBtn) {
+                stopBtn.addEventListener('click', function () {
+                    if (listening) { recognizer.stop(); }
+                });
+            }
         });
     })();
 
@@ -1689,6 +1702,11 @@
         addDeviceBtn.addEventListener('click', function () { addDeviceCard(); });
     }
 
+    var addDeviceBtnBottom = q(form, 'add-device-btn-bottom');
+    if (addDeviceBtnBottom) {
+        addDeviceBtnBottom.addEventListener('click', function () { addDeviceCard(); });
+    }
+
     var collapseAllBtnEl = q(form, 'collapse-all-btn');
     if (collapseAllBtnEl) {
         collapseAllBtnEl.addEventListener('click', function () {
@@ -2002,6 +2020,8 @@
             var targetId = btn.getAttribute('data-voice-target');
             var target = document.getElementById(targetId);
             var statusEl = el.form.querySelector('[data-voice-status-for="' + targetId + '"]');
+            var labelEl = btn.querySelector('[data-js="voice-btn-label"]');
+            var stopBtn = el.form.querySelector('[data-js="voice-stop-btn"][data-voice-target="' + targetId + '"]');
             if (!target) { return; }
 
             var recognizer = new Recognition();
@@ -2023,20 +2043,31 @@
 
             recognizer.addEventListener('end', function () {
                 listening = false;
-                btn.setAttribute('aria-pressed', 'false');
+                btn.removeAttribute('aria-disabled');
+                btn.removeAttribute('aria-describedby');
+                if (labelEl) { labelEl.textContent = '語音輸入'; }
                 if (statusEl) { statusEl.hidden = true; }
+                if (stopBtn) { stopBtn.hidden = true; }
             });
 
             btn.addEventListener('click', function () {
-                if (listening) {
-                    recognizer.stop();
-                    return;
-                }
+                if (listening) { return; }
                 listening = true;
-                btn.setAttribute('aria-pressed', 'true');
-                if (statusEl) { statusEl.hidden = false; }
+                btn.setAttribute('aria-disabled', 'true');
+                if (labelEl) { labelEl.textContent = '語音輸入中…'; }
+                if (statusEl) {
+                    statusEl.hidden = false;
+                    if (statusEl.id) { btn.setAttribute('aria-describedby', statusEl.id); }
+                }
+                if (stopBtn) { stopBtn.hidden = false; }
                 recognizer.start();
             });
+
+            if (stopBtn) {
+                stopBtn.addEventListener('click', function () {
+                    if (listening) { recognizer.stop(); }
+                });
+            }
         });
     })();
 
@@ -2442,6 +2473,11 @@
     var addDeviceBtn = q('add-device-btn');
     if (addDeviceBtn) {
         addDeviceBtn.addEventListener('click', function () { addDeviceCard(); });
+    }
+
+    var addDeviceBtnBottom = q('add-device-btn-bottom');
+    if (addDeviceBtnBottom) {
+        addDeviceBtnBottom.addEventListener('click', function () { addDeviceCard(); });
     }
 
     var collapseAllBtnEl = q('collapse-all-btn');
