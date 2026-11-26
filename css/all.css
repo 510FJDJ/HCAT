@@ -25156,6 +25156,10 @@ h3.articleBody-heading::before, .articleBody-heading.h3::before {
   color: #C0292B;
 }
 
+.cardChoice-outline.is-selected {
+  background-color: #FFFFFF;
+}
+
 .cardChoice-sub {
   margin-top: 10px;
   padding-top: 10px;
@@ -27709,7 +27713,6 @@ h3.articleBody-heading::before, .articleBody-heading.h3::before {
   padding: 0 8px;
   font-size: 18px;
   font-weight: 500;
-  color: #1F2A2E;
 }
 
 .confirmBox-legend::before {
@@ -27726,13 +27729,19 @@ h3.articleBody-heading::before, .articleBody-heading.h3::before {
   background-color: #F7F4FC;
   border-color: #CFC2E6;
 }
+.confirmBox-violet .confirmBox-legend {
+  color: #4A3D8A;
+}
 .confirmBox-violet .confirmBox-legend::before {
   background-color: #F7F4FC;
 }
 
 .confirmBox-teal {
   background-color: #E9F4F3;
-  border-color: #0F7F81;
+  border-color: #BFD9D5;
+}
+.confirmBox-teal .confirmBox-legend {
+  color: #0B6466;
 }
 .confirmBox-teal .confirmBox-legend::before {
   background-color: #E9F4F3;

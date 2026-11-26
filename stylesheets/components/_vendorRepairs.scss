@@ -25,7 +25,6 @@
     padding: 0 8px;
     font-size: 18px;
     font-weight: 500;
-    color: $ink-1;
 }
 
 .confirmBox-legend::before {
@@ -42,6 +41,10 @@
     background-color: #F7F4FC;
     border-color: #CFC2E6;
 
+    .confirmBox-legend {
+        color: #4A3D8A;
+    }
+
     .confirmBox-legend::before {
         background-color: #F7F4FC;
     }
@@ -50,7 +53,11 @@
 // 一般報修案件（非聽障）的家長繳交確認／領取輔具提示框
 .confirmBox-teal {
     background-color: $surface-teal-pale;
-    border-color: $brand-teal;
+    border-color: $surface-marker-deep;
+
+    .confirmBox-legend {
+        color: $brand-teal-deep;
+    }
 
     .confirmBox-legend::before {
         background-color: $surface-teal-pale;

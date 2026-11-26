@@ -112,6 +112,12 @@
     color: $state-required;
 }
 
+// 淡色底容器內的變體（如 confirmBox-teal 綠底提示框內的勾選項）：選中時維持白底，只靠邊框變色區分，
+// 避免卡片選中色與容器底色相近而幾乎看不出差異
+.cardChoice-outline.is-selected {
+    background-color: $surface-card;
+}
+
 // 近期學籍異動選中後展開的子欄位
 .cardChoice-sub {
     margin-top: 10px;
